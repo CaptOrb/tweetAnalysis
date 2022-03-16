@@ -70,13 +70,13 @@ public class Configuration {
 
     // our config file has hashtags separated by spaces
     // add each one to a list
-    public static void putHashTagsIntoList(String hashTags, Configuration configuration) {
+    public void putHashTagsIntoList(String hashTags, Configuration configuration) {
         String[] listHashTags = hashTags.split(" ");
 
         configuration.HASHTAGS.addAll(Arrays.asList(listHashTags));
     }
 
-    public static void getSettingsFromFile(Configuration configuration) throws IOException {
+    public void getSettingsFromFile(Configuration configuration) throws IOException {
 
         Properties properties = new Properties();
 
@@ -99,7 +99,6 @@ public class Configuration {
             configuration.SLEEP_TIME = properties.getProperty("SLEEPTIMEMS");
             configuration.LANGUAGE = properties.getProperty("LANGUAGE");
             configuration.BATCH_SIZE = properties.getProperty("BATCH_SIZE");
-
             String TEMP_HASH_TAGS = properties.getProperty("HASHTAGS");
 
             putHashTagsIntoList(TEMP_HASH_TAGS, configuration);
@@ -108,7 +107,7 @@ public class Configuration {
         }
     }
 
-    public static void initConfig(Configuration configuration){
+    public TwitterFactory getTwitterFactory(Configuration configuration){
 
         ConfigurationBuilder cb = new ConfigurationBuilder();
         cb.setDebugEnabled(true)
@@ -116,37 +115,7 @@ public class Configuration {
                 .setOAuthConsumerSecret(configuration.getAPISecretKey())
                 .setOAuthAccessToken(configuration.getACCESS_TOKEN())
                 .setOAuthAccessTokenSecret(configuration.getACCESS_TOKEN_SECRET());
-        TwitterFactory tf = new TwitterFactory(cb.build());
-        Twitter twitter = tf.getInstance();
 
-        try {
-            Query query = new Query("test");
-            QueryResult result;
-            result = twitter.search(query);
-            List<Status> tweets = result.getTweets();
-            for (Status tweet : tweets) {
-                System.out.println("@" + tweet.getUser().getScreenName() + " - " + tweet.getText());
-            }
-
-            System.exit(0);
-        } catch (TwitterException te) {
-            te.printStackTrace();
-            System.out.println("Failed to search tweets: " + te.getMessage());
-            System.exit(-1);
-        }
-    }
-
-    // JUST FOR TESTING
-
-    public static void main(String[] args){
-
-        Configuration configuration = new Configuration();
-
-        try {
-            Configuration.getSettingsFromFile(configuration);
-            Configuration.initConfig(configuration);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        return new TwitterFactory(cb.build());
     }
 }
