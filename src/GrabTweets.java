@@ -8,7 +8,7 @@ public class GrabTweets {
     // This file is just for testing so far
     // we can delete it / modify if needs be ;)
 
-    public void grabSomeTweets(TwitterFactory tf){
+    public void grabSomeTweets(TwitterFactory tf, Configuration configuration){
 
         try {
             Query query = new Query("test");
@@ -16,6 +16,7 @@ public class GrabTweets {
             result = tf.getInstance().search(query);
             List<Status> tweets = result.getTweets();
             for (Status tweet : tweets) {
+                if(tweet.getLang().equals(configuration.getLanguage()))
                 System.out.println("@" + tweet.getUser().getScreenName() + " - " + tweet.getText());
             }
 
@@ -37,7 +38,7 @@ public class GrabTweets {
 
             GrabTweets grabTweets = new GrabTweets();
 
-            grabTweets.grabSomeTweets(tf);
+            grabTweets.grabSomeTweets(tf, configuration);
         } catch (IOException e) {
             e.printStackTrace();
         }
