@@ -1,48 +1,59 @@
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Properties;
-import twitter4j.Twitter;
-import twitter4j.TwitterFactory;
+
+import twitter4j.*;
 import twitter4j.conf.ConfigurationBuilder;
 
 public class Configuration {
 
-    private String API_KEY;
-    private String API_SECRET_KEY;
-    private String BEARER_TOKEN;
-    private String DATA_DIRECTORY;
-    private String DATA_FILE;
-    private String TEMP_HASH_TAGS;
-    private LinkedList<String> HASHTAGS = new LinkedList<>();;
+    private static String API_KEY;
+    private static String API_SECRET_KEY;
+    private static String BEARER_TOKEN;
+    private static String ACCESS_TOKEN;
+    private static String ACCESS_TOKEN_SECRET;
+    private static String DATA_DIRECTORY;
+    private static String DATA_FILE;
+    private static String TEMP_HASH_TAGS;
+    private static LinkedList<String> HASHTAGS = new LinkedList<>();;
 
-    public String getAPIKey() {
+    public static String getAPIKey() {
         return API_KEY;
     }
 
-    public String getAPISecretKey() {
+    public static String getAPISecretKey() {
         return API_SECRET_KEY;
     }
 
-    public String getBearerToken() {
+    public static String getBearerToken() {
         return BEARER_TOKEN;
     }
 
-    public String getDataDirectory() {
+    public static String getDataDirectory() {
         return DATA_DIRECTORY;
     }
 
-    public String getDataFile() {
+    public static String getDataFile() {
         return DATA_FILE;
     }
 
-    public LinkedList<String> getHashTags() {
+    public static String getACCESS_TOKEN() {
+        return ACCESS_TOKEN;
+    }
+
+    public static String getACCESS_TOKEN_SECRET() {
+        return ACCESS_TOKEN_SECRET;
+    }
+
+    public static LinkedList<String> getHashTags() {
         return HASHTAGS;
     }
 
     // our config file has hashtags separated by spaces
     // add each one to a list
-    public void putHashTagsIntoList(String hashTags) {
+    public static void putHashTagsIntoList(String hashTags) {
         String[] listHashTags = hashTags.split(" ");
 
         for(String hashtag: listHashTags) {
@@ -51,11 +62,11 @@ public class Configuration {
     }
 
 
-    public void getSettingsFromFile() throws IOException {
+    public static void getSettingsFromFile() throws IOException {
 
         Properties properties = new Properties();
 
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("config_file");
+        InputStream inputStream = Configuration.class.getClassLoader().getResourceAsStream("config_file");
 
         if (inputStream == null) {
             throw new RuntimeException("Couldn't find the config file in the classpath.");
@@ -68,6 +79,9 @@ public class Configuration {
             BEARER_TOKEN = properties.getProperty("BEARER_TOKEN");
             DATA_DIRECTORY = properties.getProperty("DATA_DIRECTORY");
             DATA_FILE = properties.getProperty("DATA_FILE");
+            ACCESS_TOKEN = properties.getProperty("ACCESS_TOKEN");
+            ACCESS_TOKEN_SECRET = properties.getProperty("ACCESS_TOKEN_SECRET");
+
 
             TEMP_HASH_TAGS = properties.getProperty("HASHTAGS");
 
@@ -75,26 +89,53 @@ public class Configuration {
         } catch (IOException e) {
             throw new RuntimeException("Could not read properties from file:.", e);
         }
+    }
 
+    public static void initConfig(){
+
+        System.out.println(Configuration.getAPIKey());
+        System.out.println(Configuration.getAPISecretKey());
+        System.out.println(Configuration.getACCESS_TOKEN());
+        System.out.println(Configuration.getACCESS_TOKEN_SECRET());
+
+
+        ConfigurationBuilder cb = new ConfigurationBuilder();
+        cb.setDebugEnabled(true)
+                .setOAuthConsumerKey(Configuration.getAPIKey())
+                .setOAuthConsumerSecret(Configuration.getAPISecretKey())
+                .setOAuthAccessToken(Configuration.getACCESS_TOKEN())
+                .setOAuthAccessTokenSecret(Configuration.getACCESS_TOKEN_SECRET());
+        TwitterFactory tf = new TwitterFactory(cb.build());
+        Twitter twitter = tf.getInstance();
+
+        try {
+            Query query = new Query("test");
+            QueryResult result;
+            result = twitter.search(query);
+            List<Status> tweets = result.getTweets();
+            for (Status tweet : tweets) {
+                System.out.println("@" + tweet.getUser().getScreenName() + " - " + tweet.getText());
+            }
+
+            System.exit(0);
+        } catch (TwitterException te) {
+            te.printStackTrace();
+            System.out.println("Failed to search tweets: " + te.getMessage());
+            System.exit(-1);
+        }
     }
 
     // JUST FOR TESTING
 
     public static void main(String[] args){
 
-        Configuration initalConfig = new Configuration();
+
+
         try {
-            initalConfig.getSettingsFromFile();
+            Configuration.getSettingsFromFile();
+            Configuration.initConfig();
 
-            System.out.println(initalConfig.getHashTags().get(0));
-
-			/*ConfigurationBuilder cb = new ConfigurationBuilder();
-			cb.setDebugEnabled(true)
-			  .setOAuthConsumerKey(initalConfig.getAPIKey())
-			  .setOAuthConsumerSecret(initalConfig.getAPISecretKey())
-			  .setOAuthAccessToken(initalConfig.getBearerToken());
-			TwitterFactory tf = new TwitterFactory(cb.build());
-			Twitter twitter = tf.getInstance();*/
+            System.out.println(Configuration.getHashTags().get(0));
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
