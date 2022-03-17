@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="215c31d5-e752-48bb-836f-8b42569b7200" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/twitter4j_core_4_0_7.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/3rdyearproject.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/3rdyearproject.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/default_config" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Configuration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Configuration.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GrabTweets.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GrabTweets.java" afterDir="false" />
     </list>
@@ -78,7 +76,7 @@
       <updated>1647437307273</updated>
       <workItem from="1647437312007" duration="109000" />
       <workItem from="1647438876911" duration="2207000" />
-      <workItem from="1647553967601" duration="3397000" />
+      <workItem from="1647553967601" duration="3701000" />
     </task>
     <servers />
   </component>
