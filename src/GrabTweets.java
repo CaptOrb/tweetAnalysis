@@ -45,7 +45,8 @@ public class GrabTweets {
             // is this the right way to check for different terms in queries?
             // it doesn't like having too much
             Query query = new Query("(#VaccinesSaveLives) OR (#5g) OR (#VaccinesSaveLives) OR (#5g) OR (#VaccinesSaveLives) OR (#5g) OR (#VaccinesWork) OR (#TheTruthAboutCovid) OR (#mandatoryvaccinations) OR (#vaccinationssuck) OR (#forcedvaccination) OR (#ImVaccinated) OR (#Igotmyshot) OR #VaxxedAndMasked OR (#DontWaitVaccinate) OR (#vaccineskill) OR (#vaccinesideeffects) OR (#vaccineinjuries) OR (#vaccinedeaths) OR (#novaccinemandates) OR (#GetTheFuckingVaccine) OR (#vaccinescausebraindamage) OR (#vaccinescauseautism)");
-            query.setCount(100);
+            query.setCount(configuration.getBatchSize());
+            query.setResultType(Query.ResultType.recent);
 
             query.setLang(configuration.getLanguage());
             //query.setQuery("");

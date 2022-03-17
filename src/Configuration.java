@@ -60,8 +60,8 @@ public class Configuration {
         return SLEEP_TIME;
     }
 
-    public String getBatchSize() {
-        return BATCH_SIZE;
+    public int getBatchSize() {
+        return Integer.parseInt(BATCH_SIZE);
     }
 
     public LinkedList<String> getHashTags() {
