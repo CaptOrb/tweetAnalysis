@@ -1,8 +1,10 @@
 import twitter4j.*;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Properties;
 
 public class GrabTweets {
 
@@ -38,13 +40,35 @@ public class GrabTweets {
         }
     }
 
-    public void grabSomeTweets(TwitterFactory tf, Configuration configuration){
+    public void grabSomeTweets(TwitterFactory tf, Configuration configuration) throws IOException {
 
+        configuration.getSettingsFromFile(configuration);
+        Properties properties = new Properties();
+
+        InputStream inputStream = configuration.getClass().getClassLoader().getResourceAsStream("config_file");
+
+        String[] hashTags;
+        //like im sure there is an easier way to do this so feel free to mess around with it,
+        // maybe we have a separate function for this that returns the String[] of hash tags
+        if (inputStream == null) {
+            throw new RuntimeException("Couldn't find the config file in the classpath.");
+        }
+        try {
+            properties.load(inputStream);
+            String convertToList = properties.getProperty("HASHTAGS");
+            hashTags = configuration.putHashTagsIntoList(convertToList, configuration);
+            //System.out.println(hashTags[1] + " " + hashTags[2]);
+        } catch (IOException e) {
+            throw new RuntimeException("Could not read properties from file:", e);
+        }
+        //now have string array hashTags full of hash tags :-)
+    for(int i=0; i<hashTags.length;i++) {
         try {
 
             // is this the right way to check for different terms in queries?
             // it doesn't like having too much
-            Query query = new Query("(#VaccinesSaveLives) OR (#5g) OR (#VaccinesSaveLives) OR (#5g) OR (#VaccinesSaveLives) OR (#5g) OR (#VaccinesWork) OR (#TheTruthAboutCovid) OR (#mandatoryvaccinations) OR (#vaccinationssuck) OR (#forcedvaccination) OR (#ImVaccinated) OR (#Igotmyshot) OR #VaxxedAndMasked OR (#DontWaitVaccinate) OR (#vaccineskill) OR (#vaccinesideeffects) OR (#vaccineinjuries) OR (#vaccinedeaths) OR (#novaccinemandates) OR (#GetTheFuckingVaccine) OR (#vaccinescausebraindamage) OR (#vaccinescauseautism)");
+            Query query = new Query(hashTags[i]);
+                    //new Query("(#VaccinesSaveLives) OR (#5g) OR (#VaccinesSaveLives) OR (#5g) OR (#VaccinesSaveLives) OR (#5g) OR (#VaccinesWork) OR (#TheTruthAboutCovid) OR (#mandatoryvaccinations) OR (#vaccinationssuck) OR (#forcedvaccination) OR (#ImVaccinated) OR (#Igotmyshot) OR #VaxxedAndMasked OR (#DontWaitVaccinate) OR (#vaccineskill) OR (#vaccinesideeffects) OR (#vaccineinjuries) OR (#vaccinedeaths) OR (#novaccinemandates) OR (#GetTheFuckingVaccine) OR (#vaccinescausebraindamage) OR (#vaccinescauseautism)");
             query.setCount(100);
 
             query.setLang(configuration.getLanguage());
@@ -57,8 +81,8 @@ public class GrabTweets {
                 List<Status> tweets = result.getTweets();
                 for (Status tweet : tweets) {
                     if (!(foundTweets.contains(tweet.getId()))) {
-                            System.out.println("@" + tweet.getUser().getScreenName() + "\tTWEET TEXT: " + tweet.getText().replaceAll("\n", "") + "\tTWEET ID: " + tweet.getId()
-                                    + "\tNUM RETWEETS: " + tweet.getRetweetCount() + "\tTime stamp: " + tweet.getCreatedAt());
+                        System.out.println("@" + tweet.getUser().getScreenName() + "\tTWEET TEXT: " + tweet.getText().replaceAll("\n", "") + "\tTWEET ID: " + tweet.getId()
+                                + "\tNUM RETWEETS: " + tweet.getRetweetCount() + "\tTime stamp: " + tweet.getCreatedAt());
 
                         foundTweets.add(tweet.getId());
                     }
@@ -71,6 +95,7 @@ public class GrabTweets {
             System.out.println("Failed to search tweets: " + te.getMessage());
             System.exit(-1);
         }
+    }
     }
 
     public static void main(String[] args){

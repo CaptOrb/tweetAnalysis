@@ -70,10 +70,32 @@ public class Configuration {
 
     // our config file has hashtags separated by spaces
     // add each one to a list
-    public void putHashTagsIntoList(String hashTags, Configuration configuration) {
+    public static String[] putHashTagsIntoList(String hashTags, Configuration configuration) {
         String[] listHashTags = hashTags.split(" ");
 
         configuration.HASHTAGS.addAll(Arrays.asList(listHashTags));
+        return listHashTags;
+    }
+    //just checking how hashtags work, gonna try put them in a query like this :)
+    //also if taking this main out, remove "static" from putHashTagsIntoList function
+    public static void main(String[] args) throws IOException {
+        Configuration configuration = new Configuration();
+        configuration.getSettingsFromFile(configuration);
+        Properties properties = new Properties();
+
+        InputStream inputStream = configuration.getClass().getClassLoader().getResourceAsStream("config_file");
+
+        if (inputStream == null) {
+            throw new RuntimeException("Couldn't find the config file in the classpath.");
+        }
+        try {
+            properties.load(inputStream);
+            String convertToList = properties.getProperty("HASHTAGS");
+            String[] hashTags = putHashTagsIntoList(convertToList, configuration);
+            System.out.println(hashTags[1] + " " + hashTags[2]);
+        } catch (IOException e) {
+        throw new RuntimeException("Could not read properties from file:", e);
+    }
     }
 
     public void getSettingsFromFile(Configuration configuration) throws IOException {
