@@ -53,17 +53,32 @@ public class TwitterFileService {
 
     public void writeUser(User user) throws IOException {
         File file = new File("users.txt");
-        //try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+        boolean found = false;
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = br.readLine()) != null)  // classic way of reading a file line-by-line
+                if (line.equals("@" + user.getScreenName() + "\t"
+                    + user.getLocation() + "\t"
+                    + user.getDescription().replaceAll("\n", " ") + "\t"
+                    + user.getFollowersCount())){
 
-        //} catch (FileNotFoundException fnfe) {
-        //    fnfe.printStackTrace();
-        //}
-        try (PrintWriter pw = new PrintWriter(new FileWriter(file, true))) {
+                    found = true;
+
+                    break;  // if the text is present, we do not have to read the rest after all
+                }
+        } catch (FileNotFoundException fnfe) {
+            fnfe.printStackTrace();
+        }
+
+
+        if(!found) {
+            try (PrintWriter pw = new PrintWriter(new FileWriter(file, true))) {
                 pw.println("@" + user.getScreenName() + "\t"
                         + user.getLocation() + "\t"
                         + user.getDescription().replaceAll("\n", " ") + "\t"
                         + user.getFollowersCount());
             }
-
         }
+
     }
+}
