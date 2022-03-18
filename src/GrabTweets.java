@@ -1,4 +1,5 @@
 import twitter4j.*;
+
 import java.io.*;
 import java.util.HashSet;
 import java.util.List;
@@ -14,7 +15,7 @@ public class GrabTweets {
     // TEST CODE FROM STACK OVERFLOW
     // TO TRY AND AVOID EXCEEDING RATE LIMITS
     private void handleRateLimit(RateLimitStatus rateLimitStatus) {
-          if (rateLimitStatus != null) {
+        if (rateLimitStatus != null) {
             int remaining = rateLimitStatus.getRemaining();
             int resetTime = rateLimitStatus.getSecondsUntilReset();
             int sleep;
@@ -54,10 +55,7 @@ public class GrabTweets {
                     List<Status> tweets = result.getTweets();
                     for (Status tweet : tweets) {
                         if (!(foundTweets.contains(tweet.getId()))) {
-                            TwitterFileService tfs = new TwitterFileService();
-                            tfs.writeTweet(tweet);
-                            User user = tweet.getUser();
-                            // user = new user
+                            writeToFile(tweet);
                             foundTweets.add(tweet.getId());
                         }
                     }
@@ -73,12 +71,59 @@ public class GrabTweets {
         System.exit(0);
     }
 
+    public void writeToFile(Status tweet) throws IOException {
+        File file = new File("s.txt");  // this is a file handle, s.txt may or may not exist
+        boolean found = false;  // flag for target txt being present
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = br.readLine()) != null)  // classic way of reading a file line-by-line
+                if (line.equals(tweet.getId() + "\t"
+                        + "@" + tweet.getUser().getScreenName() + "\t"
+                        + tweet.getText().replaceAll("\n", " ") + "\t"
+                        + tweet.getRetweetCount() + "\t"
+                        + tweet.getCreatedAt())
+
+                        || tweet.getRetweetedStatus() != null && line.equals(tweet.getId() + "\t"
+                        + "@" + tweet.getUser().getScreenName() + "\t"
+                        + tweet.getRetweetedStatus().getText().replaceAll("\n", " ") + "\t"
+                        + tweet.getRetweetCount() + "\t"
+                        + tweet.getCreatedAt())) {
+                    found = true;
+
+                    break;  // if the text is present, we do not have to read the rest after all
+                }
+        } catch (FileNotFoundException fnfe) {
+            fnfe.printStackTrace();
+        }
+
+        if (!found) {
+            try (PrintWriter pw = new PrintWriter(new FileWriter(file, true))) {
+
+                if (tweet.getRetweetedStatus() != null) {
+                    pw.println(tweet.getId() + "\t"
+                            + "@" + tweet.getUser().getScreenName() + "\t"
+                            + tweet.getRetweetedStatus().getText().replaceAll("\n", " ") + "\t"
+                            + tweet.getRetweetCount() + "\t"
+                            + tweet.getCreatedAt());
+
+                } else {
+                    pw.println(tweet.getId() + "\t"
+                            + "@" + tweet.getUser().getScreenName() + "\t"
+                            + tweet.getText().replaceAll("\n", " ") + "\t"
+                            + tweet.getRetweetCount() + "\t"
+                            + tweet.getCreatedAt());
+                }
+
+            }
+        }
+    }
+
     public static void main(String[] args) {
 
         Configuration configuration = new Configuration();
         try {
             // user chooses to provide a config file as a command arg
-            if(args.length == 1) {
+            if (args.length == 1) {
                 configuration.getSettingsFromFile(configuration, args[0], 1);
             } else {
                 // config file is on class path
@@ -95,4 +140,3 @@ public class GrabTweets {
         }
     }
 }
-
