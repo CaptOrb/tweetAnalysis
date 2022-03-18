@@ -51,7 +51,19 @@ public class TwitterFileService {
         }
     }
 
-    public void writeUser(User user){
-        // TODO
+    public void writeUser(User user) throws IOException {
+        File file = new File("users.txt");
+        //try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+
+        //} catch (FileNotFoundException fnfe) {
+        //    fnfe.printStackTrace();
+        //}
+        try (PrintWriter pw = new PrintWriter(new FileWriter(file, true))) {
+                pw.println("@" + user.getScreenName() + "\t"
+                        + user.getLocation() + "\t"
+                        + user.getDescription().replaceAll("\n", " ") + "\t"
+                        + user.getFollowersCount());
+            }
+
+        }
     }
-}
