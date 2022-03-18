@@ -57,8 +57,8 @@ public class Configuration {
         return LANGUAGE;
     }
 
-    public String getSleepTime() {
-        return SLEEP_TIME;
+    public int getSleepTime() {
+        return Integer.parseInt(SLEEP_TIME);
     }
 
     public int getBatchSize() {
@@ -118,7 +118,8 @@ public class Configuration {
                 .setOAuthConsumerKey(configuration.getAPIKey())
                 .setOAuthConsumerSecret(configuration.getAPISecretKey())
                 .setOAuthAccessToken(configuration.getACCESS_TOKEN())
-                .setOAuthAccessTokenSecret(configuration.getACCESS_TOKEN_SECRET());
+                .setOAuthAccessTokenSecret(configuration.getACCESS_TOKEN_SECRET())
+                .setTweetModeExtended(true);
 
         return new TwitterFactory(cb.build());
     }
