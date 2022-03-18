@@ -78,24 +78,20 @@ public class Configuration {
     }
     //just checking how hashtags work, gonna try put them in a query like this :)
     //also if taking this main out, remove "static" from putHashTagsIntoList function
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args){
+
         Configuration configuration = new Configuration();
-        configuration.getSettingsFromFile(configuration);
-        Properties properties = new Properties();
 
-        InputStream inputStream = configuration.getClass().getClassLoader().getResourceAsStream("config_file");
-
-        if (inputStream == null) {
-            throw new RuntimeException("Couldn't find the config file in the classpath.");
-        }
         try {
-            properties.load(inputStream);
-            String convertToList = properties.getProperty("HASHTAGS");
-            String[] hashTags = putHashTagsIntoList(convertToList, configuration);
-            System.out.println(hashTags[1] + " " + hashTags[2]);
+            configuration.getSettingsFromFile(configuration);
+            TwitterFactory tf = configuration.getTwitterFactory(configuration);
+
+            GrabTweets grabTweets = new GrabTweets();
+
+            grabTweets.grabSomeTweets(tf, configuration);
         } catch (IOException e) {
-        throw new RuntimeException("Could not read properties from file:", e);
-    }
+            e.printStackTrace();
+        }
     }
 
     public void getSettingsFromFile(Configuration configuration) throws IOException {
@@ -109,6 +105,9 @@ public class Configuration {
         }
         try {
             properties.load(inputStream);
+            String convertToList = properties.getProperty("HASHTAGS");
+            String[] hashTags = putHashTagsIntoList(convertToList, configuration);
+            System.out.println(hashTags[1] + " " + hashTags[2]);
 
             configuration.API_KEY = properties.getProperty("API_KEY");
             configuration.API_SECRET_KEY = properties.getProperty("APIKEY_SECRET");
