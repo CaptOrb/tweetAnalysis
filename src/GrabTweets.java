@@ -1,6 +1,6 @@
 import twitter4j.*;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.HashSet;
 import java.util.List;
 
@@ -44,7 +44,6 @@ public class GrabTweets {
         for (int i = 0; i < hashTags.length; i++) {
             try {
                 Query query = new Query(hashTags[i]);
-                query.setCount(100);
                 query.setCount(configuration.getBatchSize());
                 query.setResultType(Query.ResultType.recent);
                 query.setLang(configuration.getLanguage());
@@ -56,14 +55,15 @@ public class GrabTweets {
                     List<Status> tweets = result.getTweets();
                     for (Status tweet : tweets) {
                         if (!(foundTweets.contains(tweet.getId()))) {
-                            System.out.println("@"
-                                    + tweet.getUser().getScreenName()
-                                    + "\tTWEET TEXT: "
-                                    + tweet.getText().replaceAll("\n", "")
-                                    + "\tTWEET ID: " + tweet.getId()
-                                    + "\tNUM RETWEETS: " + tweet.getRetweetCount()
-                                    + "\tTime stamp: " + tweet.getCreatedAt());
-
+//                            System.out.println("@"
+//                                    + tweet.getUser().getScreenName()
+//                                    + "\tTWEET TEXT: "
+//                                    + tweet.getText().replaceAll("\n", "")
+//                                    + "\tTWEET ID: " + tweet.getId()
+//                                    + "\tNUM RETWEETS: " + tweet.getRetweetCount()
+//                                    + "\tTime stamp: " + tweet.getCreatedAt());
+//
+                            writeToFile(tweet.getText().replaceAll("\n", " "));
                             foundTweets.add(tweet.getId());
                         }
                     }
@@ -77,6 +77,26 @@ public class GrabTweets {
             }
         }
         System.exit(0);
+    }
+
+    public void writeToFile(String tweet) throws IOException {
+        File file = new File("s.txt");  // this is a file handle, s.txt may or may not exist
+        boolean found=false;  // flag for target txt being present
+//        try(BufferedReader br=new BufferedReader(new FileReader(file))){
+//            String line;
+//            while((line=br.readLine())!=null)  // classic way of reading a file line-by-line
+//                if(line.equals("something")){
+//                    found=true;
+//                    break;  // if the text is present, we do not have to read the rest after all
+//                }
+//        } catch(FileNotFoundException fnfe){}
+
+       // if(!found){  // if the text is not found, it has to be written
+            try(PrintWriter pw=new PrintWriter(new FileWriter(file,true))){  // it works with
+                // non-existing files too
+                pw.println(tweet);
+            }
+        //}
     }
 
     public static void main(String[] args) {
