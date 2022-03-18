@@ -62,8 +62,8 @@ public class GrabTweets {
 //                                    + "\tTWEET ID: " + tweet.getId()
 //                                    + "\tNUM RETWEETS: " + tweet.getRetweetCount()
 //                                    + "\tTime stamp: " + tweet.getCreatedAt());
-//
-                            writeToFile(tweet.getText().replaceAll("\n", " "));
+
+                            writeToFile(tweet);
                             foundTweets.add(tweet.getId());
                         }
                     }
@@ -79,7 +79,7 @@ public class GrabTweets {
         System.exit(0);
     }
 
-    public void writeToFile(String tweet) throws IOException {
+    public void writeToFile(Status tweet) throws IOException {
         File file = new File("s.txt");  // this is a file handle, s.txt may or may not exist
         boolean found=false;  // flag for target txt being present
 //        try(BufferedReader br=new BufferedReader(new FileReader(file))){
@@ -94,7 +94,13 @@ public class GrabTweets {
        // if(!found){  // if the text is not found, it has to be written
             try(PrintWriter pw=new PrintWriter(new FileWriter(file,true))){  // it works with
                 // non-existing files too
-                pw.println(tweet);
+                pw.println("@"
+                        + tweet.getUser().getScreenName()
+                        + "\tTWEET TEXT: "
+                        + tweet.getText().replaceAll("\n", " ")
+                        + "\tTWEET ID: " + tweet.getId()
+                        + "\tNUM RETWEETS: " + tweet.getRetweetCount()
+                        + "\tTime stamp: " + tweet.getCreatedAt());
             }
         //}
     }
