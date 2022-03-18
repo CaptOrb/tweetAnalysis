@@ -99,18 +99,18 @@ public class GrabTweets {
         if (!found) {
             try (PrintWriter pw = new PrintWriter(new FileWriter(file, true))) {
 
-                if (tweet.getRetweetedStatus() != null) {
-                    pw.println(tweet.getId() + "\t"
-                            + "@" + tweet.getUser().getScreenName() + "\t"
-                            + tweet.getRetweetedStatus().getText().replaceAll("\n", " ") + "\t"
-                            + tweet.getRetweetCount() + "\t"
-                            + tweet.getCreatedAt());
-
-                } else {
+                if (tweet.getRetweetedStatus() == null) {
                     pw.println(tweet.getId() + "\t"
                             + "@" + tweet.getUser().getScreenName() + "\t"
                             + tweet.getText().replaceAll("\n", " ") + "\t"
                             + tweet.getRetweetCount() + "\t"
+                            + tweet.getCreatedAt());
+
+                } else{
+                    pw.println(tweet.getId() + "\t"
+                            + "@" + tweet.getUser().getScreenName() + "\t"
+                            + tweet.getRetweetedStatus().getText().replaceAll("\n", " ") + "\t"
+                            + tweet.getRetweetedStatus().getRetweetCount() + "\t"
                             + tweet.getCreatedAt());
                 }
 
