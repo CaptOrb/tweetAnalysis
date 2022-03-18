@@ -78,10 +78,10 @@ public class GrabTweets {
             String line;
             while((line=br.readLine())!=null)  // classic way of reading a file line-by-line
                 if(line.equals(tweet.getId() + "\t"
-                    + "@" + tweet.getUser().getScreenName()
-                    + tweet.getText().replaceAll("\n", " ")
-                    + tweet.getRetweetCount()
-                    + tweet.getCreatedAt())){
+                        + "@" + tweet.getUser().getScreenName() +"\t"
+                        + tweet.getText().replaceAll("\n", " ") +"\t"
+                        + tweet.getRetweetCount() +"\t"
+                        + tweet.getCreatedAt())){
                     found=true;
                     break;  // if the text is present, we do not have to read the rest after all
                 }
@@ -91,9 +91,9 @@ public class GrabTweets {
             try(PrintWriter pw=new PrintWriter(new FileWriter(file,true))){  // it works with
                 // non-existing files too
                 pw.println(tweet.getId() + "\t"
-                        + "@" + tweet.getUser().getScreenName()
-                        + tweet.getText().replaceAll("\n", " ")
-                        + tweet.getRetweetCount()
+                        + "@" + tweet.getUser().getScreenName() +"\t"
+                        + tweet.getText().replaceAll("\n", " ") +"\t"
+                        + tweet.getRetweetCount() +"\t"
                         + tweet.getCreatedAt());
             }
         }
