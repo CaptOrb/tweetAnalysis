@@ -55,14 +55,6 @@ public class GrabTweets {
                     List<Status> tweets = result.getTweets();
                     for (Status tweet : tweets) {
                         if (!(foundTweets.contains(tweet.getId()))) {
-//                            System.out.println("@"
-//                                    + tweet.getUser().getScreenName()
-//                                    + "\tTWEET TEXT: "
-//                                    + tweet.getText().replaceAll("\n", "")
-//                                    + "\tTWEET ID: " + tweet.getId()
-//                                    + "\tNUM RETWEETS: " + tweet.getRetweetCount()
-//                                    + "\tTime stamp: " + tweet.getCreatedAt());
-
                             writeToFile(tweet);
                             foundTweets.add(tweet.getId());
                         }
@@ -85,13 +77,11 @@ public class GrabTweets {
         try(BufferedReader br=new BufferedReader(new FileReader(file))){
             String line;
             while((line=br.readLine())!=null)  // classic way of reading a file line-by-line
-                if(line.equals("@"
-                        + tweet.getUser().getScreenName()
-                        + "\tTWEET TEXT: "
-                        + tweet.getText().replaceAll("\n", " ")
-                        + "\tTWEET ID: " + tweet.getId()
-                        + "\tNUM RETWEETS: " + tweet.getRetweetCount()
-                        + "\tTime stamp: " + tweet.getCreatedAt())){
+                if(line.equals(tweet.getId() + "\t"
+                    + "@" + tweet.getUser().getScreenName()
+                    + tweet.getText().replaceAll("\n", " ")
+                    + tweet.getRetweetCount()
+                    + tweet.getCreatedAt())){
                     found=true;
                     break;  // if the text is present, we do not have to read the rest after all
                 }
@@ -100,13 +90,11 @@ public class GrabTweets {
         if(!found){  // if the text is not found, it has to be written
             try(PrintWriter pw=new PrintWriter(new FileWriter(file,true))){  // it works with
                 // non-existing files too
-                pw.println("@"
-                        + tweet.getUser().getScreenName()
-                        + "\tTWEET TEXT: "
+                pw.println(tweet.getId() + "\t"
+                        + "@" + tweet.getUser().getScreenName()
                         + tweet.getText().replaceAll("\n", " ")
-                        + "\tTWEET ID: " + tweet.getId()
-                        + "\tNUM RETWEETS: " + tweet.getRetweetCount()
-                        + "\tTime stamp: " + tweet.getCreatedAt());
+                        + tweet.getRetweetCount()
+                        + tweet.getCreatedAt());
             }
         }
     }
