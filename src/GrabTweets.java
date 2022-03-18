@@ -85,7 +85,7 @@ public class GrabTweets {
 
                         || tweet.getRetweetedStatus() != null && line.equals(tweet.getId() + "\t"
                                 + "@" + tweet.getUser().getScreenName() + "\t"
-                                + tweet.getRetweetedStatus().getText().replaceAll("\n", " ")
+                                + tweet.getRetweetedStatus().getText().replaceAll("\n", " ") + "\t"
                                 + tweet.getRetweetCount() + "\t"
                                 + tweet.getCreatedAt())) {
                     found = true;
@@ -102,7 +102,7 @@ public class GrabTweets {
                 if (tweet.getRetweetedStatus() != null) {
                     pw.println(tweet.getId() + "\t"
                             + "@" + tweet.getUser().getScreenName() + "\t"
-                            + tweet.getRetweetedStatus().getText().replaceAll("\n", " ")
+                            + tweet.getRetweetedStatus().getText().replaceAll("\n", " ") + "\t"
                             + tweet.getRetweetCount() + "\t"
                             + tweet.getCreatedAt());
 
