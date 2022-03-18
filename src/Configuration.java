@@ -1,3 +1,4 @@
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
@@ -18,7 +19,7 @@ public class Configuration {
     private String LANGUAGE;
     private String BATCH_SIZE;
     private String SLEEP_TIME;
-    private final LinkedList<String> HASHTAGS = new LinkedList<>();
+    private String[] HASHTAGS;
 
     public String getAPIKey() {
         return API_KEY;
@@ -64,50 +65,34 @@ public class Configuration {
         return Integer.parseInt(BATCH_SIZE);
     }
 
-    public LinkedList<String> getHashTags() {
+    public String[] getHashTags() {
         return HASHTAGS;
     }
 
-    // our config file has hashtags separated by spaces
-    // add each one to a list
-    public static String[] putHashTagsIntoList(String hashTags, Configuration configuration) {
-        String[] listHashTags = hashTags.split(" ");
+    public String[] splitHashTags(String hashTags) {
 
-        configuration.HASHTAGS.addAll(Arrays.asList(listHashTags));
-        return listHashTags;
-    }
-    //just checking how hashtags work, gonna try put them in a query like this :)
-    //also if taking this main out, remove "static" from putHashTagsIntoList function
-    public static void main(String[] args){
-
-        Configuration configuration = new Configuration();
-
-        try {
-            configuration.getSettingsFromFile(configuration);
-            TwitterFactory tf = configuration.getTwitterFactory(configuration);
-
-            GrabTweets grabTweets = new GrabTweets();
-
-            grabTweets.grabSomeTweets(tf, configuration);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        return hashTags.split(" ");
     }
 
-    public void getSettingsFromFile(Configuration configuration) throws IOException {
+    public void getSettingsFromFile(Configuration configuration, String file, int mode) throws IOException {
 
         Properties properties = new Properties();
+        FileInputStream customInputFile = null;
+        InputStream classPathInputFile = null;
 
-        InputStream inputStream = configuration.getClass().getClassLoader().getResourceAsStream("config_file");
-
-        if (inputStream == null) {
-            throw new RuntimeException("Couldn't find the config file in the classpath.");
+        if (mode == 1) {
+            customInputFile = new FileInputStream(file);
+        } else {
+            classPathInputFile = configuration.getClass().getClassLoader().getResourceAsStream(file);
         }
         try {
-            properties.load(inputStream);
-            String convertToList = properties.getProperty("HASHTAGS");
-            String[] hashTags = putHashTagsIntoList(convertToList, configuration);
-            System.out.println(hashTags[1] + " " + hashTags[2]);
+            if (customInputFile != null) {
+                properties.load(customInputFile);
+            } else if (classPathInputFile != null) {
+                properties.load(classPathInputFile);
+            } else {
+                throw new RuntimeException("NO CONFIG FILE IN THE CLASS PATH OR GIVEN AS A COMMAND LINE ARGUMENT");
+            }
 
             configuration.API_KEY = properties.getProperty("API_KEY");
             configuration.API_SECRET_KEY = properties.getProperty("APIKEY_SECRET");
@@ -120,9 +105,7 @@ public class Configuration {
             configuration.SLEEP_TIME = properties.getProperty("SLEEPTIMEMS");
             configuration.LANGUAGE = properties.getProperty("LANGUAGE");
             configuration.BATCH_SIZE = properties.getProperty("BATCH_SIZE");
-            String TEMP_HASH_TAGS = properties.getProperty("HASHTAGS");
-
-            putHashTagsIntoList(TEMP_HASH_TAGS, configuration);
+            configuration.HASHTAGS = splitHashTags(properties.getProperty("HASHTAGS"));
         } catch (IOException e) {
             throw new RuntimeException("Could not read properties from file:", e);
         }
