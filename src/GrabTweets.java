@@ -83,7 +83,7 @@ public class GrabTweets {
                         + tweet.getRetweetCount() + "\t"
                         + tweet.getCreatedAt())
 
-                        || line.equals(tweet.getId() + "\t"
+                        || tweet.getRetweetedStatus() != null && line.equals(tweet.getId() + "\t"
                                 + "@" + tweet.getUser().getScreenName() + "\t"
                                 + tweet.getRetweetedStatus().getText().replaceAll("\n", " ")
                                 + tweet.getRetweetCount() + "\t"
