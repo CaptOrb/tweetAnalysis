@@ -1,6 +1,7 @@
 import twitter4j.*;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -10,6 +11,7 @@ public class GrabTweets {
     // we can delete it / modify if needs be ;)
 
     HashSet<Long> foundTweets = new HashSet<>();
+    ArrayList<User> users = new ArrayList<>();
 
     // experimental
     // TEST CODE FROM STACK OVERFLOW
@@ -54,10 +56,18 @@ public class GrabTweets {
                     handleRateLimit(result.getRateLimitStatus());
                     List<Status> tweets = result.getTweets();
                     for (Status tweet : tweets) {
+                        // create User out of each tweet
+                        User user = tweet.getUser();
                         if (!(foundTweets.contains(tweet.getId()))) {
                             TwitterFileService tfs = new TwitterFileService();
                             tfs.writeTweet(tweet);
                             foundTweets.add(tweet.getId());
+                        }
+                        // write new users to file and add to arraylist
+                        if(!(users.contains(user))){
+                            TwitterFileService tfs = new TwitterFileService();
+                            tfs.writeUser(user);
+                            users.add(user);
                         }
                     }
 
