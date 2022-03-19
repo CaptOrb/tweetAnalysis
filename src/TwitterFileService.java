@@ -5,8 +5,23 @@ import java.io.*;
 
 public class TwitterFileService {
 
-    public void writeUser(User user, Configuration configuration) throws IOException {
+    boolean isUserInFile(User user, File file) {
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] lineContents = line.split("\t");
+                String id = String.valueOf(user.getId());
+                if (lineContents[0].equals(id)) {
+                    return true;
+                }
+            }
+        } catch (IOException fnfe) {
+            fnfe.printStackTrace();
+        }
+        return false;
+    }
 
+    public void writeUser(User user, Configuration configuration) throws IOException {
         // needs to be modified to use correct directory.
         File file = new File(configuration.getDataDirectory(), configuration.getUserFile());
 
@@ -15,25 +30,7 @@ public class TwitterFileService {
 
         if (file.exists() || file.getParentFile().mkdirs()) {
 
-            boolean found = false;
-            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-                String line;
-                while ((line = br.readLine()) != null)  // classic way of reading a file line-by-line
-                    if (line.equals("@" + user.getScreenName() + "\t"
-                            + user.getLocation() + "\t"
-                            + user.getDescription().replaceAll("\n", " ") + "\t"
-                            + user.getFollowersCount())) {
-
-                        found = true;
-
-                        break;  // if the text is present, we do not have to read the rest after all
-                    }
-
-            } catch (FileNotFoundException fnfe) {
-                fnfe.printStackTrace();
-            }
-
-            if (!found) {
+            if (!isUserInFile(user, file)) {
                 try (PrintWriter pw = new PrintWriter(new FileWriter(file, true))) {
                     pw.println("@" + user.getScreenName() + "\t"
                             + user.getLocation() + "\t"
@@ -49,11 +46,10 @@ public class TwitterFileService {
         }
     }
 
-    private boolean isTweetInFile(Status tweet, String fileName) {
+    private boolean isTweetInFile(Status tweet, File file) {
 
         try {
 
-            File file = new File(fileName);
             BufferedReader br = new BufferedReader(new FileReader(file));
 
             String line;
@@ -79,7 +75,7 @@ public class TwitterFileService {
             // only creates a new file if it doesn't exist
             file.createNewFile();
 
-            if (!isTweetInFile(tweet, file.getAbsolutePath())) {
+            if (!isTweetInFile(tweet, file)) {
                 try (PrintWriter pw = new PrintWriter(new FileWriter(file, true))) {
                     String tweetText;
                     if (retweet)
