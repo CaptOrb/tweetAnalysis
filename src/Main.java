@@ -22,6 +22,7 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (RuntimeException ex) {
+            ex.printStackTrace();
             System.out.println("FATAL ERROR: \nEither provide a path to a config file as a " +
                     "command line argument or ensure a file called config_file is added to " +
                     "the classpath");

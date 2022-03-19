@@ -5,23 +5,32 @@ import java.io.*;
 
 public class TwitterFileService {
 
-    public void writeTweet(Status tweet, boolean retweet) throws IOException {
-        File file = new File("s.txt");
-        boolean foundInFile = false;
+    private boolean isTweetInFile(Status tweet, String fileName) {
+        File file = new File(fileName);
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] lineContents = line.split("\t");
                 String id = String.valueOf(tweet.getId());
                 if (lineContents[0].equals(id)) {
-                    foundInFile = true;
-                    break;// if the tweet ids are the same, we do not have to read the rest after all
+                    return true;
                 }
             }
-        } catch (FileNotFoundException fnfe) {
+        } catch (IOException fnfe) {
             fnfe.printStackTrace();
         }
-        if (!foundInFile) {
+        return false;
+    }
+
+    public void writeTweet(Status tweet, boolean retweet, Configuration configuration) throws IOException {
+
+        // needs to be modified to use correct directory.
+        File file = new File(configuration.getDataFile());
+
+        // only creates a new file if it doesn't exist
+        file.createNewFile();
+
+        if (!isTweetInFile(tweet, file.getAbsolutePath())) {
             try (PrintWriter pw = new PrintWriter(new FileWriter(file, true))) {
                 String tweetText;
                 if (retweet)
@@ -38,8 +47,13 @@ public class TwitterFileService {
         }
     }
 
-    public void writeUser(User user) throws IOException {
-        File file = new File("users.txt");
+    public void writeUser(User user, Configuration configuration) throws IOException {
+
+        // needs to be modified to use correct directory.
+        File file = new File(configuration.getUserFile());
+
+        // only creates a new file if it doesn't exist
+        file.createNewFile();
         boolean found = false;
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;

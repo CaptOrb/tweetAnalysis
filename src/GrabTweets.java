@@ -55,13 +55,13 @@ public class GrabTweets {
                         if (!(foundTweets.contains(tweet.getId()))) {
                             TwitterFileService tfs = new TwitterFileService();
                             retweet = checkRetweet(tweet); //returns true if the tweet is a retweet
-                            tfs.writeTweet(tweet, retweet);
+                            tfs.writeTweet(tweet, retweet, configuration);
                             foundTweets.add(tweet.getId());
                         }
                         // write new users to file and add to arraylist
                         if (!(users.contains(user))) {
                             TwitterFileService tfs = new TwitterFileService();
-                            tfs.writeUser(user);
+                            tfs.writeUser(user, configuration);
                             users.add(user);
                         }
                     }
