@@ -4,49 +4,36 @@ import twitter4j.User;
 import java.io.*;
 
 public class TwitterFileService {
-    public void writeTweet(Status tweet) throws IOException {
-        File file = new File("s.txt");  // this is a file handle, s.txt may or may not exist
-        boolean found = false;  // flag for target txt being present
+
+    public void writeTweet(Status tweet, boolean retweet) throws IOException {
+        File file = new File("s.txt");
+        boolean foundInFile = false;
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
-            while ((line = br.readLine()) != null)  // classic way of reading a file line-by-line
-                if (line.equals(tweet.getId() + "\t"
-                        + "@" + tweet.getUser().getScreenName() + "\t"
-                        + tweet.getText().replaceAll("\n", " ") + "\t"
-                        + tweet.getRetweetCount() + "\t"
-                        + tweet.getCreatedAt())
-
-                        || tweet.getRetweetedStatus() != null && line.equals(tweet.getId() + "\t"
-                        + "@" + tweet.getUser().getScreenName() + "\t"
-                        + tweet.getRetweetedStatus().getText().replaceAll("\n", " ") + "\t"
-                        + tweet.getRetweetCount() + "\t"
-                        + tweet.getCreatedAt())) {
-                    found = true;
-
-                    break;  // if the text is present, we do not have to read the rest after all
+            while ((line = br.readLine()) != null) {
+                String[] lineContents = line.split("\t");
+                String id = String.valueOf(tweet.getId());
+                if (lineContents[0].equals(id)) {
+                    foundInFile = true;
+                    break;// if the tweet ids are the same, we do not have to read the rest after all
                 }
+            }
         } catch (FileNotFoundException fnfe) {
             fnfe.printStackTrace();
         }
-
-        if (!found) {
+        if (!foundInFile) {
             try (PrintWriter pw = new PrintWriter(new FileWriter(file, true))) {
+                String tweetText;
+                if (retweet)
+                    tweetText = tweet.getRetweetedStatus().getText();
+                else
+                    tweetText = tweet.getText();
 
-                if (tweet.getRetweetedStatus() != null) {
-                    pw.println(tweet.getId() + "\t"
-                            + "@" + tweet.getUser().getScreenName() + "\t"
-                            + tweet.getRetweetedStatus().getText().replaceAll("\n", " ") + "\t"
-                            + tweet.getRetweetCount() + "\t"
-                            + tweet.getCreatedAt());
-
-                } else {
-                    pw.println(tweet.getId() + "\t"
-                            + "@" + tweet.getUser().getScreenName() + "\t"
-                            + tweet.getText().replaceAll("\n", " ") + "\t"
-                            + tweet.getRetweetCount() + "\t"
-                            + tweet.getCreatedAt());
-                }
-
+                pw.println(tweet.getId() + "\t"
+                        + "@" + tweet.getUser().getScreenName() + "\t"
+                        + tweetText.replaceAll("\n", " ") + "\t"
+                        + tweet.getRetweetCount() + "\t"
+                        + tweet.getCreatedAt());
             }
         }
     }
@@ -60,7 +47,7 @@ public class TwitterFileService {
                 if (line.equals("@" + user.getScreenName() + "\t"
                         + user.getLocation() + "\t"
                         + user.getDescription().replaceAll("\n", " ") + "\t"
-                        + user.getFollowersCount())){
+                        + user.getFollowersCount())) {
 
                     found = true;
 
@@ -70,8 +57,7 @@ public class TwitterFileService {
             fnfe.printStackTrace();
         }
 
-
-        if(!found) {
+        if (!found) {
             try (PrintWriter pw = new PrintWriter(new FileWriter(file, true))) {
                 pw.println("@" + user.getScreenName() + "\t"
                         + user.getLocation() + "\t"
@@ -79,6 +65,5 @@ public class TwitterFileService {
                         + user.getFollowersCount());
             }
         }
-
     }
 }
