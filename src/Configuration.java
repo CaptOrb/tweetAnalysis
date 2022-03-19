@@ -101,7 +101,7 @@ public class Configuration {
             configuration.ACCESS_TOKEN_SECRET = properties.getProperty("ACCESS_TOKEN_SECRET");
             configuration.DATA_DIRECTORY = properties.getProperty("DATA_DIRECTORY");
             configuration.DATA_FILE = properties.getProperty("DATA_FILE");
-            configuration.USER_FILE = properties.getProperty("USER FILE");
+            configuration.USER_FILE = properties.getProperty("USER_FILE");
             configuration.SLEEP_TIME = properties.getProperty("SLEEPTIMEMS");
             configuration.LANGUAGE = properties.getProperty("LANGUAGE");
             configuration.BATCH_SIZE = properties.getProperty("BATCH_SIZE");

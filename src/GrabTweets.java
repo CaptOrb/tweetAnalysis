@@ -57,11 +57,11 @@ public class GrabTweets {
                     for (Status tweet : tweets) {
                         User user = tweet.getUser();
                         if (!(foundTweets.contains(tweet.getId()))) {
-                            tfs.writeToFile(tweet);
+                            tfs.writeTweet(tweet, tweet.getRetweetedStatus() != null, configuration);
                             foundTweets.add(tweet.getId());
                         }
                         if(!(users.contains(user.getId()))){
-                            tfs.writeUser(user);
+                            tfs.writeUser(user,configuration);
                             users.add(user.getId());
                         }
                     }

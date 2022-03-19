@@ -3,7 +3,7 @@ import twitter4j.TwitterFactory;
 import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args){
         Configuration configuration = new Configuration();
         try {
             // user chooses to provide a config file as a command arg
@@ -21,12 +21,7 @@ public class Main {
             grabTweets.grabSomeTweets(tf, configuration);
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (RuntimeException ex) {
-            ex.printStackTrace();
-            System.out.println("FATAL ERROR: \nEither provide a path to a config file as a " +
-                    "command line argument or ensure a file called config_file is added to " +
-                    "the classpath");
-            System.exit(-1);
         }
+
     }
 }
