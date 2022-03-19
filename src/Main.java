@@ -21,6 +21,11 @@ public class Main {
             grabTweets.grabSomeTweets(tf, configuration);
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (RuntimeException ex) {
+            System.out.println("FATAL ERROR: \nEither provide a path to a config file as a " +
+                    "command line argument or ensure a file called config_file is added to " +
+                    "the classpath");
+            System.exit(-1);
         }
     }
 }
