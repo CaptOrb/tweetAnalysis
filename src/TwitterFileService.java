@@ -6,8 +6,12 @@ import java.io.*;
 public class TwitterFileService {
 
     private boolean isTweetInFile(Status tweet, String fileName) {
-        File file = new File(fileName);
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+
+        try {
+
+            File file = new File(fileName);
+            BufferedReader br = new BufferedReader(new FileReader(file));
+
             String line;
             while ((line = br.readLine()) != null) {
                 String[] lineContents = line.split("\t");
@@ -16,7 +20,7 @@ public class TwitterFileService {
                     return true;
                 }
             }
-        } catch (IOException fnfe) {
+        } catch (IOException | NullPointerException fnfe) {
             fnfe.printStackTrace();
         }
         return false;
@@ -43,6 +47,8 @@ public class TwitterFileService {
                         + tweetText.replaceAll("\n", " ") + "\t"
                         + tweet.getRetweetCount() + "\t"
                         + tweet.getCreatedAt());
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }
