@@ -6,63 +6,63 @@ import java.util.HashSet;
 import java.util.List;
 
 public class GrabTweets {
-    HashSet<Long> foundTweets = new HashSet<>();
-    ArrayList<User> users = new ArrayList<>();
 
-    // inspired by: https://stackoverflow.com/questions/44611659/rate-limit-exceeded
+    // This file is just for testing so far
+    // we can delete it / modify if needs be ;)
+
+    HashSet<Long> foundTweets = new HashSet<>();
+    ArrayList<Long> users = new ArrayList<>(); //changed to user ID instead
+    // experimental
+    // TEST CODE FROM STACK OVERFLOW
     // TO TRY AND AVOID EXCEEDING RATE LIMITS
-    private void handleRateLimit(RateLimitStatus rateLimitStatus, Configuration configuration) {
+    private void handleRateLimit(RateLimitStatus rateLimitStatus) {
         if (rateLimitStatus != null) {
             int remaining = rateLimitStatus.getRemaining();
             int resetTime = rateLimitStatus.getSecondsUntilReset();
             int sleep;
             if (remaining == 0) {
-                sleep = resetTime + 1;
+                sleep = resetTime + 1; //adding 1 more seconds
             } else {
-                sleep = (resetTime / remaining) + 1;
+                sleep = (resetTime / remaining) + 1; //adding 1 more seconds
             }
 
             try {
-                Thread.sleep(Math.max(sleep * configuration.getSleepTime(), 0));
+                Thread.sleep(Math.max(sleep * 1000, 0));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
     }
 
+    // CAUTION: will keep running for a very long time.
+    // don't run for too long or the API KEY's might get suspended ;)
     public void grabSomeTweets(TwitterFactory tf, Configuration configuration) throws IOException {
 
         String[] hashTags = configuration.getHashTags();
 
-        for (String hashTag : hashTags) {
+        //now have string array hashTags full of hash tags :-)
+
+        for (int i = 0; i < hashTags.length; i++) {
             try {
-                Query query = new Query(hashTag);
+                Query query = new Query(hashTags[i]);
                 query.setCount(configuration.getBatchSize());
                 query.setResultType(Query.ResultType.recent);
                 query.setLang(configuration.getLanguage());
-
+                TwitterFileService tfs = new TwitterFileService();
                 QueryResult result;
-                boolean retweet;
                 do {
                     result = tf.getInstance().search(query);
-
-                    handleRateLimit(result.getRateLimitStatus(), configuration);
-
+                    handleRateLimit(result.getRateLimitStatus());
                     List<Status> tweets = result.getTweets();
                     for (Status tweet : tweets) {
-                        // create User out of each tweet
                         User user = tweet.getUser();
                         if (!(foundTweets.contains(tweet.getId()))) {
-                            TwitterFileService tfs = new TwitterFileService();
-                            retweet = checkRetweet(tweet); //returns true if the tweet is a retweet
-                            tfs.writeTweet(tweet, retweet, configuration);
+                            tfs.writeToFile(tweet);
                             foundTweets.add(tweet.getId());
                         }
-                        // write new users to file and add to arraylist
-                        if (!(users.contains(user))) {
-                            TwitterFileService tfs = new TwitterFileService();
-                            tfs.writeUser(user, configuration);
-                            users.add(user);
+                        if(!(users.contains(user.getId()))){
+                            tfs.writeUser(user);
+                            users.add(user.getId());
                         }
                     }
 
@@ -76,7 +76,5 @@ public class GrabTweets {
         }
         System.exit(0);
     }
-    public boolean checkRetweet(Status tweet){
-        return tweet.getRetweetedStatus() != null; //returns true if retweet status exists, false otherwise
-    }
+
 }

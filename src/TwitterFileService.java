@@ -4,59 +4,10 @@ import twitter4j.User;
 import java.io.*;
 
 public class TwitterFileService {
-
-    private boolean isTweetInFile(Status tweet, String fileName) {
-
-        try {
-
-            File file = new File(fileName);
-            BufferedReader br = new BufferedReader(new FileReader(file));
-
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] lineContents = line.split("\t");
-                String id = String.valueOf(tweet.getId());
-                if (lineContents[0].equals(id)) {
-                    return true;
-                }
-            }
-        } catch (IOException | NullPointerException fnfe) {
-            fnfe.printStackTrace();
-        }
-        return false;
-    }
-
-    public void writeTweet(Status tweet, boolean retweet, Configuration configuration) throws IOException {
+    public void writeUser(User user) throws IOException {
 
         // needs to be modified to use correct directory.
-        File file = new File(configuration.getDataFile());
-
-        // only creates a new file if it doesn't exist
-        file.createNewFile();
-
-        if (!isTweetInFile(tweet, file.getAbsolutePath())) {
-            try (PrintWriter pw = new PrintWriter(new FileWriter(file, true))) {
-                String tweetText;
-                if (retweet)
-                    tweetText = tweet.getRetweetedStatus().getText();
-                else
-                    tweetText = tweet.getText();
-
-                pw.println(tweet.getId() + "\t"
-                        + "@" + tweet.getUser().getScreenName() + "\t"
-                        + tweetText.replaceAll("\n", " ") + "\t"
-                        + tweet.getRetweetCount() + "\t"
-                        + tweet.getCreatedAt());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public void writeUser(User user, Configuration configuration) throws IOException {
-
-        // needs to be modified to use correct directory.
-        File file = new File(configuration.getUserFile());
+        File file = new File("users.txt");
 
         // only creates a new file if it doesn't exist
         file.createNewFile();
@@ -86,4 +37,52 @@ public class TwitterFileService {
             }
         }
     }
+
+    public void writeToFile(Status tweet) throws IOException {
+        File file = new File("s.txt");  // this is a file handle, s.txt may or may not exist
+        boolean found = false;  // flag for target txt being present
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = br.readLine()) != null)  // classic way of reading a file line-by-line
+                if (line.equals(tweet.getId() + "\t"
+                        + "@" + tweet.getUser().getScreenName() + "\t"
+                        + tweet.getText().replaceAll("\n", " ") + "\t"
+                        + tweet.getRetweetCount() + "\t"
+                        + tweet.getCreatedAt())
+
+                        || tweet.getRetweetedStatus() != null && line.equals(tweet.getId() + "\t"
+                        + "@" + tweet.getUser().getScreenName() + "\t"
+                        + tweet.getRetweetedStatus().getText().replaceAll("\n", " ") + "\t"
+                        + tweet.getRetweetCount() + "\t"
+                        + tweet.getCreatedAt())) {
+                    found = true;
+
+                    break;  // if the text is present, we do not have to read the rest after all
+                }
+        } catch (FileNotFoundException fnfe) {
+            fnfe.printStackTrace();
+        }
+
+        if (!found) {
+            try (PrintWriter pw = new PrintWriter(new FileWriter(file, true))) {
+
+                if (tweet.getRetweetedStatus() != null) {
+                    pw.println(tweet.getId() + "\t"
+                            + "@" + tweet.getUser().getScreenName() + "\t"
+                            + tweet.getRetweetedStatus().getText().replaceAll("\n", " ") + "\t"
+                            + tweet.getRetweetCount() + "\t"
+                            + tweet.getCreatedAt());
+
+                } else {
+                    pw.println(tweet.getId() + "\t"
+                            + "@" + tweet.getUser().getScreenName() + "\t"
+                            + tweet.getText().replaceAll("\n", " ") + "\t"
+                            + tweet.getRetweetCount() + "\t"
+                            + tweet.getCreatedAt());
+                }
+
+            }
+        }
+    }
+
 }
