@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+//This class is a tweet gatherer using the twitter search API, it asks Twitter to give tweets that contain hashtags from our configuration file
+//Newline characters are removed from tweets and replaced with a space
 public class GrabTweets {
 
-    // This file is just for testing so far
-    // we can delete it / modify if needs be ;)
-
     HashSet<Long> foundTweets = new HashSet<>();
-    ArrayList<Long> users = new ArrayList<>(); //changed to user ID instead
+    ArrayList<Long> users = new ArrayList<>();
+
     // experimental
     // TEST CODE FROM STACK OVERFLOW
     // TO TRY AND AVOID EXCEEDING RATE LIMITS
@@ -34,13 +34,12 @@ public class GrabTweets {
         }
     }
 
+
     // CAUTION: will keep running for a very long time.
     // don't run for too long or the API KEY's might get suspended ;)
     public void grabSomeTweets(TwitterFactory tf, Configuration configuration) throws IOException {
 
         String[] hashTags = configuration.getHashTags();
-
-        //now have string array hashTags full of hash tags :-)
 
         for (int i = 0; i < hashTags.length; i++) {
             try {

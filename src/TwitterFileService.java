@@ -3,6 +3,11 @@ import twitter4j.User;
 
 import java.io.*;
 
+//This class generates a data file with the tweets that we gathered,
+//saving the tweets in this format:status_id <tab> @userhandle <tab> tweet text <tab> num_retweets <tab> timestamp <newline>
+//It also stores the @userhandle, the location, the short biography, number of followers of the user. One user is stored per line, using tabs to delimit the fields of the entry.
+//The code checks that the user or tweet is not in the file and so doesn't store duplicates
+//The files are opened and written to in append mode
 public class TwitterFileService {
 
     boolean isUserInFile(User user, File file) {
