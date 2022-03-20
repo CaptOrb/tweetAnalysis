@@ -5,15 +5,17 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-//This class pulls tweets from Twitter using the Twitter Search API
+//This class is a tweet gatherer using the twitter search API, it asks Twitter to give tweets that contain hashtags from our configuration file
+//Newline characters are removed from tweets and replaced with a space
 public class GrabTweets {
 
     HashSet<Long> foundTweets = new HashSet<>();
     ArrayList<Long> users = new ArrayList<>();
 
+    // experimental
     // TEST CODE FROM STACK OVERFLOW
     // TO TRY AND AVOID EXCEEDING RATE LIMITS
-    private void handleRateLimit(RateLimitStatus rateLimitStatus) {
+    private void handleRateLimit(RateLimitStatus rateLimitStatus, Configuration configuration) {
         if (rateLimitStatus != null) {
             int remaining = rateLimitStatus.getRemaining();
             int resetTime = rateLimitStatus.getSecondsUntilReset();
@@ -25,12 +27,13 @@ public class GrabTweets {
             }
 
             try {
-                Thread.sleep(Math.max(sleep * 1000, 0));
+                Thread.sleep(Math.max(sleep * configuration.getSleepTime(), 0));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
     }
+
 
     // CAUTION: will keep running for a very long time.
     // don't run for too long or the API KEY's might get suspended ;)
@@ -48,7 +51,7 @@ public class GrabTweets {
                 QueryResult result;
                 do {
                     result = tf.getInstance().search(query);
-                    handleRateLimit(result.getRateLimitStatus());
+                    handleRateLimit(result.getRateLimitStatus(), configuration);
                     List<Status> tweets = result.getTweets();
                     for (Status tweet : tweets) {
                         User user = tweet.getUser();
