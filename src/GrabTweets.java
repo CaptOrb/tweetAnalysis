@@ -15,7 +15,7 @@ public class GrabTweets {
     // experimental
     // TEST CODE FROM STACK OVERFLOW
     // TO TRY AND AVOID EXCEEDING RATE LIMITS
-    private void handleRateLimit(RateLimitStatus rateLimitStatus) {
+    private void handleRateLimit(RateLimitStatus rateLimitStatus, Configuration configuration) {
         if (rateLimitStatus != null) {
             int remaining = rateLimitStatus.getRemaining();
             int resetTime = rateLimitStatus.getSecondsUntilReset();
@@ -27,7 +27,7 @@ public class GrabTweets {
             }
 
             try {
-                Thread.sleep(Math.max(sleep * 1000, 0));
+                Thread.sleep(Math.max(sleep * configuration.getSleepTime(), 0));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -52,7 +52,7 @@ public class GrabTweets {
                 QueryResult result;
                 do {
                     result = tf.getInstance().search(query);
-                    handleRateLimit(result.getRateLimitStatus());
+                    handleRateLimit(result.getRateLimitStatus(), configuration);
                     List<Status> tweets = result.getTweets();
                     for (Status tweet : tweets) {
                         User user = tweet.getUser();
