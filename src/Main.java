@@ -1,7 +1,7 @@
 import twitter4j.TwitterFactory;
 
 import java.io.IOException;
-
+//Run the entire program here
 public class Main {
     public static void main(String[] args){
         Configuration configuration = new Configuration();
