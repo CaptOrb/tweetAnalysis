@@ -5,14 +5,12 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+//This class pulls tweets from Twitter using the Twitter Search API
 public class GrabTweets {
 
-    // This file is just for testing so far
-    // we can delete it / modify if needs be ;)
-
     HashSet<Long> foundTweets = new HashSet<>();
-    ArrayList<Long> users = new ArrayList<>(); //changed to user ID instead
-    // experimental
+    ArrayList<Long> users = new ArrayList<>();
+
     // TEST CODE FROM STACK OVERFLOW
     // TO TRY AND AVOID EXCEEDING RATE LIMITS
     private void handleRateLimit(RateLimitStatus rateLimitStatus) {
@@ -39,8 +37,6 @@ public class GrabTweets {
     public void grabSomeTweets(TwitterFactory tf, Configuration configuration) throws IOException {
 
         String[] hashTags = configuration.getHashTags();
-
-        //now have string array hashTags full of hash tags :-)
 
         for (int i = 0; i < hashTags.length; i++) {
             try {

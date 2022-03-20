@@ -3,6 +3,8 @@ import twitter4j.User;
 
 import java.io.*;
 
+//This class writes the tweets and users to files. Before writing, it checks if the user or tweet already exists in the file.
+
 public class TwitterFileService {
 
     boolean isUserInFile(User user, File file) {
