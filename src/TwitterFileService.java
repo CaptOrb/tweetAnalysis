@@ -15,8 +15,10 @@ public class TwitterFileService {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] lineContents = line.split("\t");
-                String id = String.valueOf(user.getScreenName());
+                String id = "@" + user.getScreenName();
                 if (lineContents[0].equals(id)) {
+
+                   // System.out.println("true");
                     return true;
                 }
             }
