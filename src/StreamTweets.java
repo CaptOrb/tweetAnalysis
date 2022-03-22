@@ -39,8 +39,6 @@ public class StreamTweets {
 
         TwitterStream tf = configuration.getTwitterStreamFactory(configuration);
         tf.addListener(new StreamTweets().listener);
-        tf.sample();
-
         return tf;
     }
 
