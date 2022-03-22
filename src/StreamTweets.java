@@ -50,13 +50,14 @@ public class StreamTweets {
         };
 
     public void streamTweets() {
+        // set up streaming api and add the class field StatusListener
         TwitterStream tf = internalConfig.getTwitterStreamFactory(internalConfig);
         tf.addListener(listener);
 
-        String[] hashtags = internalConfig.getHashTags();
+        // create query using hashtags from config file and pass them to the streaming api
         FilterQuery query = new FilterQuery();
-        query.track(hashtags);
-        tf.filter(hashtags);
+        query.track(internalConfig.getHashTags());
+        tf.filter(internalConfig.getHashTags());
     }
 
 }
