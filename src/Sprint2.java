@@ -22,11 +22,13 @@ public class Sprint2 {
             TwitterStream ts = st.setUp(configuration);
 
 
-            String trackParam = "UKRAINE";
+            String trackParam[] = configuration.getHashTags();
 
 
             FilterQuery query = new FilterQuery();
-            query.track(trackParam.split(","));
+            
+            query.track(trackParam);
+
             ts.filter(query);
 
         } catch (IOException e) {
