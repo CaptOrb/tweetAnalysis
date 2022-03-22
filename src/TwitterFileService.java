@@ -77,10 +77,12 @@ public class TwitterFileService {
 
         File file = new File(configuration.getDataDirectory(), configuration.getDataFile());
 
+
+        // only creates a new file if it doesn't exist
+        file.createNewFile();
+
         if (file.exists() || file.getParentFile().mkdirs()) {
 
-            // only creates a new file if it doesn't exist
-            file.createNewFile();
 
             if (!isTweetInFile(tweet, file)) {
                 try (PrintWriter pw = new PrintWriter(new FileWriter(file, true))) {

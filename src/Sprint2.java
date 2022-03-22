@@ -19,6 +19,9 @@ public class Sprint2 {
             }
 
             StreamTweets st = new StreamTweets();
+            st.streamTweets(configuration);
+
+            /*StreamTweets st = new StreamTweets();
             TwitterStream ts = st.setUp(configuration);
 
 
@@ -30,7 +33,7 @@ public class Sprint2 {
             query.track(trackParam);
 
             ts.filter(query);
-
+*/
         } catch (IOException e) {
             e.printStackTrace();
         }
