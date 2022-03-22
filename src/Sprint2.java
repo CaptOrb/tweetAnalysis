@@ -1,12 +1,12 @@
-import twitter4j.FilterQuery;
 import twitter4j.TwitterFactory;
 import twitter4j.TwitterStream;
 import twitter4j.TwitterStreamFactory;
 
 import java.io.IOException;
+
 //Run the entire program here
 public class Sprint2 {
-    public static void main(String[] args){
+    public static void main(String[] args) {
         Configuration configuration = new Configuration();
         try {
             // user chooses to provide a config file as a command arg
@@ -18,15 +18,9 @@ public class Sprint2 {
             }
 
             StreamTweets st = new StreamTweets();
+            TwitterStream ts = st.setUp(configuration);
+            ts.sample();
 
-            TwitterStream tf = configuration.getTwitterStreamFactory(configuration);
-
-            FilterQuery fq = new FilterQuery();
-            String keywords[] = {"antivax"};
-            tf.filter(keywords);
-            fq.track(keywords);
-            tf.addListener(st.listener);
-            tf.sample();
         } catch (IOException e) {
             e.printStackTrace();
         }
