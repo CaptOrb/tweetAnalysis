@@ -6,7 +6,7 @@ public class StreamTweets {
 
     private final Configuration internalConfig;
 
-    public StreamTweets(Configuration configuration){
+    public StreamTweets(Configuration configuration) {
         internalConfig = configuration;
     }
 
@@ -23,9 +23,9 @@ public class StreamTweets {
 
             try {
 
-                if(status.getRetweetedStatus() !=null){
+                if (status.getRetweetedStatus() != null) {
                     ts.writeUser(status.getRetweetedStatus().getUser(), internalConfig);
-                    System.out.println(status.getRetweetedStatus().getUser().getScreenName() + status.getText());
+                    System.out.println(status.getRetweetedStatus().getUser().getScreenName() + status.getRetweetedStatus().getText());
                 } else {
                     System.out.println(status.getUser().getScreenName() + status.getText());
                     ts.writeUser(status.getUser(), internalConfig);
@@ -52,9 +52,10 @@ public class StreamTweets {
 
         @Override
         public void onStallWarning(StallWarning stallWarning) {
+            System.out.println(stallWarning);
 
-            }
-        };
+        }
+    };
 
     public void streamTweets() {
         // set up streaming api and add the class field StatusListener

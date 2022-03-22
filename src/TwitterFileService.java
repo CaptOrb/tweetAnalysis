@@ -17,8 +17,6 @@ public class TwitterFileService {
                 String[] lineContents = line.split("\t");
                 String id = "@" + user.getScreenName();
                 if (lineContents[0].equals(id)) {
-
-                    // System.out.println("true");
                     return true;
                 }
             }
@@ -29,12 +27,12 @@ public class TwitterFileService {
     }
 
     public void writeUser(User user, Configuration configuration) throws IOException {
-        // needs to be modified to use correct directory.
         File file = new File(configuration.getDataDirectory(), configuration.getUserFile());
 
         if (!file.exists()) {
-            // only creates a new file if it doesn't exist
-            file.getParentFile().mkdirs();
+            if (!file.getParentFile().mkdirs())
+                throw new RuntimeException("Couldn't make the directory");
+
             file.createNewFile();
         }
 
@@ -76,8 +74,8 @@ public class TwitterFileService {
         File file = new File(configuration.getDataDirectory(), configuration.getDataFile());
 
         if (!file.exists()) {
-            // only creates a new file if it doesn't exist
-            file.getParentFile().mkdirs();
+            if (!file.getParentFile().mkdirs())
+                throw new RuntimeException("Couldn't make the directory");
             file.createNewFile();
         }
 
