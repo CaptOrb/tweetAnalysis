@@ -17,12 +17,8 @@ public class Sprint2 {
             }
 
             StreamTweets st = new StreamTweets();
+            st.streamTweets(configuration);
 
-            TwitterStream tf = configuration.getTwitterStreamFactory(configuration);
-
-            tf.addListener(st.listener);
-
-            tf.sample();
         } catch (IOException e) {
             e.printStackTrace();
         }
