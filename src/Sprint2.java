@@ -1,3 +1,4 @@
+import twitter4j.FilterQuery;
 import twitter4j.TwitterFactory;
 import twitter4j.TwitterStream;
 import twitter4j.TwitterStreamFactory;
@@ -19,7 +20,14 @@ public class Sprint2 {
 
             StreamTweets st = new StreamTweets();
             TwitterStream ts = st.setUp(configuration);
-            ts.sample();
+
+
+            String trackParam = "UKRAINE";
+
+
+            FilterQuery query = new FilterQuery();
+            query.track(trackParam.split(","));
+            ts.filter(query);
 
         } catch (IOException e) {
             e.printStackTrace();
