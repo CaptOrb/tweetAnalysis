@@ -20,8 +20,10 @@ public class StreamTweets {
         public void onStatus(Status status) {
 
             TwitterFileService ts = new TwitterFileService();
+            User user = status.getUser();
             try {
                 ts.writeTweet(status, status.getRetweetedStatus() != null, internalConfig);
+                ts.writeUser(user,internalConfig);
             } catch (IOException e) {
                 e.printStackTrace();
             }
