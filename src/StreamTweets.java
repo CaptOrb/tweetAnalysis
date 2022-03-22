@@ -1,45 +1,46 @@
 import twitter4j.*;
 
-import java.io.IOException;
-
 public class StreamTweets {
 
-    public void streamTweets(Configuration configuration) {
-        StatusListener listener = new StatusListener() {
-            @Override
-            public void onException(Exception e) {
+    Configuration internalConfig;
 
+    public StreamTweets(Configuration configuration){
+        internalConfig = configuration;
+    }
+
+    StatusListener listener = new StatusListener() {
+        @Override
+        public void onException(Exception e) {
+
+        }
+
+        @Override
+        public void onStatus(Status status) {
+
+            TwitterFileService ts = new TwitterFileService();
+            try {
+                ts.writeTweet(status, false, internalConfig);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+        }
 
-            @Override
-            public void onStatus(Status status) {
-                System.out.println(status.getId() + "\t" + "@" + status.getUser().getScreenName() + "\t"
-                        + status.getText().replaceAll("\n", " ") + "\t" + status.getRetweetCount() + "\t" + status.getCreatedAt());
+        @Override
+        public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {
+        }
 
-                TwitterFileService tfs = new TwitterFileService();
-                try {
-                    tfs.writeTweet(status, false, configuration);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+        @Override
+        public void onTrackLimitationNotice(int i) {
 
-            @Override
-            public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {
-            }
+        }
 
-            @Override
-            public void onTrackLimitationNotice(int i) {
+        @Override
+        public void onScrubGeo(long l, long l1) {
 
-            }
+        }
 
-            @Override
-            public void onScrubGeo(long l, long l1) {
-
-            }
-
-            @Override
-            public void onStallWarning(StallWarning stallWarning) {
+        @Override
+        public void onStallWarning(StallWarning stallWarning) {
 
             }
         };
@@ -57,22 +58,8 @@ public class StreamTweets {
     /*public TwitterStream setUp(Configuration configuration) {
 
         TwitterStream tf = configuration.getTwitterStreamFactory(configuration);
-        tf.addListener(new StreamTweets().listener);
+        tf.addListener(new StreamTweets(configuration).listener);
         return tf;
     }
 
-
-    StreamTweets st = new StreamTweets();
-    TwitterStream ts = st.setUp(configuration);
-
-
-    String trackParam[] = configuration.getHashTags();
-
-
-    FilterQuery query = new FilterQuery();
-
-            query.track(trackParam);
-
-            ts.filter(query);
-*/
 }
