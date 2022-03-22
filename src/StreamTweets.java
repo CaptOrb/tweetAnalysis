@@ -23,14 +23,9 @@ public class StreamTweets {
 
             try {
 
-                if (status.getRetweetedStatus() != null) {
-                    ts.writeUser(status.getRetweetedStatus().getUser(), internalConfig);
-                    System.out.println(status.getRetweetedStatus().getUser().getScreenName() + status.getRetweetedStatus().getText());
-                } else {
-                    System.out.println(status.getUser().getScreenName() + status.getText());
-                    ts.writeUser(status.getUser(), internalConfig);
-                }
                 ts.writeTweet(status, status.getRetweetedStatus() != null, internalConfig);
+                ts.writeUser(status.getUser(), internalConfig);
+
             } catch (IOException e) {
                 e.printStackTrace();
             }

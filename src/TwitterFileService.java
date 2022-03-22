@@ -85,11 +85,10 @@ public class TwitterFileService {
                 String tweetUser;
                 if (retweet) {
                     tweetText = tweet.getRetweetedStatus().getText();
-                    tweetUser = tweet.getRetweetedStatus().getUser().getScreenName();
                 } else {
                     tweetText = tweet.getText();
-                    tweetUser = tweet.getUser().getScreenName();
                 }
+                tweetUser = tweet.getUser().getScreenName();
 
                 pw.println(tweet.getId() + "\t"
                         + "@" + tweetUser + "\t"
