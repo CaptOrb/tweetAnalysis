@@ -126,4 +126,17 @@ public class Configuration {
 
         return new TwitterFactory(cb.build());
     }
+
+    public TwitterStreamFactory getTwitterStreamFactory(Configuration configuration){
+
+        ConfigurationBuilder cb = new ConfigurationBuilder();
+        cb.setDebugEnabled(true)
+                .setOAuthConsumerKey(configuration.getAPIKey())
+                .setOAuthConsumerSecret(configuration.getAPISecretKey())
+                .setOAuthAccessToken(configuration.getACCESS_TOKEN())
+                .setOAuthAccessTokenSecret(configuration.getACCESS_TOKEN_SECRET())
+                .setTweetModeExtended(true)
+                .setJSONStoreEnabled(true);
+                return new TwitterStreamFactory(cb.build());
+    }
 }
