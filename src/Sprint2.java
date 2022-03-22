@@ -18,17 +18,17 @@ public class Sprint2 {
                 configuration.getSettingsFromFile(configuration, "config_file", 0);
             }
 
-            System.out.println(configuration.getHashTags()[0]);
-
             StreamTweets st = new StreamTweets();
             TwitterStream ts = st.setUp(configuration);
 
 
-            String trackParam = "UKRAINE";
+            String trackParam[] = configuration.getHashTags();
 
 
             FilterQuery query = new FilterQuery();
-            query.track(configuration.getHashTags());
+            
+            query.track(trackParam);
+
             ts.filter(query);
 
         } catch (IOException e) {
