@@ -22,11 +22,11 @@ public class Sprint2 {
             TwitterStream ts = st.setUp(configuration);
 
 
-            String trackParam[] = configuration.getHashTags();
-
+            String[] trackParam = configuration.getHashTags();
 
             FilterQuery query = new FilterQuery();
-            
+
+            query.language(configuration.getLanguage());
             query.track(trackParam);
 
             ts.filter(query);
