@@ -1,3 +1,4 @@
+import twitter4j.FilterQuery;
 import twitter4j.TwitterFactory;
 import twitter4j.TwitterStream;
 import twitter4j.TwitterStreamFactory;
@@ -20,8 +21,11 @@ public class Sprint2 {
 
             TwitterStream tf = configuration.getTwitterStreamFactory(configuration);
 
+            FilterQuery fq = new FilterQuery();
+            String keywords[] = {"antivax"};
+            tf.filter(keywords);
+            fq.track(keywords);
             tf.addListener(st.listener);
-
             tf.sample();
         } catch (IOException e) {
             e.printStackTrace();
