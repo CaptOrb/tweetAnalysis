@@ -1,5 +1,7 @@
 import twitter4j.*;
 
+import java.io.IOException;
+
 public class StreamTweets {
 
     Configuration internalConfig;
@@ -44,22 +46,15 @@ public class StreamTweets {
 
             }
         };
-        TwitterStream tf = configuration.getTwitterStreamFactory(configuration);
+
+     public void streamTweets() {
+        TwitterStream tf = internalConfig.getTwitterStreamFactory(internalConfig);
         tf.addListener(listener);
 
-        String trackParam[] = configuration.getHashTags();
+        String[] hashtags = internalConfig.getHashTags();
         FilterQuery query = new FilterQuery();
-        query.track(trackParam);
-        tf.filter(query);
-
-        //return tf;
-    }
-
-    /*public TwitterStream setUp(Configuration configuration) {
-
-        TwitterStream tf = configuration.getTwitterStreamFactory(configuration);
-        tf.addListener(new StreamTweets(configuration).listener);
-        return tf;
-    }
+        query.track(hashtags);
+        tf.filter(hashtags);
+     }
 
 }

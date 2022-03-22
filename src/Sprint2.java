@@ -1,7 +1,3 @@
-import twitter4j.FilterQuery;
-import twitter4j.TwitterFactory;
-import twitter4j.TwitterStream;
-import twitter4j.TwitterStreamFactory;
 
 import java.io.IOException;
 
@@ -18,22 +14,9 @@ public class Sprint2 {
                 configuration.getSettingsFromFile(configuration, "config_file", 0);
             }
 
-            StreamTweets st = new StreamTweets();
-            st.streamTweets(configuration);
+            StreamTweets st = new StreamTweets(configuration);
+            st.streamTweets();
 
-            /*StreamTweets st = new StreamTweets();
-            TwitterStream ts = st.setUp(configuration);
-
-
-            String trackParam[] = configuration.getHashTags();
-
-
-            FilterQuery query = new FilterQuery();
-            
-            query.track(trackParam);
-
-            ts.filter(query);
-*/
         } catch (IOException e) {
             e.printStackTrace();
         }
