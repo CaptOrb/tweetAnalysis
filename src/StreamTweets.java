@@ -1,6 +1,7 @@
 import twitter4j.*;
 
 public class StreamTweets {
+
     StatusListener listener = new StatusListener() {
         @Override
         public void onException(Exception e) {
@@ -12,7 +13,6 @@ public class StreamTweets {
 
             System.out.println(status.getId() + "\t" + "@" + status.getUser().getScreenName() + "\t"
                     + status.getText().replaceAll("\n", " ") + "\t" + status.getRetweetCount() + "\t" + status.getCreatedAt());
-
         }
 
         @Override
@@ -34,5 +34,14 @@ public class StreamTweets {
 
         }
     };
+
+    public TwitterStream setUp(Configuration configuration) {
+
+        TwitterStream tf = configuration.getTwitterStreamFactory(configuration);
+        tf.addListener(new StreamTweets().listener);
+        tf.sample();
+
+        return tf;
+    }
 
 }
