@@ -47,7 +47,7 @@ public class StreamTweets {
             }
         };
 
-     public void streamTweets() {
+    public void streamTweets() {
         TwitterStream tf = internalConfig.getTwitterStreamFactory(internalConfig);
         tf.addListener(listener);
 
@@ -55,6 +55,6 @@ public class StreamTweets {
         FilterQuery query = new FilterQuery();
         query.track(hashtags);
         tf.filter(hashtags);
-     }
+    }
 
 }
