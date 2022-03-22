@@ -12,7 +12,6 @@ public class GrabTweets {
     HashSet<Long> foundTweets = new HashSet<>();
     ArrayList<Long> users = new ArrayList<>();
 
-    // experimental
     // TEST CODE FROM STACK OVERFLOW
     // TO TRY AND AVOID EXCEEDING RATE LIMITS
     private void handleRateLimit(RateLimitStatus rateLimitStatus, Configuration configuration) {
