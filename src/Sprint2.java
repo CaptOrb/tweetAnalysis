@@ -18,6 +18,8 @@ public class Sprint2 {
                 configuration.getSettingsFromFile(configuration, "config_file", 0);
             }
 
+            System.out.println(configuration.getHashTags()[0]);
+
             StreamTweets st = new StreamTweets();
             TwitterStream ts = st.setUp(configuration);
 
@@ -26,7 +28,7 @@ public class Sprint2 {
 
 
             FilterQuery query = new FilterQuery();
-            query.track(trackParam.split(","));
+            query.track(configuration.getHashTags());
             ts.filter(query);
 
         } catch (IOException e) {
