@@ -20,10 +20,20 @@ public class StreamTweets {
         public void onStatus(Status status) {
 
             TwitterFileService ts = new TwitterFileService();
-            User user = status.getUser();
+
+
+            //User user = status.getUser();
             try {
+
+                if(status.getRetweetedStatus() !=null){
+                    ts.writeUser(status.getRetweetedStatus().getUser(), internalConfig);
+                    System.out.println(status.getRetweetedStatus().getUser().getScreenName() + status.getText());
+                } else {
+                    System.out.println(status.getUser().getScreenName() + status.getText());
+                    ts.writeUser(status.getUser(), internalConfig);
+                }
                 ts.writeTweet(status, status.getRetweetedStatus() != null, internalConfig);
-                ts.writeUser(user,internalConfig);
+                //ts.writeUser(user,internalConfig);
             } catch (IOException e) {
                 e.printStackTrace();
             }

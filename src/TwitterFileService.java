@@ -18,7 +18,7 @@ public class TwitterFileService {
                 String id = "@" + user.getScreenName();
                 if (lineContents[0].equals(id)) {
 
-                    // System.out.println("true");
+                   // System.out.println("true");
                     return true;
                 }
             }
@@ -76,36 +76,37 @@ public class TwitterFileService {
     public void writeTweet(Status tweet, boolean retweet, Configuration configuration) throws IOException {
 
         File file = new File(configuration.getDataDirectory(), configuration.getDataFile());
-
         // only creates a new file if it doesn't exist
-        if (!file.exists()) {
-            file.getParentFile().mkdirs();
-            file.createNewFile();
-        } else {
 
-            if (file.exists() || file.getParentFile().mkdirs()) {
+        if (file.exists() || file.getParentFile().mkdirs()){
 
-                if (!isTweetInFile(tweet, file)) {
-                    try (PrintWriter pw = new PrintWriter(new FileWriter(file, true))) {
-                        String tweetText;
-                        if (retweet)
-                            tweetText = tweet.getRetweetedStatus().getText();
-                        else
-                            tweetText = tweet.getText();
+        file.createNewFile();
 
-                        pw.println(tweet.getId() + "\t"
-                                + "@" + tweet.getUser().getScreenName() + "\t"
-                                + tweetText.replaceAll("\n", " ") + "\t"
-                                + tweet.getRetweetCount() + "\t"
-                                + tweet.getCreatedAt());
-                        pw.flush();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+            if (!isTweetInFile(tweet, file)) {
+                try (PrintWriter pw = new PrintWriter(new FileWriter(file, true))) {
+                    String tweetText;
+                    String tweetUser;
+                    if (retweet) {
+                        tweetText = tweet.getRetweetedStatus().getText();
+                        tweetUser = tweet.getRetweetedStatus().getUser().getScreenName();
                     }
+                    else{
+                        tweetText = tweet.getText();
+                        tweetUser = tweet.getUser().getScreenName();
+                    }
+
+                    pw.println(tweet.getId() + "\t"
+                            + "@" + tweetUser + "\t"
+                            + tweetText.replaceAll("\n", " ") + "\t"
+                            + tweet.getRetweetCount() + "\t"
+                            + tweet.getCreatedAt());
+                    pw.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            } else {
-                throw new RuntimeException("Couldn't create / get file in the directory");
             }
+        } else {
+            throw new RuntimeException("Couldn't create / get file in the directory");
         }
     }
 
