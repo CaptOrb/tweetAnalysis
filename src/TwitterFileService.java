@@ -37,10 +37,16 @@ public class TwitterFileService {
         }
 
         if (!isUserInFile(user, file)) {
+            String bio; //if a user doesnt have a bio they were not getting written to the user file
+            if(user.getDescription()==null){
+                bio = "NA no bio";
+            } else {
+                bio = user.getDescription().replaceAll("\n", " ");
+            }
             try (PrintWriter pw = new PrintWriter(new FileWriter(file, true))) {
                 pw.println("@" + user.getScreenName() + "\t"
                         + user.getLocation() + "\t"
-                        + user.getDescription().replaceAll("\n", " ") + "\t"
+                        + bio + "\t"
                         + user.getFollowersCount());
                 pw.flush();
             } catch (IOException e) {
