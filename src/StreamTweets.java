@@ -10,7 +10,8 @@ public class StreamTweets {
         @Override
         public void onStatus(Status status) {
 
-            System.out.println(status.getCreatedAt());
+            System.out.println(status.getId() + "\t" + "@" + status.getUser().getScreenName() + "\t"
+                    + status.getText().replaceAll("\n", " ") + "\t" + status.getRetweetCount() + "\t" + status.getCreatedAt());
 
         }
 
