@@ -18,7 +18,7 @@ public class Sprint2 {
                 configuration.getSettingsFromFile(configuration, "config_file", 0);
             }
 
-            StreamTweets st = new StreamTweets();
+            StreamTweets st = new StreamTweets(configuration);
             TwitterStream ts = st.setUp(configuration);
 
 

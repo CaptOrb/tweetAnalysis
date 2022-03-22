@@ -1,6 +1,14 @@
 import twitter4j.*;
 
+import java.io.IOException;
+
 public class StreamTweets {
+
+    Configuration internalConfig;
+
+    public StreamTweets(Configuration configuration){
+        internalConfig = configuration;
+    }
 
     StatusListener listener = new StatusListener() {
         @Override
@@ -11,8 +19,12 @@ public class StreamTweets {
         @Override
         public void onStatus(Status status) {
 
-            System.out.println(status.getId() + "\t" + "@" + status.getUser().getScreenName() + "\t"
-                    + status.getText().replaceAll("\n", " ") + "\t" + status.getRetweetCount() + "\t" + status.getCreatedAt());
+            TwitterFileService ts = new TwitterFileService();
+            try {
+                ts.writeTweet(status, false, internalConfig);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         @Override
@@ -38,7 +50,7 @@ public class StreamTweets {
     public TwitterStream setUp(Configuration configuration) {
 
         TwitterStream tf = configuration.getTwitterStreamFactory(configuration);
-        tf.addListener(new StreamTweets().listener);
+        tf.addListener(new StreamTweets(configuration).listener);
         return tf;
     }
 
