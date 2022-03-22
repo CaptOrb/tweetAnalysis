@@ -9,7 +9,9 @@ public class StreamTweets {
 
         @Override
         public void onStatus(Status status) {
-            System.out.println(status.getText());
+
+            System.out.println(status.getCreatedAt());
+
         }
 
         @Override
