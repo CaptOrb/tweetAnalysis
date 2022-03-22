@@ -21,7 +21,7 @@ public class StreamTweets {
 
             TwitterFileService ts = new TwitterFileService();
             try {
-                ts.writeTweet(status, false, internalConfig);
+                ts.writeTweet(status, status.getRetweetedStatus() != null, internalConfig);
             } catch (IOException e) {
                 e.printStackTrace();
             }
