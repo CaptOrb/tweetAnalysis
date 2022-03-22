@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public class StreamTweets {
 
-    Configuration internalConfig;
+    private final Configuration internalConfig;
 
     public StreamTweets(Configuration configuration){
         internalConfig = configuration;
@@ -21,8 +21,6 @@ public class StreamTweets {
 
             TwitterFileService ts = new TwitterFileService();
 
-
-            //User user = status.getUser();
             try {
 
                 if(status.getRetweetedStatus() !=null){
@@ -33,7 +31,6 @@ public class StreamTweets {
                     ts.writeUser(status.getUser(), internalConfig);
                 }
                 ts.writeTweet(status, status.getRetweetedStatus() != null, internalConfig);
-                //ts.writeUser(user,internalConfig);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -67,7 +64,8 @@ public class StreamTweets {
         // create query using hashtags from config file and pass them to the streaming api
         FilterQuery query = new FilterQuery();
         query.track(internalConfig.getHashTags());
-        tf.filter(internalConfig.getHashTags());
+        query.language(internalConfig.getLanguage());
+        tf.filter(query);
     }
 
 }
