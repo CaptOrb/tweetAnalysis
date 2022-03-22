@@ -76,12 +76,10 @@ public class TwitterFileService {
     public void writeTweet(Status tweet, boolean retweet, Configuration configuration) throws IOException {
 
         File file = new File(configuration.getDataDirectory(), configuration.getDataFile());
+        // only creates a new file if it doesn't exist
+        file.createNewFile();
 
         if (file.exists() || file.getParentFile().mkdirs()) {
-
-            // only creates a new file if it doesn't exist
-            file.createNewFile();
-
             if (!isTweetInFile(tweet, file)) {
                 try (PrintWriter pw = new PrintWriter(new FileWriter(file, true))) {
                     String tweetText;
