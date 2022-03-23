@@ -31,7 +31,7 @@ public class TwitterFileService {
 
         if (!isUserInFile(user, file)) {
             String bio; //if a user doesnt have a bio they were not getting written to the user file
-            if(user.getDescription()==null){
+            if (user.getDescription() == null) {
                 bio = "";
             } else {
                 bio = user.getDescription().replaceAll("\n", " ");
@@ -70,12 +70,11 @@ public class TwitterFileService {
 
     private File createFile(String directory, String fileName) throws IOException {
         File file = new File(directory, fileName);
-
-        if (!file.exists()) {
-            if (!file.getParentFile().mkdirs())
-                throw new RuntimeException("Couldn't make the directory");
-            file.createNewFile();
+        if (file.getParentFile() != null) {
+            file.getParentFile().mkdirs();
         }
+        file.createNewFile();
+
         return file;
     }
 
