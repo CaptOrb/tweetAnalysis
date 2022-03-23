@@ -27,14 +27,7 @@ public class TwitterFileService {
     }
 
     public void writeUser(User user, Configuration configuration) throws IOException {
-        File file = new File(configuration.getDataDirectory(), configuration.getUserFile());
-
-        if (!file.exists()) {
-            if (!file.getParentFile().mkdirs())
-                throw new RuntimeException("Couldn't make the directory");
-
-            file.createNewFile();
-        }
+        File file = createFile(configuration);
 
         if (!isUserInFile(user, file)) {
             String bio; //if a user doesnt have a bio they were not getting written to the user file
@@ -75,8 +68,7 @@ public class TwitterFileService {
         return false;
     }
 
-    public void writeTweet(Status tweet, boolean retweet, Configuration configuration) throws IOException {
-
+    private File createFile(Configuration configuration) throws IOException {
         File file = new File(configuration.getDataDirectory(), configuration.getDataFile());
 
         if (!file.exists()) {
@@ -84,6 +76,11 @@ public class TwitterFileService {
                 throw new RuntimeException("Couldn't make the directory");
             file.createNewFile();
         }
+        return file;
+    }
+
+    public void writeTweet(Status tweet, boolean retweet, Configuration configuration) throws IOException {
+        File file = createFile(configuration);
 
         if (!isTweetInFile(tweet, file)) {
             try (PrintWriter pw = new PrintWriter(new FileWriter(file, true))) {
