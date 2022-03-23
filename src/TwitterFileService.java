@@ -39,7 +39,7 @@ public class TwitterFileService {
         if (!isUserInFile(user, file)) {
             String bio; //if a user doesnt have a bio they were not getting written to the user file
             if(user.getDescription()==null){
-                bio = "NA no bio";
+                bio = "";
             } else {
                 bio = user.getDescription().replaceAll("\n", " ");
             }
@@ -90,7 +90,11 @@ public class TwitterFileService {
                 String tweetText;
                 String tweetUser;
                 if (retweet) {
-                    tweetText = tweet.getRetweetedStatus().getText();
+                    // tweet.getRetweetedStatus().getText() will cause RT @retweeted user not to be appended to the file
+                    // but if we don't use the above, retweets get truncated due to the char limit
+                    // so just prepend it manually
+                    tweetText = "RT @" + tweet.getRetweetedStatus().getUser().getScreenName() + ": " +
+                            tweet.getRetweetedStatus().getText();
                 } else {
                     tweetText = tweet.getText();
                 }

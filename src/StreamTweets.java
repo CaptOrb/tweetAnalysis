@@ -33,11 +33,13 @@ public class StreamTweets {
 
         @Override
         public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {
+            System.out.println("Got a status deletion notice id:"
+                    + statusDeletionNotice.getStatusId());
         }
 
         @Override
         public void onTrackLimitationNotice(int i) {
-
+            System.out.println("Got track limitation notice:" + i);
         }
 
         @Override
@@ -47,8 +49,7 @@ public class StreamTweets {
 
         @Override
         public void onStallWarning(StallWarning stallWarning) {
-            System.out.println(stallWarning);
-
+            System.out.println("Got a stall warning: " +stallWarning);
         }
     };
 

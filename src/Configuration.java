@@ -137,6 +137,7 @@ public class Configuration {
                 .setOAuthAccessTokenSecret(configuration.getACCESS_TOKEN_SECRET())
                 .setTweetModeExtended(true)
                 .setJSONStoreEnabled(true);
+              //  .setHttpConnectionTimeout();
                 return new TwitterStreamFactory(cb.build()).getInstance();
     }
 }
