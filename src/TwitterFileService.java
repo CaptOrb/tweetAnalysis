@@ -2,6 +2,7 @@ import twitter4j.Status;
 import twitter4j.User;
 
 import java.io.*;
+import java.util.HashSet;
 
 //This class generates a data file with the tweets that we gathered,
 //saving the tweets in this format:status_id <tab> @userhandle <tab> tweet text <tab> num_retweets <tab> timestamp <newline>
@@ -10,46 +11,10 @@ import java.io.*;
 //The files are opened and written to in append mode
 public class TwitterFileService {
 
-    private boolean isUserInFile(User user, File file) {
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] lineContents = line.split("\t");
-                String id = "@" + user.getScreenName();
-                if (lineContents[0].equals(id)) {
-                    return true;
-                }
-            }
-        } catch (IOException fnfe) {
-            fnfe.printStackTrace();
-        }
-        return false;
-    }
+    private final HashSet<Long> foundTweetIDS = new HashSet<>();
+    private final HashSet<String> foundUserHandles = new HashSet<>();
 
-    public void writeUser(User user, Configuration configuration) throws IOException {
-        File file = createFile(configuration.getDataDirectory(), configuration.getUserFile());
-
-        if (!isUserInFile(user, file)) {
-            String bio; //if a user doesnt have a bio they were not getting written to the user file
-            if (user.getDescription() == null) {
-                bio = "";
-            } else {
-                bio = user.getDescription().replaceAll("\n", " ");
-            }
-            try (PrintWriter pw = new PrintWriter(new FileWriter(file, true))) {
-                pw.println("@" + user.getScreenName() + "\t"
-                        + user.getLocation() + "\t"
-                        + bio + "\t"
-                        + user.getFollowersCount());
-                pw.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private boolean isTweetInFile(Status tweet, File file) {
-
+    public void readTweetsIntoSet(File file){
         try {
 
             BufferedReader br = new BufferedReader(new FileReader(file));
@@ -57,15 +22,38 @@ public class TwitterFileService {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] lineContents = line.split("\t");
-                String id = String.valueOf(tweet.getId());
-                if (lineContents[0].equals(id)) {
-                    return true;
-                }
+                foundTweetIDS.add(Long.parseLong(lineContents[0]));
+                foundUserHandles.add(lineContents[1]);
             }
         } catch (IOException | NullPointerException fnfe) {
             fnfe.printStackTrace();
         }
-        return false;
+
+    }
+
+    public void writeUser(User user, Configuration configuration) throws IOException {
+        File file = createFile(configuration.getDataDirectory(), configuration.getUserFile());
+
+        String userName = "@" + user.getScreenName();
+        if (!foundUserHandles.contains(userName)) {
+            String bio; //if a user doesnt have a bio they were not getting written to the user file
+            if (user.getDescription() == null) {
+                bio = "";
+            } else {
+                bio = user.getDescription().replaceAll("\n", " ");
+            }
+            try (PrintWriter pw = new PrintWriter(new FileWriter(file, true))) {
+                pw.println(userName + "\t"
+                        + user.getLocation() + "\t"
+                        + bio + "\t"
+                        + user.getFollowersCount());
+                pw.flush();
+
+                foundUserHandles.add(userName);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private File createFile(String directory, String fileName) throws IOException {
@@ -81,10 +69,9 @@ public class TwitterFileService {
     public void writeTweet(Status tweet, boolean retweet, Configuration configuration) throws IOException {
         File file = createFile(configuration.getDataDirectory(), configuration.getDataFile());
 
-        if (!isTweetInFile(tweet, file)) {
+        if (!foundTweetIDS.contains(tweet.getId())) {
             try (PrintWriter pw = new PrintWriter(new FileWriter(file, true))) {
                 String tweetText;
-                String tweetUser;
                 if (retweet) {
                     // tweet.getRetweetedStatus().getText() will cause RT @retweeted user not to be appended to the file
                     // but if we don't use the above, retweets get truncated due to the char limit
@@ -94,14 +81,15 @@ public class TwitterFileService {
                 } else {
                     tweetText = tweet.getText();
                 }
-                tweetUser = tweet.getUser().getScreenName();
 
                 pw.println(tweet.getId() + "\t"
-                        + "@" + tweetUser + "\t"
+                        + "@" + tweet.getUser().getScreenName() + "\t"
                         + tweetText.replaceAll("\n", " ") + "\t"
                         + tweet.getRetweetCount() + "\t"
                         + tweet.getCreatedAt());
                 pw.flush();
+
+                foundTweetIDS.add(tweet.getId());
             } catch (IOException e) {
                 e.printStackTrace();
             }

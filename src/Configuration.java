@@ -127,7 +127,7 @@ public class Configuration {
         return new TwitterFactory(cb.build());
     }
 
-    public TwitterStream getTwitterStreamFactory(Configuration configuration){
+    public TwitterStream getTwitterStream(Configuration configuration){
 
         ConfigurationBuilder cb = new ConfigurationBuilder();
         cb.setDebugEnabled(true)
@@ -137,7 +137,6 @@ public class Configuration {
                 .setOAuthAccessTokenSecret(configuration.getACCESS_TOKEN_SECRET())
                 .setTweetModeExtended(true)
                 .setJSONStoreEnabled(true);
-              //  .setHttpConnectionTimeout();
                 return new TwitterStreamFactory(cb.build()).getInstance();
     }
 }
