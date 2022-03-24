@@ -40,7 +40,7 @@ public class TwitterFileService {
             if (user.getDescription() == null) {
                 bio = "No bio";
             } else {
-                bio = user.getDescription().replaceAll("\n", " ");
+                bio = user.getDescription().replaceAll("\n", " ").replaceAll("\n\n"," ");
             }
             try (PrintWriter pw = new PrintWriter(new FileWriter(file, true))) {
                 pw.println(userName + "\t"
