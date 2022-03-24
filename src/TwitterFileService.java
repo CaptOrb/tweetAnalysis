@@ -32,7 +32,7 @@ public class TwitterFileService {
         if (!isUserInFile(user, file)) {
             String bio; //if a user doesnt have a bio they were not getting written to the user file
             if (user.getDescription() == null) {
-                bio = "";
+                bio = "No bio";
             } else {
                 bio = user.getDescription().replaceAll("\n", " ");
             }
