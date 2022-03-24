@@ -2,6 +2,10 @@ import twitter4j.*;
 
 import java.io.IOException;
 
+// This class is responsible for the use of Twitter 4J's streaming API
+// The onStatus method describes what should happen when a new Tweet comes in
+// The streamTweets method is responsible for setting up a Twitter Stream, and setting up a filterquery
+// to search for occurrences of the hashtags listed in the config file being posted on Twitter
 public class StreamTweets {
 
     private final Configuration internalConfig;
