@@ -5,9 +5,11 @@ import java.io.IOException;
 public class StreamTweets {
 
     private final Configuration internalConfig;
+    private final TwitterFileService tfileService;
 
-    public StreamTweets(Configuration configuration) {
-        internalConfig = configuration;
+    public StreamTweets(Configuration configuration, TwitterFileService tfs) {
+        this.internalConfig = configuration;
+        this.tfileService = tfs;
     }
 
     StatusListener listener = new StatusListener() {
@@ -19,12 +21,10 @@ public class StreamTweets {
         @Override
         public void onStatus(Status status) {
 
-            TwitterFileService ts = new TwitterFileService();
-
             try {
 
-                ts.writeTweet(status, status.getRetweetedStatus() != null, internalConfig);
-                ts.writeUser(status.getUser(), internalConfig);
+                tfileService.writeTweet(status, status.getRetweetedStatus() != null, internalConfig);
+                tfileService.writeUser(status.getUser(), internalConfig);
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -55,7 +55,7 @@ public class StreamTweets {
 
     public void streamTweets() {
         // set up streaming api and add the class field StatusListener
-        TwitterStream tf = internalConfig.getTwitterStreamFactory(internalConfig);
+        TwitterStream tf = internalConfig.getTwitterStream(internalConfig);
         tf.addListener(listener);
 
         // create query using hashtags from config file and pass them to the streaming api

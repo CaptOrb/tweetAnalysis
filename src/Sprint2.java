@@ -1,4 +1,4 @@
-
+import java.io.File;
 import java.io.IOException;
 
 //Run the entire program here
@@ -14,7 +14,13 @@ public class Sprint2 {
                 configuration.getSettingsFromFile(configuration, "config_file", 0);
             }
 
-            StreamTweets st = new StreamTweets(configuration);
+            // read tweet id's and user handles into the hashset
+            // so later on we can do an "occurs check"
+            TwitterFileService ts = new TwitterFileService();
+            ts.readTweetsIntoSet(new File(configuration.getDataDirectory(),
+                    configuration.getDataFile()));
+
+            StreamTweets st = new StreamTweets(configuration, ts);
             st.streamTweets();
 
         } catch (IOException e) {
