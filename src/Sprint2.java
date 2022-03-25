@@ -17,13 +17,13 @@ public class Sprint2 {
             // read tweet id's and user handles into the hashset
             // so later on we can do an "occurs check"
             File dataFile = new File(configuration.getDataDirectory(), configuration.getDataFile());
-            TwitterFileService ts = new TwitterFileService();
+            TwitterFileService twitterFileService = new TwitterFileService();
 
             if (dataFile.exists()) {
-                ts.readTweetsIntoSet(dataFile);
+                twitterFileService.readTweetsIntoSet(dataFile);
             }
 
-            StreamTweets st = new StreamTweets(configuration, ts);
+            StreamTweets st = new StreamTweets(configuration, twitterFileService);
             st.streamTweets();
 
         } catch (IOException e) {

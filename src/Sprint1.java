@@ -3,7 +3,7 @@ import twitter4j.TwitterFactory;
 import java.io.File;
 import java.io.IOException;
 //Run the entire program here
-public class Main {
+public class Sprint1 {
     public static void main(String[] args){
         Configuration configuration = new Configuration();
         try {
