@@ -1,5 +1,6 @@
 import twitter4j.TwitterFactory;
 
+import java.io.File;
 import java.io.IOException;
 //Run the entire program here
 public class Main {
@@ -18,7 +19,16 @@ public class Main {
 
             GrabTweets grabTweets = new GrabTweets();
 
-            grabTweets.grabSomeTweets(tf, configuration);
+            // read tweet id's and user handles into the hashset
+            // so later on we can do an "occurs check"
+            File dataFile = new File(configuration.getDataDirectory(), configuration.getDataFile());
+            TwitterFileService ts = new TwitterFileService();
+
+            if (dataFile.exists()) {
+                ts.readTweetsIntoSet(dataFile);
+            }
+
+            grabTweets.grabSomeTweets(tf, configuration, ts);
         } catch (IOException e) {
             e.printStackTrace();
         }
