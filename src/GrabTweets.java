@@ -1,16 +1,12 @@
 import twitter4j.*;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
 //This class is a tweet gatherer using the twitter search API, it asks Twitter to give tweets that contain hashtags from our configuration file
 //Newline characters are removed from tweets and replaced with a space
 public class GrabTweets {
-
-    HashSet<Long> foundTweets = new HashSet<>();
-    ArrayList<Long> users = new ArrayList<>();
 
     // TEST CODE FROM STACK OVERFLOW
     // TO TRY AND AVOID EXCEEDING RATE LIMITS
@@ -36,9 +32,11 @@ public class GrabTweets {
 
     // CAUTION: will keep running for a very long time.
     // don't run for too long or the API KEY's might get suspended ;)
-    public void grabSomeTweets(TwitterFactory tf, Configuration configuration) throws IOException {
+    public void grabSomeTweets(TwitterFactory tf, Configuration configuration, TwitterFileService tfs) throws IOException {
 
         String[] hashTags = configuration.getHashTags();
+        final HashSet<Long> foundTweetIDS = tfs.getFoundTweetIDS();
+        final HashSet<String> foundUserHandles = tfs.getFoundUserHandles();
 
         for (int i = 0; i < hashTags.length; i++) {
             try {
@@ -46,7 +44,6 @@ public class GrabTweets {
                 query.setCount(configuration.getBatchSize());
                 query.setResultType(Query.ResultType.recent);
                 query.setLang(configuration.getLanguage());
-                TwitterFileService tfs = new TwitterFileService();
                 QueryResult result;
                 do {
                     result = tf.getInstance().search(query);
@@ -54,13 +51,14 @@ public class GrabTweets {
                     List<Status> tweets = result.getTweets();
                     for (Status tweet : tweets) {
                         User user = tweet.getUser();
-                        if (!(foundTweets.contains(tweet.getId()))) {
+                        if (!(foundTweetIDS.contains(tweet.getId()))) {
                             tfs.writeTweet(tweet, tweet.getRetweetedStatus() != null, configuration);
-                            foundTweets.add(tweet.getId());
+                            foundTweetIDS.add(tweet.getId());
                         }
-                        if(!(users.contains(user.getId()))){
+                        String userName = "@" + user.getScreenName();
+                        if(!(foundUserHandles.contains(userName))){
                             tfs.writeUser(user,configuration);
-                            users.add(user.getId());
+                            foundUserHandles.add(userName);
                         }
                     }
 

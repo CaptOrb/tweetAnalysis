@@ -14,6 +14,14 @@ public class TwitterFileService {
     private final HashSet<Long> foundTweetIDS = new HashSet<>();
     private final HashSet<String> foundUserHandles = new HashSet<>();
 
+    public HashSet<String> getFoundUserHandles() {
+        return foundUserHandles;
+    }
+
+    public HashSet<Long> getFoundTweetIDS() {
+        return foundTweetIDS;
+    }
+
     public void readTweetsIntoSet(File file){
         try {
 
