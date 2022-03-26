@@ -38,9 +38,9 @@ public class GrabTweets {
         final HashSet<Long> foundTweetIDS = tfs.getFoundTweetIDS();
         final HashSet<String> foundUserHandles = tfs.getFoundUserHandles();
 
-        for (int i = 0; i < hashTags.length; i++) {
+        for (String hashTag : hashTags) {
             try {
-                Query query = new Query(hashTags[i]);
+                Query query = new Query(hashTag);
                 query.setCount(configuration.getBatchSize());
                 query.setResultType(Query.ResultType.recent);
                 query.setLang(configuration.getLanguage());
@@ -56,8 +56,8 @@ public class GrabTweets {
                             foundTweetIDS.add(tweet.getId());
                         }
                         String userName = "@" + user.getScreenName();
-                        if(!(foundUserHandles.contains(userName))){
-                            tfs.writeUser(user,configuration);
+                        if (!(foundUserHandles.contains(userName))) {
+                            tfs.writeUser(user, configuration);
                             foundUserHandles.add(userName);
                         }
                     }
@@ -67,7 +67,6 @@ public class GrabTweets {
             } catch (TwitterException te) {
                 te.printStackTrace();
                 System.out.println("Failed to search tweets: " + te.getMessage());
-                System.exit(-1);
             }
         }
         System.exit(0);
