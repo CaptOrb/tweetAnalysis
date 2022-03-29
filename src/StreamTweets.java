@@ -30,6 +30,7 @@ public class StreamTweets {
                 tfileService.writeTweet(status, status.getRetweetedStatus() != null, internalConfig);
                 tfileService.writeUser(status.getUser(), internalConfig);
 
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
