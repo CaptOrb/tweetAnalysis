@@ -1,21 +1,27 @@
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class RetweetGraph implements Graph {
+public class RetweetGraph<E> implements Graph {
 
-    private Map<Vertex, List<Vertex>> adjVertices;
+    private Map<Vertex<E>, List<Vertex<E>>> adjVertices = new HashMap<>();
 
-    public Map<Vertex, List<Vertex>> getAdjVertices() {
+    public Map<Vertex<E>, List<Vertex<E>>> getAdjVertices() {
         return adjVertices;
     }
 
-    public void setAdjVertices(Map<Vertex, List<Vertex>> adjVertices) {
+    List<Vertex<E>> getAdjVertices(String label) {
+        return adjVertices.get(new Vertex<E>(label));
+    }
+
+    public void setAdjVertices(Map<Vertex<E>, List<Vertex<E>>> adjVertices) {
         this.adjVertices = adjVertices;
     }
 
     @Override
-    public void addVertex(Vertex vertex) {
-
+    public void addVertex(String label) {
+        adjVertices.putIfAbsent(new Vertex<>(label), new ArrayList<>());
     }
 
     @Override
