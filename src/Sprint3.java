@@ -17,10 +17,10 @@ public class Sprint3 {
 
             File dataFile = new File(configuration.getDataDirectory(), configuration.getDataFile());
 
-            GraphFormation graphFormation = new GraphFormation();
+            FindRetweets findRetweets = new FindRetweets();
 
             if (dataFile.exists()) {
-                graphFormation.readRetweetsIntoSet(dataFile);
+                findRetweets.readRetweetsIntoSet(dataFile);
             }
         } catch (IOException e) {
             e.printStackTrace();
