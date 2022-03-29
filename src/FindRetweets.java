@@ -4,9 +4,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.lang.reflect.Array;
+import java.util.*;
 
-public class GraphFormation {
+public class FindRetweets {
     //this works for how the file is made but like technically it is reusable if a diff file has the same structure?
     //but otherwise, if we did this WHILE collecting tweets we just add @user and the retweeted user IFF it is a retweet?
     //like so yeah it could be reusable :)
@@ -42,6 +43,4 @@ public class GraphFormation {
         }
 
     }
-
-
 }
