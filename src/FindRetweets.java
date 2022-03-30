@@ -43,4 +43,15 @@ public class FindRetweets {
         }
 
     }
+
+    public void toPutIntoHashMap(){
+        RetweetGraph rtGraph = new RetweetGraph();
+        for(String rt : retweets){
+            String line[] = rt.split("\t"); //line[0] contains user, line[1] contains the user they are retweeting
+            Vertex srcVertex = new Vertex(line[0],+0);
+            Vertex destVertex = new Vertex(line[1],+0);
+            Arc myArc = new Arc(destVertex,+1);
+            rtGraph.addVertex(srcVertex,myArc);
+        }
+    }
 }
