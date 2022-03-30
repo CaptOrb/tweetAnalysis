@@ -19,7 +19,7 @@ public class RetweetGraph<E> implements Graph {
 
     @Override
     public void addVertex(Vertex vertex, Arc arc) {
-        // Check if vertex given has already been made
+        // Check if vertex given has already been made as a key in the hashmap
         // If it has, access the values it corresponds to and add the corresponding value
         // If it hasn't, create it as a new key
 

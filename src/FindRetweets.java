@@ -8,6 +8,7 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 public class FindRetweets {
+    List<Vertex> usersInGraph = new ArrayList<>();
     //this works for how the file is made but like technically it is reusable if a diff file has the same structure?
     //but otherwise, if we did this WHILE collecting tweets we just add @user and the retweeted user IFF it is a retweet?
     //like so yeah it could be reusable :)
@@ -48,10 +49,32 @@ public class FindRetweets {
         RetweetGraph rtGraph = new RetweetGraph();
         for(String rt : retweets){
             String line[] = rt.split("\t"); //line[0] contains user, line[1] contains the user they are retweeting
-            Vertex srcVertex = new Vertex(line[0],+0);
-            Vertex destVertex = new Vertex(line[1],+0);
+            Vertex srcVertex = getVertex(line[0]);
+            Vertex destVertex = getVertex(line[1]);
             Arc myArc = new Arc(destVertex,+1);
+            // Maintain list of users in graph
+            controlUsers(srcVertex);
+            controlUsers(destVertex);
+
             rtGraph.addVertex(srcVertex,myArc);
+        }
+    }
+
+    private Vertex getVertex(String label){
+        // check list of existing users
+        // if user exists, then return user
+        // if not create a new user with given label and return
+        for(Vertex user : usersInGraph){
+            if(user.getLabel().equals(label)){
+                return user;
+            }
+        }
+        return new Vertex(label, 0);
+    }
+
+    private void controlUsers(Vertex user){
+        if(!usersInGraph.contains(user)){
+            usersInGraph.add(user);
         }
     }
 }

@@ -1,6 +1,6 @@
 public class Vertex<T> {
     private final String label;
-    private final int weight; //the weight on each vertex, 0 if user does not retweet themselves
+    private int weight = 0; //the weight on each vertex, 0 if user does not retweet themselves
 
     Vertex(String label, int weight) {
         this.label = label;

@@ -1,5 +1,9 @@
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 //Run the entire program here
 public class Sprint2 {
@@ -25,7 +29,6 @@ public class Sprint2 {
 
             StreamTweets st = new StreamTweets(configuration, twitterFileService);
             st.streamTweets();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
