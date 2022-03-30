@@ -1,29 +1,37 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class RetweetGraph<E> implements Graph {
 
-    private Map<Vertex<E>, List<Vertex<E>>> adjVertices = new HashMap<>();
+    private Map<Vertex<E>, ArrayList<Arc>> adjVertices = new HashMap<>();
 
-    public Map<Vertex<E>, List<Vertex<E>>> getAdjVertices() {
+    public Map<Vertex<E>, ArrayList<Arc>> getAdjVertices() {
         return adjVertices;
     }
 
-    List<Vertex<E>> getAdjVertices(Vertex<E> vertex) {
-        return adjVertices.get(vertex);
+    ArrayList<Arc> getAdjVertices(Vertex<E> key) {
+        return adjVertices.get(key);
     }
 
-    public void setAdjVertices(Map<Vertex<E>, List<Vertex<E>>> adjVertices) {
-        this.adjVertices = adjVertices;
-    }
+    //public void setAdjVertices(Map<Vertex<E>, List<Vertex<E>>> adjVertices) {
+    //    this.adjVertices = adjVertices;
+    //}
+
 
     @Override
-    public void addVertex(String label) {
-        // initially weight is 0
-        // need to change somehow
-        adjVertices.putIfAbsent(new Vertex<>(label, 0), new ArrayList<>());
+    public void addVertex(Vertex vertex, Arc arc) {
+        // Check if vertex given has already been made
+        // If it has, access the values it corresponds to and add the corresponding value
+        // If it hasn't, create it as a new key
+
+        if(!adjVertices.containsKey(vertex)){
+            ArrayList<Arc> arcs = new ArrayList<>();
+            arcs.add(arc);
+            adjVertices.put(vertex, arcs);
+        }
+
+        else {
+            adjVertices.get(vertex).add(arc);
+        }
     }
 
     @Override

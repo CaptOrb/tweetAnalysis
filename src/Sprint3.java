@@ -7,11 +7,11 @@ public class Sprint3 {
     // remove before submission
    static void createGraph() {
         RetweetGraph<String> graph = new RetweetGraph<>();
-        graph.addVertex("Bob");
-        graph.addVertex("Alice");
-        graph.addVertex("Mark");
-        graph.addVertex("Rob");
-        graph.addVertex("Maria");
+        //graph.addVertex("Bob");
+        //graph.addVertex("Alice");
+        //graph.addVertex("Mark");
+        //graph.addVertex("Rob");
+        //graph.addVertex("Maria");
         //graph.addEdge("Bob", "Alice");
 
         System.out.println(graph.getAdjVertices(new Vertex<>("alice", 5)));
