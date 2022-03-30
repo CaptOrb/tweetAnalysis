@@ -54,6 +54,7 @@ public class RetweetGraph<E> implements Graph {
 
         if(vertex == arc.getVertex()){
             vertex.incrementWeight();
+            return;
         }
 
         for(Arc testArc : adjVertices.get(vertex)){
