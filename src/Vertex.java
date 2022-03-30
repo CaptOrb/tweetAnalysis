@@ -1,27 +1,18 @@
-import java.util.Objects;
-
 public class Vertex<T> {
-    T contents;
-    String label;
-    Vertex(T contents){
-        this.contents = contents;
-    }
-    //Vertex(String label) {
-    //    this.label = label;
-    //}
+    private final String label;
+    private final int weight; //the weight on each vertex, 0 if user does not retweet themselves
 
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Vertex<?> vertex = (Vertex<?>) o;
-        return Objects.equals(contents, vertex.contents) && Objects.equals(label, vertex.label);
+    Vertex(String label, int weight) {
+        this.label = label;
+        this.weight = weight; //we need a weight associated with each vertex for a person retweeting themselves
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(contents, label);
+    public String getLabel() {
+        return label;
+    }
+
+    public int getWeight() {
+        return weight;
     }
 }
 

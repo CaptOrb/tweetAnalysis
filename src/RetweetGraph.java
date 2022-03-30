@@ -1,23 +1,37 @@
-import twitter4j.User;
+import java.util.*;
 
-import java.util.List;
-import java.util.Map;
+public class RetweetGraph<E> implements Graph {
 
-public class RetweetGraph implements Graph {
+    private Map<Vertex<E>, ArrayList<Arc>> adjVertices = new HashMap<>();
 
-    private Map<Vertex, List<Vertex>> adjVertices;
-
-    public Map<Vertex, List<Vertex>> getAdjVertices() {
+    public Map<Vertex<E>, ArrayList<Arc>> getAdjVertices() {
         return adjVertices;
     }
 
-    public void setAdjVertices(Map<Vertex, List<Vertex>> adjVertices) {
-        this.adjVertices = adjVertices;
+    ArrayList<Arc> getAdjVertices(Vertex<E> key) {
+        return adjVertices.get(key);
     }
 
-    @Override
-    public void addVertex(Vertex vertex) {
+    //public void setAdjVertices(Map<Vertex<E>, List<Vertex<E>>> adjVertices) {
+    //    this.adjVertices = adjVertices;
+    //}
 
+
+    @Override
+    public void addVertex(Vertex vertex, Arc arc) {
+        // Check if vertex given has already been made
+        // If it has, access the values it corresponds to and add the corresponding value
+        // If it hasn't, create it as a new key
+
+        if(!adjVertices.containsKey(vertex)){
+            ArrayList<Arc> arcs = new ArrayList<>();
+            arcs.add(arc);
+            adjVertices.put(vertex, arcs);
+        }
+
+        else {
+            adjVertices.get(vertex).add(arc);
+        }
     }
 
     @Override
