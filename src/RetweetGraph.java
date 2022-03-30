@@ -48,8 +48,14 @@ public class RetweetGraph<E> implements Graph {
     }
 
     private void addToExistingKey(Vertex vertex, Arc arc){
+        // check for self retweet first. then:
         // If list of arcs already contains the given arc we simply increase the weight of the arc by 1
         // If not add the new arc to the list
+
+        if(vertex == arc.getVertex()){
+            vertex.incrementWeight();
+        }
+
         for(Arc testArc : adjVertices.get(vertex)){
             if(testArc.getVertex() == arc.getVertex()){
                 testArc.incrementWeight();
