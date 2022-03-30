@@ -8,7 +8,6 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 public class FindRetweets {
-    List<Vertex> usersInGraph = new ArrayList<>();
     //this works for how the file is made but like technically it is reusable if a diff file has the same structure?
     //but otherwise, if we did this WHILE collecting tweets we just add @user and the retweeted user IFF it is a retweet?
     //like so yeah it could be reusable :)
@@ -19,6 +18,7 @@ public class FindRetweets {
     //for example, if me jane tweeted myself 5 times it would only appear once in a hashset but we gotta know about
     //them 4 other times :)
     private final ArrayList<String> retweets = new ArrayList<String>();
+    List<Vertex> usersInGraph = new ArrayList<>();
 
     public ArrayList<String> getRetweets() {
         return retweets;
