@@ -11,8 +11,8 @@ public class RetweetGraph<E> implements Graph {
         return adjVertices;
     }
 
-    List<Vertex<E>> getAdjVertices(String label) {
-        return adjVertices.get(new Vertex<E>(label));
+    List<Vertex<E>> getAdjVertices(Vertex<E> vertex) {
+        return adjVertices.get(vertex);
     }
 
     public void setAdjVertices(Map<Vertex<E>, List<Vertex<E>>> adjVertices) {
@@ -21,7 +21,9 @@ public class RetweetGraph<E> implements Graph {
 
     @Override
     public void addVertex(String label) {
-        adjVertices.putIfAbsent(new Vertex<>(label), new ArrayList<>());
+        // initially weight is 0
+        // need to change somehow
+        adjVertices.putIfAbsent(new Vertex<>(label, 0), new ArrayList<>());
     }
 
     @Override

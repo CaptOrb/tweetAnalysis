@@ -14,8 +14,7 @@ public class Sprint3 {
         graph.addVertex("Maria");
         //graph.addEdge("Bob", "Alice");
 
-        System.out.println(graph.getAdjVertices("Alice"));
-        System.out.println(graph.getAdjVertices("Bob"));
+        System.out.println(graph.getAdjVertices(new Vertex<>("alice", 5)));
 
    }
     public static void main(String[] args) {
