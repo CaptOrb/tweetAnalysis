@@ -24,13 +24,11 @@ public class RetweetGraph<E> implements Graph {
         // If it hasn't, create it as a new key
 
         if(!adjVertices.containsKey(vertex)){
-            ArrayList<Arc> arcs = new ArrayList<>();
-            arcs.add(arc);
-            adjVertices.put(vertex, arcs);
+            addNewKeyValuePair(vertex, arc);
         }
 
         else {
-            adjVertices.get(vertex).add(arc);
+            addToExistingKey(vertex, arc);
         }
     }
 
@@ -47,5 +45,23 @@ public class RetweetGraph<E> implements Graph {
     @Override
     public void removeEdge(Vertex vertex1, Vertex vertex2) {
 
+    }
+
+    private void addToExistingKey(Vertex vertex, Arc arc){
+        // If list of arcs already contains the given arc we simply increase the weight of the arc by 1
+        // If not add the new arc to the list
+        for(Arc testArc : adjVertices.get(vertex)){
+            if(testArc.getVertex() == arc.getVertex()){
+                testArc.incrementWeight();
+                return;
+            }
+        }
+        adjVertices.get(vertex).add(arc);
+    }
+
+    private void addNewKeyValuePair(Vertex vertex, Arc arc){
+        ArrayList<Arc> arcs = new ArrayList<>();
+        arcs.add(arc);
+        adjVertices.put(vertex, arcs);
     }
 }

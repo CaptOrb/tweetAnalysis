@@ -14,6 +14,8 @@ public class Vertex<T> {
     public int getWeight() {
         return weight;
     }
+
+    public void incrementWeight(){ weight++; }
 }
 
 

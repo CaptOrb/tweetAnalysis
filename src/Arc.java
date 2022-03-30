@@ -6,4 +6,12 @@ public class Arc {
         this.vertex = vertex;
         this.weight = weight;
     }
+
+    public Vertex getVertex(){return vertex;}
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public void incrementWeight(){ weight++; }
 }
