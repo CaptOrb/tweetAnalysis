@@ -72,6 +72,12 @@ public class RetweetGraph<E> implements Graph {
     }
 
     private void addNewKeyValuePair(Vertex vertex, Arc arc){
+        // if self retweet just increment weight of vertex
+        if(vertex == arc.getVertex()){
+            vertex.incrementWeight();
+            return;
+        }
+
         ArrayList<Arc> arcs = new ArrayList<>();
         arcs.add(arc);
         adjVertices.put(vertex, arcs);
