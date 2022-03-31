@@ -39,15 +39,15 @@ public class Sprint3 {
     // just for testing purposes
     // remove before submission
     public static <E> void testHashMap() throws IOException {
-        RetweetFileService<E> retweetFileService = new RetweetFileService<E>();
+        RetweetFileService<String> retweetFileService = new RetweetFileService<>();
 
-        HashMap<Vertex<E>, ArrayList<Arc>> tempHashMap = new HashMap<>();
+        HashMap<Vertex<String>, ArrayList<Arc>> tempHashMap = new HashMap<>();
 
         ArrayList<Arc> arcsForChloe = new ArrayList<>();
 
-        Vertex<E> testVertex = new Vertex<>("@Chloe", 0);
-        Vertex<E> testVertex2 = new Vertex<>("@Leo", 0);
-        Vertex<E> testVertex3 = new Vertex<>("@Liam", 0);
+        Vertex<String> testVertex = new Vertex<>("@Chloe", 0);
+        Vertex<String> testVertex2 = new Vertex<>("@Leo", 0);
+        Vertex<String> testVertex3 = new Vertex<>("@Liam", 0);
 
         arcsForChloe.add(new Arc(testVertex2, 0));
         arcsForChloe.add(new Arc(testVertex3, 0));
@@ -56,9 +56,9 @@ public class Sprint3 {
 
         ArrayList<Arc> arcsForChloee = new ArrayList<>();
 
-        Vertex<E> testVertexe = new Vertex<>("@n", 0);
-        Vertex<E> testVertex2e = new Vertex<>("@1234", 0);
-        Vertex<E> testVertex3e = new Vertex<>("@567", 0);
+        Vertex<String> testVertexe = new Vertex<>("@n", 0);
+        Vertex<String> testVertex2e = new Vertex<>("@1234", 0);
+        Vertex<String> testVertex3e = new Vertex<>("@567", 0);
 
         arcsForChloee.add(new Arc(testVertex2e, 0));
         arcsForChloee.add(new Arc(testVertex3e, 0));
