@@ -3,10 +3,13 @@ import java.util.*;
 public class RetweetGraph<E> implements Graph {
 
     private Map<Vertex<E>, ArrayList<Arc>> adjVertices = new HashMap<>();
+    private List allVerticesInGraph = new ArrayList();
 
     public Map<Vertex<E>, ArrayList<Arc>> getAdjVertices() {
         return adjVertices;
     }
+
+    public List getAllVerticesInGraph() { return allVerticesInGraph; }
 
     ArrayList<Arc> getAdjVertices(Vertex<E> key) {
         return adjVertices.get(key);
@@ -30,6 +33,8 @@ public class RetweetGraph<E> implements Graph {
         else {
             addToExistingKey(vertex, arc);
         }
+        controlUsers(vertex);
+        controlUsers(arc.getVertex());
     }
 
     @Override
@@ -71,4 +76,16 @@ public class RetweetGraph<E> implements Graph {
         arcs.add(arc);
         adjVertices.put(vertex, arcs);
     }
+
+    public boolean hasArcBetween(Vertex vertex1, Vertex vertex2){
+        // TODO
+        return false;
+    }
+
+    private void controlUsers(Vertex user){
+        if(!allVerticesInGraph.contains(user)){
+            allVerticesInGraph.add(user);
+        }
+    }
+
 }
