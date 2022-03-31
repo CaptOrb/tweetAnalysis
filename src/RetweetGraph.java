@@ -97,9 +97,9 @@ public class RetweetGraph<E> implements Graph {
                     return true;
                 }
             }
-
-            return false;
         }
+            return false;
+
     }
 
     private void controlUsers(Vertex user){
