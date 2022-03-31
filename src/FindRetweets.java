@@ -58,7 +58,6 @@ public class FindRetweets {
 
             rtGraph.addConnection(srcVertex, myArc);
         }
-        String m = "";
     }
 
     private Vertex<String> getVertex(String label){

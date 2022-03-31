@@ -92,14 +92,14 @@ public class RetweetGraph<T> implements Graph<T> {
         // check if either vertex is a key
         // if so check its value for an arc containing the other vertex
         if (graph.containsKey(vertex1)) {
-            for (Arc arc : graph.get(vertex1)) {
+            for (Arc<T> arc : graph.get(vertex1)) {
                 if (arc.getVertex() == vertex2) {
                     return true;
                 }
             }
         }
         if (graph.containsKey(vertex2)) {
-            for (Arc arc : graph.get(vertex2)) {
+            for (Arc<T> arc : graph.get(vertex2)) {
                 if (arc.getVertex() == vertex1) {
                     return true;
                 }
@@ -109,7 +109,7 @@ public class RetweetGraph<T> implements Graph<T> {
 
     }
 
-    private void controlUsers(Vertex user){
+    private void controlUsers(Vertex<T> user){
         if(!allVerticesInGraph.contains(user)){
             allVerticesInGraph.add(user);
         }
