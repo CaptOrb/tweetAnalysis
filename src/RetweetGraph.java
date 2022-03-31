@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class RetweetGraph<E> implements Graph {
@@ -72,8 +73,11 @@ public class RetweetGraph<E> implements Graph {
     }
 
     private void addNewKeyValuePair(Vertex vertex, Arc arc){
-        // if self retweet just increment weight of vertex
+        // if self retweet make a new key with an empty list of arcs
+        // increment weight of vertex
         if(vertex == arc.getVertex()){
+            ArrayList<Arc> arcs = new ArrayList<>();
+            adjVertices.put(vertex, arcs);
             vertex.incrementWeight();
             return;
         }
