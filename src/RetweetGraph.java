@@ -77,25 +77,29 @@ public class RetweetGraph<E> implements Graph {
         adjVertices.put(vertex, arcs);
     }
 
-    public boolean hasArcBetween(Vertex vertex1, Vertex vertex2){
+    public boolean hasArcBetween(Vertex vertex1, Vertex vertex2) {
         // check both vertices are in the graph initially
-        if(!allVerticesInGraph.contains(vertex1) && allVerticesInGraph.contains(vertex2)){
+        if (!allVerticesInGraph.contains(vertex1) && allVerticesInGraph.contains(vertex2)) {
             return false;
         }
 
         // check if either vertex is a key
         // if so check its value for an arc containing the other vertex
-        if(adjVertices.containsKey(vertex1)){
-            for(Arc arc: adjVertices.get(vertex1)){
-                if (arc.getVertex() == vertex2){ return true; }
+        if (adjVertices.containsKey(vertex1)) {
+            for (Arc arc : adjVertices.get(vertex1)) {
+                if (arc.getVertex() == vertex2) {
+                    return true;
+                }
             }
-        }
-        else if (adjVertices.containsKey(vertex2)){
-            for(Arc arc: adjVertices.get(vertex2)){
-                if(arc.getVertex() == vertex1){ return true; }
-        }
+        } else if (adjVertices.containsKey(vertex2)) {
+            for (Arc arc : adjVertices.get(vertex2)) {
+                if (arc.getVertex() == vertex1) {
+                    return true;
+                }
+            }
 
-        return false;
+            return false;
+        }
     }
 
     private void controlUsers(Vertex user){
