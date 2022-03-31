@@ -1,22 +1,11 @@
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Sprint3 {
 
-    // just for testing purposes
-    // remove before submission
-//   static void createGraph() {
-//        RetweetGraph<String> graph = new RetweetGraph<>();
-//        //graph.addVertex("Bob");
-//        //graph.addVertex("Alice");
-//        //graph.addVertex("Mark");
-//        //graph.addVertex("Rob");
-//        //graph.addVertex("Maria");
-//        //graph.addEdge("Bob", "Alice");
-//
-//        System.out.println(graph.getAdjVertices(new Vertex<>("alice", 5)));
-//
-//   }
     public static void main(String[] args) {
 
         Configuration configuration = new Configuration();
@@ -37,11 +26,33 @@ public class Sprint3 {
                 findRetweets.readRetweetsIntoSet(dataFile);
             }
             findRetweets.toPutIntoHashMap();
-           // createGraph();
+
+            testHashMap();
+            // createGraph();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+    }
+
+    // just for testing purposes
+    // remove before submission
+    public static <E> void testHashMap() throws IOException {
+        RetweetFileService<E> retweetFileService = new RetweetFileService<E>();
+
+        HashMap<Vertex<E>, ArrayList<Arc>> tempHashMap = new HashMap<>();
+
+        ArrayList<Arc> arcsForChloe = new ArrayList<>();
+
+        Vertex<E> testVertex = new Vertex<>("Chloe", 0);
+        Vertex<E> testVertex2 = new Vertex<>("Leo", 0);
+        Vertex<E> testVertex3 = new Vertex<>("Liam", 0);
+
+        arcsForChloe.add(new Arc(testVertex, 0));
+        arcsForChloe.add(new Arc(testVertex3, 0));
+
+        tempHashMap.put(testVertex2, arcsForChloe);
+        retweetFileService.writeRetweetFile(tempHashMap);
     }
 }
