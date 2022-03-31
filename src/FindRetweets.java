@@ -17,7 +17,7 @@ public class FindRetweets {
     //NOTE - hashset doesn't allow duplicates so I used an arraylist instead
     //for example, if me jane tweeted myself 5 times it would only appear once in a hashset but we gotta know about
     //them 4 other times :)
-    private final ArrayList<String> retweets = new ArrayList<String>();
+    private final ArrayList<String> retweets = new ArrayList<>();
     List<Vertex<String>> usersInGraph = new ArrayList<>();
 
     public ArrayList<String> getRetweets() {

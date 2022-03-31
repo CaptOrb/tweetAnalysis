@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class RetweetFileService<E> {
 
-    public void writeRetweetFile(HashMap<Vertex<E>, ArrayList<Arc>> retweetHashMap) throws IOException {
+    public void writeRetweetFile(HashMap<Vertex<E>, ArrayList<Arc<E>>> retweetHashMap) throws IOException {
         File file = TwitterFileService.createFile("Testing", "testingWriter.txt");
 
         StringBuilder sb = new StringBuilder();
