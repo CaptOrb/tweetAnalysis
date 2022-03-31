@@ -3,13 +3,13 @@ import java.util.*;
 public class RetweetGraph<E> implements Graph {
 
     private Map<Vertex<E>, ArrayList<Arc>> adjVertices = new HashMap<>();
-    private List allVerticesInGraph = new ArrayList();
+    private List<Vertex> allVerticesInGraph = new ArrayList<>();
 
     public Map<Vertex<E>, ArrayList<Arc>> getAdjVertices() {
         return adjVertices;
     }
 
-    public List getAllVerticesInGraph() { return allVerticesInGraph; }
+    public List<Vertex> getAllVerticesInGraph() { return allVerticesInGraph; }
 
     ArrayList<Arc> getAdjVertices(Vertex<E> key) {
         return adjVertices.get(key);
@@ -91,7 +91,8 @@ public class RetweetGraph<E> implements Graph {
                     return true;
                 }
             }
-        } else if (adjVertices.containsKey(vertex2)) {
+        }
+        if (adjVertices.containsKey(vertex2)) {
             for (Arc arc : adjVertices.get(vertex2)) {
                 if (arc.getVertex() == vertex1) {
                     return true;
@@ -107,5 +108,4 @@ public class RetweetGraph<E> implements Graph {
             allVerticesInGraph.add(user);
         }
     }
-
 }
