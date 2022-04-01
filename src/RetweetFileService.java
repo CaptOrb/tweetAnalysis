@@ -18,11 +18,9 @@ public class RetweetFileService<E> {
         try (PrintWriter pw = new PrintWriter(new FileWriter(file))) {
 
             for (Vertex<E> vertex : retweetHashMap.keySet()) {
-                if (vertex.getWeight() != 0) {
-                    sb.append(vertex.getLabel()).append("(").append(vertex.getWeight()).append(") ").append("[");
-                } else {
+
                     sb.append(vertex.getLabel()).append(" [");
-                }
+
                 for (int i = 0; i < retweetHashMap.get(vertex).size(); i++) {
                     if (i > 0) {
                         sb.append(", ").append(retweetHashMap.get(vertex).get(i).getVertex().getLabel());

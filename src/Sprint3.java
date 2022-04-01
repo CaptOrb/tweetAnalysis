@@ -18,7 +18,7 @@ public class Sprint3 {
                 configuration.getSettingsFromFile(configuration, "config_file", 0);
             }
 
-            File dataFile = new File(configuration.getDataDirectory(), configuration.getDataFile());
+            File dataFile = new File("Testing", "test RT.txt");
 
             FindRetweets findRetweets = new FindRetweets();
 
