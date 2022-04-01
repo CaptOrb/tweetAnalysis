@@ -100,6 +100,37 @@ public class RetweetGraph<T> implements DirectedGraph<T> {
             return false;
 
     }
+    public int getLabelBetweenVertices(Vertex<T> vertex1, Vertex<T> vertex2){
+
+        if (!allVerticesInGraph.contains(vertex1) && allVerticesInGraph.contains(vertex2)) {
+            return -1;
+        }
+//        boolean hasArc = hasArcBetween(vertex1,vertex2);
+//        if(hasArc){
+//
+//        }
+
+        // check if either vertex is a key
+        // if so check its value for an arc containing the other vertex
+        if (graph.containsKey(vertex1)) {
+            for (Arc<T> arc : graph.get(vertex1)) {
+                if (arc.getVertex() == vertex2) {
+                    return arc.getWeight();
+                }
+            }
+        }
+        if (graph.containsKey(vertex2)) {
+            for (Arc<T> arc : graph.get(vertex2)) {
+                if (arc.getVertex() == vertex1) {
+                    return arc.getWeight();
+                }
+            }
+        }
+
+        return -1;
+    }
+
+
 
     public void controlUsers(Vertex<T> user){
         if(!allVerticesInGraph.contains(user)){
