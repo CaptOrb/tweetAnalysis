@@ -46,6 +46,8 @@ public class FindRetweets {
             rtGraph.controlUsers(destVertex);
 
             rtGraph.addArc(srcVertex, myArc);
+            //to check that getLabelBetweenVertices works
+            //System.out.println(srcVertex.getLabel() + " " + destVertex.getLabel() + " " + rtGraph.getLabelBetweenVertices(srcVertex,destVertex));
 
         }
         RetweetFileService<String> rs = new RetweetFileService<>();
