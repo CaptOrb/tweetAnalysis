@@ -26,11 +26,9 @@ public class FindRetweets {
 
     //Any retweets are now contained in arraylist retweets:
     public void readRetweetsIntoSet(File file){
-        int i=1;
         try(BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
-                i++;
                 String[] lineContents = line.split("\t");
                 try{
                     Long.parseLong(lineContents[0]);
