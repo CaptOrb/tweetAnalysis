@@ -19,6 +19,8 @@ public class Configuration {
     private String DATA_DIRECTORY;
     private String DATA_FILE;
     private String USER_FILE;
+    private String GRAPH_DIRECTORY;
+    private String RTGRAPH_OUTPUT_FILE;
     private String LANGUAGE;
     private String BATCH_SIZE;
     private String SLEEP_TIME;
@@ -46,6 +48,14 @@ public class Configuration {
 
     public String getUserFile() {
         return USER_FILE;
+    }
+
+    public String getGRAPH_DIRECTORY() {
+        return GRAPH_DIRECTORY;
+    }
+
+    public String getRTGRAPH_OUTPUT_FILE() {
+        return RTGRAPH_OUTPUT_FILE;
     }
 
     public String getACCESS_TOKEN() {
@@ -105,6 +115,8 @@ public class Configuration {
             configuration.DATA_DIRECTORY = properties.getProperty("DATA_DIRECTORY");
             configuration.DATA_FILE = properties.getProperty("DATA_FILE");
             configuration.USER_FILE = properties.getProperty("USER_FILE");
+            configuration.GRAPH_DIRECTORY = properties.getProperty("GRAPH_OUTPUT_DIRECTORY");
+            configuration.RTGRAPH_OUTPUT_FILE = properties.getProperty("RTGRAPH_OUTPUT_FILE");
             configuration.SLEEP_TIME = properties.getProperty("SLEEPTIMEMS");
             configuration.LANGUAGE = properties.getProperty("LANGUAGE");
             configuration.BATCH_SIZE = properties.getProperty("BATCH_SIZE");

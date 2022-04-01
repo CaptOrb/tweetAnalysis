@@ -3,8 +3,8 @@ import java.util.*;
 
 public class RetweetGraph<T> implements DirectedGraph<T> {
 
-    private Map<Vertex<T>, ArrayList<Arc<T>>> graph = new HashMap<>();
-    private List<Vertex<T>> allVerticesInGraph = new ArrayList<>();
+    private final Map<Vertex<T>, ArrayList<Arc<T>>> graph = new HashMap<>();
+    private final List<Vertex<T>> allVerticesInGraph = new ArrayList<>();
 
     public Map<Vertex<T>, ArrayList<Arc<T>>> getGraph() { return graph; }
 

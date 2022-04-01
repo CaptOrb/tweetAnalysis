@@ -5,18 +5,8 @@ import java.io.IOException;
 import java.util.*;
 
 public class FindRetweets {
-    //this works for how the file is made but like technically it is reusable if a diff file has the same structure?
-    //but otherwise, if we did this WHILE collecting tweets we just add @user and the retweeted user IFF it is a retweet?
-    //like so yeah it could be reusable :)
-    //if doing it at time of writing to file, don't forget to add @ to start of username, and this is based on fact that "RT" is in the tweet text!!
 
-
-    //NOTE - hashset doesn't allow duplicates so I used an arraylist instead
-    //for example, if me jane tweeted myself 5 times it would only appear once in a hashset but we gotta know about
-    //them 4 other times :)
     private final ArrayList<String> retweets = new ArrayList<>();
-    //  private final List<Vertex<String>> usersInGraph = new ArrayList<>();
-
     public ArrayList<String> getRetweets() {
         return retweets;
     }
@@ -45,19 +35,16 @@ public class FindRetweets {
                 }
 
             }
-//          for( String rt : retweets ){ //for testing purposes, uncomment if you wanna see that it works
-//          System.out.println(rt);
-//     }
         } catch (IOException | NullPointerException fnfe) {
             fnfe.printStackTrace();
         }
 
     }
 
-    public void toPutIntoHashMap() throws IOException {
+    public void toPutIntoHashMap(Configuration configuration) throws IOException {
         RetweetGraph<String> rtGraph = new RetweetGraph<>();
         for (String rt : retweets) {
-            String line[] = rt.split("\t"); //line[0] contains user, line[1] contains the user they are retweeting
+            String[] line = rt.split("\t"); //line[0] contains user, line[1] contains the user they are retweeting
             Vertex<String> srcVertex = getVertex(line[0], rtGraph.getAllVerticesInGraph());
             Vertex<String> destVertex = getVertex(line[1], rtGraph.getAllVerticesInGraph());
             Arc<String> myArc = new Arc<>(destVertex, +1);
@@ -68,9 +55,9 @@ public class FindRetweets {
             rtGraph.addConnection(srcVertex, myArc);
 
         }
-        RetweetFileService rs = new RetweetFileService();
+        RetweetFileService<String> rs = new RetweetFileService<>();
 
-        rs.writeRetweetFile(rtGraph.getGraph());
+        rs.writeRetweetFile(rtGraph.getGraph(), configuration);
     }
 
     private Vertex<String> getVertex(String label, List<Vertex<String>> usersInGraph) {

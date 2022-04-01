@@ -25,7 +25,7 @@ public class Sprint3 {
             if (dataFile.exists()) {
                 findRetweets.readRetweetsIntoSet(dataFile);
             }
-            findRetweets.toPutIntoHashMap();
+            findRetweets.toPutIntoHashMap(configuration);
 
         } catch (IOException e) {
             e.printStackTrace();
