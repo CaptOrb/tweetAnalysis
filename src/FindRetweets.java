@@ -30,15 +30,27 @@ public class FindRetweets {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] lineContents = line.split("\t");
-                String[] findRetweet = lineContents[2].split(" "); //lineContents[2] is "RT @RetweetedUser tweetText" if it's a retweet
-                if(findRetweet[0].contains("RT") && findRetweet[1].contains("@")){
-                    String username = findRetweet[1].replaceAll(":",""); //remove : after the retweeted user
-                    retweets.add(lineContents[1] + "\t" + username); //adds @User + "\t" + @RetweetedUser and whatever they tweeted
+                try{
+                    Long.parseLong(lineContents[0]);
+                    try{
+                        String[] findRetweet = lineContents[2].split(" "); //lineContents[2] is "RT @RetweetedUser tweetText" if it's a retweet
+                        if (findRetweet[0].contains("RT") && findRetweet[1].contains("@")) {
+                            String username = findRetweet[1].replaceAll(":", ""); //remove : after the retweeted user
+                            retweets.add(lineContents[1] + "\t" + username); //adds @User + "\t" + @RetweetedUser and whatever they tweeted
+                        }
+
+                    } catch(ArrayIndexOutOfBoundsException e){
+                        e.printStackTrace();
+                    }
+
+                    } catch(NumberFormatException e){
+                        e.printStackTrace();
                 }
+
             }
-/*            for( String rt : retweets ){ //for testing purposes, uncomment if you wanna see that it works
-                System.out.println(rt);
-            }*/
+//          for( String rt : retweets ){ //for testing purposes, uncomment if you wanna see that it works
+//          System.out.println(rt);
+//     }
         } catch (IOException | NullPointerException fnfe) {
             fnfe.printStackTrace();
         }
