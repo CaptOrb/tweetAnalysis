@@ -10,11 +10,7 @@ public class RetweetGraph<T> implements DirectedGraph<T> {
 
     public List<Vertex<T>> getAllVerticesInGraph() { return allVerticesInGraph; }
 
-    ArrayList<Arc<T>> getAdjVertices(Vertex<T> key) { return graph.get(key); }
-
-    //public void setAdjVertices(Map<Vertex<E>, List<Vertex<E>>> adjVertices) {
-    //    this.adjVertices = adjVertices;
-    //}
+   public ArrayList<Arc<T>> getAdjVertices(Vertex<T> key) { return graph.get(key); }
 
 
     @Override
@@ -109,7 +105,7 @@ public class RetweetGraph<T> implements DirectedGraph<T> {
 
     }
 
-    private void controlUsers(Vertex<T> user){
+    public void controlUsers(Vertex<T> user){
         if(!allVerticesInGraph.contains(user)){
             allVerticesInGraph.add(user);
         }

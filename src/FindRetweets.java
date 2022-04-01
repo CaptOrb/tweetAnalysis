@@ -1,10 +1,7 @@
-import twitter4j.User;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class FindRetweets {
@@ -18,33 +15,33 @@ public class FindRetweets {
     //for example, if me jane tweeted myself 5 times it would only appear once in a hashset but we gotta know about
     //them 4 other times :)
     private final ArrayList<String> retweets = new ArrayList<>();
-    List<Vertex<String>> usersInGraph = new ArrayList<>();
+    //  private final List<Vertex<String>> usersInGraph = new ArrayList<>();
 
     public ArrayList<String> getRetweets() {
         return retweets;
     }
 
     //Any retweets are now contained in arraylist retweets:
-    public void readRetweetsIntoSet(File file){
-        try(BufferedReader br = new BufferedReader(new FileReader(file))) {
+    public void readRetweetsIntoSet(File file) {
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] lineContents = line.split("\t");
-                try{
+                try {
                     Long.parseLong(lineContents[0]);
-                    try{
+                    try {
                         String[] findRetweet = lineContents[2].split(" "); //lineContents[2] is "RT @RetweetedUser tweetText" if it's a retweet
                         if (findRetweet[0].contains("RT") && findRetweet[1].contains("@")) {
                             String username = findRetweet[1].replaceAll(":", ""); //remove : after the retweeted user
                             retweets.add(lineContents[1] + "\t" + username); //adds @User + "\t" + @RetweetedUser and whatever they tweeted
                         }
 
-                    } catch(ArrayIndexOutOfBoundsException e){
+                    } catch (ArrayIndexOutOfBoundsException e) {
                         e.printStackTrace();
                     }
 
-                    } catch(NumberFormatException e){
-                        e.printStackTrace();
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
                 }
 
             }
@@ -59,37 +56,32 @@ public class FindRetweets {
 
     public void toPutIntoHashMap() throws IOException {
         RetweetGraph<String> rtGraph = new RetweetGraph<>();
-        for(String rt : retweets){
+        for (String rt : retweets) {
             String line[] = rt.split("\t"); //line[0] contains user, line[1] contains the user they are retweeting
-            Vertex<String> srcVertex = getVertex(line[0]);
-            Vertex<String> destVertex = getVertex(line[1]);
-            Arc<String> myArc = new Arc<>(destVertex,+1);
+            Vertex<String> srcVertex = getVertex(line[0], rtGraph.getAllVerticesInGraph());
+            Vertex<String> destVertex = getVertex(line[1], rtGraph.getAllVerticesInGraph());
+            Arc<String> myArc = new Arc<>(destVertex, +1);
             // Maintain list of users in graph
-            controlUsers(srcVertex);
-            controlUsers(destVertex);
+            rtGraph.controlUsers(srcVertex);
+            rtGraph.controlUsers(destVertex);
 
             rtGraph.addConnection(srcVertex, myArc);
+
         }
         RetweetFileService rs = new RetweetFileService();
 
         rs.writeRetweetFile(rtGraph.getGraph());
     }
 
-    private Vertex<String> getVertex(String label){
+    private Vertex<String> getVertex(String label, List<Vertex<String>> usersInGraph) {
         // check list of existing users
         // if user exists, then return user
         // if not create a new user with given label and return
-        for(Vertex<String> user : usersInGraph){
-            if(user.getLabel().equals(label)){
+        for (Vertex<String> user : usersInGraph) {
+            if (user.getLabel().equals(label)) {
                 return user;
             }
         }
         return new Vertex<String>(label, 0);
-    }
-
-    private void controlUsers(Vertex<String> user){
-        if(!usersInGraph.contains(user)){
-            usersInGraph.add(user);
-        }
     }
 }
