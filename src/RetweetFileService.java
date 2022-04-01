@@ -17,16 +17,22 @@ public class RetweetFileService<E> {
 
             for (Vertex<E> vertex : retweetHashMap.keySet()) {
                 if(vertex.getWeight()!=0){
-                    sb.append(vertex.getLabel()).append("(").append(vertex.getWeight()).append(")").append("[");
+                    sb.append(vertex.getLabel()).append("(").append(vertex.getWeight()).append(") ").append("[");
                 } else {
-                    sb.append(vertex.getLabel()).append("[");
+                    sb.append(vertex.getLabel()).append(" [");
                 }
-
                 for (int i = 0; i < retweetHashMap.get(vertex).size(); i++) {
                     // lets worry about getting it to print properly to the terminal and not to the file yet..
-                    sb.append(retweetHashMap.get(vertex).get(i).getVertex().getLabel());
-                    sb.append("(").append(retweetHashMap.get(vertex).get(i).getWeight()).append(")").append(", ");
+                    if(i>0){
+                        sb.append(", ").append(retweetHashMap.get(vertex).get(i).getVertex().getLabel());
+                        sb.append("(").append(retweetHashMap.get(vertex).get(i).getWeight()).append(")");
+                    } else{
+                        sb.append(retweetHashMap.get(vertex).get(i).getVertex().getLabel());
+                        sb.append("(").append(retweetHashMap.get(vertex).get(i).getWeight()).append(")");
+                    }
+
                 }
+
                // sb.replace(sb.length() - 2, sb.length() , "");
                 sb.append("]");
                 System.out.println(sb);
