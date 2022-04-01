@@ -83,7 +83,7 @@ public class RetweetGraph<T> implements Graph<T> {
         graph.put(vertex, arcs);
     }
 
-    public boolean hasArcBetween(Vertex vertex1, Vertex vertex2) {
+    public boolean hasArcBetween(Vertex<T> vertex1, Vertex<T> vertex2) {
         // check both vertices are in the graph initially
         if (!allVerticesInGraph.contains(vertex1) && allVerticesInGraph.contains(vertex2)) {
             return false;
