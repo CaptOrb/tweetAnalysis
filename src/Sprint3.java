@@ -25,10 +25,9 @@ public class Sprint3 {
             if (dataFile.exists()) {
                 findRetweets.readRetweetsIntoSet(dataFile);
             }
-            findRetweets.toPutIntoHashMap();
+            //findRetweets.toPutIntoHashMap();
 
-            testHashMap();
-            // createGraph();
+            //testHashMap();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -41,7 +40,7 @@ public class Sprint3 {
     public static <E> void testHashMap() throws IOException {
         RetweetFileService<String> retweetFileService = new RetweetFileService<>();
 
-        HashMap<Vertex<String>, ArrayList<Arc<String>>> tempHashMap = new HashMap<>();
+/*        HashMap<Vertex<String>, ArrayList<Arc<String>>> tempHashMap = new HashMap<>();
 
         ArrayList<Arc<String>> arcsForChloe = new ArrayList<>();
 
@@ -61,9 +60,9 @@ public class Sprint3 {
         Vertex<String> testVertex3e = new Vertex<>("@567", 0);
 
         arcsForChloee.add(new Arc<>(testVertex2e, 0));
-        arcsForChloee.add(new Arc<>(testVertex3e, 0));
+        arcsForChloee.add(new Arc<>(testVertex3e, 0));*/
 
-        tempHashMap.put(testVertexe, arcsForChloee);
-        retweetFileService.writeRetweetFile(tempHashMap);
+       // tempHashMap.put(testVertexe, arcsForChloee);
+      //  retweetFileService.writeRetweetFile(tempHashMap);
     }
 }
