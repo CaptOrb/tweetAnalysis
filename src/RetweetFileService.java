@@ -25,11 +25,10 @@ public class RetweetFileService<E> {
                     // lets worry about getting it to print properly to the terminal and not to the file yet..
                     if(i>0){
                         sb.append(", ").append(retweetHashMap.get(vertex).get(i).getVertex().getLabel());
-                        sb.append("(").append(retweetHashMap.get(vertex).get(i).getWeight()).append(")");
                     } else{
                         sb.append(retweetHashMap.get(vertex).get(i).getVertex().getLabel());
-                        sb.append("(").append(retweetHashMap.get(vertex).get(i).getWeight()).append(")");
                     }
+                    sb.append("(").append(retweetHashMap.get(vertex).get(i).getWeight()).append(")");
 
                 }
 
