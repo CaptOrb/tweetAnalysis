@@ -51,16 +51,6 @@ public class RetweetGraph<T> implements DirectedGraph<T> {
         }
     }
 
-    //@Override
-    //public void addEdge(Vertex<T> vertex1, Vertex<T> vertex2) {
-
-    //}
-
-    //@Override
-    //public void removeEdge(Vertex<T> vertex1, Vertex<T> vertex2) {
-
-    //}
-
     private void addToExistingKey(Vertex<T> vertex, Arc<T> arc){
         // If list of arcs already contains the given arc we simply increase the weight of the arc by 1
         // If not add the new arc to the list
@@ -79,6 +69,7 @@ public class RetweetGraph<T> implements DirectedGraph<T> {
         graph.put(vertex, arcs);
     }
 
+    @Override
     public boolean hasArcBetween(Vertex<T> vertex1, Vertex<T> vertex2) {
         // check both vertices are in the graph initially
         if (!allVerticesInGraph.contains(vertex1) && allVerticesInGraph.contains(vertex2)) {
@@ -104,15 +95,13 @@ public class RetweetGraph<T> implements DirectedGraph<T> {
             return false;
 
     }
+
+    @Override
     public int getLabelBetweenVertices(Vertex<T> vertex1, Vertex<T> vertex2){
 
         if (!allVerticesInGraph.contains(vertex1) && allVerticesInGraph.contains(vertex2)) {
             return -1;
         }
-//        boolean hasArc = hasArcBetween(vertex1,vertex2);
-//        if(hasArc){
-//
-//        }
 
         // check if either vertex is a key
         // if so check its value for an arc containing the other vertex
