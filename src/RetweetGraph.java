@@ -1,7 +1,7 @@
 import java.lang.reflect.Array;
 import java.util.*;
 
-public class RetweetGraph<T> implements Graph<T> {
+public class RetweetGraph<T> implements DirectedGraph<T> {
 
     private Map<Vertex<T>, ArrayList<Arc<T>>> graph = new HashMap<>();
     private List<Vertex<T>> allVerticesInGraph = new ArrayList<>();
