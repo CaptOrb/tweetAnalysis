@@ -40,15 +40,15 @@ public class RetweetGraph<T> implements DirectedGraph<T> {
         }
     }
 
-    @Override
-    public void addEdge(Vertex<T> vertex1, Vertex<T> vertex2) {
+    //@Override
+    //public void addEdge(Vertex<T> vertex1, Vertex<T> vertex2) {
 
-    }
+    //}
 
-    @Override
-    public void removeEdge(Vertex<T> vertex1, Vertex<T> vertex2) {
+    //@Override
+    //public void removeEdge(Vertex<T> vertex1, Vertex<T> vertex2) {
 
-    }
+    //}
 
     private void addToExistingKey(Vertex<T> vertex, Arc<T> arc){
         // check for self retweet first. then:
