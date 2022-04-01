@@ -31,8 +31,19 @@ public class RetweetGraph<T> implements DirectedGraph<T> {
 
     @Override
     public void removeArc(Vertex<T> vertex, Arc<T> arc) {
-        if( !graph.get(vertex).contains(arc) ){
-            System.out.println("hi");
+        if ( !graph.containsKey(vertex) ){
+            System.out.println(vertex.toString() + " does not retweet anyone");
+            return;
+        }
+
+        if ( !graph.get(vertex).contains(arc) ){
+            System.out.println(vertex.toString() + "does not retweet " + arc.toString());
+            return;
+        }
+
+        graph.get(vertex).remove(arc);
+        if (graph.get(vertex).isEmpty()){
+            graph.remove(vertex);
         }
     }
 
@@ -47,15 +58,8 @@ public class RetweetGraph<T> implements DirectedGraph<T> {
     //}
 
     private void addToExistingKey(Vertex<T> vertex, Arc<T> arc){
-        // check for self retweet first. then:
         // If list of arcs already contains the given arc we simply increase the weight of the arc by 1
         // If not add the new arc to the list
-
-        if(vertex == arc.getVertex()){
-            vertex.incrementWeight();
-            return;
-        }
-
         for(Arc<T> testArc : graph.get(vertex)){
             if(testArc.getVertex() == arc.getVertex()){
                 testArc.incrementWeight();
@@ -66,15 +70,6 @@ public class RetweetGraph<T> implements DirectedGraph<T> {
     }
 
     private void addNewKeyValuePair(Vertex<T> vertex, Arc<T> arc){
-        // if self retweet make a new key with an empty list of arcs
-        // increment weight of vertex
-        if(vertex == arc.getVertex()){
-            ArrayList<Arc<T>> arcs = new ArrayList<>();
-            graph.put(vertex, arcs);
-            vertex.incrementWeight();
-            return;
-        }
-
         ArrayList<Arc<T>> arcs = new ArrayList<>();
         arcs.add(arc);
         graph.put(vertex, arcs);

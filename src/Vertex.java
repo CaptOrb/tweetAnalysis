@@ -16,6 +16,12 @@ public class Vertex<T> {
     }
 
     public void incrementWeight(){ weight++; }
+
+    public void decrementWeight(){ weight--; }
+
+    public String toString(){
+        return label.toString() + " " + weight;
+    }
 }
 
 
