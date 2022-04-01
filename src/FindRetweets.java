@@ -19,21 +19,14 @@ public class FindRetweets {
                 String[] lineContents = line.split("\t");
                 try {
                     Long.parseLong(lineContents[0]);
-                    try {
-                        String[] findRetweet = lineContents[2].split(" "); //lineContents[2] is "RT @RetweetedUser tweetText" if it's a retweet
-                        if (findRetweet[0].contains("RT") && findRetweet[1].contains("@")) {
-                            String username = findRetweet[1].replaceAll(":", ""); //remove : after the retweeted user
-                            retweets.add(lineContents[1] + "\t" + username); //adds @User + "\t" + @RetweetedUser and whatever they tweeted
-                        }
-
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        e.printStackTrace();
+                    String[] findRetweet = lineContents[2].split(" "); //lineContents[2] is "RT @RetweetedUser tweetText" if it's a retweet
+                    if (findRetweet[0].contains("RT") && findRetweet[1].contains("@")) {
+                        String username = findRetweet[1].replaceAll(":", ""); //remove : after the retweeted user
+                        retweets.add(lineContents[1] + "\t" + username); //adds @User + "\t" + @RetweetedUser and whatever they tweeted
                     }
-
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
+                } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+                    System.out.println("invalid line format - skipped");
                 }
-
             }
         } catch (IOException | NullPointerException fnfe) {
             fnfe.printStackTrace();
@@ -52,7 +45,7 @@ public class FindRetweets {
             rtGraph.controlUsers(srcVertex);
             rtGraph.controlUsers(destVertex);
 
-            rtGraph.addConnection(srcVertex, myArc);
+            rtGraph.addArc(srcVertex, myArc);
 
         }
         RetweetFileService<String> rs = new RetweetFileService<>();
