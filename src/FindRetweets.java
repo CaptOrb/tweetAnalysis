@@ -62,6 +62,6 @@ public class FindRetweets {
                 return user;
             }
         }
-        return new Vertex<String>(label, 0);
+        return new Vertex<String>(label);
     }
 }
