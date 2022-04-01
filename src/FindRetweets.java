@@ -68,7 +68,7 @@ public class FindRetweets {
             controlUsers(srcVertex);
             controlUsers(destVertex);
 
-            rtGraph.addConnection(srcVertex, myArc);
+            rtGraph.addArc(srcVertex, myArc);
         }
         RetweetFileService rs = new RetweetFileService();
 

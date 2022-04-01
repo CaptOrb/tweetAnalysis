@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class RetweetGraph<T> implements DirectedGraph<T> {
@@ -18,7 +17,7 @@ public class RetweetGraph<T> implements DirectedGraph<T> {
 
 
     @Override
-    public void addConnection(Vertex<T> source, Arc<T> arc) {
+    public void addArc(Vertex<T> source, Arc<T> arc) {
         // Check if vertex given has already been made as a key in the hashmap
         // If it has, access the values it corresponds to and add the corresponding value
         // If it hasn't, create it as a new key
@@ -35,8 +34,10 @@ public class RetweetGraph<T> implements DirectedGraph<T> {
     }
 
     @Override
-    public void removeVertex(Vertex<T> vertex) {
-
+    public void removeArc(Vertex<T> vertex, Arc<T> arc) {
+        if( !graph.get(vertex).contains(arc) ){
+            System.out.println("hi");
+        }
     }
 
     @Override
