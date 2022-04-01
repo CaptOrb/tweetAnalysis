@@ -18,6 +18,6 @@ public class Arc<E>{
     public void decrementWeight(){ weight--; }
 
     public String toString(){
-        return vertex.toString() + " arc weight: " + weight;
+        return "Label: " + vertex.toString() + ", arc weight: " + weight;
     }
 }
