@@ -45,7 +45,7 @@ public class FindRetweets {
 
     }
 
-    public void toPutIntoHashMap(){
+    public void toPutIntoHashMap() throws IOException {
         RetweetGraph<String> rtGraph = new RetweetGraph<>();
         for(String rt : retweets){
             String line[] = rt.split("\t"); //line[0] contains user, line[1] contains the user they are retweeting
@@ -58,6 +58,9 @@ public class FindRetweets {
 
             rtGraph.addConnection(srcVertex, myArc);
         }
+        RetweetFileService rs = new RetweetFileService();
+
+        rs.writeRetweetFile(rtGraph.getGraph());
     }
 
     private Vertex<String> getVertex(String label){
