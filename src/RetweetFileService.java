@@ -16,13 +16,22 @@ public class RetweetFileService<E> {
         try (PrintWriter pw = new PrintWriter(new FileWriter(file, true))) {
 
             for (Vertex<E> vertex : retweetHashMap.keySet()) {
-
-                sb.append(vertex.getLabel()).append(vertex.getWeight()).append("[");
+                if(vertex.getWeight()!=0){
+                    sb.append(vertex.getLabel()).append("(").append(vertex.getWeight()).append(") ").append("[");
+                } else {
+                    sb.append(vertex.getLabel()).append(" [");
+                }
                 for (int i = 0; i < retweetHashMap.get(vertex).size(); i++) {
                     // lets worry about getting it to print properly to the terminal and not to the file yet..
-                    sb.append(retweetHashMap.get(vertex).get(i).getVertex().getLabel());
-                    sb.append("(").append(retweetHashMap.get(vertex).get(i).getWeight()).append(")").append(", ");
+                    if(i>0){
+                        sb.append(", ").append(retweetHashMap.get(vertex).get(i).getVertex().getLabel());
+                    } else{
+                        sb.append(retweetHashMap.get(vertex).get(i).getVertex().getLabel());
+                    }
+                    sb.append("(").append(retweetHashMap.get(vertex).get(i).getWeight()).append(")");
+
                 }
+
                // sb.replace(sb.length() - 2, sb.length() , "");
                 sb.append("]");
                 System.out.println(sb);
