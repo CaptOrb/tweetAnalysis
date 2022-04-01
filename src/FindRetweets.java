@@ -17,8 +17,8 @@ public class FindRetweets {
     //NOTE - hashset doesn't allow duplicates so I used an arraylist instead
     //for example, if me jane tweeted myself 5 times it would only appear once in a hashset but we gotta know about
     //them 4 other times :)
-    private final ArrayList<String> retweets = new ArrayList<String>();
-    List<Vertex> usersInGraph = new ArrayList<>();
+    private final ArrayList<String> retweets = new ArrayList<>();
+    List<Vertex<String>> usersInGraph = new ArrayList<>();
 
     public ArrayList<String> getRetweets() {
         return retweets;
@@ -60,33 +60,33 @@ public class FindRetweets {
     }
 
     public void toPutIntoHashMap(){
-        RetweetGraph rtGraph = new RetweetGraph();
+        RetweetGraph<String> rtGraph = new RetweetGraph<>();
         for(String rt : retweets){
             String line[] = rt.split("\t"); //line[0] contains user, line[1] contains the user they are retweeting
-            Vertex srcVertex = getVertex(line[0]);
-            Vertex destVertex = getVertex(line[1]);
-            Arc myArc = new Arc(destVertex,+1);
+            Vertex<String> srcVertex = getVertex(line[0]);
+            Vertex<String> destVertex = getVertex(line[1]);
+            Arc<String> myArc = new Arc<>(destVertex,+1);
             // Maintain list of users in graph
             controlUsers(srcVertex);
             controlUsers(destVertex);
 
-            rtGraph.addVertex(srcVertex,myArc);
+            rtGraph.addConnection(srcVertex, myArc);
         }
     }
 
-    private Vertex getVertex(String label){
+    private Vertex<String> getVertex(String label){
         // check list of existing users
         // if user exists, then return user
         // if not create a new user with given label and return
-        for(Vertex user : usersInGraph){
+        for(Vertex<String> user : usersInGraph){
             if(user.getLabel().equals(label)){
                 return user;
             }
         }
-        return new Vertex(label, 0);
+        return new Vertex<String>(label, 0);
     }
 
-    private void controlUsers(Vertex user){
+    private void controlUsers(Vertex<String> user){
         if(!usersInGraph.contains(user)){
             usersInGraph.add(user);
         }

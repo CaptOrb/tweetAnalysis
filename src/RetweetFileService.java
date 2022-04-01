@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class RetweetFileService<E> {
 
-    public void writeRetweetFile(HashMap<Vertex<E>, ArrayList<Arc>> retweetHashMap) throws IOException {
+    public void writeRetweetFile(HashMap<Vertex<E>, ArrayList<Arc<E>>> retweetHashMap) throws IOException {
         File file = TwitterFileService.createFile("Testing", "testingWriter.txt");
 
         StringBuilder sb = new StringBuilder();
@@ -18,7 +18,7 @@ public class RetweetFileService<E> {
                 sb.append(vertex.getLabel()).append("[");
                 for (int i = 0; i < retweetHashMap.get(vertex).size(); i++) {
                     // lets worry about getting it to print properly to the terminal and not to the file yet..
-                    sb.append(retweetHashMap.get(vertex).get(i).vertex.getLabel());
+                    sb.append(retweetHashMap.get(vertex).get(i).getVertex().getLabel());
                     sb.append("(").append(vertex.getWeight()).append(")").append(", ");
                 }
                 sb.replace(sb.length() - 2, sb.length() , "");
