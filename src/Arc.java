@@ -15,6 +15,8 @@ public class Arc<E>{
 
     public void incrementWeight(){ weight ++; }
 
+    public void decrementWeight(){ weight--; }
+
     public String toString(){
         return vertex.toString() + " arc weight: " + weight;
     }

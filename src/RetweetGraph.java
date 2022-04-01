@@ -41,6 +41,10 @@ public class RetweetGraph<T> implements DirectedGraph<T> {
             return;
         }
 
+        if(arc.getWeight() > 1){
+            arc.decrementWeight();
+            return;
+        }
         graph.get(vertex).remove(arc);
         if (graph.get(vertex).isEmpty()){
             graph.remove(vertex);
