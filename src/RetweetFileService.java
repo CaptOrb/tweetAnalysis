@@ -32,7 +32,7 @@ public class RetweetFileService<E> {
                 }
 
                 sb.append("]");
-                System.out.println(sb);
+              //  System.out.println(sb);
                 pw.println(sb);
                 sb.setLength(0);
                 pw.flush();

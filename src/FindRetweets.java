@@ -36,10 +36,12 @@ public class FindRetweets {
 
     public void toPutIntoHashMap(Configuration configuration) throws IOException {
         RetweetGraph<String> rtGraph = new RetweetGraph<>();
+
+        List<Vertex<String>> allVerticesInGraph = rtGraph.getAllVerticesInGraph();
         for (String rt : retweets) {
             String[] line = rt.split("\t"); //line[0] contains user, line[1] contains the user they are retweeting
-            Vertex<String> srcVertex = getVertex(line[0], rtGraph.getAllVerticesInGraph());
-            Vertex<String> destVertex = getVertex(line[1], rtGraph.getAllVerticesInGraph());
+            Vertex<String> srcVertex = getVertex(line[0], allVerticesInGraph);
+            Vertex<String> destVertex = getVertex(line[1], allVerticesInGraph);
             Arc<String> myArc = new Arc<>(destVertex, +1);
             // Maintain list of users in graph
             rtGraph.controlUsers(srcVertex);
