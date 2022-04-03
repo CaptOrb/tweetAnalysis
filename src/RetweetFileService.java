@@ -1,8 +1,8 @@
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Map;
 
+// HANDLES reading and writing to/from the graph output fileadd
 public class RetweetFileService<E> extends FileService {
 
     public void writeRetweetFile(Map<Vertex<E>, ArrayList<Arc<E>>> retweetHashMap,
