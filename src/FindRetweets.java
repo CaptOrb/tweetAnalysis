@@ -26,6 +26,8 @@ public class FindRetweets {
                     }
                 } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
                     System.out.println("invalid line format - skipped");
+                } catch (Exception exception){
+                    String k = "asd";
                 }
             }
         } catch (IOException | NullPointerException fnfe) {
@@ -37,15 +39,12 @@ public class FindRetweets {
     public void toPutIntoHashMap(Configuration configuration) throws IOException {
         RetweetGraph<String> rtGraph = new RetweetGraph<>();
 
-        List<Vertex<String>> allVerticesInGraph = rtGraph.getAllVerticesInGraph();
+        Map<String, Vertex<String>> allVerticesInGraph = rtGraph.getAllVerticesInGraph();
         for (String rt : retweets) {
             String[] line = rt.split("\t"); //line[0] contains user, line[1] contains the user they are retweeting
             Vertex<String> srcVertex = getVertex(line[0], allVerticesInGraph);
             Vertex<String> destVertex = getVertex(line[1], allVerticesInGraph);
             Arc<String> myArc = new Arc<>(destVertex, +1);
-            // Maintain list of users in graph
-            rtGraph.controlUsers(srcVertex);
-            rtGraph.controlUsers(destVertex);
 
             rtGraph.addArc(srcVertex, myArc);
             //to check that getLabelBetweenVertices works
@@ -57,14 +56,12 @@ public class FindRetweets {
         rs.writeRetweetFile(rtGraph.getGraph(), configuration);
     }
 
-    private Vertex<String> getVertex(String label, List<Vertex<String>> usersInGraph) {
+    private Vertex<String> getVertex(String label, Map<String,Vertex<String>> usersInGraph) {
         // check list of existing users
         // if user exists, then return user
         // if not create a new user with given label and return
-        for (Vertex<String> user : usersInGraph) {
-            if (user.getLabel().equals(label)) {
-                return user;
-            }
+        if( usersInGraph.containsKey(label) ){
+            return usersInGraph.get(label);
         }
         return new Vertex<String>(label);
     }
