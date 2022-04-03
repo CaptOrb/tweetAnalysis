@@ -25,7 +25,7 @@ public class Sprint3 {
             FindRetweets findRetweets = new FindRetweets();
 
             if (dataFile.exists()) {
-                findRetweets.readRetweetsIntoSet(dataFile);
+                findRetweets.initialiseRetweets(dataFile);
             }
             RetweetGraph<String> rtGraph = findRetweets.toPutIntoHashMap(configuration);
 

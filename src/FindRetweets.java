@@ -1,6 +1,4 @@
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
@@ -11,6 +9,7 @@ public class FindRetweets {
         return retweets;
     }
 
+    public void toPutIntoHashMap(Configuration configuration) throws IOException {
     //Any retweets are now contained in arraylist retweets:
     public void readRetweetsIntoSet(File file) {
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
@@ -66,5 +65,11 @@ public class FindRetweets {
             return usersInGraph.get(label);
         }
         return new Vertex<String>(label);
+    }
+
+    public void initialiseRetweets(File dataFile) {
+        RetweetFileService<String> rfs = new RetweetFileService<>();
+
+        getRetweets().addAll(rfs.readRetweetsIntoSet(dataFile));
     }
 }

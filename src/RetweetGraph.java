@@ -98,7 +98,7 @@ public class RetweetGraph<T> implements DirectedGraph<T> {
                 }
             }
         }
-            return false;
+        return false;
 
     }
 
