@@ -28,9 +28,9 @@ public class Sprint3 {
             if (dataFile.exists()) {
                 findRetweets.initialiseRetweets(dataFile);
             }
+            // graph for using implemented methods on
+            // see RetweetGraph.java for description of public methods
             RetweetGraph<String> rtGraph = findRetweets.toPutIntoHashMap(configuration);
-            String k="sdknfkd";
-
 
             int option = 0;
 
