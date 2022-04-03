@@ -9,7 +9,7 @@ public class RetweetGraph<T> implements DirectedGraph<T> {
 
     public Map<T, Vertex<T>> getAllVerticesInGraph() { return allVerticesInGraph; }
 
-   public ArrayList<Arc<T>> getAdjVertices(Vertex<T> key) { return graph.get(key); }
+    public ArrayList<Arc<T>> getAdjVertices(Vertex<T> key) { return graph.get(key); }
 
 
     @Override
@@ -92,7 +92,7 @@ public class RetweetGraph<T> implements DirectedGraph<T> {
                 }
             }
         }
-            return false;
+        return false;
 
     }
 

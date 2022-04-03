@@ -9,7 +9,7 @@ import java.util.HashSet;
 //It also stores the @userhandle, the location, the short biography, number of followers of the user. One user is stored per line, using tabs to delimit the fields of the entry.
 //The code checks that the user or tweet is not in the file and so doesn't store duplicates
 //The files are opened and written to in append mode
-public class TwitterFileService {
+public class TwitterFileService extends FileService {
 
     private final HashSet<Long> foundTweetIDS = new HashSet<>();
     private final HashSet<String> foundUserHandles = new HashSet<>();
@@ -62,15 +62,6 @@ public class TwitterFileService {
         }
     }
 
-    static File createFile(String directory, String fileName) throws IOException {
-        File file = new File(directory, fileName);
-        if (file.getParentFile() != null) {
-            file.getParentFile().mkdirs();
-        }
-        file.createNewFile();
-
-        return file;
-    }
 
     public void writeTweet(Status tweet, boolean retweet, Configuration configuration) throws IOException {
         File file = createFile(configuration.getDataDirectory(), configuration.getDataFile());
