@@ -27,16 +27,9 @@ public class Sprint3 {
             if (dataFile.exists()) {
                 findRetweets.initialiseRetweets(dataFile);
             }
+            // graph for using implemented methods on
+            // see RetweetGraph.java for description of public methods
             RetweetGraph<String> rtGraph = findRetweets.toPutIntoHashMap(configuration);
-            String k="sdknfkd";
-
-            // test vertex1:
-            // findRetweets.getVertex("@twitterHandle", rtGraph.getAllVerticesInGraph());
-
-            // test vertex2
-            // findRetweets.getVertex("@twitterHandle2", rtGraph.getAllVerticesInGraph());
-
-            // rtGraph.getLabelBetweenVertices(vertex1, vertex2);
 
         } catch (IOException e) {
             e.printStackTrace();
