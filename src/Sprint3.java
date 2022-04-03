@@ -28,6 +28,7 @@ public class Sprint3 {
                 findRetweets.initialiseRetweets(dataFile);
             }
             RetweetGraph<String> rtGraph = findRetweets.toPutIntoHashMap(configuration);
+            String k="sdknfkd";
 
             // test vertex1:
             // findRetweets.getVertex("@twitterHandle", rtGraph.getAllVerticesInGraph());

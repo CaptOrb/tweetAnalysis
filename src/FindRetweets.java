@@ -9,32 +9,6 @@ public class FindRetweets {
         return retweets;
     }
 
-    public void toPutIntoHashMap(Configuration configuration) throws IOException {
-    //Any retweets are now contained in arraylist retweets:
-    public void readRetweetsIntoSet(File file) {
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] lineContents = line.split("\t");
-                try {
-                    Long.parseLong(lineContents[0]);
-                    String[] findRetweet = lineContents[2].split(" "); //lineContents[2] is "RT @RetweetedUser tweetText" if it's a retweet
-                    if (findRetweet[0].contains("RT") && findRetweet[1].contains("@")) {
-                        String username = findRetweet[1].replaceAll(":", ""); //remove : after the retweeted user
-                        retweets.add(lineContents[1] + "\t" + username); //adds @User + "\t" + @RetweetedUser and whatever they tweeted
-                    }
-                } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-                    System.out.println("invalid line format - skipped");
-                } catch (Exception exception){
-                    String k = "asd";
-                }
-            }
-        } catch (IOException | NullPointerException fnfe) {
-            fnfe.printStackTrace();
-        }
-
-    }
-
     public RetweetGraph<String> toPutIntoHashMap(Configuration configuration) throws IOException {
         RetweetGraph<String> rtGraph = new RetweetGraph<>();
 
