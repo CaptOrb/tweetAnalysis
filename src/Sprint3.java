@@ -1,3 +1,5 @@
+import com.sun.corba.se.impl.orbutil.graph.Graph;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,7 +27,15 @@ public class Sprint3 {
             if (dataFile.exists()) {
                 findRetweets.readRetweetsIntoSet(dataFile);
             }
-            findRetweets.toPutIntoHashMap(configuration);
+            RetweetGraph<String> rtGraph = findRetweets.toPutIntoHashMap(configuration);
+
+            // test vertex1:
+            // findRetweets.getVertex("@twitterHandle", rtGraph.getAllVerticesInGraph());
+
+            // test vertex2
+            // findRetweets.getVertex("@twitterHandle2", rtGraph.getAllVerticesInGraph());
+
+            // rtGraph.getLabelBetweenVertices(vertex1, vertex2);
 
         } catch (IOException e) {
             e.printStackTrace();

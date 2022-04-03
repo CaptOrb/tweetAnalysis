@@ -36,7 +36,7 @@ public class FindRetweets {
 
     }
 
-    public void toPutIntoHashMap(Configuration configuration) throws IOException {
+    public RetweetGraph<String> toPutIntoHashMap(Configuration configuration) throws IOException {
         RetweetGraph<String> rtGraph = new RetweetGraph<>();
 
         Map<String, Vertex<String>> allVerticesInGraph = rtGraph.getAllVerticesInGraph();
@@ -54,9 +54,11 @@ public class FindRetweets {
         RetweetFileService<String> rs = new RetweetFileService<>();
 
         rs.writeRetweetFile(rtGraph.getGraph(), configuration);
+
+        return rtGraph;
     }
 
-    private Vertex<String> getVertex(String label, Map<String,Vertex<String>> usersInGraph) {
+    public Vertex<String> getVertex(String label, Map<String,Vertex<String>> usersInGraph) {
         // check list of existing users
         // if user exists, then return user
         // if not create a new user with given label and return
