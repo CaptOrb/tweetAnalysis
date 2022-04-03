@@ -2,6 +2,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Map;
 
+// HANDLES reading and writing to/from the graph output fileadd
 public class RetweetFileService<E> extends FileService {
 
     public void writeRetweetFile(Map<Vertex<E>, ArrayList<Arc<E>>> retweetHashMap,
@@ -16,7 +17,7 @@ public class RetweetFileService<E> extends FileService {
 
             for (Vertex<E> vertex : retweetHashMap.keySet()) {
 
-                    sb.append(vertex.getLabel()).append(" [");
+                sb.append(vertex.getLabel()).append(" [");
 
                 for (int i = 0; i < retweetHashMap.get(vertex).size(); i++) {
                     if (i > 0) {
@@ -41,7 +42,7 @@ public class RetweetFileService<E> extends FileService {
     }
 
     public ArrayList<String> readRetweetsIntoSet(File file) {
-         final ArrayList<String> retweets = new ArrayList<>();
+        final ArrayList<String> retweets = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -55,7 +56,7 @@ public class RetweetFileService<E> extends FileService {
                     }
                 } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
                     System.out.println("invalid line format - skipped");
-                } catch (Exception exception){
+                } catch (Exception exception) {
                     String k = "asd";
                 }
             }
@@ -65,5 +66,37 @@ public class RetweetFileService<E> extends FileService {
         return retweets;
 
     }
+
+
+/*    public RetweetGraph<String> readGraphFile(File file) {
+
+        RetweetGraph<String> rt = new RetweetGraph<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] lineContents = line.split(" ");
+
+                Vertex<String> sourceVertex = FindRetweets.getVertex(lineContents[0], rt.getAllVerticesInGraph());
+
+                // need to set vertex weights
+                // need to separate userhandles from weights somehow
+                for (int i = 1; i < lineContents.length; i++) {
+
+                    Vertex<String> destVertex = FindRetweets.getVertex(lineContents[i], rt.getAllVerticesInGraph());
+
+                    Arc<String> myArc = new Arc<>(destVertex, +1);
+
+                    rt.addArc(sourceVertex, myArc);
+                    rt.controlUsers(destVertex);
+                }
+                rt.controlUsers(sourceVertex);
+            }
+        } catch (IOException | NullPointerException fnfe) {
+            fnfe.printStackTrace();
+        }
+        return rt;
+
+    }*/
 
 }
