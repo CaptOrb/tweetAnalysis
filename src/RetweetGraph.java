@@ -1,3 +1,9 @@
+// Implementation of a directed graph to graph retweets
+// addArc method is used to build the graph and link a retweeter to their retweeted
+// getRetweeted method returns a list of retweeted users by a given retweeter
+// hasArcBetween method indicates whether a user is connected to another user by retweeting/ being retweeted by them
+// getLabelBetweenVertices method will indicate number of times retweeted ( the label on the arc )
+
 import java.util.*;
 
 public class RetweetGraph<T> implements DirectedGraph<T> {
@@ -9,7 +15,7 @@ public class RetweetGraph<T> implements DirectedGraph<T> {
 
     public Map<T, Vertex<T>> getAllVerticesInGraph() { return allVerticesInGraph; }
 
-    public ArrayList<Arc<T>> getAdjVertices(Vertex<T> key) { return graph.get(key); }
+    public ArrayList<Arc<T>> getRetweeted(Vertex<T> key) { return graph.get(key); }
 
 
     @Override
