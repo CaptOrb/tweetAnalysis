@@ -10,7 +10,7 @@ public class Vertex<T> {
     }
 
     public String toString(){
-        return label.toString() + " ";
+        return "Label: " + label.toString();
     }
 }
 

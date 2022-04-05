@@ -1,15 +1,21 @@
+// Implementation of a directed graph to graph retweets
+// addArc method is used to build the graph and link a retweeter to their retweeted
+// getRetweeted method returns a list of retweeted users by a given retweeter
+// hasArcBetween method indicates whether a user is connected to another user by retweeting/ being retweeted by them
+// getLabelBetweenVertices method will indicate number of times retweeted ( the label on the arc )
+
 import java.util.*;
 
 public class RetweetGraph<T> implements DirectedGraph<T> {
 
     private final Map<Vertex<T>, ArrayList<Arc<T>>> graph = new HashMap<>();
-    private final List<Vertex<T>> allVerticesInGraph = new ArrayList<>();
+    private final Map<T, Vertex<T>> allVerticesInGraph = new HashMap<>();
 
     public Map<Vertex<T>, ArrayList<Arc<T>>> getGraph() { return graph; }
 
-    public List<Vertex<T>> getAllVerticesInGraph() { return allVerticesInGraph; }
+    public Map<T, Vertex<T>> getAllVerticesInGraph() { return allVerticesInGraph; }
 
-   public ArrayList<Arc<T>> getAdjVertices(Vertex<T> key) { return graph.get(key); }
+    public ArrayList<Arc<T>> getRetweeted(Vertex<T> key) { return graph.get(key); }
 
 
     @Override
@@ -72,7 +78,7 @@ public class RetweetGraph<T> implements DirectedGraph<T> {
     @Override
     public boolean hasArcBetween(Vertex<T> vertex1, Vertex<T> vertex2) {
         // check both vertices are in the graph initially
-        if (!allVerticesInGraph.contains(vertex1) && allVerticesInGraph.contains(vertex2)) {
+        if (!allVerticesInGraph.containsKey(vertex1.getLabel()) && allVerticesInGraph.containsKey(vertex2.getLabel())) {
             return false;
         }
 
@@ -92,14 +98,14 @@ public class RetweetGraph<T> implements DirectedGraph<T> {
                 }
             }
         }
-            return false;
+        return false;
 
     }
 
     @Override
     public int getLabelBetweenVertices(Vertex<T> vertex1, Vertex<T> vertex2){
 
-        if (!allVerticesInGraph.contains(vertex1) && allVerticesInGraph.contains(vertex2)) {
+        if (!allVerticesInGraph.containsKey(vertex1.getLabel()) && allVerticesInGraph.containsKey(vertex2.getLabel())) {
             return -1;
         }
 
@@ -126,8 +132,8 @@ public class RetweetGraph<T> implements DirectedGraph<T> {
 
 
     public void controlUsers(Vertex<T> user){
-        if(!allVerticesInGraph.contains(user)){
-            allVerticesInGraph.add(user);
+        if(!allVerticesInGraph.containsKey(user.getLabel())){
+            allVerticesInGraph.put(user.getLabel(), user);
         }
     }
 }
