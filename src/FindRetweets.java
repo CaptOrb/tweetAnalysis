@@ -5,6 +5,7 @@ import java.util.*;
 public class FindRetweets {
 
     private final ArrayList<String> retweets = new ArrayList<>();
+
     public ArrayList<String> getRetweets() {
         return retweets;
     }
@@ -26,16 +27,25 @@ public class FindRetweets {
         }
         RetweetFileService<String> rs = new RetweetFileService<>();
 
-        rs.writeRetweetFile(rtGraph.getGraph(), configuration);
+        String outputFile;
+        if (a == 0) {
+            outputFile = configuration.getRTGRAPH_OUTPUT_FILE();
+        } else {
+            outputFile = configuration.getRTWEETEDGRAPH_OUTPUT_FILE();
+        }
+
+        rs.writeRetweetFile(rtGraph.getGraph(),
+                new File(configuration.getGRAPH_DIRECTORY(),
+                        outputFile));
 
         return rtGraph;
     }
 
-    public Vertex<String> getVertex(String label, Map<String,Vertex<String>> usersInGraph) {
+    public Vertex<String> getVertex(String label, Map<String, Vertex<String>> usersInGraph) {
         // check list of existing users
         // if user exists, then return user
         // if not create a new user with given label and return
-        if( usersInGraph.containsKey(label) ){
+        if (usersInGraph.containsKey(label)) {
             return usersInGraph.get(label);
         }
         return new Vertex<String>(label);

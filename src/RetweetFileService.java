@@ -5,11 +5,7 @@ import java.util.Map;
 // HANDLES reading and writing to/from the graph output fileadd
 public class RetweetFileService<E> extends FileService {
 
-    public void writeRetweetFile(Map<Vertex<E>, ArrayList<Arc<E>>> retweetHashMap,
-                                 Configuration configuration) throws IOException {
-
-        File file = createFile(configuration.getGRAPH_DIRECTORY(),
-                configuration.getRTGRAPH_OUTPUT_FILE());
+    public void writeRetweetFile(Map<Vertex<E>, ArrayList<Arc<E>>> retweetHashMap, File file) throws IOException {
 
         StringBuilder sb = new StringBuilder();
 

@@ -21,6 +21,7 @@ public class Configuration {
     private String USER_FILE;
     private String GRAPH_DIRECTORY;
     private String RTGRAPH_OUTPUT_FILE;
+    private String RTWEETEDGRAPH_OUTPUT_FILE;
     private String LANGUAGE;
     private String BATCH_SIZE;
     private String SLEEP_TIME;
@@ -56,6 +57,10 @@ public class Configuration {
 
     public String getRTGRAPH_OUTPUT_FILE() {
         return RTGRAPH_OUTPUT_FILE;
+    }
+
+    public String getRTWEETEDGRAPH_OUTPUT_FILE() {
+        return RTWEETEDGRAPH_OUTPUT_FILE;
     }
 
     public String getACCESS_TOKEN() {
@@ -117,6 +122,7 @@ public class Configuration {
             configuration.USER_FILE = properties.getProperty("USER_FILE");
             configuration.GRAPH_DIRECTORY = properties.getProperty("GRAPH_OUTPUT_DIRECTORY");
             configuration.RTGRAPH_OUTPUT_FILE = properties.getProperty("RTGRAPH_OUTPUT_FILE");
+            configuration.RTWEETEDGRAPH_OUTPUT_FILE = properties.getProperty("RETWEETGPHOUTPUTFILE");
             configuration.SLEEP_TIME = properties.getProperty("SLEEPTIMEMS");
             configuration.LANGUAGE = properties.getProperty("LANGUAGE");
             configuration.BATCH_SIZE = properties.getProperty("BATCH_SIZE");
