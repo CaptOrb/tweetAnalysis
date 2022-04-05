@@ -28,7 +28,7 @@ public class Sprint4 {
             RetweetGraph<String> retweetedGraph = findRetweets.toPutIntoHashMap(configuration, 1, 0);
 
             findEvangelists findEvangelist = new findEvangelists();
-            findEvangelist.top100(retweetedGraph);
+            findEvangelist.findTotalRetweets(retweetedGraph);
 
         } catch (IOException e) {
             e.printStackTrace();
