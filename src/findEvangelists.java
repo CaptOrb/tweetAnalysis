@@ -16,16 +16,16 @@ public class findEvangelists {
             for (int i = 0; i < retweetedGraph.getGraph().get(vertex).size(); i++) {
                 totalRetweets += retweetedGraph.getGraph().get(vertex).get(i).getWeight();
             }
-            System.out.println(vertex);
-            System.out.println(totalRetweets);
+          //  System.out.println(vertex);
+           // System.out.println(totalRetweets);
             retweetsHashMap.put(vertex, totalRetweets);
         }
 
         List<Map.Entry<Vertex<String>, Integer>> topNRetweeted = sortMostRetweeted(retweetsHashMap);
 
-        for (Map.Entry<Vertex<String>, Integer> vertex : topNRetweeted) {
-            //System.out.println(vertex.getKey());
-            evangelistsHashMap.put(vertex.getKey(), vertex.getValue());
+        for (int i = 0; i < 100; i++) {
+            evangelistsHashMap.put(topNRetweeted.get(i).getKey(), topNRetweeted.get(i).getValue());
+            System.out.println(topNRetweeted.get(i).getKey());
         }
     }
 
