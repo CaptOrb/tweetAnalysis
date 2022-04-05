@@ -30,7 +30,9 @@ public class Sprint3 {
             }
             // graph for using implemented methods on
             // see RetweetGraph.java for description of public methods
-            RetweetGraph<String> rtGraph = findRetweets.toPutIntoHashMap(configuration);
+            RetweetGraph<String> rtGraph = findRetweets.toPutIntoHashMap(configuration, 0,1);
+            RetweetGraph<String> rtGraph1 = findRetweets.toPutIntoHashMap(configuration, 1,0);
+
 
             int option = 0;
 
