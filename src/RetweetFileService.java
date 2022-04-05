@@ -7,6 +7,8 @@ public class RetweetFileService<E> extends FileService {
 
     public void writeRetweetFile(Map<Vertex<E>, ArrayList<Arc<E>>> retweetHashMap, File file) throws IOException {
 
+        createFile(file.getParent(), file.getName());
+
         StringBuilder sb = new StringBuilder();
 
         try (PrintWriter pw = new PrintWriter(new FileWriter(file))) {
