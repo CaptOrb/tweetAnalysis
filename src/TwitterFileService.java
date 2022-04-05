@@ -31,7 +31,7 @@ public class TwitterFileService extends FileService {
                 foundTweetIDS.add(Long.parseLong(lineContents[0]));
                 foundUserHandles.add(lineContents[1]);
             }
-        } catch (IOException | NullPointerException fnfe) {
+        } catch (IOException | NullPointerException | NumberFormatException fnfe) {
             fnfe.printStackTrace();
         }
 
