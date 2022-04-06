@@ -1,11 +1,18 @@
+package org.tojaco.FileIO;
+
+import org.tojaco.Graph.Arc;
+import org.tojaco.Graph.Vertex;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Map;
 
-// HANDLES reading and writing to/from the graph output fileadd
+// HANDLES reading and writing to/from the graph output file
 public class RetweetFileService<E> extends FileService {
 
     public void writeRetweetFile(Map<Vertex<E>, ArrayList<Arc<E>>> retweetHashMap, File file) throws IOException {
+
+        createFile(file.getParent(), file.getName());
 
         StringBuilder sb = new StringBuilder();
 
@@ -64,24 +71,24 @@ public class RetweetFileService<E> extends FileService {
     }
 
 
-/*    public RetweetGraph<String> readGraphFile(File file) {
+/*    public org.tojaco.Graph.RetweetGraph<String> readGraphFile(File file) {
 
-        RetweetGraph<String> rt = new RetweetGraph<>();
+        org.tojaco.Graph.RetweetGraph<String> rt = new org.tojaco.Graph.RetweetGraph<>();
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
 
             String line;
             while ((line = br.readLine()) != null) {
                 String[] lineContents = line.split(" ");
 
-                Vertex<String> sourceVertex = FindRetweets.getVertex(lineContents[0], rt.getAllVerticesInGraph());
+                org.tojaco.Graph.Vertex<String> sourceVertex = org.tojaco.FindRetweets.getVertex(lineContents[0], rt.getAllVerticesInGraph());
 
                 // need to set vertex weights
                 // need to separate userhandles from weights somehow
                 for (int i = 1; i < lineContents.length; i++) {
 
-                    Vertex<String> destVertex = FindRetweets.getVertex(lineContents[i], rt.getAllVerticesInGraph());
+                    org.tojaco.Graph.Vertex<String> destVertex = org.tojaco.FindRetweets.getVertex(lineContents[i], rt.getAllVerticesInGraph());
 
-                    Arc<String> myArc = new Arc<>(destVertex, +1);
+                    org.tojaco.Graph.Arc<String> myArc = new org.tojaco.Graph.Arc<>(destVertex, +1);
 
                     rt.addArc(sourceVertex, myArc);
                     rt.controlUsers(destVertex);

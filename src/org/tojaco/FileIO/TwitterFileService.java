@@ -1,3 +1,6 @@
+package org.tojaco.FileIO;
+
+import org.tojaco.Configuration;
 import twitter4j.Status;
 import twitter4j.User;
 
@@ -31,7 +34,7 @@ public class TwitterFileService extends FileService {
                 foundTweetIDS.add(Long.parseLong(lineContents[0]));
                 foundUserHandles.add(lineContents[1]);
             }
-        } catch (IOException | NullPointerException fnfe) {
+        } catch (IOException | NullPointerException | NumberFormatException fnfe) {
             fnfe.printStackTrace();
         }
 

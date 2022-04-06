@@ -1,3 +1,5 @@
+package org.tojaco.Graph;
+
 public class Vertex<T> {
     private final T label;
     private int influence;
@@ -6,7 +8,7 @@ public class Vertex<T> {
 
     public void addToInfluence(int retweets){ influence += retweets; }
 
-    Vertex(T label) {
+    public Vertex(T label) {
         this.label = label;
     }
 

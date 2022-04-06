@@ -1,3 +1,5 @@
+package org.tojaco;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -6,7 +8,7 @@ import java.util.*;
 import twitter4j.*;
 import twitter4j.conf.ConfigurationBuilder;
 
-// This Configuration class is for loading a configuration file with the necessary named parameters for the task
+// This org.tojaco.Configuration class is for loading a configuration file with the necessary named parameters for the task
 //(directory names, file names, Twitter keys, numeric settings, etc.).
 
 public class Configuration {
