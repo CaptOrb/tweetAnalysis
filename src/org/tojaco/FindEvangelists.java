@@ -4,7 +4,7 @@ import org.tojaco.Graph.*;
 
 import java.util.*;
 
-public class FindEvangeLists {
+public class FindEvangelists {
     private final Map<Vertex<String>, Integer> retweetsHashMap = new HashMap<>();
     private final Map<Vertex<String>, Integer> evangelistsHashMap = new HashMap<>();
 
