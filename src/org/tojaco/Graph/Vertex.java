@@ -2,11 +2,11 @@ package org.tojaco.Graph;
 
 public class Vertex<T> {
     private final T label;
-    private int influence;
+    private int stance;
 
-    public int getInfluence(){ return influence; }
+    public int getStance(){ return stance; }
 
-    public void addToInfluence(int retweets){ influence += retweets; }
+    public void setStance(int stance){ this.stance = stance; }
 
     public Vertex(T label) {
         this.label = label;

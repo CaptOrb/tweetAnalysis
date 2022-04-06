@@ -92,6 +92,11 @@ public class Main {
 
                 FindEvangeLists findEvangelist = new FindEvangeLists();
                 findEvangelist.findTotalRetweets(retweetedGraph);
+
+                RetweetGraphAnalyser graphAnalyser = new RetweetGraphAnalyser();
+                for( int i =0; i < 20; i++) {
+                    //graphAnalyser.assignUserStances(rtGraph);
+                }
                 break;
         }
 
