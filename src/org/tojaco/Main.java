@@ -2,6 +2,7 @@ package org.tojaco;
 
 import org.tojaco.FileIO.TwitterFileService;
 import org.tojaco.Graph.*;
+import org.tojaco.GraphAnalysis.RetweetGraphAnalyser;
 import twitter4j.TwitterFactory;
 
 import java.util.Scanner;

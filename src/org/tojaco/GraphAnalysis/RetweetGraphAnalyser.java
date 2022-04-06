@@ -1,4 +1,4 @@
-package org.tojaco;
+package org.tojaco.GraphAnalysis;
 
 import org.tojaco.Graph.Arc;
 import org.tojaco.Graph.RetweetGraph;
