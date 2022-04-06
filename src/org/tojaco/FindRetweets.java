@@ -1,3 +1,8 @@
+package org.tojaco;
+
+import org.tojaco.FileIO.RetweetFileService;
+import org.tojaco.Graph.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -51,9 +56,11 @@ public class FindRetweets {
         return new Vertex<String>(label);
     }
 
-    public void initialiseRetweets(File dataFile) {
+    public ArrayList<String> initialiseRetweets(File dataFile) {
         RetweetFileService<String> rfs = new RetweetFileService<>();
 
         getRetweets().addAll(rfs.readRetweetsIntoSet(dataFile));
+
+        return retweets;
     }
 }

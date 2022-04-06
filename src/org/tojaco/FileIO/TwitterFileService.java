@@ -1,3 +1,6 @@
+package org.tojaco.FileIO;
+
+import org.tojaco.Configuration;
 import twitter4j.Status;
 import twitter4j.User;
 
