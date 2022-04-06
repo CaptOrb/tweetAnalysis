@@ -90,7 +90,7 @@ public class Main {
 
                 RetweetGraph<String> retweetedGraph = findRetweets.toPutIntoHashMap(configuration, 1, 0);
 
-                FindEvangeLists findEvangelist = new FindEvangeLists();
+                FindEvangelists findEvangelist = new FindEvangelists();
                 findEvangelist.findTotalRetweets(retweetedGraph);
 
                 RetweetGraphAnalyser graphAnalyser = new RetweetGraphAnalyser();
