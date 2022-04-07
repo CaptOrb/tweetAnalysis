@@ -1,3 +1,37 @@
+@BernieSpofforth anti
+@JamesMelville anti
+@EssexPR anti
+Label: @alanvibe anti
+Label: @GillianMcKeith anti
+Label: @jackjohnsoniv7 pro
+Label: @RealCandaceO anti
+Label: @org_scp anti
+Label: @BananaMediaQ anti
+Label: @Togetherdec anti
+Label: @ginacarano anti
+Label: @JamesfWells anti
+Label: @LozzaFox anti
+Label: @djlange anti
+Label: @kernaghanscott5 anti
+Label: @gbrough10 anti
+Label: @catturd2 anti
+Label: @EU_Commission pro
+Label: @TonyHinton2016 anti
+Label: @ToniaBuxton anti
+Label: @CaoimhinFachtna anti
+Label: @HPVSideEffects anti
+Label: @PeterDooleyDUB anti
+Label: @CTZebra pro
+Label: @atensnut anti
+Label: @greenhousemd pro
+Label: @HumanRights4UK anti
+Label: @profnfenton anti
+Label: @ProtestNews_EN anti
+Label: @wqbelle pro
+Label: @VigilantFox anti
+Label: @CarymaRules pro
+Label: @davidkurten anti
+
 Starting from 34 in top100
 Label: @RealJamesWoods anti
 Label: @Karenlovecheese pro
@@ -103,6 +137,10 @@ Label: @Timcast	 idk
 Label: @WithyGrove anti
 Label: @hugotalks1 anti
 Label: @nick_the_geek78	anti
+
+Label: @shazmamithani pro
+Label: @georgehahn pro
+Label: @BransfieldRob pro
 
 Starting from 67 in 100-200
 Label: @KuckelmanAshley pro
