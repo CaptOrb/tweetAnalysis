@@ -27,7 +27,7 @@ public class FindEvangelists {
 
         List<Map.Entry<Vertex<String>, Integer>> topNRetweeted = sortMostRetweeted(retweetsHashMap);
 
-        for (int i = 0; i < 200; i++) {
+        for (int i = 0; i < 2; i++) {
             evangelistsHashMap.put(topNRetweeted.get(i).getKey(), topNRetweeted.get(i).getValue());
             System.out.println(topNRetweeted.get(i).getKey());
         }

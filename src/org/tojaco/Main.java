@@ -126,10 +126,10 @@ public class Main {
                     newArc[i] = scanner.next();
                 }
 
-                Vertex<String> start = findRetweets.getVertex(newArc[0], rtGraph.getAllVerticesInGraph());
+                Vertex<String> start = rtGraph.getVertex(newArc[0]);
 
                 // new org.tojaco.Graph.Vertex<String>(newArc[0]);
-                Vertex<String> end = findRetweets.getVertex(newArc[1], rtGraph.getAllVerticesInGraph());
+                Vertex<String> end = rtGraph.getVertex(newArc[1]);
                 //new org.tojaco.Graph.Vertex<String>(newArc[1]);
 
                 if (rtGraph.hasArcBetween(start, end)) {
@@ -151,9 +151,9 @@ public class Main {
                     vertices[i] = scanner.next();
                 }
 
-                Vertex<String> vertex1 = findRetweets.getVertex(vertices[0], rtGraph.getAllVerticesInGraph());
+                Vertex<String> vertex1 = rtGraph.getVertex(vertices[0]);
 
-                Vertex<String> vertex2 = findRetweets.getVertex(vertices[1], rtGraph.getAllVerticesInGraph());
+                Vertex<String> vertex2 = rtGraph.getVertex(vertices[1]);
 
                 boolean hasArc = rtGraph.hasArcBetween(vertex1, vertex2);
 
