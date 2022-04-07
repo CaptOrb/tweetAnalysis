@@ -62,17 +62,18 @@ public class Main {
                 st.streamTweets();
                 break;
             case 3:
-                 findRetweets = new FindRetweets();
-                 rtGraph = findRetweets.toPutIntoHashMap(configuration, 0, 1);
+                findRetweets = new FindRetweets();
+                TwitterUsers<String> usersSprint3 = new TwitterUsers<>();
+                rtGraph = findRetweets.toPutIntoHashMap(configuration, usersSprint3, 0, 1);
 
                 if (dataFile.exists()) {
                     findRetweets.initialiseRetweets(dataFile);
                 }
-                rtGraph1 = findRetweets.toPutIntoHashMap(configuration, 1, 0);
+                rtGraph1 = findRetweets.toPutIntoHashMap(configuration, usersSprint3, 1, 0);
 
                 System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
 
-                showSprint3Options(findRetweets, rtGraph);
+                showSprint3Options(findRetweets, rtGraph, usersSprint3);
                 break;
             case 4:
 
@@ -84,15 +85,16 @@ public class Main {
                 if (dataFile.exists()) {
                     findRetweets.initialiseRetweets(dataFile);
                 }
-                rtGraph = findRetweets.toPutIntoHashMap(configuration, 0, 1);
-                rtGraph1 = findRetweets.toPutIntoHashMap(configuration, 1, 0);
+                TwitterUsers<String> usersSprint4 = new TwitterUsers<>();
+                rtGraph = findRetweets.toPutIntoHashMap(configuration, usersSprint4, 0, 1);
+                rtGraph1 = findRetweets.toPutIntoHashMap(configuration, usersSprint4, 1, 0);
 
                 System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
 
-                RetweetGraph<String> retweetedGraph = findRetweets.toPutIntoHashMap(configuration, 1, 0);
+                RetweetGraph<String> retweetedGraph = findRetweets.toPutIntoHashMap(configuration, usersSprint4, 1, 0);
 
                 FindEvangelists findEvangelist = new FindEvangelists();
-                findEvangelist.findTotalRetweets(retweetedGraph);
+                findEvangelist.findTotalRetweets(retweetedGraph, usersSprint4);
 
                 // initial setup for calculating stances
                 RetweetGraphAnalyser graphAnalyser = new RetweetGraphAnalyser();
@@ -104,7 +106,7 @@ public class Main {
 
     }
 
-    public static void showSprint3Options(FindRetweets findRetweets, RetweetGraph<String> rtGraph) {
+    public static void showSprint3Options(FindRetweets findRetweets, RetweetGraph<String> rtGraph, TwitterUsers<String> users) {
         int option = 0;
 
         System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
@@ -126,10 +128,10 @@ public class Main {
                     newArc[i] = scanner.next();
                 }
 
-                Vertex<String> start = rtGraph.getVertex(newArc[0]);
+                Vertex<String> start = users.getVertex(newArc[0]);
 
                 // new org.tojaco.Graph.Vertex<String>(newArc[0]);
-                Vertex<String> end = rtGraph.getVertex(newArc[1]);
+                Vertex<String> end = users.getVertex(newArc[1]);
                 //new org.tojaco.Graph.Vertex<String>(newArc[1]);
 
                 if (rtGraph.hasArcBetween(start, end)) {
@@ -151,9 +153,9 @@ public class Main {
                     vertices[i] = scanner.next();
                 }
 
-                Vertex<String> vertex1 = rtGraph.getVertex(vertices[0]);
+                Vertex<String> vertex1 = users.getVertex(vertices[0]);
 
-                Vertex<String> vertex2 = rtGraph.getVertex(vertices[1]);
+                Vertex<String> vertex2 = users.getVertex(vertices[1]);
 
                 boolean hasArc = rtGraph.hasArcBetween(vertex1, vertex2);
 

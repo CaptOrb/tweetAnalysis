@@ -15,14 +15,14 @@ public class FindRetweets {
         return retweets;
     }
 
-    public RetweetGraph<String> toPutIntoHashMap(Configuration configuration, int a, int b) throws IOException {
+    public RetweetGraph<String> toPutIntoHashMap(Configuration configuration, TwitterUsers<String> users, int a, int b) throws IOException {
         RetweetGraph<String> rtGraph = new RetweetGraph<>();
 
-        Map<String, Vertex<String>> allVerticesInGraph = rtGraph.getAllVerticesInGraph();
+        //Map<String, Vertex<String>> allVerticesInGraph = rtGraph.getAllVerticesInGraph();
         for (String rt : retweets) {
             String[] line = rt.split("\t"); //line[0] contains user, line[1] contains the user they are retweeting
-            Vertex<String> srcVertex = rtGraph.getVertex(line[a]);
-            Vertex<String> destVertex = rtGraph.getVertex(line[b]);
+            Vertex<String> srcVertex = users.getVertex(line[a]);
+            Vertex<String> destVertex = users.getVertex(line[b]);
             Arc<String> myArc = new Arc<>(destVertex, +1);
 
             rtGraph.addArc(srcVertex, myArc);

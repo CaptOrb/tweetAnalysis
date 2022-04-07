@@ -12,7 +12,7 @@ public class FindEvangelists {
         return evangelistsHashMap;
     }
 
-    public void findTotalRetweets(RetweetGraph<String> retweetedGraph) {
+    public void findTotalRetweets(RetweetGraph<String> retweetedGraph,TwitterUsers<String> users) {
 
         for (Vertex<String> vertex : retweetedGraph.getGraph().keySet()) {
             int totalRetweets = 0;
@@ -31,6 +31,13 @@ public class FindEvangelists {
             evangelistsHashMap.put(topNRetweeted.get(i).getKey(), topNRetweeted.get(i).getValue());
             System.out.println(topNRetweeted.get(i).getKey());
         }
+
+        if(retweetedGraph.getAllVerticesInGraph().containsKey("@tom") && retweetedGraph.getAllVerticesInGraph().containsKey("@conor") ) {
+            users.getVertex("@tom").setStance(1000);
+            users.getVertex("@conor").setStance(-1000);
+        }
+
+        String s = "hell";
     }
 
     private <K, V extends Comparable<? super V>>

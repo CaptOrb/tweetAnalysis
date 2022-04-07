@@ -137,14 +137,4 @@ public class RetweetGraph<T> implements DirectedGraph<T> {
             allVerticesInGraph.put(user.getLabel(), user);
         }
     }
-
-    public Vertex<T> getVertex(T label) {
-        // check list of existing users
-        // if user exists, then return user
-        // if not create a new user with given label and return
-        if (allVerticesInGraph.containsKey(label)) {
-            return allVerticesInGraph.get(label);
-        }
-        return new Vertex<T>(label);
-    }
 }
