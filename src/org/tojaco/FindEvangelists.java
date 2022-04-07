@@ -27,17 +27,10 @@ public class FindEvangelists {
 
         List<Map.Entry<Vertex<String>, Integer>> topNRetweeted = sortMostRetweeted(retweetsHashMap);
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 200; i++) {
             evangelistsHashMap.put(topNRetweeted.get(i).getKey(), topNRetweeted.get(i).getValue());
             System.out.println(topNRetweeted.get(i).getKey());
         }
-
-        if(retweetedGraph.getAllVerticesInGraph().containsKey("@tom") && retweetedGraph.getAllVerticesInGraph().containsKey("@conor") ) {
-            users.getVertex("@tom").setStance(1000);
-            users.getVertex("@conor").setStance(-1000);
-        }
-
-        String s = "hell";
     }
 
     private <K, V extends Comparable<? super V>>

@@ -99,8 +99,9 @@ public class Main {
                 // initial setup for calculating stances
                 RetweetGraphAnalyser graphAnalyser = new RetweetGraphAnalyser();
                 for( int i =0; i < 20; i++) {
-                    //graphAnalyser.assignUserStances(rtGraph);
+                    graphAnalyser.assignUserStances(rtGraph);
                 }
+                System.out.println("fkldhng");
                 break;
         }
 
