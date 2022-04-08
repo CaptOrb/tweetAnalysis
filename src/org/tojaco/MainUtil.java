@@ -5,7 +5,6 @@ import org.tojaco.Graph.Arc;
 import org.tojaco.Graph.RetweetGraph;
 import org.tojaco.Graph.Vertex;
 import org.tojaco.GraphAnalysis.RetweetGraphAnalyser;
-import org.tojaco.GraphAnalysis.Users100;
 import twitter4j.TwitterFactory;
 
 import java.io.File;
@@ -96,9 +95,8 @@ public class MainUtil {
 
                 // get coverage of stances
                 graphAnalyser.calculateCoverage(rtGraph);
-
-                Users100 users100 = new Users100();
-                users100.checkStance(rtGraph);
+                graphAnalyser.caluclatePercentagePositiveStances(rtGraph);
+                graphAnalyser.calculatePercentageNegativeStances(rtGraph);
                 break;
         }
 
