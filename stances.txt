@@ -1,179 +1,170 @@
 @BernieSpofforth anti
 @JamesMelville anti
 @EssexPR anti
-Label: @alanvibe anti
-Label: @GillianMcKeith anti
-Label: @jackjohnsoniv7 pro
-Label: @RealCandaceO anti
-Label: @org_scp anti
-Label: @BananaMediaQ anti
-Label: @Togetherdec anti
-Label: @ginacarano anti
-Label: @JamesfWells anti
-Label: @LozzaFox anti
-Label: @djlange anti
-Label: @kernaghanscott5 anti
-Label: @gbrough10 anti
-Label: @catturd2 anti
-Label: @EU_Commission pro
-Label: @TonyHinton2016 anti
-Label: @ToniaBuxton anti
-Label: @CaoimhinFachtna anti
-Label: @HPVSideEffects anti
-Label: @PeterDooleyDUB anti
-Label: @CTZebra pro
-Label: @atensnut anti
-Label: @greenhousemd pro
-Label: @HumanRights4UK anti
-Label: @profnfenton anti
-Label: @ProtestNews_EN anti
-Label: @wqbelle pro
-Label: @VigilantFox anti
-Label: @CarymaRules pro
-Label: @davidkurten anti
-
-Starting from 34 in top100
-Label: @RealJamesWoods anti
-Label: @Karenlovecheese pro
-Label: @JT4USA anti
-Label: @EliseiNicole anti
-Label: @BKarahalios anti
-Label: @DrHoenderkamp anti
-Label: @mrjamesob pro
-Label: @WhiteCoatWaste anti
-Label: @Eric_Schmitt anti
-Label: @libertytarian anti
-Label: @chiproytx anti
-Label: @danjgregory anti
-Label: @RWTaylors anti
-Label: @MaajidNawaz anti
-Label: @RWMaloneMD anti
-Label: @laworfiction pro
-Label: @TomthunkitsMind pro
-Label: @JuliaHB1 idk
-Label: @Rene4D45 anti
-Label: @mysteriouskat idk
-Label: @TheVoxWolf anti
-Label: @Valkyrie20201 anti
-Label: @beverleyturner anti
-Label: @TheDemCoalition	pro
-Label: @awareness_4all anti
-Label: @SolNataMD pro
-Label: @RefusenikExmoor anti
-Label: @SteveBakerHW pro
-Label: @realDailyWire anti
-Label: @Surabees anti
-Label: @Jemmapalmer anti
-Label: @Andy_In_The_UK anti
-Label: @CarlosSimancas anti
-
-Starting from 67 in top100
-Label: @michaelmalice anti
-Label: @SebGorka anti 
-Label: @PapiTrumpo anti
-Label: @TruthMav anti
-Label: @EricMMatheny anti
-Label: @RpsAgainstTrump pro
-Label: @castterry73	anti
-Label: @ian_charles007 pro
-Label: @Femi_Sorry pro
-Label: @marcowenjones pro
-Label: @Arwenstar	anti
-Label: @MattHoyOfficial anti
-Label: @DrNeilStone pro
-Label: @AmerAcadPeds pro
-Label: @bmay pro
-Label: @NeilClark66 anti
-Label: @mommamia1217 pro
-Label: @NeverSleever anti 
-Label: @Zieleds anti 
-Label: @ChrisLoesch anti
-Label: @taradublinrocks pro
-Label: @Lenabellalou anti 
-Label: @GeorginaLishma1 anti
-Label: @BuffyWicks pro
-Label: @ProfessorFergu1 anti
-Label: @DrIanWeissman pro
-Label: @Gerard39delaney anti
-Label: @BethanyCherisse anti
-Label: @rosellacottage anti
-Label: @LeeroyPress anti
-Label: @parisofprairie pro
-Label: @bblock29 pro
-Label: @DrMadej anti
-Label: @zoeharcombe anti
-
-Starting from 1 in 100-200
-Label: @JasCol29 anti
-Label: @McGiff anti
-Label: @AnnastaciaMP pro
-Label: @Jessicam6946 pro
-Label: @LiberalWarrior_ pro
-Label: @NML_Canada anti
-Label: @Belondyy anti
-Label: @JeffreyPeel anti
-Label: @Qhawe___L anti
-Label: @MarcVegt anti
-Label: @GautengHealth pro
-Label: @ScottAnd67 anti
-Label: @awakenindiamvmt	anti
-Label: @tmprowell pro
-Label: @richardcings anti
-Label: @BorisJohnson_MP pro
-Label: @DarrenPlymouth anti
-Label: @AngelaBelcamino pro
-Label: @TheRightMelissa anti
-Label: @gbrou10 anti
-Label: @mcm_ct anti
-Label: @BetteMidler pro
-Label: @RealPatriot56 anti
-Label: @TeamPelosi pro
-Label: @AmyAThatcher anti
-Label: @MontagueTerrie anti
-Label: @kenolin1 pro
-Label: @voteblue100	pro
-Label: @BareReality	anti
-Label: @Timcast	 idk
-Label: @WithyGrove anti
-Label: @hugotalks1 anti
-Label: @nick_the_geek78	anti
-
-Label: @shazmamithani pro
-Label: @georgehahn pro
-Label: @BransfieldRob pro
-
-Starting from 67 in 100-200
-Label: @KuckelmanAshley pro
-Label: @plasticmartyr pro
-Label: @SLT20201 anti
-Label: @VaccineIn anti
-Label: @meganranney pro
-Label: @wordwhisperer anti
-Label: @Paul_Baro pro
-Label: @TeeAyEmEmWhy anti
-Label: @DrRobDavidson pro
-Label: @AreOhEssEyeEe anti
-Label: @inselratte pro
-Label: @FreeVic_2021 anti
-Label: @NMLockdownsUK anti
-Label: @ReflectionsV2 anti
-Label: @StrumpetsV anti
-Label: @EbonyJHilton_MD pro
-Label: @4a_of pro
-Label: @BadGeannie anti
-Label: @picardonhealth pro
-Label: @RevengeBunny anti
-Label: @PartyOfAction anti
-Label: @Springwoodht pro
-Label: @jedi_fu anti
-Label: @WeAreTheNewz anti
-Label: @jennyeye pro
-Label: @lorrainestv_ads anti
-Label: @PakFightsPolio pro
-Label: @cassandra17lina pro
-Label: @KarenJu62258050 pro
-Label: @Aliciastarr001 anti
-Label: @WeThePeople021 anti
-Label: @michaeljohns idk
-Label: @AMHotFlash pro
-Label: @btaylor_71 anti
+@alanvibe anti
+@GillianMcKeith anti
+@jackjohnsoniv7 pro
+@RealCandaceO anti
+@org_scp anti
+@BananaMediaQ anti
+@Togetherdec anti
+@ginacarano anti
+@JamesfWells anti
+@LozzaFox anti
+@djlange anti
+@kernaghanscott5 anti
+@gbrough10 anti
+@catturd2 anti
+@EU_Commission pro
+@TonyHinton2016 anti
+@ToniaBuxton anti
+@CaoimhinFachtna anti
+@HPVSideEffects anti
+@PeterDooleyDUB anti
+@CTZebra pro
+@atensnut anti
+@greenhousemd pro
+@HumanRights4UK anti
+@profnfenton anti
+@ProtestNews_EN anti
+@wqbelle pro
+@VigilantFox anti
+@CarymaRules pro
+@davidkurten anti
+@RealJamesWoods anti
+@Karenlovecheese pro
+@JT4USA anti
+@EliseiNicole anti
+@BKarahalios anti
+@DrHoenderkamp anti
+@mrjamesob pro
+@WhiteCoatWaste anti
+@Eric_Schmitt anti
+@libertytarian anti
+@chiproytx anti
+@danjgregory anti
+@RWTaylors anti
+@MaajidNawaz anti
+@RWMaloneMD anti
+@laworfiction pro
+@TomthunkitsMind pro
+@JuliaHB1 idk
+@Rene4D45 anti
+@mysteriouskat idk
+@TheVoxWolf anti
+@Valkyrie20201 anti
+@beverleyturner anti
+@TheDemCoalition pro
+@awareness_4all anti
+@SolNataMD pro
+@RefusenikExmoor anti
+@SteveBakerHW pro
+@realDailyWire anti
+@Surabees anti
+@Jemmapalmer anti
+@Andy_In_The_UK anti
+@CarlosSimancas anti
+@michaelmalice anti
+@SebGorka anti 
+@PapiTrumpo anti
+@TruthMav anti
+@EricMMatheny anti
+@RpsAgainstTrump pro
+@castterry73	anti
+@ian_charles007 pro
+@Femi_Sorry pro
+@marcowenjones pro
+@Arwenstar	anti
+@MattHoyOfficial anti
+@DrNeilStone pro
+@AmerAcadPeds pro
+@bmay pro
+@NeilClark66 anti
+@mommamia1217 pro
+@NeverSleever anti 
+@Zieleds anti 
+@ChrisLoesch anti
+@taradublinrocks pro
+@Lenabellalou anti 
+@GeorginaLishma1 anti
+@BuffyWicks pro
+@ProfessorFergu1 anti
+@DrIanWeissman pro
+@Gerard39delaney anti
+@BethanyCherisse anti
+@rosellacottage anti
+@LeeroyPress anti
+@parisofprairie pro
+@bblock29 pro
+@DrMadej anti
+@zoeharcombe anti
+@JasCol29 anti
+@McGiff anti
+@AnnastaciaMP pro
+@Jessicam6946 pro
+@LiberalWarrior_ pro
+@NML_Canada anti
+@Belondyy anti
+@JeffreyPeel anti
+@Qhawe___L anti
+@MarcVegt anti
+@GautengHealth pro
+@ScottAnd67 anti
+@awakenindiamvmt anti
+@tmprowell pro
+@richardcings anti
+@BorisJohnson_MP pro
+@DarrenPlymouth anti
+@AngelaBelcamino pro
+@TheRightMelissa anti
+@gbrou10 anti
+@mcm_ct anti
+@BetteMidler pro
+@RealPatriot56 anti
+@TeamPelosi pro
+@AmyAThatcher anti
+@MontagueTerrie anti
+@kenolin1 pro
+@voteblue100 pro
+@BareReality anti
+@Timcast idk
+@WithyGrove anti
+@hugotalks1 anti
+@nick_the_geek78 anti
+@shazmamithani pro
+@georgehahn pro
+@BransfieldRob pro
+@KuckelmanAshley pro
+@plasticmartyr pro
+@SLT20201 anti
+@VaccineIn anti
+@meganranney pro
+@wordwhisperer anti
+@Paul_Baro pro
+@TeeAyEmEmWhy anti
+@DrRobDavidson pro
+@AreOhEssEyeEe anti
+@inselratte pro
+@FreeVic_2021 anti
+@NMLockdownsUK anti
+@ReflectionsV2 anti
+@StrumpetsV anti
+@EbonyJHilton_MD pro
+@4a_of pro
+@BadGeannie anti
+@picardonhealth pro
+@RevengeBunny anti
+@PartyOfAction anti
+@Springwoodht pro
+@jedi_fu anti
+@WeAreTheNewz anti
+@jennyeye pro
+@lorrainestv_ads anti
+@PakFightsPolio pro
+@cassandra17lina pro
+@KarenJu62258050 pro
+@Aliciastarr001 anti
+@WeThePeople021 anti
+@michaeljohns idk
+@AMHotFlash pro
+@btaylor_71 anti
