@@ -27,6 +27,7 @@ public class Main {
 
             showProgramOptions(configuration, dataFile);
 
+
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -95,6 +96,10 @@ public class Main {
 
                 FindEvangelists findEvangelist = new FindEvangelists();
                 findEvangelist.findTotalRetweets(retweetedGraph, usersSprint4);
+
+                File stanceFile = new File(configuration.getSTANCE_FILE());
+                AssignStances assignStances = new AssignStances();
+                assignStances.determineProAntiVaxEvangelists(findEvangelist.getEvangelistsHashMap(),stanceFile);
 
                 // initial setup for calculating stances
                 RetweetGraphAnalyser graphAnalyser = new RetweetGraphAnalyser();

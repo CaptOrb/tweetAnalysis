@@ -29,7 +29,7 @@ public class FindEvangelists {
 
         for (int i = 0; i < 200; i++) {
             evangelistsHashMap.put(topNRetweeted.get(i).getKey(), topNRetweeted.get(i).getValue());
-            System.out.println(topNRetweeted.get(i).getKey());
+            //System.out.println(topNRetweeted.get(i).getKey());
         }
     }
 
@@ -42,4 +42,5 @@ public class FindEvangelists {
 
         return sortedEntries;
     }
+
 }

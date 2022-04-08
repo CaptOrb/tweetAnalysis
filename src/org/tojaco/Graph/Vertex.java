@@ -23,7 +23,11 @@ public class Vertex<T> {
     }
 
     public String toString(){
-        return "Label: " + label.toString();
+        if(hasStance()==true){
+            return label.toString() + ", Stance = " +  stance;
+        } else{
+            return "Label: " + label.toString();
+        }
     }
 }
 
