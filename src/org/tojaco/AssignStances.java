@@ -18,29 +18,27 @@ public class AssignStances {
             System.out.println("before loop");
             int i = 0;
             int k = 1;
+            Vertex<String> vertexError = null;
             try {
-                for (Vertex<String> vertex : evangelists.keySet()) {
-                    i++;
-                    if (i == 1 || i == 50) {
-                        System.out.println("in middle of loop " + i);
-                    }
-                    while ((line = br.readLine()) != null) {
+                while ((line = br.readLine()) != null) {
+                    for (Vertex<String> vertex : evangelists.keySet()) {
+                        vertexError=vertex;
                         String[] lineContents = line.split(" ");
                         if (lineContents[1].equals("anti")) {
                             if (vertex.getLabel().equals(lineContents[0])) {
                                 vertex.setStance(-1000);
-                                System.out.println(vertex + " " + vertex.getStance());
+                                System.out.println(vertex);
                             }
                         } else if (lineContents[1].equals("pro")) {
                             if (vertex.getLabel().equals(lineContents[0])) {
                                 vertex.setStance(1000);
-                                System.out.println(vertex + " " + vertex.getStance());
+                                System.out.println(vertex);
                             }
                         } //if it equals idk then skip
                     }
                 }
             } catch(ArrayIndexOutOfBoundsException e){
-                System.out.println("Skipped a user" + k++ + " time(s)");
+                System.out.println("Skipped a user" + k++ + " time(s), " + vertexError);
             }
             System.out.println("outside loop");
         } catch (IOException | NullPointerException | NumberFormatException fnfe) {
