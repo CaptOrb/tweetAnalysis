@@ -94,9 +94,9 @@ public class MainUtil {
                 }
 
                 // get coverage of stances
-                graphAnalyser.calculateCoverage(rtGraph);
-                graphAnalyser.caluclatePercentagePositiveStances(rtGraph);
-                graphAnalyser.calculatePercentageNegativeStances(rtGraph);
+                System.out.println(graphAnalyser.calculateCoverage(rtGraph));
+                System.out.println(graphAnalyser.calculatePercentagePositiveStances(rtGraph));
+                System.out.println(graphAnalyser.calculatePercentageNegativeStances(rtGraph));
                 break;
         }
 

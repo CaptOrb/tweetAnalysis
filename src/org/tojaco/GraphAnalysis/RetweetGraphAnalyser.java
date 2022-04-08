@@ -29,7 +29,7 @@ public class RetweetGraphAnalyser {
         return stances / rtGraph.getAllVerticesInGraph().size();
     }
 
-    public float caluclatePercentagePositiveStances(RetweetGraph<String> rtGraph){
+    public float calculatePercentagePositiveStances(RetweetGraph<String> rtGraph){
         float positiveStances = 0;
         float hasStance = 0;
         for(Vertex<String> vertex : rtGraph.getAllVerticesInGraph().values()){
