@@ -27,8 +27,9 @@ public class MainUtil {
 
         FindRetweets findRetweets;
         RetweetGraph<String> rtGraph;
-        RetweetGraph<String> rtGraph1;
-        switch (option){
+        RetweetGraph<String> retweetedGraph;
+
+        switch (option) {
             case 1:
                 TwitterFactory tf = configuration.getTwitterFactory(configuration);
 
@@ -58,7 +59,7 @@ public class MainUtil {
 
                 rtGraph = findRetweets.toPutIntoHashMap(configuration, usersSprint3, 0, 1);
 
-                rtGraph1 = findRetweets.toPutIntoHashMap(configuration, usersSprint3, 1, 0);
+                retweetedGraph = findRetweets.toPutIntoHashMap(configuration, usersSprint3, 1, 0);
 
                 System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
 
@@ -76,7 +77,7 @@ public class MainUtil {
                 }
                 TwitterUsers<String> usersSprint4 = new TwitterUsers<>();
                 rtGraph = findRetweets.toPutIntoHashMap(configuration, usersSprint4, 0, 1);
-                RetweetGraph<String> retweetedGraph = findRetweets.toPutIntoHashMap(configuration, usersSprint4, 1, 0);
+                retweetedGraph = findRetweets.toPutIntoHashMap(configuration, usersSprint4, 1, 0);
                 System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
 
                 FindEvangelists findEvangelist = new FindEvangelists();
@@ -84,7 +85,7 @@ public class MainUtil {
 
                 // initial setup for calculating stances
                 RetweetGraphAnalyser graphAnalyser = new RetweetGraphAnalyser();
-                for( int i =0; i < 20; i++) {
+                for (int i = 0; i < 20; i++) {
                     graphAnalyser.assignUserStances(rtGraph);
                 }
 
