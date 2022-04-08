@@ -3,13 +3,15 @@ package org.tojaco.Graph;
 public class Vertex<T> {
     private final T label;
     private int stance;
-    boolean stanceSet = false;
+    boolean hasStance = false;
 
     public int getStance(){ return stance; }
 
+    public boolean hasStance(){ return hasStance; }
+
     public void setStance(int stance){
         this.stance = stance;
-        stanceSet = true;
+        hasStance = true;
     }
 
     public Vertex(T label) {

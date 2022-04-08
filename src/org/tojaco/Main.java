@@ -101,6 +101,9 @@ public class Main {
                 for( int i =0; i < 20; i++) {
                     graphAnalyser.assignUserStances(rtGraph);
                 }
+
+                // get coverage of stances
+                graphAnalyser.calculateCoverage(rtGraph);
                 break;
         }
 
