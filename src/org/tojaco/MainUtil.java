@@ -90,12 +90,14 @@ public class MainUtil {
 
                 // initial setup for calculating stances
                 RetweetGraphAnalyser graphAnalyser = new RetweetGraphAnalyser();
-                for (int i = 0; i < 20; i++) {
+
+                for (int i = 0; i < 6; i++) {
                     graphAnalyser.assignUserStances(rtGraph);
                 }
 
                 // get coverage of stances
                 graphAnalyser.calculateCoverage(rtGraph);
+
                 graphAnalyser.calculatePercentagePositiveStances(rtGraph);
                 graphAnalyser.calculatePercentageNegativeStances(rtGraph);
 

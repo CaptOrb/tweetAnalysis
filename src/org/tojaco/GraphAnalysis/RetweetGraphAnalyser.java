@@ -8,11 +8,17 @@ public class RetweetGraphAnalyser {
     public void assignUserStances( RetweetGraph<String> rtGraph ){
         for (Vertex<String> vertex : rtGraph.getGraph().keySet()) {
             int totalOfStances = 0;
-            for( Arc<String> arc : rtGraph.getGraph().get(vertex) ){
-                totalOfStances += arc.getVertex().getStance();
+            int numArcs = 0;
+            for (Arc<String> arc : rtGraph.getGraph().get(vertex)) {
+                if (arc.getVertex().hasStance()) {
+                    totalOfStances += arc.getVertex().getStance();
+                    numArcs++;
+                }
             }
-            int stance = totalOfStances/rtGraph.getGraph().get(vertex).size();
-            vertex.setStance(stance);
+            if (numArcs > 0) {
+                int stance = totalOfStances / numArcs;
+                vertex.setStance(stance);
+            }
         }
     }
 
