@@ -83,6 +83,10 @@ public class MainUtil {
                 FindEvangelists findEvangelist = new FindEvangelists();
                 findEvangelist.findTotalRetweets(retweetedGraph, usersSprint4);
 
+                AssignStances assignStances = new AssignStances();
+                File StanceFile = new File(configuration.getSTANCE_FILE());
+                assignStances.determineProAntiVaxEvangelists(findEvangelist.getEvangelistsHashMap(), StanceFile);
+
                 // initial setup for calculating stances
                 RetweetGraphAnalyser graphAnalyser = new RetweetGraphAnalyser();
                 for (int i = 0; i < 20; i++) {
