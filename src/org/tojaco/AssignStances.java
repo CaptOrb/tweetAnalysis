@@ -10,10 +10,7 @@ public class AssignStances {
     public void determineProAntiVaxEvangelists(TwitterUsers<String> twitterUsers, File file) {
 
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-
             String line;
-            System.out.println("before loop");
-
             Vertex<String> vertexError = null;
             try {
                 while ((line = br.readLine()) != null) {
