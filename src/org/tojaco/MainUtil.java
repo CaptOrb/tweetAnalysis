@@ -85,7 +85,7 @@ public class MainUtil {
 
                 AssignStances assignStances = new AssignStances();
                 File StanceFile = new File(configuration.getSTANCE_FILE());
-                assignStances.determineProAntiVaxEvangelists(findEvangelist.getEvangelistsHashMap(), StanceFile);
+                assignStances.determineProAntiVaxEvangelists(usersSprint4, StanceFile);
 
                 // initial setup for calculating stances
                 RetweetGraphAnalyser graphAnalyser = new RetweetGraphAnalyser();
