@@ -25,12 +25,14 @@ public class AssignStances {
 
                     vertexError = vertex;
 
-                    if (lineContents[1].equals("anti") && negFound < 56) {
+                    if (lineContents[1].equals("anti")){
+                            //&& negFound < 56) {
                         if (vertex.getLabel().equals(lineContents[0])) {
                             vertex.setStance(-1000);
                             negFound++;
                         }
-                    } else if (lineContents[1].equals("pro") && posFound < 56) {
+                    } else if (lineContents[1].equals("pro") ){
+                            //&& posFound < 56) {
                         if (vertex.getLabel().equals(lineContents[0])) {
                             vertex.setStance(1000);
                             posFound++;
