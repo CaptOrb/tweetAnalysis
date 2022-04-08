@@ -64,11 +64,13 @@ public class Main {
             case 3:
                 findRetweets = new FindRetweets();
                 TwitterUsers<String> usersSprint3 = new TwitterUsers<>();
-                rtGraph = findRetweets.toPutIntoHashMap(configuration, usersSprint3, 0, 1);
 
                 if (dataFile.exists()) {
                     findRetweets.initialiseRetweets(dataFile);
                 }
+
+                rtGraph = findRetweets.toPutIntoHashMap(configuration, usersSprint3, 0, 1);
+
                 rtGraph1 = findRetweets.toPutIntoHashMap(configuration, usersSprint3, 1, 0);
 
                 System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
@@ -87,11 +89,8 @@ public class Main {
                 }
                 TwitterUsers<String> usersSprint4 = new TwitterUsers<>();
                 rtGraph = findRetweets.toPutIntoHashMap(configuration, usersSprint4, 0, 1);
-                rtGraph1 = findRetweets.toPutIntoHashMap(configuration, usersSprint4, 1, 0);
-
-                System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
-
                 RetweetGraph<String> retweetedGraph = findRetweets.toPutIntoHashMap(configuration, usersSprint4, 1, 0);
+                System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
 
                 FindEvangelists findEvangelist = new FindEvangelists();
                 findEvangelist.findTotalRetweets(retweetedGraph, usersSprint4);
