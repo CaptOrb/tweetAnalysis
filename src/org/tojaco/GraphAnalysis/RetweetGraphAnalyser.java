@@ -4,8 +4,6 @@ import org.tojaco.Graph.Arc;
 import org.tojaco.Graph.RetweetGraph;
 import org.tojaco.Graph.Vertex;
 
-import java.util.ArrayList;
-
 public class RetweetGraphAnalyser {
     public void assignUserStances( RetweetGraph<String> rtGraph ){
         for (Vertex<String> vertex : rtGraph.getGraph().keySet()) {
@@ -30,4 +28,32 @@ public class RetweetGraphAnalyser {
         }
         return stances / rtGraph.getAllVerticesInGraph().size();
     }
+
+    public float caluclatePercentagePositiveStances(RetweetGraph<String> rtGraph){
+        float positiveStances = 0;
+        float hasStance = 0;
+        for(Vertex<String> vertex : rtGraph.getAllVerticesInGraph().values()){
+            if(vertex.hasStance()) {
+                hasStance++;
+                if (vertex.getStance() > 0) {
+                    positiveStances++;
+                }
+            }
+        }
+        return positiveStances / hasStance;
+    }
+    public float calculatePercentageNegativeStances(RetweetGraph<String> rtGraph){
+        float negativeStances = 0;
+        float hasStance = 0;
+        for(Vertex<String> vertex : rtGraph.getAllVerticesInGraph().values()){
+            if(vertex.hasStance()) {
+                hasStance++;
+                if (vertex.getStance() < 0) {
+                    negativeStances++;
+                }
+            }
+        }
+        return negativeStances / hasStance;
+    }
+
 }
