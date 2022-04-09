@@ -102,6 +102,7 @@ public class MainUtil {
                 System.out.println("Coverage in graph: " + graphAnalyser.calculateCoverage(rtGraph));
                // System.out.println("Coverage in retweeted graph: " + graphAnalyser.calculateCoverage(retweetedGraph));
 
+                System.out.println("Users without a stance: " + (1-graphAnalyser.calculateCoverage(rtGraph)));
 
                 System.out.println("positive stances: " + graphAnalyser.calculatePercentagePositiveStances(rtGraph));
                 System.out.println("negative stance: " + graphAnalyser.calculatePercentageNegativeStances(rtGraph));
