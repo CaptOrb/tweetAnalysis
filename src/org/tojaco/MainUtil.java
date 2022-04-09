@@ -92,15 +92,19 @@ public class MainUtil {
                 // initial setup for calculating stances
                 RetweetGraphAnalyser graphAnalyser = new RetweetGraphAnalyser();
 
-                for (int i = 0; i < 10; i++) {
+                for (int i = 0; i < 20; i++) {
                     graphAnalyser.assignUserStances(rtGraph);
+                    graphAnalyser.assignUserStances(retweetedGraph);
+
                 }
 
                 // get coverage of stances
-                System.out.println(graphAnalyser.calculateCoverage(rtGraph));
+                System.out.println("Coverage in retweet graph: " + graphAnalyser.calculateCoverage(rtGraph));
+                System.out.println("Coverage in retweeted graph: " + graphAnalyser.calculateCoverage(retweetedGraph));
 
-                System.out.println(graphAnalyser.calculatePercentagePositiveStances(rtGraph));
-                System.out.println(graphAnalyser.calculatePercentageNegativeStances(rtGraph));
+
+                System.out.println("positive stances in retweet graph: " + graphAnalyser.calculatePercentagePositiveStances(rtGraph));
+                System.out.println("negative stance in retweet graph: " + graphAnalyser.calculatePercentageNegativeStances(rtGraph));
 
                 Users100 users100 = new Users100();
                 users100.checkStance(retweetsHashMap);

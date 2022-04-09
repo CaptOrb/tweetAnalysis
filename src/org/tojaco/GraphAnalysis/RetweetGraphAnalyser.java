@@ -6,9 +6,11 @@ import org.tojaco.Graph.Vertex;
 
 public class RetweetGraphAnalyser {
     public void assignUserStances( RetweetGraph<String> rtGraph ){
+        int totalOfStances = 0;
+        int numArcs = 0;
         for (Vertex<String> vertex : rtGraph.getGraph().keySet()) {
-            int totalOfStances = 0;
-            int numArcs = 0;
+            totalOfStances = 0;
+            numArcs = 0;
             for (Arc<String> arc : rtGraph.getGraph().get(vertex)) {
                 if (arc.getVertex().hasStance()) {
                     totalOfStances += arc.getVertex().getStance();

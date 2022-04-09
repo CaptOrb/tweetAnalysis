@@ -1,100 +1,100 @@
-@jojozeff84, Stance = -990
-Label: @ramadeyrao
-@dare_to_think6, Stance = -986
-Label: @Chewythewookie1
-Label: @TheBattler180
-@davidjthunder, Stance = -985
-@farnsworth_adam, Stance = -985
-@Ohio_buckeye_us, Stance = -981
-@IbarYahawadah, Stance = -971
-Label: @RepBourdeaux
-Label: @NanaChel21
-@Lottieiamfree, Stance = -986
-@piperscreekway, Stance = 980
-@HotelLubyanka, Stance = -985
-@parisofprairie, Stance = 1000
-Label: @Arizona_LP
-Label: @dwmoskowitz
+@jojozeff84, Stance = -826
+@ramadeyrao, Stance = 646
+@dare_to_think6, Stance = -817
+@Chewythewookie1, Stance = 642
+@TheBattler180, Stance = -815
+@davidjthunder, Stance = -827
+@farnsworth_adam, Stance = -733
+@Ohio_buckeye_us, Stance = -829
+@IbarYahawadah, Stance = -823
+@RepBourdeaux, Stance = 578
+@NanaChel21, Stance = 646
+@Lottieiamfree, Stance = -826
+@piperscreekway, Stance = 332
+@HotelLubyanka, Stance = -826
+@parisofprairie, Stance = 597
+@Arizona_LP, Stance = -837
+@dwmoskowitz, Stance = -608
 Label: @AlaRasi123
-@crzywrld519, Stance = -983
-@BreenKing, Stance = -977
-Label: @MojackMarine
-Label: @Gerrythecynic
-Label: @LynnSharig8
-@_AMaldonado_, Stance = 1000
-Label: @45bestwords
-Label: @khuwig1
-@debrollins2nd, Stance = -982
-Label: @ShelbyTNHealth
-Label: @Irma_Spikeymama
-Label: @DrDev7
-Label: @AltSequence
-Label: @ShawnJDaGreat
-@GitteTheron, Stance = -885
-@rutilibus, Stance = -986
+@crzywrld519, Stance = -809
+@BreenKing, Stance = -836
+@MojackMarine, Stance = 625
+@Gerrythecynic, Stance = 765
+@LynnSharig8, Stance = 603
+@_AMaldonado_, Stance = 849
+@45bestwords, Stance = 577
+@khuwig1, Stance = -833
+@debrollins2nd, Stance = -831
+@ShelbyTNHealth, Stance = 843
+@Irma_Spikeymama, Stance = 611
+@DrDev7, Stance = -824
+@AltSequence, Stance = -771
+@ShawnJDaGreat, Stance = -617
+@GitteTheron, Stance = -818
+@rutilibus, Stance = -823
 Label: @Lukedutchh
-@trudygonzales, Stance = 942
-@echo_chamberz, Stance = -983
-Label: @Pirate4Life71
-@Flippy33760140, Stance = -986
-@Mikeggibbs, Stance = 919
-Label: @GetTrollsOut
-Label: @WistfulCass
-Label: @NyakanaNichola1
-Label: @PaulAdamsNo1
-@fourplatekate, Stance = -986
-Label: @nirav_mainecdc
-@girlnasty22, Stance = -982
-@AdamBaldwin, Stance = -987
-Label: @NormanVadnais
-Label: @BhargavaPriyash
-@420DontBeADick, Stance = -976
-@AVPassport, Stance = -983
-Label: @realThasanta
-@RebekahsRight, Stance = -986
-@BabaBoon17, Stance = -992
-Label: @Otto_English
-@maria_alexea, Stance = -985
-@thefreeonline, Stance = -985
-@AilsaForshaw, Stance = -925
-Label: @ArseRustica
-@chibuezze, Stance = 997
-@they_had_names, Stance = -986
-@Blistified, Stance = -979
-Label: @TPUSA
-@CharlieLight14, Stance = -976
-@Fett0071, Stance = -976
-Label: @Huski67
-@URdreamingnow, Stance = -986
-@tudor3of6, Stance = -983
-@Jpana75, Stance = -986
-@mai12635036, Stance = -984
-@Toughbutfair2, Stance = -987
-@DuckieNinja, Stance = 950
-@treesforTrump, Stance = -978
-Label: @MeanwhileinCana
-@DonaldBestCA, Stance = -977
-Label: @AlStewartOBE
-Label: @NithyaRamanath1
-Label: @NewTimesRwanda
-@4HumanUnity, Stance = 1000
-@LaredoLars, Stance = -986
-@Brick715, Stance = 1000
-@Maddiegrant5H, Stance = -901
-Label: @keelinodonoghue
-Label: @BobbyLWesson
-Label: @PalmGardenHC
-@ladyrosmarino, Stance = -985
-@risemelbourne, Stance = -983
-Label: @BadVaccineTakes
-@NewsArmageddon, Stance = -986
-Label: @carlosalazraqui
-@chitownrapper, Stance = -983
-Label: @liberty_places
-@vote4robgill, Stance = 609
-@samuelxgarcia, Stance = -983
-Label: @CaptainMemeOh
-Label: @Chesschick01
-Label: @dasra
-@WHOPakistan, Stance = 1000
-Label: @messageblackman
+@trudygonzales, Stance = 634
+@echo_chamberz, Stance = -841
+@Pirate4Life71, Stance = -799
+@Flippy33760140, Stance = -824
+@Mikeggibbs, Stance = 545
+@GetTrollsOut, Stance = 526
+@WistfulCass, Stance = 507
+@NyakanaNichola1, Stance = 200
+@PaulAdamsNo1, Stance = -825
+@fourplatekate, Stance = -823
+@nirav_mainecdc, Stance = 732
+@girlnasty22, Stance = -810
+@AdamBaldwin, Stance = -833
+@NormanVadnais, Stance = 672
+@BhargavaPriyash, Stance = -531
+@420DontBeADick, Stance = -835
+@AVPassport, Stance = -825
+@realThasanta, Stance = 306
+@RebekahsRight, Stance = -824
+@BabaBoon17, Stance = -825
+@Otto_English, Stance = 500
+@maria_alexea, Stance = -822
+@thefreeonline, Stance = -708
+@AilsaForshaw, Stance = -813
+@ArseRustica, Stance = 250
+@chibuezze, Stance = 678
+@they_had_names, Stance = -826
+@Blistified, Stance = -834
+@TPUSA, Stance = -831
+@CharlieLight14, Stance = -815
+@Fett0071, Stance = -826
+@Huski67, Stance = -815
+@URdreamingnow, Stance = -822
+@tudor3of6, Stance = -823
+@Jpana75, Stance = -812
+@mai12635036, Stance = -827
+@Toughbutfair2, Stance = -820
+@DuckieNinja, Stance = 494
+@treesforTrump, Stance = -814
+@MeanwhileinCana, Stance = 591
+@DonaldBestCA, Stance = -806
+@AlStewartOBE, Stance = -685
+@NithyaRamanath1, Stance = 730
+@NewTimesRwanda, Stance = 243
+@4HumanUnity, Stance = 616
+@LaredoLars, Stance = -821
+@Brick715, Stance = 627
+@Maddiegrant5H, Stance = -815
+@keelinodonoghue, Stance = 623
+@BobbyLWesson, Stance = 645
+@PalmGardenHC, Stance = 12
+@ladyrosmarino, Stance = -827
+@risemelbourne, Stance = -826
+@BadVaccineTakes, Stance = 578
+@NewsArmageddon, Stance = -820
+@carlosalazraqui, Stance = 714
+@chitownrapper, Stance = -673
+@liberty_places, Stance = -830
+@vote4robgill, Stance = 354
+@samuelxgarcia, Stance = -825
+@CaptainMemeOh, Stance = 13
+@Chesschick01, Stance = -831
+@dasra, Stance = 557
+@WHOPakistan, Stance = 673
+@messageblackman, Stance = -794
