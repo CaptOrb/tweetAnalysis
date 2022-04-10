@@ -18,7 +18,6 @@ Answers to Sprint 4 questions
 
 3c)
 ###Answers obtained by running the jar file and selecting option 4 in the menu
-- Coverage 95%
 - percentage of users who have stances: 95.3451693%
 - percentage of users who don't have stances: 4.6548307%
 - Percentage positive stances: 41.021523%
