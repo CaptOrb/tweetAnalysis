@@ -1,36 +1,36 @@
-@jojozeff84, Stance = -826
-@ramadeyrao, Stance = 646
-@dare_to_think6, Stance = -817
-@Chewythewookie1, Stance = 642
-@TheBattler180, Stance = -815
-@davidjthunder, Stance = -827
-@farnsworth_adam, Stance = -733
-@Ohio_buckeye_us, Stance = -829
-@IbarYahawadah, Stance = -823
-@RepBourdeaux, Stance = 578
-@NanaChel21, Stance = 646
-@Lottieiamfree, Stance = -826
-@piperscreekway, Stance = 332
-@HotelLubyanka, Stance = -826
-@parisofprairie, Stance = 597
-@Arizona_LP, Stance = -837
-@dwmoskowitz, Stance = -608
-Label: @AlaRasi123
-@crzywrld519, Stance = -809
-@BreenKing, Stance = -836
-@MojackMarine, Stance = 625
-@Gerrythecynic, Stance = 765
-@LynnSharig8, Stance = 603
-@_AMaldonado_, Stance = 849
-@45bestwords, Stance = 577
-@khuwig1, Stance = -833
-@debrollins2nd, Stance = -831
-@ShelbyTNHealth, Stance = 843
-@Irma_Spikeymama, Stance = 611
-@DrDev7, Stance = -824
-@AltSequence, Stance = -771
-@ShawnJDaGreat, Stance = -617
-@GitteTheron, Stance = -818
+@jojozeff84, Stance = -826 manual stance = anti
+@ramadeyrao, Stance = 646 manual stance = pro
+@dare_to_think6, Stance = -817 manual stance = anti
+@Chewythewookie1, Stance = 642 manual stance = pro
+@TheBattler180, Stance = -815 manual stance = anti
+@davidjthunder, Stance = -827 manual stance = anti
+@farnsworth_adam, Stance = -733 manual stance = anti
+@Ohio_buckeye_us, Stance = -829 manual stance = anti
+@IbarYahawadah, Stance = -823 manual stance = anti
+@RepBourdeaux, Stance = 578 manual stance = pro
+@NanaChel21, Stance = 646 manual stance = pro
+@Lottieiamfree, Stance = -826 manual stance = anti
+@piperscreekway, Stance = 332 manual stance = pro
+@HotelLubyanka, Stance = -826 manual stance = anti
+@parisofprairie, Stance = 597 manual stance = pro
+@Arizona_LP, Stance = -837 manual stance = anti
+@dwmoskowitz, Stance = -608 manual stance = anti
+Label: @AlaRasi123 no stance assigned manual stance = pro
+@crzywrld519, Stance = -809 manual stance = anti
+@BreenKing, Stance = -836 manual stance = anti
+@MojackMarine, Stance = 625 manual stance = pro
+@Gerrythecynic, Stance = 765 manual stance pro
+@LynnSharig8, Stance = 603 manual stance pro
+@_AMaldonado_, Stance = 849 manual stance pro
+@45bestwords, Stance = 577 manual stance pro
+@khuwig1, Stance = -833 manual stance anti
+@debrollins2nd, Stance = -831 manual stance anti
+@ShelbyTNHealth, Stance = 843 manual stance pro
+@Irma_Spikeymama, Stance = 611 pro
+@DrDev7, Stance = -824 manual stance anti
+@AltSequence, Stance = -771 manual stance anti
+@ShawnJDaGreat, Stance = -617 manual stance anti
+@GitteTheron, Stance = -818 manual stance anti
 @rutilibus, Stance = -823
 Label: @Lukedutchh
 @trudygonzales, Stance = 634
