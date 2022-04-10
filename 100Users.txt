@@ -64,37 +64,37 @@ Label: @Lukedutchh
 @TPUSA, Stance = -831
 @CharlieLight14, Stance = -815
 @Fett0071, Stance = -826
-@Huski67, Stance = -815
-@URdreamingnow, Stance = -822
-@tudor3of6, Stance = -823
-@Jpana75, Stance = -812
-@mai12635036, Stance = -827
-@Toughbutfair2, Stance = -820
-@DuckieNinja, Stance = 494
-@treesforTrump, Stance = -814
-@MeanwhileinCana, Stance = 591
-@DonaldBestCA, Stance = -806
-@AlStewartOBE, Stance = -685
-@NithyaRamanath1, Stance = 730
-@NewTimesRwanda, Stance = 243
-@4HumanUnity, Stance = 616
-@LaredoLars, Stance = -821
-@Brick715, Stance = 627
-@Maddiegrant5H, Stance = -815
-@keelinodonoghue, Stance = 623
-@BobbyLWesson, Stance = 645
-@PalmGardenHC, Stance = 12
-@ladyrosmarino, Stance = -827
-@risemelbourne, Stance = -826
-@BadVaccineTakes, Stance = 578
-@NewsArmageddon, Stance = -820
-@carlosalazraqui, Stance = 714
-@chitownrapper, Stance = -673
-@liberty_places, Stance = -830
-@vote4robgill, Stance = 354
-@samuelxgarcia, Stance = -825
-@CaptainMemeOh, Stance = 13
-@Chesschick01, Stance = -831
-@dasra, Stance = 557
-@WHOPakistan, Stance = 673
-@messageblackman, Stance = -794
+@Huski67, Stance = -815, manual stance = anti
+@URdreamingnow, Stance = -822, manual stance = anti
+@tudor3of6, Stance = -823, manual stance = anti
+@Jpana75, Stance = -812,  manual stance = anti
+@mai12635036, Stance = -827, manual stance = anti
+@Toughbutfair2, Stance = -820, manual stance = anti
+@DuckieNinja, Stance = 494, manual stance = in the middle ish, retweets anti and pro (RT @NReveillee: #VaccinesSaveLives  Natural immunity never reached herd immunity stage!) (RT @CovidB1tch: #pureblood #antivaxxers #NoVaccineMandates   #TeamCovid   Thank you)
+@treesforTrump, Stance = -814, manual stance = anti
+@MeanwhileinCana, Stance = 591, manual stance = pro
+@DonaldBestCA, Stance = -806, manual stance = anti
+@AlStewartOBE, Stance = -685, manual stance = anti
+@NithyaRamanath1, Stance = 730, manual stance = pro
+@NewTimesRwanda, Stance = 243, manual stance = pro ish, seem to just report on covid
+@4HumanUnity, Stance = 616, manual stance = pro
+@LaredoLars, Stance = -821, manual stance = anti
+@Brick715, Stance = 627, manual stance = pro
+@Maddiegrant5H, Stance = -815, manual stance = anti
+@keelinodonoghue, Stance = 623, manual stance = pro
+@BobbyLWesson, Stance = 645, manual stance = pro
+@PalmGardenHC, Stance = 12, manual stance = pro, only retweets themselves, and got retweeted a few times, that's why stance is low
+@ladyrosmarino, Stance = -827, manual stance = anti
+@risemelbourne, Stance = -826, manual stance = anti
+@BadVaccineTakes, Stance = 578, manual stance = pro, but they retweet antivaxxers to laugh at them (retweets anti as well as pro)
+@NewsArmageddon, Stance = -820, manual stance = anti
+@carlosalazraqui, Stance = 714, manual stance = pro
+@chitownrapper, Stance = -673, manual stance = anti
+@liberty_places, Stance = -830, manual stance = anti
+@vote4robgill, Stance = 354, manual stance = pro
+@samuelxgarcia, Stance = -825, manual stance = anti
+@CaptainMemeOh, Stance = 13, manual stance = pro, this user doesn't ever retweet other users (in the data set), but a few other users have retweeted them
+@Chesschick01, Stance = -831, manual stance = anti
+@dasra, Stance = 557, manual stance = pro
+@WHOPakistan, Stance = 673, manual stance = pro
+@messageblackman, Stance = -794, manual stance = anti
