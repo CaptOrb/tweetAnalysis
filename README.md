@@ -21,7 +21,8 @@ Answers to Sprint 4 questions
 - Coverage 95%
 - percentage of users who have stances: 95.3451693%
 - percentage of users who don't have stances: 4.6548307%
-
+- Percentage positive stances: 41.021523%
+- Percentage negative stance: 58.968647%
 4) 
 - tbd
 
