@@ -19,18 +19,18 @@ Answers to Sprint 4 questions
 3c)
 ###Answers obtained by running the jar file and selecting option 4 in the menu
 - Coverage 95%
-- percentage of users who have stances: 95.3451693%
-- percentage of users who don't have stances: 4.6548307%
+- percentage of users who have anti vax stances: 58.892816%
+- percentage of users who have pro vax stances: 41.104653%
 
 4) 
-- tbd
+- Our stance assignment alogorithm correctly assigns stances to 95% of users in the data set 100% of the time, in terms of labelling someone as "pro vax" with a positive number less than 1000, or "anti vax" with a negative number greater than -1000 (which was checked and confirmed in part 4a and 4b, where each of the users who were assigned a stance produced accurate results). The weight of the stance that each user recieved may not be completely accurate, as certain users who seemed to only retweet pro vax evangellists might only have a stance of 600 or 700, when they deserve to have a stance of 1000, and the same results appeared for anti vaxxers deserving of a stance of -1000 but were actually assigned a stance of around -800.
 
 4a & 4b) 
 - see 100Users.txt
 
 4c) 
-- Positive: 43/43 = 1
-- Negative 63/63 = 1
+- Positive Stances: 40/40 = 1 ( There are 41 pro vax users in total, @Lukedutchh was not assigned a stance, this user is retweeted by a few users but does not retweet any other users in the data set)
+- Negative Stances: 59/59 = 1
 
 
-4d) Based on the precision scores given above it doesn't appear that there isn't an apparent bias in our algorithm. 
+4d) Based on the precision scores given above it doesn't appear that there is an apparent bias in our algorithm. 

@@ -70,7 +70,7 @@ Label: @AlaRasi123 no stance assigned manual stance = pro
 @Jpana75, Stance = -812,  manual stance = anti
 @mai12635036, Stance = -827, manual stance = anti
 @Toughbutfair2, Stance = -820, manual stance = anti
-@DuckieNinja, Stance = 494, manual stance = in the middle ish, retweets anti and pro (RT @NReveillee: #VaccinesSaveLives  Natural immunity never reached herd immunity stage!) (RT @CovidB1tch: #pureblood #antivaxxers #NoVaccineMandates   #TeamCovid   Thank you)
+@DuckieNinja, Stance = 494, manual stance = pro but in the middle ish, retweets anti and pro (RT @NReveillee: #VaccinesSaveLives  Natural immunity never reached herd immunity stage!) (RT @CovidB1tch: #pureblood #antivaxxers #NoVaccineMandates   #TeamCovid   Thank you)
 @treesforTrump, Stance = -814, manual stance = anti
 @MeanwhileinCana, Stance = 591, manual stance = pro
 @DonaldBestCA, Stance = -806, manual stance = anti
