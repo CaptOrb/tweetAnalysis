@@ -10,14 +10,14 @@ RUNNING FROM JAR
 - If using a custom config file, note that a sample configuration file is given in config/default_config.txt. Use that file as a template for your config file
   and put in your API KEYS
 
-The tasks were divided evenly between the team members. See commit history for a clearer idea of who carried out which tasks, but pair work was often carried out with just one person committing the finished result.
-
 If running from source ensure to add the Twitter4J library to the classpath.
 
 Answers to Sprint 4 questions 
 
+- The tasks were divided evenly between the team members. See commit history for a clearer idea of who carried out which tasks, but pair work was often carried out with just one person committing the finished result.
+
 3c)
-###Answers obtained by running the jar file and selecting option 4 in the menu
+Answers obtained by running the jar file and selecting option 4 in the menu
 
 - percentage of users who have stances: 95.3451693% 
 - percentage of users who don't have stances: 4.6548307%
@@ -26,7 +26,7 @@ Answers to Sprint 4 questions
 - percentage of users who have pro vax stances: 41.104653%
 
 4) 
-- Our stance assignment alogorithm correctly assigns stances to 95% of users in the data set 100% of the time, in terms of labelling someone as "pro vax" with a positive number less than 1000, or "anti vax" with a negative number greater than -1000 (which was checked and confirmed in part 4a and 4b, where each of the users who were assigned a stance produced accurate results). The weight of the stance that each user recieved may not be completely accurate, as certain users who seemed to only retweet pro vax evangellists might only have a stance of 600 or 700, when they deserve to have a stance of 1000, and the same results appeared for anti vaxxers deserving of a stance of -1000 but were actually assigned a stance of around -800.
+- Our stance assignment algorithm correctly assigns stances to 95% of users in the data set 100% of the time, in terms of labelling someone as "pro vax" with a positive number less than 1000, or "anti vax" with a negative number greater than -1000 (which was checked and confirmed in part 4a and 4b, where each of the users who were assigned a stance produced accurate results). The weight of the stance that each user received may not be completely accurate, as certain users who seemed to only retweet pro vax evangelists might only have a stance of 600 or 700, when they deserve to have a stance of 1000, and the same results appeared for anti vaxxers deserving of a stance of -1000 but were actually assigned a stance of around -800.
 
 4a & 4b) 
 - see 100Users.txt
