@@ -12,7 +12,7 @@ public class FindEvangelists {
         return evangelistsHashMap;
     }
 
-    public void findTotalRetweets(RetweetGraph<String> retweetedGraph,TwitterUsers<String> users) {
+    public Map<Vertex<String>, Integer> findTotalRetweets(RetweetGraph<String> retweetedGraph,TwitterUsers<String> users) {
 
         for (Vertex<String> vertex : retweetedGraph.getGraph().keySet()) {
             int totalRetweets = 0;
@@ -20,8 +20,7 @@ public class FindEvangelists {
             for (int i = 0; i < retweetedGraph.getGraph().get(vertex).size(); i++) {
                 totalRetweets += retweetedGraph.getGraph().get(vertex).get(i).getWeight();
             }
-          //  System.out.println(vertex);
-           // System.out.println(totalRetweets);
+
             retweetsHashMap.put(vertex, totalRetweets);
         }
 
@@ -29,8 +28,9 @@ public class FindEvangelists {
 
         for (int i = 0; i < 200; i++) {
             evangelistsHashMap.put(topNRetweeted.get(i).getKey(), topNRetweeted.get(i).getValue());
-            //System.out.println(topNRetweeted.get(i).getKey());
         }
+
+        return retweetsHashMap;
     }
 
     private <K, V extends Comparable<? super V>>

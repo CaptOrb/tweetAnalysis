@@ -10,6 +10,7 @@ import twitter4j.TwitterFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 import java.util.Scanner;
 
 public class MainUtil {
@@ -82,7 +83,7 @@ public class MainUtil {
                 System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
 
                 FindEvangelists findEvangelist = new FindEvangelists();
-                findEvangelist.findTotalRetweets(retweetedGraph, usersSprint4);
+                Map<Vertex<String>, Integer> retweetsHashMap = findEvangelist.findTotalRetweets(retweetedGraph, usersSprint4);
 
                 AssignStances assignStances = new AssignStances();
                 File StanceFile = new File(configuration.getSTANCE_FILE());
@@ -91,18 +92,25 @@ public class MainUtil {
                 // initial setup for calculating stances
                 RetweetGraphAnalyser graphAnalyser = new RetweetGraphAnalyser();
 
-                for (int i = 0; i < 6; i++) {
+                for (int i = 0; i < 20; i++) {
                     graphAnalyser.assignUserStances(rtGraph);
+                    graphAnalyser.assignUserStances(retweetedGraph);
+
                 }
 
                 // get coverage of stances
-                graphAnalyser.calculateCoverage(rtGraph);
+                System.out.println("Coverage in graph: " + graphAnalyser.calculateCoverage(rtGraph));
+               // System.out.println("Coverage in retweeted graph: " + graphAnalyser.calculateCoverage(retweetedGraph));
 
-                graphAnalyser.calculatePercentagePositiveStances(rtGraph);
-                graphAnalyser.calculatePercentageNegativeStances(rtGraph);
+                System.out.println("Users without a stance: " + (1-graphAnalyser.calculateCoverage(rtGraph)));
+
+                System.out.println("positive stances: " + graphAnalyser.calculatePercentagePositiveStances(rtGraph));
+                System.out.println("negative stance: " + graphAnalyser.calculatePercentageNegativeStances(rtGraph));
 
                 Users100 users100 = new Users100();
-                users100.checkStance(rtGraph);
+                users100.checkStance(retweetsHashMap);
+
+
                 break;
         }
 

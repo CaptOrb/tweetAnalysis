@@ -46,6 +46,7 @@ public class RetweetFileService<E> extends FileService {
 
     public ArrayList<String> readRetweetsIntoSet(File file) {
         final ArrayList<String> retweets = new ArrayList<>();
+        String j=null;
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -58,7 +59,7 @@ public class RetweetFileService<E> extends FileService {
                         retweets.add(lineContents[1] + "\t" + username); //adds @User + "\t" + @RetweetedUser and whatever they tweeted
                     }
                 } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-                    System.out.println("invalid line format - skipped");
+                    j = "doNothing";
                 } catch (Exception exception) {
                     String k = "asd";
                 }
