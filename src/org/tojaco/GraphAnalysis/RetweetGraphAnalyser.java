@@ -27,14 +27,13 @@ public class RetweetGraphAnalyser {
     public float calculateCoverage(RetweetGraph<String> rtGraph){
         // iterate all users in graph
         // if they have been given a stance then increment the stance counter
-        // divide by number of users to return coverage as a decimal
         float stances = 0;
         for(String user : rtGraph.getAllVerticesInGraph().keySet()){
             if(rtGraph.getAllVerticesInGraph().get(user).hasStance()) {
                 stances ++;
             }
         }
-        return stances / rtGraph.getAllVerticesInGraph().size();
+        return (stances / rtGraph.getAllVerticesInGraph().size()) * 100;
     }
 
     public float calculatePercentagePositiveStances(RetweetGraph<String> rtGraph){
@@ -48,7 +47,7 @@ public class RetweetGraphAnalyser {
                 }
             }
         }
-        return positiveStances / hasStance;
+        return (positiveStances / hasStance) * 100;
     }
     public float calculatePercentageNegativeStances(RetweetGraph<String> rtGraph){
         float negativeStances = 0;
@@ -61,7 +60,7 @@ public class RetweetGraphAnalyser {
                 }
             }
         }
-        return negativeStances / hasStance;
+        return (negativeStances / hasStance) * 100;
     }
 
 }
