@@ -2,7 +2,6 @@ package org.tojaco;
 
 import org.tojaco.FileIO.TwitterFileService;
 import org.tojaco.Graph.Arc;
-import org.tojaco.Graph.Graph;
 import org.tojaco.Graph.RetweetGraph;
 import org.tojaco.Graph.Vertex;
 import org.tojaco.GraphAnalysis.RetweetGraphAnalyser;
@@ -28,7 +27,7 @@ public class MainUtil {
         Scanner scanner = new Scanner(System.in);
         int option = scanner.nextInt();
 
-        FindRetweets findRetweets;
+        FindGraphElements findRetweets;
         RetweetGraph<String> rtGraph;
         RetweetGraph<String> retweetedGraph;
 
@@ -53,16 +52,16 @@ public class MainUtil {
                 st.streamTweets();
                 break;
             case 3:
-                findRetweets = new FindRetweets();
+                findRetweets = new FindGraphElements();
                 TwitterUsers<String> usersSprint3 = new TwitterUsers<>();
 
                 if (dataFile.exists()) {
                     findRetweets.initialiseRetweets(dataFile);
                 }
 
-                rtGraph = findRetweets.toPutIntoHashMap(configuration, usersSprint3, 0, 1);
+                rtGraph = findRetweets.toPutIntoHashMap(configuration, usersSprint3, 0, 1, false);
 
-                retweetedGraph = findRetweets.toPutIntoHashMap(configuration, usersSprint3, 1, 0);
+                retweetedGraph = findRetweets.toPutIntoHashMap(configuration, usersSprint3, 1, 0, false);
 
                 System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
 
@@ -73,14 +72,14 @@ public class MainUtil {
                 // graph for using implemented methods on
                 // see org.tojaco.Graph.RetweetGraph.java for description of public methods
 
-                findRetweets = new FindRetweets();
+                findRetweets = new FindGraphElements();
 
                 if (dataFile.exists()) {
                     findRetweets.initialiseRetweets(dataFile);
                 }
                 TwitterUsers<String> usersSprint4 = new TwitterUsers<>();
-                rtGraph = findRetweets.toPutIntoHashMap(configuration, usersSprint4, 0, 1);
-                retweetedGraph = findRetweets.toPutIntoHashMap(configuration, usersSprint4, 1, 0);
+                rtGraph = findRetweets.toPutIntoHashMap(configuration, usersSprint4, 0, 1, false);
+                retweetedGraph = findRetweets.toPutIntoHashMap(configuration, usersSprint4, 1, 0, false);
                 System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
 
                 FindEvangelists findEvangelist = new FindEvangelists();
