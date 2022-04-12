@@ -1,5 +1,6 @@
 package org.tojaco;
 
+import org.tojaco.FileIO.ReadHashtags;
 import org.tojaco.FileIO.TwitterFileService;
 import org.tojaco.Graph.Arc;
 import org.tojaco.Graph.RetweetGraph;
@@ -22,15 +23,12 @@ public class MainUtil {
                 "\n2. Search for Tweets using the steaming API (Sprint 2)" +
                 "\n3. Build a retweet Graph (Sprint 3)" +
                 "\n4. Assign stances to Tweets (Sprint 4)" +
-                "\n5. idk what its called but sprint 5 :-)" +
                 "\nOr enter -1 to quit");
 
         Scanner scanner = new Scanner(System.in);
         int option = scanner.nextInt();
 
-        FindGraphElements findRetweets;
-        FindGraphElements findHashtags;
-        RetweetGraph<String> UsersToHashtags;
+        FindGraphElements findGraphElements;
         RetweetGraph<String> rtGraph;
         RetweetGraph<String> retweetedGraph;
 
@@ -55,16 +53,16 @@ public class MainUtil {
                 st.streamTweets();
                 break;
             case 3:
-                findRetweets = new FindGraphElements();
+                findGraphElements = new FindGraphElements();
                 TwitterUsers<String> usersSprint3 = new TwitterUsers<>();
 
                 if (dataFile.exists()) {
-                    findRetweets.initialiseRetweets(dataFile);
+                    findGraphElements.initialiseRetweets(dataFile);
                 }
 
-                rtGraph = findRetweets.toPutIntoHashMap(configuration, usersSprint3, 0, 1, false);
+                rtGraph = findGraphElements.toPutIntoHashMap(configuration, usersSprint3, 0, 1, false);
 
-                retweetedGraph = findRetweets.toPutIntoHashMap(configuration, usersSprint3, 1, 0, false);
+                retweetedGraph = findGraphElements.toPutIntoHashMap(configuration, usersSprint3, 1, 0, false);
 
                 System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
 
@@ -75,14 +73,14 @@ public class MainUtil {
                 // graph for using implemented methods on
                 // see org.tojaco.Graph.RetweetGraph.java for description of public methods
 
-                findRetweets = new FindGraphElements();
+                findGraphElements = new FindGraphElements();
 
                 if (dataFile.exists()) {
-                    findRetweets.initialiseRetweets(dataFile);
+                    findGraphElements.initialiseRetweets(dataFile);
                 }
                 TwitterUsers<String> usersSprint4 = new TwitterUsers<>();
-                rtGraph = findRetweets.toPutIntoHashMap(configuration, usersSprint4, 0, 1, false);
-                retweetedGraph = findRetweets.toPutIntoHashMap(configuration, usersSprint4, 1, 0, false);
+                rtGraph = findGraphElements.toPutIntoHashMap(configuration, usersSprint4, 0, 1, false);
+                retweetedGraph = findGraphElements.toPutIntoHashMap(configuration, usersSprint4, 1, 0, false);
                 System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
 
                 FindEvangelists findEvangelist = new FindEvangelists();
@@ -113,20 +111,46 @@ public class MainUtil {
                 Users100 users100 = new Users100();
                 users100.checkStance(retweetsHashMap);
 
+
+                break;
+
             case 5:
-                findHashtags = new FindGraphElements();
+
+                // graph for using implemented methods on
+                // see org.tojaco.Graph.RetweetGraph.java for description of public methods
+
+                ReadHashtags readHashtags = new ReadHashtags();
+                readHashtags.readHashTagsFromFile(dataFile);
+
+                findGraphElements = new FindGraphElements();
 
                 if (dataFile.exists()) {
-                    findHashtags.initialiseHashtags(dataFile);
+                    findGraphElements.initialiseRetweets(dataFile);
+                    findGraphElements.initialiseHashtags(dataFile);
                 }
                 TwitterUsers<String> usersSprint5 = new TwitterUsers<>();
-                UsersToHashtags = findHashtags.toPutIntoHashMap(configuration, usersSprint5, 0, 1, true);
-                System.out.println("users to hashtags added successfully to org.tojaco.Graph directory! But needs to be changed :)");
+                rtGraph = findGraphElements.toPutIntoHashMap(configuration, usersSprint5, 0, 1, false);
+                retweetedGraph = findGraphElements.toPutIntoHashMap(configuration, usersSprint5, 1, 0, false);
+                System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
 
+                findEvangelist = new FindEvangelists();
+                retweetsHashMap = findEvangelist.findTotalRetweets(retweetedGraph, usersSprint5);
+
+                assignStances = new AssignStances();
+                StanceFile = new File(configuration.getSTANCE_FILE());
+                assignStances.determineProAntiVaxEvangelists(usersSprint5, StanceFile);
+
+                // initial setup for calculating stances
+                graphAnalyser = new RetweetGraphAnalyser();
+
+                for (int i = 0; i < 20; i++) {
+                    graphAnalyser.assignUserStances(rtGraph, usersSprint5);
+                    graphAnalyser.assignUserStances(retweetedGraph, usersSprint5);
+
+                }
 
                 break;
         }
-
     }
 
     public static void showSprint3Options(RetweetGraph<String> rtGraph, TwitterUsers<String> users) {
