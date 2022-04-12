@@ -14,6 +14,7 @@ public class FindEvangelists {
 
     public Map<Vertex<String>, Integer> findTotalRetweets(Graph<String> retweetedGraph, TwitterUsers<String> users) {
 
+
         for (Vertex<String> vertex : retweetedGraph.getGraph().keySet()) {
             int totalRetweets = 0;
 
