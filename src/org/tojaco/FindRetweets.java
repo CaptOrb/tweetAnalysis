@@ -15,14 +15,14 @@ public class FindRetweets {
         return retweets;
     }
 
-    public RetweetGraph<String> toPutIntoHashMap(Configuration configuration, int a, int b) throws IOException {
+    public RetweetGraph<String> toPutIntoHashMap(Configuration configuration, TwitterUsers<String> users, int a, int b) throws IOException {
         RetweetGraph<String> rtGraph = new RetweetGraph<>();
 
-        Map<String, Vertex<String>> allVerticesInGraph = rtGraph.getAllVerticesInGraph();
+        //Map<String, Vertex<String>> allVerticesInGraph = rtGraph.getAllVerticesInGraph();
         for (String rt : retweets) {
             String[] line = rt.split("\t"); //line[0] contains user, line[1] contains the user they are retweeting
-            Vertex<String> srcVertex = getVertex(line[a], allVerticesInGraph);
-            Vertex<String> destVertex = getVertex(line[b], allVerticesInGraph);
+            Vertex<String> srcVertex = users.getVertex(line[a]);
+            Vertex<String> destVertex = users.getVertex(line[b]);
             Arc<String> myArc = new Arc<>(destVertex, +1);
 
             rtGraph.addArc(srcVertex, myArc);
@@ -44,16 +44,6 @@ public class FindRetweets {
                         outputFile));
 
         return rtGraph;
-    }
-
-    public Vertex<String> getVertex(String label, Map<String, Vertex<String>> usersInGraph) {
-        // check list of existing users
-        // if user exists, then return user
-        // if not create a new user with given label and return
-        if (usersInGraph.containsKey(label)) {
-            return usersInGraph.get(label);
-        }
-        return new Vertex<String>(label);
     }
 
     public ArrayList<String> initialiseRetweets(File dataFile) {
