@@ -36,10 +36,21 @@ public class FindGraphElements {
         for (String rt : list) {
             String[] line = rt.split("\t"); //line[0] contains user, line[1] contains the user they are retweeting
             Vertex<String> srcVertex = users.getVertex(line[a]);
-            Vertex<String> destVertex = users.getVertex(line[b]);
-            Arc<String> myArc = new Arc<>(destVertex, +1);
+            if(line.length<2) {
+                //Vertex<String> srcVertex = users.getVertex(line[a]);
+                Vertex<String> destVertex = users.getVertex(line[b]);
+                Arc<String> myArc = new Arc<>(destVertex, +1);
+                rtGraph.addArc(srcVertex, myArc);
+            } else{
+                int i = 1;
+                while(i<line.length){
+                    Vertex<String> destVertex = users.getVertex(line[i]);
+                    Arc<String> myArc = new Arc<>(destVertex, +1);
+                    rtGraph.addArc(srcVertex, myArc);
+                    i++;
+                }
+            }
 
-            rtGraph.addArc(srcVertex, myArc);
             //to check that getLabelBetweenVertices works
             //System.out.println(srcVertex.getLabel() + " " + destVertex.getLabel() + " " + rtGraph.getLabelBetweenVertices(srcVertex,destVertex));
 

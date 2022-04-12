@@ -22,12 +22,15 @@ public class MainUtil {
                 "\n2. Search for Tweets using the steaming API (Sprint 2)" +
                 "\n3. Build a retweet Graph (Sprint 3)" +
                 "\n4. Assign stances to Tweets (Sprint 4)" +
+                "\n5. idk what its called but sprint 5 :-)" +
                 "\nOr enter -1 to quit");
 
         Scanner scanner = new Scanner(System.in);
         int option = scanner.nextInt();
 
         FindGraphElements findRetweets;
+        FindGraphElements findHashtags;
+        RetweetGraph<String> UsersToHashtags;
         RetweetGraph<String> rtGraph;
         RetweetGraph<String> retweetedGraph;
 
@@ -109,6 +112,16 @@ public class MainUtil {
 
                 Users100 users100 = new Users100();
                 users100.checkStance(retweetsHashMap);
+
+            case 5:
+                findHashtags = new FindGraphElements();
+
+                if (dataFile.exists()) {
+                    findHashtags.initialiseHashtags(dataFile);
+                }
+                TwitterUsers<String> usersSprint5 = new TwitterUsers<>();
+                UsersToHashtags = findHashtags.toPutIntoHashMap(configuration, usersSprint5, 0, 1, true);
+                System.out.println("users to hashtags added successfully to org.tojaco.Graph directory! But needs to be changed :)");
 
 
                 break;
