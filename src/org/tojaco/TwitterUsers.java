@@ -7,8 +7,10 @@ import java.util.Map;
 
 public class TwitterUsers<T> {
     private final Map<T, Vertex<T>> allVerticesInGraph = new HashMap<>();
+    private final Map<Vertex<T>, Integer> userStances = new HashMap<>();
 
     public Map<T, Vertex<T>> getAllVerticesInGraph() { return allVerticesInGraph; }
+    public Map<Vertex<T>, Integer> getUserStances(){ return userStances; }
 
     public Vertex<T> getVertex(T label) {
         // check list of existing users
