@@ -31,12 +31,12 @@ public class Graph<T> implements DirectedGraph<T> {
     @Override
     public void removeArc(Vertex<T> vertex, Arc<T> arc) {
         if ( !graph.containsKey(vertex) ){
-            System.out.println(vertex.toString() + " does not retweet anyone");
+            System.out.println(vertex.toString() + " is not in the graph");
             return;
         }
 
         if ( !graph.get(vertex).contains(arc) ){
-            System.out.println(vertex.toString() + "does not retweet " + arc.toString());
+            System.out.println(vertex.toString() + "does not have a link to " + arc.toString());
             return;
         }
 
