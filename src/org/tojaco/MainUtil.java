@@ -1,5 +1,6 @@
 package org.tojaco;
 
+import org.tojaco.FileIO.ReadHashtags;
 import org.tojaco.FileIO.TwitterFileService;
 import org.tojaco.Graph.Arc;
 import org.tojaco.Graph.RetweetGraph;
@@ -113,8 +114,44 @@ public class MainUtil {
 
 
                 break;
-        }
 
+            case 5:
+
+                // graph for using implemented methods on
+                // see org.tojaco.Graph.RetweetGraph.java for description of public methods
+
+                ReadHashtags readHashtags = new ReadHashtags();
+                readHashtags.readHashTagsFromFile(dataFile);
+
+                findGraphElements = new FindGraphElements();
+
+                if (dataFile.exists()) {
+                    findGraphElements.initialiseRetweets(dataFile);
+                    findGraphElements.initialiseHashtags(dataFile);
+                }
+                TwitterUsers<String> usersSprint5 = new TwitterUsers<>();
+                rtGraph = findGraphElements.toPutIntoHashMap(configuration, usersSprint5, 0, 1);
+                retweetedGraph = findGraphElements.toPutIntoHashMap(configuration, usersSprint5, 1, 0);
+                System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
+
+                findEvangelist = new FindEvangelists();
+                retweetsHashMap = findEvangelist.findTotalRetweets(retweetedGraph, usersSprint5);
+
+                assignStances = new AssignStances();
+                StanceFile = new File(configuration.getSTANCE_FILE());
+                assignStances.determineProAntiVaxEvangelists(usersSprint5, StanceFile);
+
+                // initial setup for calculating stances
+                graphAnalyser = new RetweetGraphAnalyser();
+
+                for (int i = 0; i < 20; i++) {
+                    graphAnalyser.assignUserStances(rtGraph, usersSprint5);
+                    graphAnalyser.assignUserStances(retweetedGraph, usersSprint5);
+
+                }
+
+                break;
+        }
     }
 
     public static void showSprint3Options(RetweetGraph<String> rtGraph, TwitterUsers<String> users) {
