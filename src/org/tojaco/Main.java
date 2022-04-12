@@ -21,13 +21,13 @@ public class Main {
 
             File dataFile = new File(configuration.getDataDirectory(), configuration.getDataFile());
 
-           //MainUtil.showProgramOptions(configuration, dataFile);
+           MainUtil.showProgramOptions(configuration, dataFile);
 
             //ReadHashtags readHashtags = new ReadHashtags();
             //readHashtags.readHashTagsFromFile(dataFile);
 
-            RetweetFileService<String> rtf = new RetweetFileService();
-            rtf.readRetweetsIntoSet(dataFile);
+           // RetweetFileService<String> rtf = new RetweetFileService();
+            // rtf.readRetweetsIntoSet(dataFile);
         } catch (IOException ex) {
             ex.printStackTrace();
         }

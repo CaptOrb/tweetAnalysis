@@ -9,26 +9,26 @@ import java.io.IOException;
 
 public class AssignStances {
 
-    public void determineProAntiVaxEvangelists(TwitterUsers<String> twitterUsers, File file) {
+    public void determineProAntiVaxEvangelists(TwitterUsers twitterUsers, File file) {
 
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
-            Vertex<String> vertexError = null;
+            Vertex<TwitterUser> vertexError = null;
             try {
                 while ((line = br.readLine()) != null) {
 
                     String[] lineContents = line.split(" ");
 
-                    Vertex<String> vertex = twitterUsers.getVertex(lineContents[0]);
+                    Vertex<TwitterUser> vertex = twitterUsers.getVertex(lineContents[0]);
 
                     vertexError = vertex;
 
                     if (lineContents[1].equals("anti")){
-                        if (vertex.getLabel().equals(lineContents[0])) {
+                        if (vertex.getLabel().getUserHandle().equals(lineContents[0])) {
                             twitterUsers.getUserStances().putIfAbsent(vertex, -1000);
                         }
                     } else if (lineContents[1].equals("pro") ){
-                        if (vertex.getLabel().equals(lineContents[0])) {
+                        if (vertex.getLabel().getUserHandle().equals(lineContents[0])) {
                             twitterUsers.getUserStances().putIfAbsent(vertex, 1000);
                         }
                     } //if it equals idk then skip

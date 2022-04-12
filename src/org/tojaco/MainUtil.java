@@ -3,10 +3,11 @@ package org.tojaco;
 import org.tojaco.FileIO.ReadHashtags;
 import org.tojaco.FileIO.TwitterFileService;
 import org.tojaco.Graph.Arc;
-import org.tojaco.Graph.RetweetGraph;
+import org.tojaco.Graph.Graph;
 import org.tojaco.Graph.Vertex;
 import org.tojaco.GraphAnalysis.RetweetGraphAnalyser;
 import org.tojaco.GraphAnalysis.Users100;
+import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
 
 import java.io.File;
@@ -29,8 +30,8 @@ public class MainUtil {
         int option = scanner.nextInt();
 
         FindGraphElements findGraphElements;
-        RetweetGraph<String> rtGraph;
-        RetweetGraph<String> retweetedGraph;
+        Graph<TwitterUser, TwitterUser> rtGraph;
+        Graph<TwitterUser, TwitterUser> retweetedGraph;
 
         switch (option) {
             case 1:
@@ -54,7 +55,7 @@ public class MainUtil {
                 break;
             case 3:
                 findGraphElements = new FindGraphElements();
-                TwitterUsers<String> usersSprint3 = new TwitterUsers<>();
+                TwitterUsers usersSprint3 = new TwitterUsers();
 
                 if (dataFile.exists()) {
                     findGraphElements.initialiseRetweets(dataFile);
@@ -79,13 +80,13 @@ public class MainUtil {
                 if (dataFile.exists()) {
                     findGraphElements.initialiseRetweets(dataFile);
                 }
-                TwitterUsers<String> usersSprint4 = new TwitterUsers<>();
+                TwitterUsers usersSprint4 = new TwitterUsers();
                 rtGraph = findGraphElements.toPutIntoHashMap(configuration, usersSprint4, 0, 1);
                 retweetedGraph = findGraphElements.toPutIntoHashMap(configuration, usersSprint4, 1, 0);
                 System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
 
                 FindEvangelists findEvangelist = new FindEvangelists();
-                Map<Vertex<String>, Integer> retweetsHashMap = findEvangelist.findTotalRetweets(retweetedGraph, usersSprint4);
+                Map<Vertex<TwitterUser>, Integer> retweetsHashMap = findEvangelist.findTotalRetweets(retweetedGraph, usersSprint4);
 
                 AssignStances assignStances = new AssignStances();
                 File StanceFile = new File(configuration.getSTANCE_FILE());
@@ -129,7 +130,7 @@ public class MainUtil {
                     findGraphElements.initialiseRetweets(dataFile);
                     findGraphElements.initialiseHashtags(dataFile);
                 }
-                TwitterUsers<String> usersSprint5 = new TwitterUsers<>();
+                TwitterUsers usersSprint5 = new TwitterUsers();
                 rtGraph = findGraphElements.toPutIntoHashMap(configuration, usersSprint5, 0, 1);
                 retweetedGraph = findGraphElements.toPutIntoHashMap(configuration, usersSprint5, 1, 0);
                 System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
@@ -154,7 +155,7 @@ public class MainUtil {
         }
     }
 
-    public static void showSprint3Options(RetweetGraph<String> rtGraph, TwitterUsers<String> users) {
+    public static void showSprint3Options(Graph<TwitterUser, TwitterUser> rtGraph, TwitterUsers users) {
         int option = 0;
 
         System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
@@ -176,13 +177,13 @@ public class MainUtil {
                     newArc[i] = scanner.next();
                 }
 
-                Vertex<String> start = users.getVertex(newArc[0]);
-                Vertex<String> end = users.getVertex(newArc[1]);
+                Vertex<TwitterUser> start = users.getVertex(newArc[0]);
+                Vertex<TwitterUser> end = users.getVertex(newArc[1]);
 
                 if (rtGraph.hasArcBetween(start, end)) {
                     System.out.println("There already exists an arc between these two vertices.");
                 } else {
-                    Arc<String> arc = new Arc<>(end, Integer.parseInt(newArc[2]));
+                    Arc<TwitterUser> arc = new Arc<>(end, Integer.parseInt(newArc[2]));
                     rtGraph.addArc(start, arc);
 
                     System.out.print("org.tojaco.Graph.Vertex with " + start + " and arc with " + end.toString() + " was added to the graph.\n");
@@ -198,9 +199,9 @@ public class MainUtil {
                     vertices[i] = scanner.next();
                 }
 
-                Vertex<String> vertex1 = users.getVertex(vertices[0]);
+                Vertex<TwitterUser> vertex1 = users.getVertex(vertices[0]);
 
-                Vertex<String> vertex2 = users.getVertex(vertices[1]);
+                Vertex<TwitterUser> vertex2 = users.getVertex(vertices[1]);
 
                 boolean hasArc = rtGraph.hasArcBetween(vertex1, vertex2);
 

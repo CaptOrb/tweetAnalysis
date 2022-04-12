@@ -5,21 +5,21 @@ import org.tojaco.Graph.Vertex;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TwitterUsers<T> {
-    private final Map<T, Vertex<T>> allVerticesInGraph = new HashMap<>();
-    private final Map<Vertex<T>, Integer> userStances = new HashMap<>();
+public class TwitterUsers {
+    private final Map<String, Vertex<TwitterUser>> allVerticesInGraph = new HashMap<>();
+    private final Map<Vertex<TwitterUser>, Integer> userStances = new HashMap<>();
 
-    public Map<T, Vertex<T>> getAllVerticesInGraph() { return allVerticesInGraph; }
-    public Map<Vertex<T>, Integer> getUserStances(){ return userStances; }
+    public Map<String, Vertex<TwitterUser>> getAllVerticesInGraph() { return allVerticesInGraph; }
+    public Map<Vertex<TwitterUser>, Integer> getUserStances(){ return userStances; }
 
-    public Vertex<T> getVertex(T label) {
+    public Vertex<TwitterUser> getVertex(String label) {
         // check list of existing users
         // if user exists, then return user
         // if not create a new user with given label and return
         if (allVerticesInGraph.containsKey(label)) {
             return allVerticesInGraph.get(label);
         }
-        Vertex<T> vertex = new Vertex<T>(label);
+        Vertex<TwitterUser> vertex = new Vertex<TwitterUser>(new TwitterUser(label));
         allVerticesInGraph.put(label, vertex);
         return vertex;
     }

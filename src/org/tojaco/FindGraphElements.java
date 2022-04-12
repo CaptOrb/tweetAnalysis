@@ -3,6 +3,7 @@ package org.tojaco;
 import org.tojaco.FileIO.ReadHashtags;
 import org.tojaco.FileIO.RetweetFileService;
 import org.tojaco.Graph.*;
+import twitter4j.Twitter;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,22 +20,22 @@ public class FindGraphElements {
         return retweets;
     }
 
-    public RetweetGraph<String> toPutIntoHashMap(Configuration configuration, TwitterUsers<String> users, int a, int b) throws IOException {
-        RetweetGraph<String> rtGraph = new RetweetGraph<>();
+    public Graph<TwitterUser, TwitterUser> toPutIntoHashMap(Configuration configuration, TwitterUsers users, int a, int b) throws IOException {
+        Graph<TwitterUser, TwitterUser> rtGraph = new Graph<>();
 
         //Map<String, Vertex<String>> allVerticesInGraph = rtGraph.getAllVerticesInGraph();
         for (String rt : retweets) {
             String[] line = rt.split("\t"); //line[0] contains user, line[1] contains the user they are retweeting
-            Vertex<String> srcVertex = users.getVertex(line[a]);
-            Vertex<String> destVertex = users.getVertex(line[b]);
-            Arc<String> myArc = new Arc<>(destVertex, +1);
+            Vertex<TwitterUser> srcVertex = users.getVertex(line[a]);
+            Vertex<TwitterUser> destVertex = users.getVertex(line[b]);
+            Arc<TwitterUser> myArc = new Arc<>(destVertex, +1);
 
             rtGraph.addArc(srcVertex, myArc);
             //to check that getLabelBetweenVertices works
             //System.out.println(srcVertex.getLabel() + " " + destVertex.getLabel() + " " + rtGraph.getLabelBetweenVertices(srcVertex,destVertex));
 
         }
-        RetweetFileService<String> rs = new RetweetFileService<>();
+        RetweetFileService<TwitterUser> rs = new RetweetFileService<>();
 
         String outputFile;
         if (a == 0) {

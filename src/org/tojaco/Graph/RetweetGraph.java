@@ -1,4 +1,4 @@
-package org.tojaco.Graph;
+/*package org.tojaco.Graph;
 
 import java.util.ArrayList;
 
@@ -9,12 +9,12 @@ import java.util.ArrayList;
 // getLabelBetweenVertices method will indicate number of times retweeted ( the label on the arc )
 
 
-public class RetweetGraph<T> extends Graph<T> {
+public class RetweetGraph<T, E> extends Graph<T, E> {
 
-    public ArrayList<Arc<T>> getRetweeted(Vertex<T> key) { return getGraph().get(key); }
+    public ArrayList<Arc<E>> getRetweeted(Vertex<T> key) { return getGraph().get(key); }
 
     @Override
-    public void removeArc(Vertex<T> vertex, Arc<T> arc) {
+    public void removeArc(Vertex<T> vertex, Arc<E> arc) {
         if ( !getGraph().containsKey(vertex) ){
             System.out.println(vertex.toString() + " does not retweet anyone");
             return;
@@ -34,4 +34,4 @@ public class RetweetGraph<T> extends Graph<T> {
             getGraph().remove(vertex);
         }
     }
-}
+}*/
