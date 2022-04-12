@@ -74,7 +74,7 @@ public class MainUtil {
             case 4:
 
                 // graph for using implemented methods on
-                // see org.tojaco.Graph.RetweetGraph.java for description of public methods
+                // see org.tojaco.Graph.DirectedGraph.java for description of public methods
 
                 findGraphElements = new FindGraphElements();
 
@@ -120,7 +120,7 @@ public class MainUtil {
             case 5:
 
                 // graph for using implemented methods on
-                // see org.tojaco.Graph.RetweetGraph.java for description of public methods
+                // see org.tojaco.Graph.DirectedGraph.java for description of public methods
 
                 ReadHashtags readHashtags = new ReadHashtags();
                 readHashtags.readHashTagsFromFile(dataFile);
