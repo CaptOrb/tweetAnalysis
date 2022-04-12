@@ -12,4 +12,26 @@ import java.util.ArrayList;
 public class RetweetGraph<T> extends Graph<T> {
 
     public ArrayList<Arc<T>> getRetweeted(Vertex<T> key) { return getGraph().get(key); }
+
+    @Override
+    public void removeArc(Vertex<T> vertex, Arc<T> arc) {
+        if ( !getGraph().containsKey(vertex) ){
+            System.out.println(vertex.toString() + " does not retweet anyone");
+            return;
+        }
+
+        if ( !getGraph().get(vertex).contains(arc) ){
+            System.out.println(vertex.toString() + "does not retweet " + arc.toString());
+            return;
+        }
+
+        if(arc.getWeight() > 1){
+            arc.decrementWeight();
+            return;
+        }
+        getGraph().get(vertex).remove(arc);
+        if (getGraph().get(vertex).isEmpty()){
+            getGraph().remove(vertex);
+        }
+    }
 }

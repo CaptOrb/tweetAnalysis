@@ -11,9 +11,6 @@ public class Graph<T> implements DirectedGraph<T> {
 
     public Map<T, Vertex<T>> getAllVerticesInGraph() { return allVerticesInGraph; }
 
-    public ArrayList<Arc<T>> getRetweeted(Vertex<T> key) { return graph.get(key); }
-
-
     @Override
     public void addArc(Vertex<T> source, Arc<T> arc) {
         // Check if vertex given has already been made as a key in the hashmap
@@ -34,12 +31,12 @@ public class Graph<T> implements DirectedGraph<T> {
     @Override
     public void removeArc(Vertex<T> vertex, Arc<T> arc) {
         if ( !graph.containsKey(vertex) ){
-            System.out.println(vertex.toString() + " does not retweet anyone");
+            System.out.println(vertex.toString() + " is not in the graph");
             return;
         }
 
         if ( !graph.get(vertex).contains(arc) ){
-            System.out.println(vertex.toString() + "does not retweet " + arc.toString());
+            System.out.println(vertex.toString() + "does not have a link to " + arc.toString());
             return;
         }
 
