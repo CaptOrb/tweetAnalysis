@@ -17,17 +17,17 @@ public class ReadHashtags {
                 String[] lineContents = line.split("\t");
                 try {
                     Long.parseLong(lineContents[0]);
-                    //String[] findRetweet = lineContents[2].split(" ");
-                    //if (findRetweet[2].contains("#")) { //if tweet has hashtags
                         String[] tweetText = lineContents[2].split(" "); //split the tweet text
                         StringBuilder hashtagsInLine = new StringBuilder("");
                         for(int i = 0; i<tweetText.length; i++){
                             if(tweetText[i].startsWith("#"))
                             hashtagsInLine.append("\t").append(tweetText[i]); //appends \t and the hashtag
                         }
-                        hashtags.add(lineContents[1] + hashtagsInLine);
-                        System.out.println(lineContents[1] + hashtagsInLine + tweetText.length);
-                    //}
+                        if(!(hashtagsInLine.length()<1)){
+                            hashtags.add(lineContents[1] + hashtagsInLine);
+                            System.out.println(lineContents[1] + hashtagsInLine);
+                        }
+
                 } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
                     j = "doNothing";
                 } catch (Exception exception) {
