@@ -5,6 +5,8 @@ import org.tojaco.Graph.Vertex;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 // HANDLES reading and writing to/from the graph output file
@@ -45,23 +47,37 @@ public class RetweetFileService<E> extends FileService {
     }
 
     public ArrayList<String> readRetweetsIntoSet(File file) {
+
         final ArrayList<String> retweets = new ArrayList<>();
-        String j=null;
+        final HashMap<String, List<String>> hashtags = new HashMap<>();
+
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] lineContents = line.split("\t");
                 try {
                     Long.parseLong(lineContents[0]);
-                    String[] findRetweet = lineContents[2].split(" "); //lineContents[2] is "RT @RetweetedUser tweetText" if it's a retweet
-                    if (findRetweet[0].contains("RT") && findRetweet[1].contains("@")) {
-                        String username = findRetweet[1].replaceAll(":", ""); //remove : after the retweeted user
+                    String[] tweetText = lineContents[2].split(" "); //lineContents[2] is "RT @RetweetedUser tweetText" if it's a retweet
+                    if (tweetText[0].contains("RT") && tweetText[1].contains("@")) {
+                        String username = tweetText[1].replaceAll(":", ""); //remove : after the retweeted user
                         retweets.add(lineContents[1] + "\t" + username); //adds @User + "\t" + @RetweetedUser and whatever they tweeted
                     }
+                    //String[] tweetText = lineContents[2].split(" "); //split the tweet text
+
+                    List<String> hashtagsInLine = new ArrayList<>();
+                    for(int i = 0; i<tweetText.length; i++){
+                        if(tweetText[i].startsWith("#"))
+                            hashtagsInLine.add(tweetText[i]); //appends \t and the hashtag
+                    }
+                    if(!(hashtagsInLine.size()<1)){
+                        hashtags.put(lineContents[1], hashtagsInLine);
+                        System.out.println(lineContents[1] +" "+ hashtagsInLine);
+                    }
+
                 } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-                    j = "doNothing";
+
                 } catch (Exception exception) {
-                    String k = "asd";
+
                 }
             }
         } catch (IOException | NullPointerException fnfe) {
