@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class ReadHashtags {
 
-    public ArrayList<String> readRetweetsIntoSet(File file) {
+    public ArrayList<String> readHashTagsFromFile(File file) {
         final ArrayList<String> hashtags = new ArrayList<>();
         String j=null;
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {

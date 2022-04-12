@@ -22,7 +22,7 @@ public class Main {
 
            // MainUtil.showProgramOptions(configuration, dataFile);
             ReadHashtags readHashtags = new ReadHashtags();
-            readHashtags.readRetweetsIntoSet(dataFile);
+            readHashtags.readHashTagsFromFile(dataFile);
 
         } catch (IOException ex) {
             ex.printStackTrace();
