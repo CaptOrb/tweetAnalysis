@@ -15,8 +15,8 @@ public class FindRetweets {
         return retweets;
     }
 
-    public Graph<String> toPutIntoHashMap(Configuration configuration, TwitterUsers<String> users, int a, int b) throws IOException {
-        Graph<String> rtGraph = new Graph<>();
+    public RetweetGraph<String> toPutIntoHashMap(Configuration configuration, TwitterUsers<String> users, int a, int b) throws IOException {
+        RetweetGraph<String> rtGraph = new RetweetGraph<>();
 
         //Map<String, Vertex<String>> allVerticesInGraph = rtGraph.getAllVerticesInGraph();
         for (String rt : retweets) {
