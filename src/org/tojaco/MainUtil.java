@@ -23,12 +23,15 @@ public class MainUtil {
                 "\n2. Search for Tweets using the steaming API (Sprint 2)" +
                 "\n3. Build a retweet Graph (Sprint 3)" +
                 "\n4. Assign stances to Tweets (Sprint 4)" +
+                "\n5. sprint 5 :)" +
                 "\nOr enter -1 to quit");
 
         Scanner scanner = new Scanner(System.in);
         int option = scanner.nextInt();
 
         FindGraphElements findGraphElements;
+        RetweetGraph<String> UserstoHashtags;
+        RetweetGraph<String> HashtagsToUsers;
         RetweetGraph<String> rtGraph;
         RetweetGraph<String> retweetedGraph;
 
@@ -139,6 +142,11 @@ public class MainUtil {
                 assignStances = new AssignStances();
                 StanceFile = new File(configuration.getSTANCE_FILE());
                 assignStances.determineProAntiVaxEvangelists(usersSprint5, StanceFile);
+
+                UserstoHashtags = findGraphElements.toPutIntoHashMap(configuration, usersSprint5, 0, 1, true);
+                HashtagsToUsers = findGraphElements.toPutIntoHashMap(configuration, usersSprint5, 1, 0, true);
+                System.out.println("Hashtag graphs added successfully to org.tojaco.Graph directory!");
+
 
                 // initial setup for calculating stances
                 graphAnalyser = new RetweetGraphAnalyser();
