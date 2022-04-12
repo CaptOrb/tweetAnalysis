@@ -11,9 +11,6 @@ public class Graph<T> implements DirectedGraph<T> {
 
     public Map<T, Vertex<T>> getAllVerticesInGraph() { return allVerticesInGraph; }
 
-    public ArrayList<Arc<T>> getRetweeted(Vertex<T> key) { return graph.get(key); }
-
-
     @Override
     public void addArc(Vertex<T> source, Arc<T> arc) {
         // Check if vertex given has already been made as a key in the hashmap
