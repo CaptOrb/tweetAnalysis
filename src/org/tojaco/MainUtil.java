@@ -57,6 +57,7 @@ public class MainUtil {
 
                 if (dataFile.exists()) {
                     findGraphElements.initialiseRetweets(dataFile);
+                    findGraphElements.initialiseHashtags(dataFile);
                 }
 
                 rtGraph = findGraphElements.toPutIntoHashMap(configuration, usersSprint3, 0, 1);
