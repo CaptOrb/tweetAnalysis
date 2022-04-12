@@ -20,8 +20,8 @@ public class FindGraphElements {
         return retweets;
     }
 
-    public Graph<TwitterUser, TwitterUser> toPutIntoHashMap(Configuration configuration, TwitterUsers users, int a, int b) throws IOException {
-        Graph<TwitterUser, TwitterUser> rtGraph = new Graph<>();
+    public DirectedGraph<TwitterUser, TwitterUser> toPutIntoHashMap(Configuration configuration, TwitterUsers users, int a, int b) throws IOException {
+        DirectedGraph<TwitterUser, TwitterUser> rtGraph = new DirectedGraph<>();
 
         //Map<String, Vertex<String>> allVerticesInGraph = rtGraph.getAllVerticesInGraph();
         for (String rt : retweets) {

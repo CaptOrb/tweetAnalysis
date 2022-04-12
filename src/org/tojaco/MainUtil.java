@@ -3,6 +3,7 @@ package org.tojaco;
 import org.tojaco.FileIO.ReadHashtags;
 import org.tojaco.FileIO.TwitterFileService;
 import org.tojaco.Graph.Arc;
+import org.tojaco.Graph.DirectedGraph;
 import org.tojaco.Graph.Graph;
 import org.tojaco.Graph.Vertex;
 import org.tojaco.GraphAnalysis.RetweetGraphAnalyser;
@@ -30,8 +31,8 @@ public class MainUtil {
         int option = scanner.nextInt();
 
         FindGraphElements findGraphElements;
-        Graph<TwitterUser, TwitterUser> rtGraph;
-        Graph<TwitterUser, TwitterUser> retweetedGraph;
+        DirectedGraph<TwitterUser, TwitterUser> rtGraph;
+        DirectedGraph<TwitterUser, TwitterUser> retweetedGraph;
 
         switch (option) {
             case 1:

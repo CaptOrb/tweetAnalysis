@@ -2,6 +2,7 @@ package org.tojaco.GraphAnalysis;
 
 import org.tojaco.Graph.Arc;
 
+import org.tojaco.Graph.DirectedGraph;
 import org.tojaco.Graph.Graph;
 import org.tojaco.Graph.Vertex;
 import org.tojaco.TwitterUser;
@@ -9,7 +10,7 @@ import org.tojaco.TwitterUsers;
 import twitter4j.Twitter;
 
 public class RetweetGraphAnalyser {
-    public void assignUserStances(Graph<TwitterUser, TwitterUser> rtGraph, TwitterUsers users){
+    public void assignUserStances(DirectedGraph<TwitterUser, TwitterUser> rtGraph, TwitterUsers users){
         int totalOfStances = 0;
         int numArcs = 0;
         for (Vertex<TwitterUser> vertex : rtGraph.getGraph().keySet()) {
@@ -56,7 +57,7 @@ public class RetweetGraphAnalyser {
         }
         return (positiveStances / hasStance) * 100;
     }
-    public float calculatePercentageNegativeStances(Graph<TwitterUser, TwitterUser> rtGraph, TwitterUsers users){
+    public float calculatePercentageNegativeStances(DirectedGraph<TwitterUser, TwitterUser> rtGraph, TwitterUsers users){
         float negativeStances = 0;
         float hasStance = 0;
         for(Vertex<TwitterUser> vertex : rtGraph.getAllVerticesInGraph().values()){
