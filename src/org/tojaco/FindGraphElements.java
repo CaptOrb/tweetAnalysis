@@ -19,38 +19,17 @@ public class FindGraphElements {
         return retweets;
     }
 
-    public RetweetGraph<String> toPutIntoHashMap(Configuration configuration, TwitterUsers<String> users, int a, int b, boolean hashtagList) throws IOException {
-
-        if(!hashtagList){
-            return toPutIntoHashMap1(configuration, users, a,b, retweets);
-        }
-        else{
-            return toPutIntoHashMap1(configuration, users, a,b,hashtags);
-        }
-    }
-
-    public RetweetGraph<String> toPutIntoHashMap1(Configuration configuration, TwitterUsers<String> users, int a, int b, ArrayList<String> list) throws IOException {
+    public RetweetGraph<String> toPutIntoHashMap(Configuration configuration, TwitterUsers<String> users, int a, int b) throws IOException {
         RetweetGraph<String> rtGraph = new RetweetGraph<>();
 
         //Map<String, Vertex<String>> allVerticesInGraph = rtGraph.getAllVerticesInGraph();
-        for (String rt : list) {
+        for (String rt : retweets) {
             String[] line = rt.split("\t"); //line[0] contains user, line[1] contains the user they are retweeting
             Vertex<String> srcVertex = users.getVertex(line[a]);
-            if(line.length<2) {
-                //Vertex<String> srcVertex = users.getVertex(line[a]);
-                Vertex<String> destVertex = users.getVertex(line[b]);
-                Arc<String> myArc = new Arc<>(destVertex, +1);
-                rtGraph.addArc(srcVertex, myArc);
-            } else{
-                int i = 1;
-                while(i<line.length){
-                    Vertex<String> destVertex = users.getVertex(line[i]);
-                    Arc<String> myArc = new Arc<>(destVertex, +1);
-                    rtGraph.addArc(srcVertex, myArc);
-                    i++;
-                }
-            }
+            Vertex<String> destVertex = users.getVertex(line[b]);
+            Arc<String> myArc = new Arc<>(destVertex, +1);
 
+            rtGraph.addArc(srcVertex, myArc);
             //to check that getLabelBetweenVertices works
             //System.out.println(srcVertex.getLabel() + " " + destVertex.getLabel() + " " + rtGraph.getLabelBetweenVertices(srcVertex,destVertex));
 
