@@ -1,11 +1,11 @@
 package org.tojaco.GraphAnalysis;
 
 import org.tojaco.Graph.Arc;
-import org.tojaco.Graph.RetweetGraph;
+import org.tojaco.Graph.Graph;
 import org.tojaco.Graph.Vertex;
 
 public class RetweetGraphAnalyser {
-    public void assignUserStances( RetweetGraph<String> rtGraph ){
+    public void assignUserStances( Graph<String> rtGraph ){
         int totalOfStances = 0;
         int numArcs = 0;
         for (Vertex<String> vertex : rtGraph.getGraph().keySet()) {
@@ -24,7 +24,7 @@ public class RetweetGraphAnalyser {
         }
     }
 
-    public float calculateCoverage(RetweetGraph<String> rtGraph){
+    public float calculateCoverage(Graph<String> rtGraph){
         // iterate all users in graph
         // if they have been given a stance then increment the stance counter
         float stances = 0;
@@ -36,7 +36,7 @@ public class RetweetGraphAnalyser {
         return (stances / rtGraph.getAllVerticesInGraph().size()) * 100;
     }
 
-    public float calculatePercentagePositiveStances(RetweetGraph<String> rtGraph){
+    public float calculatePercentagePositiveStances(Graph<String> rtGraph){
         float positiveStances = 0;
         float hasStance = 0;
         for(Vertex<String> vertex : rtGraph.getAllVerticesInGraph().values()){
@@ -49,7 +49,7 @@ public class RetweetGraphAnalyser {
         }
         return (positiveStances / hasStance) * 100;
     }
-    public float calculatePercentageNegativeStances(RetweetGraph<String> rtGraph){
+    public float calculatePercentageNegativeStances(Graph<String> rtGraph){
         float negativeStances = 0;
         float hasStance = 0;
         for(Vertex<String> vertex : rtGraph.getAllVerticesInGraph().values()){

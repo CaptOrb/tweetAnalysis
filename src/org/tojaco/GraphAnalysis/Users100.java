@@ -1,8 +1,6 @@
 package org.tojaco.GraphAnalysis;
-import org.tojaco.Graph.RetweetGraph;
 import org.tojaco.Graph.Vertex;
 
-import java.util.HashMap;
 import java.util.Map;
 
 

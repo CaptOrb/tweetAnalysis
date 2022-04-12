@@ -7,7 +7,7 @@ package org.tojaco.Graph;
 
 import java.util.*;
 
-public class RetweetGraph<T> implements DirectedGraph<T> {
+public class Graph<T> implements DirectedGraph<T> {
 
     private final Map<Vertex<T>, ArrayList<Arc<T>>> graph = new HashMap<>();
     private final Map<T, Vertex<T>> allVerticesInGraph = new HashMap<>();

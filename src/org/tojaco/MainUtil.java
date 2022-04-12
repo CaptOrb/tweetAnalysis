@@ -2,7 +2,7 @@ package org.tojaco;
 
 import org.tojaco.FileIO.TwitterFileService;
 import org.tojaco.Graph.Arc;
-import org.tojaco.Graph.RetweetGraph;
+import org.tojaco.Graph.Graph;
 import org.tojaco.Graph.Vertex;
 import org.tojaco.GraphAnalysis.RetweetGraphAnalyser;
 import org.tojaco.GraphAnalysis.Users100;
@@ -28,8 +28,8 @@ public class MainUtil {
         int option = scanner.nextInt();
 
         FindRetweets findRetweets;
-        RetweetGraph<String> rtGraph;
-        RetweetGraph<String> retweetedGraph;
+        Graph<String> rtGraph;
+        Graph<String> retweetedGraph;
 
         switch (option) {
             case 1:
@@ -116,7 +116,7 @@ public class MainUtil {
 
     }
 
-    public static void showSprint3Options(RetweetGraph<String> rtGraph, TwitterUsers<String> users) {
+    public static void showSprint3Options(Graph<String> rtGraph, TwitterUsers<String> users) {
         int option = 0;
 
         System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
