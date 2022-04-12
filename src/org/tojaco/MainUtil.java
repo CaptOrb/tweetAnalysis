@@ -93,19 +93,19 @@ public class MainUtil {
                 RetweetGraphAnalyser graphAnalyser = new RetweetGraphAnalyser();
 
                 for (int i = 0; i < 20; i++) {
-                    graphAnalyser.assignUserStances(rtGraph);
-                    graphAnalyser.assignUserStances(retweetedGraph);
+                    graphAnalyser.assignUserStances(rtGraph, usersSprint4);
+                    graphAnalyser.assignUserStances(retweetedGraph, usersSprint4);
 
                 }
 
                 // get coverage of stances
-                System.out.println("Coverage in graph: " + graphAnalyser.calculateCoverage(rtGraph) + "%");
+                System.out.println("Coverage in graph: " + graphAnalyser.calculateCoverage(rtGraph, usersSprint4) + "%");
                // System.out.println("Coverage in retweeted graph: " + graphAnalyser.calculateCoverage(retweetedGraph));
 
-                System.out.println("Percentage of users without a stance: " + (graphAnalyser.calculateCoverage(rtGraph) - 100) * -1 + "%");
+                System.out.println("Percentage of users without a stance: " + (graphAnalyser.calculateCoverage(rtGraph, usersSprint4) - 100) * -1 + "%");
 
-                System.out.println("Percentage positive stances: " + graphAnalyser.calculatePercentagePositiveStances(rtGraph) + "%");
-                System.out.println("Percentage negative stance: " + graphAnalyser.calculatePercentageNegativeStances(rtGraph) + "%");
+                System.out.println("Percentage positive stances: " + graphAnalyser.calculatePercentagePositiveStances(rtGraph, usersSprint4) + "%");
+                System.out.println("Percentage negative stance: " + graphAnalyser.calculatePercentageNegativeStances(rtGraph,usersSprint4) + "%");
 
                 Users100 users100 = new Users100();
                 users100.checkStance(retweetsHashMap);

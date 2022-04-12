@@ -25,11 +25,11 @@ public class AssignStances {
 
                     if (lineContents[1].equals("anti")){
                         if (vertex.getLabel().equals(lineContents[0])) {
-                            vertex.setStance(-1000);
+                            twitterUsers.getUserStances().putIfAbsent(vertex, -1000);
                         }
                     } else if (lineContents[1].equals("pro") ){
                         if (vertex.getLabel().equals(lineContents[0])) {
-                            vertex.setStance(1000);
+                            twitterUsers.getUserStances().putIfAbsent(vertex, 1000);
                         }
                     } //if it equals idk then skip
                 }
