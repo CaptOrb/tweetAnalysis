@@ -75,7 +75,8 @@ public class RetweetFileService<E> extends FileService {
                     }
 
                 } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-
+                    String[] lineContents1 = line.split("\t");
+                    System.out.println(lineContents[0]);
                 } catch (Exception exception) {
 
                 }
