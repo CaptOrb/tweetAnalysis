@@ -12,8 +12,12 @@ public class Vertex<T> {
         return label;
     }
 
-    public String toString(){
+/*    public String toString(){
             return "Label: " + label.toString();
+    }*/
+
+    public String toString(){
+       return label.toString();
     }
 }
 

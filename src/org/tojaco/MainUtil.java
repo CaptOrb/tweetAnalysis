@@ -167,7 +167,6 @@ public class MainUtil {
                 DirectedGraph<TwitterUser, Hashtag> usertoHashTag;
                 usertoHashTag = fge1.createGraph(graphElements, getHashtags(), 0, 1);
 
-                System.out.println(configuration.getUSERS_TO_HASHTAGS() + "Hi");
                 rfs1.writeRetweetFile(usertoHashTag.getGraph(),
                         new File(configuration.getGRAPH_DIRECTORY(),
                                 configuration.getUSERS_TO_HASHTAGS()));
@@ -177,7 +176,6 @@ public class MainUtil {
                 DirectedGraph<Hashtag, TwitterUser> hashtagToUsers;
                 hashtagToUsers = fge2.createGraph(graphElements, getHashtags(), 1, 0);
 
-                System.out.println(configuration.getUSERS_TO_HASHTAGS() + "Hi");
                 rfs1.writeRetweetFile(hashtagToUsers.getGraph(),
                         new File(configuration.getGRAPH_DIRECTORY(),
                                 configuration.getHASHTAGS_TO_USERS()));
