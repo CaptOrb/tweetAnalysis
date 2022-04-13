@@ -29,7 +29,7 @@ public class MainUtil {
     public static void showProgramOptions(Configuration configuration, File dataFile) throws IOException {
         TwitterFileService ts = new TwitterFileService();
 
-        System.out.println("Enter 1, 2, 3, or 4. " +
+        System.out.println("Enter 1, 2, 3, 4 or 5. " +
                 "\n1. Search for Tweets using search API (Sprint 1)" +
                 "\n2. Search for Tweets using the steaming API (Sprint 2)" +
                 "\n3. Build a retweet Graph (Sprint 3)" +
@@ -44,6 +44,8 @@ public class MainUtil {
         FindGraphElements findGraphElements;
         DirectedGraph<TwitterUser, TwitterUser> rtGraph;
         DirectedGraph<TwitterUser, TwitterUser> retweetedGraph;
+
+        String GRAPH_OUTPUT_DIR = configuration.getGRAPH_DIRECTORY();
 
         switch (option) {
             case 1:
@@ -67,11 +69,6 @@ public class MainUtil {
                 break;
             case 3:
                 findGraphElements = new FindGraphElements<>(new CreateUserVertex(), new CreateUserVertex());
-//                if (dataFile.exists()) {
-//                    findGraphElements.initialiseRetweets(dataFile);
-//                }
-//
-//                rtGraph = findGraphElements.createGraph(usersSprint3, 0, 1);
 
                 RetweetFileService rfs = new RetweetFileService();
 
@@ -81,7 +78,17 @@ public class MainUtil {
 
                 rtGraph = findGraphElements.createGraph(graphElements, getRetweets(), 0, 1);
 
+                retweetedGraph = findGraphElements.createGraph(graphElements, getRetweets(), 1, 0);
+
+                rfs.writeRetweetFile(rtGraph.getGraph(),
+                        new File(configuration.getGRAPH_DIRECTORY(),
+                                configuration.getRTGRAPH_OUTPUT_FILE()));
+
+                rfs.writeRetweetFile(retweetedGraph.getGraph(),
+                        new File(configuration.getGRAPH_DIRECTORY(),
+                                configuration.getRTWEETEDGRAPH_OUTPUT_FILE()));
                 System.out.println("Retweet graph added successfully to Graph directory!");
+
 
                 showSprint3Options(rtGraph, graphElements);
                 break;
@@ -110,7 +117,7 @@ public class MainUtil {
 
                 rfs.writeRetweetFile(retweetedGraph.getGraph(),
                         new File(configuration.getGRAPH_DIRECTORY(),
-                                configuration.getRTGRAPH_OUTPUT_FILE()));
+                                configuration.getRTWEETEDGRAPH_OUTPUT_FILE()));
                 System.out.println("Retweet graph added successfully to Graph directory!");
 
                 FindEvangelists findEvangelist = new FindEvangelists();
@@ -187,11 +194,9 @@ public class MainUtil {
                         new File(configuration.getGRAPH_DIRECTORY(),
                                 configuration.getHASHTAGS_TO_USERS()));
 
-                System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
-//
-//                findEvangelist = new FindEvangelists();
-//
-//
+                System.out.println("Retweet graph added successfully to Graph directory!");
+
+
 //                assignStances = new AssignStances();
 //                StanceFile = new File(configuration.getSTANCE_FILE());
 //                assignStances.determineProAntiVaxEvangelists(usersSprint5, StanceFile);
@@ -212,7 +217,7 @@ public class MainUtil {
     public static void showSprint3Options(Graph<TwitterUser, TwitterUser> rtGraph, GraphElements graphElements) {
         int option = 0;
 
-        System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
+        System.out.println("Retweet graph added successfully to Graph directory!");
 
         while (option != -1) {
 
@@ -240,7 +245,7 @@ public class MainUtil {
                     Arc<TwitterUser> arc = new Arc<>(end, Integer.parseInt(newArc[2]));
                     rtGraph.addArc(start, arc);
 
-                    System.out.print("org.tojaco.Graph.Vertex with " + start + " and arc with " + end.toString() + " was added to the graph.\n");
+                    System.out.print("Graph.Vertex with " + start + " and arc with " + end.toString() + " was added to the graph.\n");
 
                 }
             }
