@@ -10,16 +10,7 @@ import java.util.*;
 
 public class FindGraphElements {
 
-    private final ArrayList<String> retweets = new ArrayList<>();
 
-    public ArrayList<String> getRetweets() {
-        return retweets;
-    }
-    private final ArrayList<String> hashtags = new ArrayList<>();
-
-    public ArrayList<String> getHashtags() {
-        return hashtags;
-    }
 
     public <T, E> DirectedGraph<T, E> toPutIntoHashMap(ArrayList<String> list, int a, int b) throws IOException {
         DirectedGraph<T, E> rtGraph = new DirectedGraph<>();
@@ -39,12 +30,4 @@ public class FindGraphElements {
         return rtGraph;
     }
 
-    public void initialiseRetweets(File dataFile) {
-        RetweetFileService<String> rfs = new RetweetFileService<>();
-        getRetweets().addAll(rfs.readRetweetsIntoSet(dataFile));
-
-        getHashtags().addAll(rfs.getHashtags());
-
-        //return retweets;
-    }
 }

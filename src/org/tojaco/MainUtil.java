@@ -1,5 +1,6 @@
 package org.tojaco;
 
+import org.tojaco.FileIO.RetweetFileService;
 import org.tojaco.FileIO.TwitterFileService;
 import org.tojaco.Graph.Arc;
 import org.tojaco.Graph.DirectedGraph;
@@ -12,10 +13,23 @@ import twitter4j.TwitterFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
 
 public class MainUtil {
+
+    private static ArrayList<String> retweets;
+    private static ArrayList<String> hashtags;
+
+    public static ArrayList<String> getRetweets() {
+        return retweets;
+    }
+
+    public static ArrayList<String> getHashtags() {
+        return hashtags;
+    }
+
     public static void showProgramOptions(Configuration configuration, File dataFile) throws IOException {
         TwitterFileService ts = new TwitterFileService();
 
@@ -58,14 +72,14 @@ public class MainUtil {
                 findGraphElements = new FindGraphElements();
                 TwitterUsers usersSprint3 = new TwitterUsers();
 
-                if (dataFile.exists()) {
-                    findGraphElements.initialiseRetweets(dataFile);
-                }
-
-                rtGraph = findGraphElements.toPutIntoHashMap(configuration, usersSprint3, 0, 1);
+//                if (dataFile.exists()) {
+//                    findGraphElements.initialiseRetweets(dataFile);
+//                }
+//
+//                rtGraph = findGraphElements.toPutIntoHashMap(usersSprint3, 0, 1);
                 System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
 
-                showSprint3Options(rtGraph, usersSprint3);
+                //showSprint3Options(rtGraph, usersSprint3);
                 break;
             case 4:
 
@@ -74,41 +88,46 @@ public class MainUtil {
 
                 findGraphElements = new FindGraphElements();
 
+                RetweetFileService<String> rfs = new RetweetFileService<>();
+
                 if (dataFile.exists()) {
-                    findGraphElements.initialiseRetweets(dataFile);
+                    getRetweets().addAll(rfs.readRetweetsIntoSet(dataFile));
                 }
-                TwitterUsers usersSprint4 = new TwitterUsers();
-                rtGraph = findGraphElements.toPutIntoHashMap(configuration, usersSprint4, 0, 1);
-                retweetedGraph = findGraphElements.toPutIntoHashMap(configuration, usersSprint4, 1, 0);
+                TwitterUsers usersSprint5 = new TwitterUsers();
+
+                getHashtags().addAll(rfs.getHashtags());
+
+                rtGraph = findGraphElements.toPutIntoHashMap(getRetweets(), 0, 1);
+                retweetedGraph = findGraphElements.toPutIntoHashMap(getRetweets(), 1, 0);
                 System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
 
-                FindEvangelists findEvangelist = new FindEvangelists();
-                Map<Vertex<TwitterUser>, Integer> retweetsHashMap = findEvangelist.findTotalRetweets(retweetedGraph, usersSprint4);
-
-                AssignStances assignStances = new AssignStances();
-                File StanceFile = new File(configuration.getSTANCE_FILE());
-                assignStances.determineProAntiVaxEvangelists(usersSprint4, StanceFile);
+//                FindEvangelists findEvangelist = new FindEvangelists();
+//                Map<Vertex<TwitterUser>, Integer> retweetsHashMap = findEvangelist.findTotalRetweets(retweetedGraph, usersSprint4);
+//
+//                AssignStances assignStances = new AssignStances();
+//                File StanceFile = new File(configuration.getSTANCE_FILE());
+//                assignStances.determineProAntiVaxEvangelists(usersSprint4, StanceFile);
 
                 // initial setup for calculating stances
                 RetweetGraphAnalyser graphAnalyser = new RetweetGraphAnalyser();
 
-                for (int i = 0; i < 20; i++) {
-                    graphAnalyser.assignUserStances(rtGraph, usersSprint4);
-                    graphAnalyser.assignUserStances(retweetedGraph, usersSprint4);
-
-                }
+//                for (int i = 0; i < 20; i++) {
+//                    graphAnalyser.assignUserStances(rtGraph, usersSprint4);
+//                    graphAnalyser.assignUserStances(retweetedGraph, usersSprint4);
+//
+//                }
 
                 // get coverage of stances
-                System.out.println("Coverage in graph: " + graphAnalyser.calculateCoverage(rtGraph, usersSprint4) + "%");
+                //System.out.println("Coverage in graph: " + graphAnalyser.calculateCoverage(rtGraph, usersSprint4) + "%");
                 // System.out.println("Coverage in retweeted graph: " + graphAnalyser.calculateCoverage(retweetedGraph));
 
-                System.out.println("Percentage of users without a stance: " + (graphAnalyser.calculateCoverage(rtGraph, usersSprint4) - 100) * -1 + "%");
-
-                System.out.println("Percentage positive stances: " + graphAnalyser.calculatePercentagePositiveStances(rtGraph, usersSprint4) + "%");
-                System.out.println("Percentage negative stance: " + graphAnalyser.calculatePercentageNegativeStances(rtGraph,usersSprint4) + "%");
-
-                Users100 users100 = new Users100();
-                users100.checkStance(retweetsHashMap);
+//                System.out.println("Percentage of users without a stance: " + (graphAnalyser.calculateCoverage(rtGraph, usersSprint4) - 100) * -1 + "%");
+//
+//                System.out.println("Percentage positive stances: " + graphAnalyser.calculatePercentagePositiveStances(rtGraph, usersSprint4) + "%");
+//                System.out.println("Percentage negative stance: " + graphAnalyser.calculatePercentageNegativeStances(rtGraph,usersSprint4) + "%");
+//
+//                Users100 users100 = new Users100();
+//                users100.checkStance(retweetsHashMap);
 
 
                 break;
@@ -121,29 +140,36 @@ public class MainUtil {
 
                 findGraphElements = new FindGraphElements();
 
+                RetweetFileService<String> rfs1 = new RetweetFileService<>();
                 if (dataFile.exists()) {
-                    findGraphElements.initialiseRetweets(dataFile);
+                    getRetweets().addAll(rfs1.readRetweetsIntoSet(dataFile));
                 }
-                TwitterUsers usersSprint5 = new TwitterUsers();
-                rtGraph = findGraphElements.toPutIntoHashMap(configuration, usersSprint5, 0, 1);
-                retweetedGraph = findGraphElements.toPutIntoHashMap(configuration, usersSprint5, 1, 0);
+                //TwitterUsers usersSprint5 = new TwitterUsers();
+
+
+
+
+                getHashtags().addAll(rfs1.getHashtags());
+
+                rtGraph = findGraphElements.toPutIntoHashMap(getRetweets(), 0, 1);
+                retweetedGraph = findGraphElements.toPutIntoHashMap(getRetweets(), 1, 0);
                 System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
-
-                findEvangelist = new FindEvangelists();
-
-
-                assignStances = new AssignStances();
-                StanceFile = new File(configuration.getSTANCE_FILE());
-                assignStances.determineProAntiVaxEvangelists(usersSprint5, StanceFile);
-
-                // initial setup for calculating stances
-                graphAnalyser = new RetweetGraphAnalyser();
-
-                for (int i = 0; i < 20; i++) {
-                    graphAnalyser.assignUserStances(rtGraph, usersSprint5);
-                    graphAnalyser.assignUserStances(retweetedGraph, usersSprint5);
-
-                }
+//
+//                findEvangelist = new FindEvangelists();
+//
+//
+//                assignStances = new AssignStances();
+//                StanceFile = new File(configuration.getSTANCE_FILE());
+//                assignStances.determineProAntiVaxEvangelists(usersSprint5, StanceFile);
+//
+//                // initial setup for calculating stances
+//                graphAnalyser = new RetweetGraphAnalyser();
+//
+//                for (int i = 0; i < 20; i++) {
+//                    graphAnalyser.assignUserStances(rtGraph, usersSprint5);
+//                    graphAnalyser.assignUserStances(retweetedGraph, usersSprint5);
+//
+//                }
 
                 break;
         }
