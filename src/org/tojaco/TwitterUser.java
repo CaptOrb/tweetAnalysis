@@ -1,7 +1,7 @@
 package org.tojaco;
 
 public class TwitterUser {
-    private String userHandle;
+    private final String userHandle;
     private int stance;
 
     TwitterUser(String userHandle){
