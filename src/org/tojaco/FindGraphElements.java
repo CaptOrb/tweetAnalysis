@@ -11,13 +11,12 @@ import java.util.*;
 public class FindGraphElements {
 
     private final ArrayList<String> retweets = new ArrayList<>();
-    private final ArrayList<String> hashtags = new ArrayList<>();
-
-    public ArrayList<String> getHashtags() { return hashtags;}
 
     public ArrayList<String> getRetweets() {
         return retweets;
     }
+
+
 
     public DirectedGraph<TwitterUser, TwitterUser> toPutIntoHashMap(Configuration configuration, TwitterUsers users, int a, int b) throws IOException {
         DirectedGraph<TwitterUser, TwitterUser> rtGraph = new DirectedGraph<>();
@@ -34,7 +33,12 @@ public class FindGraphElements {
             //System.out.println(srcVertex.getLabel() + " " + destVertex.getLabel() + " " + rtGraph.getLabelBetweenVertices(srcVertex,destVertex));
 
         }
+
         RetweetFileService<TwitterUser> rs = new RetweetFileService<>();
+
+//        for (Map.Entry<String, List<String>> entry : rs.getHashtags().entrySet()){
+//
+//        }
 
         String outputFile;
         if (a == 0) {
