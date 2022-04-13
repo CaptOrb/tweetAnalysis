@@ -2,7 +2,6 @@ package org.tojaco;
 
 import org.tojaco.FileIO.RetweetFileService;
 import org.tojaco.Graph.*;
-import twitter4j.Twitter;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,7 +20,7 @@ public class FindGraphElements {
         return hashtags;
     }
 
-    public DirectedGraph<TwitterUser, TwitterUser> toPutIntoHashMap(Configuration configuration, TwitterUsers users, int a, int b) throws IOException {
+    public DirectedGraph<TwitterUser, TwitterUser> createGraph(Configuration configuration, TwitterUsers users, int a, int b) throws IOException {
         DirectedGraph<TwitterUser, TwitterUser> Graph = new DirectedGraph<>();
 
         //Map<String, Vertex<String>> allVerticesInGraph = rtGraph.getAllVerticesInGraph();
@@ -57,7 +56,6 @@ public class FindGraphElements {
         getRetweets().addAll(rfs.readRetweetsIntoSet(dataFile));
 
         getHashtags().addAll(rfs.getHashtags());
-
         //return retweets;
     }
 }

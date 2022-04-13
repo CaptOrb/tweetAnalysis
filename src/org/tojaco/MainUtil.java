@@ -1,5 +1,6 @@
 package org.tojaco;
 
+import org.tojaco.FileIO.RetweetFileService;
 import org.tojaco.FileIO.TwitterFileService;
 import org.tojaco.Graph.Arc;
 import org.tojaco.Graph.DirectedGraph;
@@ -7,7 +8,6 @@ import org.tojaco.Graph.Graph;
 import org.tojaco.Graph.Vertex;
 import org.tojaco.GraphAnalysis.RetweetGraphAnalyser;
 import org.tojaco.GraphAnalysis.Users100;
-import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
 
 import java.io.File;
@@ -33,6 +33,8 @@ public class MainUtil {
         FindGraphElements findGraphElements;
         DirectedGraph<TwitterUser, TwitterUser> rtGraph;
         DirectedGraph<TwitterUser, TwitterUser> retweetedGraph;
+        RetweetFileService<TwitterUser> rs = new RetweetFileService<>();
+        RetweetGraphAnalyser graphAnalyser = new RetweetGraphAnalyser();
 
         switch (option) {
             case 1:
@@ -62,7 +64,7 @@ public class MainUtil {
                     findGraphElements.initialiseRetweets(dataFile);
                 }
 
-                rtGraph = findGraphElements.toPutIntoHashMap(configuration, usersSprint3, 0, 1);
+                rtGraph = findGraphElements.createGraph(configuration, usersSprint3, 0, 1);
                 System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
 
                 showSprint3Options(rtGraph, usersSprint3);
@@ -78,8 +80,17 @@ public class MainUtil {
                     findGraphElements.initialiseRetweets(dataFile);
                 }
                 TwitterUsers usersSprint4 = new TwitterUsers();
-                rtGraph = findGraphElements.toPutIntoHashMap(configuration, usersSprint4, 0, 1);
-                retweetedGraph = findGraphElements.toPutIntoHashMap(configuration, usersSprint4, 1, 0);
+                rtGraph = findGraphElements.createGraph(configuration, usersSprint4, 0, 1);
+                retweetedGraph = findGraphElements.createGraph(configuration, usersSprint4, 1, 0);
+
+                rs.writeRetweetFile(rtGraph.getGraph(),
+                        new File(configuration.getGRAPH_DIRECTORY(),
+                                configuration.getRTGRAPH_OUTPUT_FILE()));
+
+                rs.writeRetweetFile(retweetedGraph.getGraph(),
+                        new File(configuration.getGRAPH_DIRECTORY(),
+                                configuration.getRTGRAPH_OUTPUT_FILE()));
+
                 System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
 
                 FindEvangelists findEvangelist = new FindEvangelists();
@@ -88,9 +99,6 @@ public class MainUtil {
                 AssignStances assignStances = new AssignStances();
                 File StanceFile = new File(configuration.getSTANCE_FILE());
                 assignStances.determineProAntiVaxEvangelists(usersSprint4, StanceFile);
-
-                // initial setup for calculating stances
-                RetweetGraphAnalyser graphAnalyser = new RetweetGraphAnalyser();
 
                 for (int i = 0; i < 20; i++) {
                     graphAnalyser.assignUserStances(rtGraph, usersSprint4);
@@ -110,7 +118,6 @@ public class MainUtil {
                 Users100 users100 = new Users100();
                 users100.checkStance(retweetsHashMap);
 
-
                 break;
 
             case 5:
@@ -118,26 +125,30 @@ public class MainUtil {
                 // graph for using implemented methods on
                 // see org.tojaco.Graph.DirectedGraph.java for description of public methods
 
-
                 findGraphElements = new FindGraphElements();
 
                 if (dataFile.exists()) {
                     findGraphElements.initialiseRetweets(dataFile);
                 }
                 TwitterUsers usersSprint5 = new TwitterUsers();
-                rtGraph = findGraphElements.toPutIntoHashMap(configuration, usersSprint5, 0, 1);
-                retweetedGraph = findGraphElements.toPutIntoHashMap(configuration, usersSprint5, 1, 0);
-                System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
+                rtGraph = findGraphElements.createGraph(configuration, usersSprint5, 0, 1);
+                retweetedGraph = findGraphElements.createGraph(configuration, usersSprint5, 1, 0);
+
+                rs.writeRetweetFile(rtGraph.getGraph(),
+                        new File(configuration.getGRAPH_DIRECTORY(),
+                                configuration.getRTGRAPH_OUTPUT_FILE()));
+
+                rs.writeRetweetFile(retweetedGraph.getGraph(),
+                        new File(configuration.getGRAPH_DIRECTORY(),
+                                configuration.getRTGRAPH_OUTPUT_FILE()));
 
                 findEvangelist = new FindEvangelists();
 
+                System.out.println("Retweet graph added successfully to the Graph directory!");
 
                 assignStances = new AssignStances();
                 StanceFile = new File(configuration.getSTANCE_FILE());
                 assignStances.determineProAntiVaxEvangelists(usersSprint5, StanceFile);
-
-                // initial setup for calculating stances
-                graphAnalyser = new RetweetGraphAnalyser();
 
                 for (int i = 0; i < 20; i++) {
                     graphAnalyser.assignUserStances(rtGraph, usersSprint5);
