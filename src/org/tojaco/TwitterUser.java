@@ -5,7 +5,7 @@ public class TwitterUser {
     private int stance;
     private boolean hasStance;
 
-    TwitterUser(String userHandle){
+    public TwitterUser(String userHandle){
         this.userHandle = userHandle;
     }
 
@@ -14,6 +14,7 @@ public class TwitterUser {
 
     public void setStance(int stance){
         this.stance = stance;
+        hasStance = true;
     }
 
     public boolean hasStance(){

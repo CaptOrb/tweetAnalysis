@@ -2,16 +2,15 @@ package org.tojaco;
 
 import org.tojaco.FileIO.RetweetFileService;
 import org.tojaco.FileIO.TwitterFileService;
-import org.tojaco.Graph.Arc;
-import org.tojaco.Graph.DirectedGraph;
-import org.tojaco.Graph.Graph;
-import org.tojaco.Graph.Vertex;
+import org.tojaco.Graph.*;
 import org.tojaco.GraphAnalysis.RetweetGraphAnalyser;
+import org.tojaco.GraphAnalysis.Users100;
 import twitter4j.TwitterFactory;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Scanner;
 
 public class MainUtil {
@@ -41,6 +40,7 @@ public class MainUtil {
         Scanner scanner = new Scanner(System.in);
         int option = scanner.nextInt();
 
+        GraphElements graphElements = new GraphElements();
         FindGraphElements findGraphElements;
         DirectedGraph<TwitterUser, TwitterUser> rtGraph;
         DirectedGraph<TwitterUser, TwitterUser> retweetedGraph;
@@ -66,8 +66,8 @@ public class MainUtil {
                 st.streamTweets();
                 break;
             case 3:
-                findGraphElements = new FindGraphElements();
-                TwitterUsers usersSprint3 = new TwitterUsers();
+                findGraphElements = new FindGraphElements<>(new CreateUserVertex(), new CreateUserVertex());
+                GraphElements usersSprint3 = new GraphElements();
 
 //                if (dataFile.exists()) {
 //                    findGraphElements.initialiseRetweets(dataFile);
@@ -83,19 +83,19 @@ public class MainUtil {
                 // graph for using implemented methods on
                 // see org.tojaco.Graph.DirectedGraph.java for description of public methods
 
-                findGraphElements = new FindGraphElements();
+                findGraphElements = new FindGraphElements<>(new CreateUserVertex(), new CreateUserVertex());
 
                 RetweetFileService rfs = new RetweetFileService();
 
                 if (dataFile.exists()) {
                     getRetweets().addAll(rfs.readRetweetsIntoSet(dataFile));
                 }
-                TwitterUsers usersSprint5 = new TwitterUsers();
 
                 getHashtags().addAll(rfs.getHashtags());
 
-                rtGraph = findGraphElements.createGraph(getRetweets(), 0, 1);
-                retweetedGraph = findGraphElements.createGraph(getRetweets(), 1, 0);
+
+                rtGraph = findGraphElements.createGraph(graphElements, getRetweets(), 0, 1);
+                retweetedGraph = findGraphElements.createGraph(graphElements, getRetweets(), 1, 0);
 
                 rfs.writeRetweetFile(rtGraph.getGraph(),
                         new File(configuration.getGRAPH_DIRECTORY(),
@@ -111,7 +111,7 @@ public class MainUtil {
 
                 AssignStances assignStances = new AssignStances();
                 File StanceFile = new File(configuration.getSTANCE_FILE());
-                assignStances.determineProAntiVaxEvangelists(rtGraph, StanceFile);
+                assignStances.determineProAntiVaxEvangelists(graphElements, rtGraph, StanceFile);
 
                 // initial setup for calculating stances
                 RetweetGraphAnalyser graphAnalyser = new RetweetGraphAnalyser();
@@ -123,13 +123,13 @@ public class MainUtil {
                 }
 
                 // get coverage of stances
-                System.out.println("Coverage in graph: " + graphAnalyser.calculateCoverage(rtGraph) + "%");
-                System.out.println("Coverage in retweeted graph: " + graphAnalyser.calculateCoverage(retweetedGraph));
+                System.out.println("Coverage in graph: " + graphAnalyser.calculateCoverage(rtGraph, graphElements) + "%");
+                System.out.println("Coverage in retweeted graph: " + graphAnalyser.calculateCoverage(retweetedGraph, graphElements));
 
-                System.out.println("Percentage of users without a stance: " + (graphAnalyser.calculateCoverage(rtGraph) - 100) * -1 + "%");
+                System.out.println("Percentage of users without a stance: " + (graphAnalyser.calculateCoverage(rtGraph, graphElements) - 100) * -1 + "%");
 
-                System.out.println("Percentage positive stances: " + graphAnalyser.calculatePercentagePositiveStances(rtGraph) + "%");
-                System.out.println("Percentage negative stance: " + graphAnalyser.calculatePercentageNegativeStances(rtGraph) + "%");
+                System.out.println("Percentage positive stances: " + graphAnalyser.calculatePercentagePositiveStances(rtGraph, graphElements) + "%");
+                System.out.println("Percentage negative stance: " + graphAnalyser.calculatePercentageNegativeStances(rtGraph, graphElements) + "%");
 
                 Users100 users100 = new Users100();
                 users100.checkStance(retweetsHashMap);
@@ -142,7 +142,7 @@ public class MainUtil {
                 // graph for using implemented methods on
                 // see org.tojaco.Graph.DirectedGraph.java for description of public methods
 
-                findGraphElements = new FindGraphElements();
+                findGraphElements = new FindGraphElements(new CreateUserVertex(), new CreateUserVertex());
 
                 RetweetFileService rfs1 = new RetweetFileService();
                 if (dataFile.exists()) {
@@ -152,8 +152,8 @@ public class MainUtil {
 
                 getHashtags().addAll(rfs1.getHashtags());
 
-                rtGraph = findGraphElements.createGraph(getRetweets(), 0, 1);
-                retweetedGraph = findGraphElements.createGraph(getRetweets(), 1, 0);
+                rtGraph = findGraphElements.createGraph(graphElements, getRetweets(), 0, 1);
+                retweetedGraph = findGraphElements.createGraph(graphElements, getRetweets(), 1, 0);
 
                 rfs1.writeRetweetFile(rtGraph.getGraph(),
                         new File(configuration.getGRAPH_DIRECTORY(),
@@ -163,8 +163,9 @@ public class MainUtil {
                         new File(configuration.getGRAPH_DIRECTORY(),
                                 configuration.getRTGRAPH_OUTPUT_FILE()));
 
-                DirectedGraph<TwitterUser, TwitterUser> usertoHashTag;
-                usertoHashTag = findGraphElements.createGraph(getHashtags(), 0, 1);
+                FindGraphElements<TwitterUser, Hashtag> fge1 = new FindGraphElements<>(new CreateUserVertex(), new CreateHashtagVertex());
+                DirectedGraph<TwitterUser, Hashtag> usertoHashTag;
+                usertoHashTag = fge1.createGraph(graphElements, getHashtags(), 0, 1);
 
                 System.out.println(configuration.getUSERS_TO_HASHTAGS() + "Hi");
                 rfs1.writeRetweetFile(usertoHashTag.getGraph(),
@@ -172,8 +173,9 @@ public class MainUtil {
                                 configuration.getUSERS_TO_HASHTAGS()));
 
 
-                DirectedGraph<TwitterUser, TwitterUser> hashtagToUsers;
-                hashtagToUsers = findGraphElements.createGraph(getHashtags(), 1, 0);
+                FindGraphElements<Hashtag, TwitterUser> fge2 = new FindGraphElements<>(new CreateHashtagVertex(), new CreateUserVertex());
+                DirectedGraph<Hashtag, TwitterUser> hashtagToUsers;
+                hashtagToUsers = fge2.createGraph(graphElements, getHashtags(), 1, 0);
 
                 System.out.println(configuration.getUSERS_TO_HASHTAGS() + "Hi");
                 rfs1.writeRetweetFile(hashtagToUsers.getGraph(),
@@ -202,7 +204,7 @@ public class MainUtil {
         }
     }
 
-    public static void showSprint3Options(Graph<TwitterUser, TwitterUser> rtGraph, TwitterUsers users) {
+    public static void showSprint3Options(Graph<TwitterUser, TwitterUser> rtGraph, GraphElements graphElements) {
         int option = 0;
 
         System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
@@ -224,8 +226,8 @@ public class MainUtil {
                     newArc[i] = scanner.next();
                 }
 
-                Vertex<TwitterUser> start = users.getVertex(newArc[0]);
-                Vertex<TwitterUser> end = users.getVertex(newArc[1]);
+                Vertex<TwitterUser> start = graphElements.getVertex(newArc[0], new CreateUserVertex());
+                Vertex<TwitterUser> end = graphElements.getVertex(newArc[1], new CreateUserVertex());
 
                 if (rtGraph.hasArcBetween(start, end)) {
                     System.out.println("There already exists an arc between these two vertices.");
@@ -246,9 +248,9 @@ public class MainUtil {
                     vertices[i] = scanner.next();
                 }
 
-                Vertex<TwitterUser> vertex1 = users.getVertex(vertices[0]);
+                Vertex<TwitterUser> vertex1 = graphElements.getVertex(vertices[0], new CreateUserVertex());
 
-                Vertex<TwitterUser> vertex2 = users.getVertex(vertices[1]);
+                Vertex<TwitterUser> vertex2 = graphElements.getVertex(vertices[1], new CreateUserVertex());
 
                 boolean hasArc = rtGraph.hasArcBetween(vertex1, vertex2);
 

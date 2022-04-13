@@ -1,7 +1,6 @@
 package org.tojaco;
 
-import org.tojaco.Graph.DirectedGraph;
-import org.tojaco.Graph.Vertex;
+import org.tojaco.Graph.*;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -9,8 +8,9 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class AssignStances {
+    VertexCreator<TwitterUser> vertexCreator = new CreateUserVertex();
 
-    public void determineProAntiVaxEvangelists(DirectedGraph<TwitterUser, TwitterUser> graph, File file) {
+    public void determineProAntiVaxEvangelists(GraphElements graphElements, DirectedGraph<TwitterUser, TwitterUser> graph, File file) {
 
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
@@ -20,7 +20,7 @@ public class AssignStances {
 
                     String[] lineContents = line.split(" ");
 
-                    Vertex<TwitterUser> vertex = graph.getVertex(lineContents[0]);
+                    Vertex<TwitterUser> vertex = graphElements.getVertex(lineContents[0], vertexCreator);
 
                     vertexError = vertex;
 

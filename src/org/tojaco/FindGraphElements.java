@@ -5,16 +5,23 @@ import org.tojaco.Graph.*;
 import java.io.IOException;
 import java.util.*;
 
-public class FindGraphElements {
+public class FindGraphElements<T, E> {
+    private final VertexCreator<T> srcVertexCreator;
+    private final VertexCreator<E> destVertexCreator;
 
-    public <T, E> DirectedGraph<T, E> createGraph(ArrayList<String> list, int a, int b) throws IOException {
+    FindGraphElements(VertexCreator<T> srcVertexCreator, VertexCreator<E> destVertexCreator){
+        this.srcVertexCreator = srcVertexCreator;
+        this.destVertexCreator = destVertexCreator;
+    }
+
+    public DirectedGraph<T, E> createGraph(GraphElements graphElements, ArrayList<String> list, int a, int b) throws IOException {
         DirectedGraph<T, E> rtGraph = new DirectedGraph<>();
 
         //Map<String, Vertex<String>> allVerticesInGraph = rtGraph.getAllVerticesInGraph();
         for (String rt : list) {
             String[] line = rt.split("\t"); //line[0] contains user, line[1] contains the user they are retweeting
-            Vertex<T> srcVertex = rtGraph.getVertex(line[a]);
-            Vertex<E> destVertex = rtGraph.getVertex(line[b]);
+            Vertex<T> srcVertex = graphElements.getVertex(line[a], srcVertexCreator);
+            Vertex<E> destVertex = graphElements.getVertex(line[b], destVertexCreator);
             Arc<E> myArc = new Arc<>(destVertex, +1);
 
             rtGraph.addArc(srcVertex, myArc);

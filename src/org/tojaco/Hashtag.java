@@ -7,7 +7,7 @@ public class Hashtag {
     private String tag;
     private List<String> words = new ArrayList<>();
 
-    Hashtag(String tag){
+    public Hashtag(String tag){
         this.tag = tag;
     }
 }

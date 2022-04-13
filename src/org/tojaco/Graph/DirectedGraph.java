@@ -7,9 +7,9 @@ import java.util.*;
 public class DirectedGraph<T, E> implements Graph<T, E> {
 
     private final Map<Vertex<T>, ArrayList<Arc<E>>> graph = new HashMap<>();
-    private final Map<String, Vertex<T>> allVerticesInGraph = new HashMap<>();
+    //private final Map<String, Vertex> allVerticesInGraph = new HashMap<>();
     public Map<Vertex<T>, ArrayList<Arc<E>>> getGraph() { return graph; }
-    public Map<String, Vertex<T>> getAllVerticesInGraph() { return allVerticesInGraph; }
+    //public Map<String, Vertex> getAllVerticesInGraph() { return allVerticesInGraph; }
     public ArrayList<Arc<E>> getArcsByKey(Vertex<T> key) { return getGraph().get(key); }
 
     @Override
@@ -25,8 +25,8 @@ public class DirectedGraph<T, E> implements Graph<T, E> {
         else {
             addToExistingKey(source, arc);
         }
-        controlUsers(source);
-        controlUsers(arc.getVertex());
+//        controlUsers(source);
+//        controlUsers(arc.getVertex());
     }
 
     @Override
@@ -72,7 +72,8 @@ public class DirectedGraph<T, E> implements Graph<T, E> {
     @Override
     public boolean hasArcBetween(Vertex<T> vertex1, Vertex<T> vertex2) {
         // check both vertices are in the graph initially
-        if (!allVerticesInGraph.containsKey(vertex1.getLabel()) && allVerticesInGraph.containsKey(vertex2.getLabel())) {
+        //if (!allVerticesInGraph.containsKey(vertex1.getLabel()) && allVerticesInGraph.containsKey(vertex2.getLabel()))
+        if ( !graph.containsKey(vertex1) && !graph.containsKey(vertex2)){
             return false;
         }
 
@@ -99,7 +100,8 @@ public class DirectedGraph<T, E> implements Graph<T, E> {
     @Override
     public int getLabelBetweenVertices(Vertex<T> vertex1, Vertex<T> vertex2){
 
-        if (!allVerticesInGraph.containsKey(vertex1.getLabel()) && allVerticesInGraph.containsKey(vertex2.getLabel())) {
+        //if (!allVerticesInGraph.containsKey(vertex1.getLabel()) && allVerticesInGraph.containsKey(vertex2.getLabel()))
+        if ( !graph.containsKey(vertex1) && !graph.containsKey(vertex2)){
             return -1;
         }
 
@@ -123,23 +125,22 @@ public class DirectedGraph<T, E> implements Graph<T, E> {
         return -1;
     }
 
+//    public void controlUsers(Vertex user){
+//        if(!allVerticesInGraph.containsKey(user.getLabel())){
+//            allVerticesInGraph.put(user.getLabel().toString(), user);
+//        }
+//    }
 
-
-    public void controlUsers(Vertex user){
-        if(!allVerticesInGraph.containsKey(user.getLabel())){
-            allVerticesInGraph.put(user.getLabel().toString(), user);
-        }
-    }
-
-    public Vertex getVertex(Object label) {
-        // check list of existing users
-        // if user exists, then return user
-        // if not create a new user with given label and return
-        if (allVerticesInGraph.containsKey(label)) {
-            return allVerticesInGraph.get(label);
-        }
-        Vertex vertex = new Vertex<>(label);
-        allVerticesInGraph.put(label.toString(), vertex);
-        return vertex;
-    }
+//    public Vertex getVertex(String label, VertexCreator vertexCreator) {
+//        // check list of existing users
+//        // if user exists, then return user
+//        // if not create a new user with given label and return
+//        if (allVerticesInGraph.containsKey(label)) {
+//            return allVerticesInGraph.get(label);
+//        }
+//        Vertex vertex = vertexCreator.createVertex(label);
+//        //Vertex vertex = new Vertex<>(label);
+//        allVerticesInGraph.put(label.toString(), vertex);
+//        return vertex;
+//    }
 }
