@@ -67,16 +67,23 @@ public class MainUtil {
                 break;
             case 3:
                 findGraphElements = new FindGraphElements<>(new CreateUserVertex(), new CreateUserVertex());
-                GraphElements usersSprint3 = new GraphElements();
-
 //                if (dataFile.exists()) {
 //                    findGraphElements.initialiseRetweets(dataFile);
 //                }
 //
 //                rtGraph = findGraphElements.createGraph(usersSprint3, 0, 1);
-                System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
 
-                //showSprint3Options(rtGraph, usersSprint3);
+                RetweetFileService rfs = new RetweetFileService();
+
+                if (dataFile.exists()) {
+                    getRetweets().addAll(rfs.readRetweetsIntoSet(dataFile));
+                }
+
+                rtGraph = findGraphElements.createGraph(graphElements, getRetweets(), 0, 1);
+
+                System.out.println("Retweet graph added successfully to Graph directory!");
+
+                showSprint3Options(rtGraph, graphElements);
                 break;
             case 4:
 
@@ -85,7 +92,7 @@ public class MainUtil {
 
                 findGraphElements = new FindGraphElements<>(new CreateUserVertex(), new CreateUserVertex());
 
-                RetweetFileService rfs = new RetweetFileService();
+                 rfs = new RetweetFileService();
 
                 if (dataFile.exists()) {
                     getRetweets().addAll(rfs.readRetweetsIntoSet(dataFile));
@@ -104,7 +111,7 @@ public class MainUtil {
                 rfs.writeRetweetFile(retweetedGraph.getGraph(),
                         new File(configuration.getGRAPH_DIRECTORY(),
                                 configuration.getRTGRAPH_OUTPUT_FILE()));
-                System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
+                System.out.println("Retweet graph added successfully to Graph directory!");
 
                 FindEvangelists findEvangelist = new FindEvangelists();
                 Map<Vertex<TwitterUser>, Integer> retweetsHashMap = findEvangelist.findTotalRetweets(retweetedGraph);
