@@ -7,20 +7,17 @@ import org.tojaco.Graph.DirectedGraph;
 import org.tojaco.Graph.Graph;
 import org.tojaco.Graph.Vertex;
 import org.tojaco.GraphAnalysis.RetweetGraphAnalyser;
-import org.tojaco.GraphAnalysis.Users100;
-import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Scanner;
 
 public class MainUtil {
 
-    private static ArrayList<String> retweets;
-    private static ArrayList<String> hashtags;
+    private static final ArrayList<String> retweets = new ArrayList<>();
+    private static final ArrayList<String> hashtags = new ArrayList<>();
 
     public static ArrayList<String> getRetweets() {
         return retweets;
@@ -145,9 +142,6 @@ public class MainUtil {
                     getRetweets().addAll(rfs1.readRetweetsIntoSet(dataFile));
                 }
                 //TwitterUsers usersSprint5 = new TwitterUsers();
-
-
-
 
                 getHashtags().addAll(rfs1.getHashtags());
 
