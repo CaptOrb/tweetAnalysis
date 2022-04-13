@@ -7,20 +7,17 @@ import org.tojaco.Graph.DirectedGraph;
 import org.tojaco.Graph.Graph;
 import org.tojaco.Graph.Vertex;
 import org.tojaco.GraphAnalysis.RetweetGraphAnalyser;
-import org.tojaco.GraphAnalysis.Users100;
-import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Scanner;
 
 public class MainUtil {
 
-    private static ArrayList<String> retweets;
-    private static ArrayList<String> hashtags;
+    private static final ArrayList<String> retweets = new ArrayList<>();
+    private static final ArrayList<String> hashtags = new ArrayList<>();
 
     public static ArrayList<String> getRetweets() {
         return retweets;
@@ -76,7 +73,7 @@ public class MainUtil {
 //                    findGraphElements.initialiseRetweets(dataFile);
 //                }
 //
-//                rtGraph = findGraphElements.toPutIntoHashMap(usersSprint3, 0, 1);
+//                rtGraph = findGraphElements.createGraph(usersSprint3, 0, 1);
                 System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
 
                 //showSprint3Options(rtGraph, usersSprint3);
@@ -88,7 +85,7 @@ public class MainUtil {
 
                 findGraphElements = new FindGraphElements();
 
-                RetweetFileService<String> rfs = new RetweetFileService<>();
+                RetweetFileService rfs = new RetweetFileService();
 
                 if (dataFile.exists()) {
                     getRetweets().addAll(rfs.readRetweetsIntoSet(dataFile));
@@ -97,8 +94,16 @@ public class MainUtil {
 
                 getHashtags().addAll(rfs.getHashtags());
 
-                rtGraph = findGraphElements.toPutIntoHashMap(getRetweets(), 0, 1);
-                retweetedGraph = findGraphElements.toPutIntoHashMap(getRetweets(), 1, 0);
+                rtGraph = findGraphElements.createGraph(getRetweets(), 0, 1);
+                retweetedGraph = findGraphElements.createGraph(getRetweets(), 1, 0);
+
+                rfs.writeRetweetFile(rtGraph.getGraph(),
+                        new File(configuration.getGRAPH_DIRECTORY(),
+                                configuration.getRTGRAPH_OUTPUT_FILE()));
+
+                rfs.writeRetweetFile(retweetedGraph.getGraph(),
+                        new File(configuration.getGRAPH_DIRECTORY(),
+                                configuration.getRTGRAPH_OUTPUT_FILE()));
                 System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
 
                 FindEvangelists findEvangelist = new FindEvangelists();
@@ -137,22 +142,44 @@ public class MainUtil {
                 // graph for using implemented methods on
                 // see org.tojaco.Graph.DirectedGraph.java for description of public methods
 
-
                 findGraphElements = new FindGraphElements();
 
-                RetweetFileService<String> rfs1 = new RetweetFileService<>();
+                RetweetFileService rfs1 = new RetweetFileService();
                 if (dataFile.exists()) {
                     getRetweets().addAll(rfs1.readRetweetsIntoSet(dataFile));
                 }
                 //TwitterUsers usersSprint5 = new TwitterUsers();
 
-
-
-
                 getHashtags().addAll(rfs1.getHashtags());
 
-                rtGraph = findGraphElements.toPutIntoHashMap(getRetweets(), 0, 1);
-                retweetedGraph = findGraphElements.toPutIntoHashMap(getRetweets(), 1, 0);
+                rtGraph = findGraphElements.createGraph(getRetweets(), 0, 1);
+                retweetedGraph = findGraphElements.createGraph(getRetweets(), 1, 0);
+
+                rfs1.writeRetweetFile(rtGraph.getGraph(),
+                        new File(configuration.getGRAPH_DIRECTORY(),
+                                configuration.getRTGRAPH_OUTPUT_FILE()));
+
+                rfs1.writeRetweetFile(retweetedGraph.getGraph(),
+                        new File(configuration.getGRAPH_DIRECTORY(),
+                                configuration.getRTGRAPH_OUTPUT_FILE()));
+
+                DirectedGraph<TwitterUser, TwitterUser> usertoHashTag;
+                usertoHashTag = findGraphElements.createGraph(getHashtags(), 0, 1);
+
+                System.out.println(configuration.getUSERS_TO_HASHTAGS() + "Hi");
+                rfs1.writeRetweetFile(usertoHashTag.getGraph(),
+                        new File(configuration.getGRAPH_DIRECTORY(),
+                                configuration.getUSERS_TO_HASHTAGS()));
+
+
+                DirectedGraph<TwitterUser, TwitterUser> hashtagToUsers;
+                hashtagToUsers = findGraphElements.createGraph(getHashtags(), 1, 0);
+
+                System.out.println(configuration.getUSERS_TO_HASHTAGS() + "Hi");
+                rfs1.writeRetweetFile(hashtagToUsers.getGraph(),
+                        new File(configuration.getGRAPH_DIRECTORY(),
+                                configuration.getHASHTAGS_TO_USERS()));
+
                 System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
 //
 //                findEvangelist = new FindEvangelists();

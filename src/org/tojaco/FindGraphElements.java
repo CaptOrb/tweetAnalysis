@@ -1,18 +1,13 @@
 package org.tojaco;
 
-import org.tojaco.FileIO.RetweetFileService;
 import org.tojaco.Graph.*;
-import twitter4j.Twitter;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
 public class FindGraphElements {
 
-
-
-    public <T, E> DirectedGraph<T, E> toPutIntoHashMap(ArrayList<String> list, int a, int b) throws IOException {
+    public <T, E> DirectedGraph<T, E> createGraph(ArrayList<String> list, int a, int b) throws IOException {
         DirectedGraph<T, E> rtGraph = new DirectedGraph<>();
 
         //Map<String, Vertex<String>> allVerticesInGraph = rtGraph.getAllVerticesInGraph();
