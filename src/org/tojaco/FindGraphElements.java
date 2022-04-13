@@ -32,9 +32,6 @@ public class FindGraphElements {
             Arc<TwitterUser> myArc = new Arc<>(destVertex, +1);
 
             Graph.addArc(srcVertex, myArc);
-            //to check that getLabelBetweenVertices works
-            //System.out.println(srcVertex.getLabel() + " " + destVertex.getLabel() + " " + rtGraph.getLabelBetweenVertices(srcVertex,destVertex));
-
         }
         RetweetFileService<TwitterUser> rs = new RetweetFileService<>();
         String outputFile;
