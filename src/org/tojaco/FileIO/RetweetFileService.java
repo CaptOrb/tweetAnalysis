@@ -87,7 +87,6 @@ public class RetweetFileService<E> extends FileService {
                         }
                         if(hashtagInLine!=null){
                             hashtags.add(lineContents[1] + "\t" + hashtagInLine);
-                            System.out.println(lineContents[1] +"\t"+ hashtagInLine);
                         }
                     }
 

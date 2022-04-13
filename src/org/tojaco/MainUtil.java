@@ -63,9 +63,6 @@ public class MainUtil {
                 }
 
                 rtGraph = findGraphElements.toPutIntoHashMap(configuration, usersSprint3, 0, 1);
-
-                //retweetedGraph = findGraphElements.toPutIntoHashMap(configuration, usersSprint3, 1, 0);
-
                 System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
 
                 showSprint3Options(rtGraph, usersSprint3);
@@ -133,7 +130,7 @@ public class MainUtil {
                 System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
 
                 findEvangelist = new FindEvangelists();
-                retweetsHashMap = findEvangelist.findTotalRetweets(retweetedGraph, usersSprint5);
+
 
                 assignStances = new AssignStances();
                 StanceFile = new File(configuration.getSTANCE_FILE());

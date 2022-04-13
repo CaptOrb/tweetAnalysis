@@ -15,11 +15,14 @@ public class FindGraphElements {
     public ArrayList<String> getRetweets() {
         return retweets;
     }
+    private final ArrayList<String> hashtags = new ArrayList<>();
 
-
+    public ArrayList<String> getHashtags() {
+        return hashtags;
+    }
 
     public DirectedGraph<TwitterUser, TwitterUser> toPutIntoHashMap(Configuration configuration, TwitterUsers users, int a, int b) throws IOException {
-        DirectedGraph<TwitterUser, TwitterUser> rtGraph = new DirectedGraph<>();
+        DirectedGraph<TwitterUser, TwitterUser> Graph = new DirectedGraph<>();
 
         //Map<String, Vertex<String>> allVerticesInGraph = rtGraph.getAllVerticesInGraph();
         for (String rt : retweets) {
@@ -28,37 +31,33 @@ public class FindGraphElements {
             Vertex<TwitterUser> destVertex = users.getVertex(line[b]);
             Arc<TwitterUser> myArc = new Arc<>(destVertex, +1);
 
-            rtGraph.addArc(srcVertex, myArc);
+            Graph.addArc(srcVertex, myArc);
             //to check that getLabelBetweenVertices works
             //System.out.println(srcVertex.getLabel() + " " + destVertex.getLabel() + " " + rtGraph.getLabelBetweenVertices(srcVertex,destVertex));
 
         }
-
         RetweetFileService<TwitterUser> rs = new RetweetFileService<>();
-
-//        for (Map.Entry<String, List<String>> entry : rs.getHashtags().entrySet()){
-//
-//        }
-
         String outputFile;
+
         if (a == 0) {
             outputFile = configuration.getRTGRAPH_OUTPUT_FILE();
         } else {
             outputFile = configuration.getRTWEETEDGRAPH_OUTPUT_FILE();
         }
 
-        rs.writeRetweetFile(rtGraph.getGraph(),
+        rs.writeRetweetFile(Graph.getGraph(),
                 new File(configuration.getGRAPH_DIRECTORY(),
                         outputFile));
 
-        return rtGraph;
+        return Graph;
     }
 
-
-    public ArrayList<String> initialiseRetweets(File dataFile) {
+    public void initialiseRetweets(File dataFile) {
         RetweetFileService<String> rfs = new RetweetFileService<>();
         getRetweets().addAll(rfs.readRetweetsIntoSet(dataFile));
 
-        return retweets;
+        getHashtags().addAll(rfs.getHashtags());
+
+        //return retweets;
     }
 }
