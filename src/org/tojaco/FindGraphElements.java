@@ -1,20 +1,17 @@
 package org.tojaco;
 
-import org.tojaco.FileIO.ReadHashtags;
 import org.tojaco.FileIO.RetweetFileService;
-import org.tojaco.Graph.*;
-import twitter4j.Twitter;
+import org.tojaco.Graph.Arc;
+import org.tojaco.Graph.DirectedGraph;
+import org.tojaco.Graph.Vertex;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
 
 public class FindGraphElements {
 
     private final ArrayList<String> retweets = new ArrayList<>();
-    private final ArrayList<String> hashtags = new ArrayList<>();
-
-    public ArrayList<String> getHashtags() { return hashtags;}
 
     public ArrayList<String> getRetweets() {
         return retweets;
@@ -49,13 +46,6 @@ public class FindGraphElements {
                         outputFile));
 
         return rtGraph;
-    }
-
-    public ArrayList<String> initialiseHashtags(File dataFile){
-        ReadHashtags rht= new ReadHashtags();
-        getHashtags().addAll(rht.readHashTagsFromFile(dataFile));
-
-        return hashtags;
     }
 
     public ArrayList<String> initialiseRetweets(File dataFile) {
