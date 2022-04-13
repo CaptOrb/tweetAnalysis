@@ -1,5 +1,6 @@
 package org.tojaco;
 
+import org.tojaco.FileIO.ReadHashtags;
 import org.tojaco.FileIO.RetweetFileService;
 import org.tojaco.Graph.*;
 import twitter4j.Twitter;
@@ -11,25 +12,18 @@ import java.util.*;
 public class FindGraphElements {
 
     private final ArrayList<String> retweets = new ArrayList<>();
+    private final ArrayList<String> hashtags = new ArrayList<>();
 
-    private final HashMap<String, List<String>> hashtags = new HashMap<>();
-
-    public HashMap<String, List<String>> getHashtags() {
-        return hashtags;
-    }
-
+    public ArrayList<String> getHashtags() { return hashtags;}
 
     public ArrayList<String> getRetweets() {
         return retweets;
     }
 
-//    public DirectedGraph<TwitterUser, Hashtag> UserToHashTagGraph(Configuration configuration, TwitterUsers users) throws IOException{
-//        // create the user to hashtag graph here
-//    }
-
     public DirectedGraph<TwitterUser, TwitterUser> toPutIntoHashMap(Configuration configuration, TwitterUsers users, int a, int b) throws IOException {
         DirectedGraph<TwitterUser, TwitterUser> rtGraph = new DirectedGraph<>();
 
+        //Map<String, Vertex<String>> allVerticesInGraph = rtGraph.getAllVerticesInGraph();
         for (String rt : retweets) {
             String[] line = rt.split("\t"); //line[0] contains user, line[1] contains the user they are retweeting
             Vertex<TwitterUser> srcVertex = users.getVertex(line[a]);
@@ -37,6 +31,9 @@ public class FindGraphElements {
             Arc<TwitterUser> myArc = new Arc<>(destVertex, +1);
 
             rtGraph.addArc(srcVertex, myArc);
+            //to check that getLabelBetweenVertices works
+            //System.out.println(srcVertex.getLabel() + " " + destVertex.getLabel() + " " + rtGraph.getLabelBetweenVertices(srcVertex,destVertex));
+
         }
         RetweetFileService<TwitterUser> rs = new RetweetFileService<>();
 
@@ -54,18 +51,16 @@ public class FindGraphElements {
         return rtGraph;
     }
 
-//    public ArrayList<String> initialiseHashtags(File dataFile){
-//        ReadHashtags rht= new ReadHashtags();
-//        getHashtags().addAll(rht.readHashTagsFromFile(dataFile));
-//
-//        return hashtags;
-//    }
+    public ArrayList<String> initialiseHashtags(File dataFile){
+        ReadHashtags rht= new ReadHashtags();
+        getHashtags().addAll(rht.readHashTagsFromFile(dataFile));
+
+        return hashtags;
+    }
 
     public ArrayList<String> initialiseRetweets(File dataFile) {
-        RetweetFileService<TwitterUser> rfs = new RetweetFileService<>();
+        RetweetFileService<String> rfs = new RetweetFileService<>();
         getRetweets().addAll(rfs.readRetweetsIntoSet(dataFile));
-
-        rfs.getHashtags();
 
         return retweets;
     }

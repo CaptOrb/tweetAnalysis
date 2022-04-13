@@ -1,5 +1,6 @@
 package org.tojaco;
 
+import org.tojaco.FileIO.ReadHashtags;
 import org.tojaco.FileIO.TwitterFileService;
 import org.tojaco.Graph.Arc;
 import org.tojaco.Graph.DirectedGraph;
@@ -59,11 +60,12 @@ public class MainUtil {
 
                 if (dataFile.exists()) {
                     findGraphElements.initialiseRetweets(dataFile);
+                    findGraphElements.initialiseHashtags(dataFile);
                 }
 
                 rtGraph = findGraphElements.toPutIntoHashMap(configuration, usersSprint3, 0, 1);
 
-                //retweetedGraph = findGraphElements.toPutIntoHashMap(configuration, usersSprint3, 1, 0); //not necessary in sprint 3
+                retweetedGraph = findGraphElements.toPutIntoHashMap(configuration, usersSprint3, 1, 0);
 
                 System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
 
@@ -120,14 +122,14 @@ public class MainUtil {
                 // graph for using implemented methods on
                 // see org.tojaco.Graph.DirectedGraph.java for description of public methods
 
-//                ReadHashtags readHashtags = new ReadHashtags();
-//                readHashtags.readHashTagsFromFile(dataFile);
+                ReadHashtags readHashtags = new ReadHashtags();
+                readHashtags.readHashTagsFromFile(dataFile);
 
                 findGraphElements = new FindGraphElements();
 
                 if (dataFile.exists()) {
                     findGraphElements.initialiseRetweets(dataFile);
-                    //findGraphElements.initialiseHashtags(dataFile);
+                    findGraphElements.initialiseHashtags(dataFile);
                 }
                 TwitterUsers usersSprint5 = new TwitterUsers();
                 rtGraph = findGraphElements.toPutIntoHashMap(configuration, usersSprint5, 0, 1);
@@ -135,7 +137,7 @@ public class MainUtil {
                 System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
 
                 findEvangelist = new FindEvangelists();
-                //retweetsHashMap = findEvangelist.findTotalRetweets(retweetedGraph, usersSprint5);
+                retweetsHashMap = findEvangelist.findTotalRetweets(retweetedGraph, usersSprint5);
 
                 assignStances = new AssignStances();
                 StanceFile = new File(configuration.getSTANCE_FILE());
