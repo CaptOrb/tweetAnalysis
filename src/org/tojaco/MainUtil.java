@@ -101,33 +101,33 @@ public class MainUtil {
                 retweetedGraph = findGraphElements.toPutIntoHashMap(getRetweets(), 1, 0);
                 System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
 
-//                FindEvangelists findEvangelist = new FindEvangelists();
-//                Map<Vertex<TwitterUser>, Integer> retweetsHashMap = findEvangelist.findTotalRetweets(retweetedGraph, usersSprint4);
-//
-//                AssignStances assignStances = new AssignStances();
-//                File StanceFile = new File(configuration.getSTANCE_FILE());
-//                assignStances.determineProAntiVaxEvangelists(usersSprint4, StanceFile);
+                FindEvangelists findEvangelist = new FindEvangelists();
+                Map<Vertex<TwitterUser>, Integer> retweetsHashMap = findEvangelist.findTotalRetweets(retweetedGraph);
+
+                AssignStances assignStances = new AssignStances();
+                File StanceFile = new File(configuration.getSTANCE_FILE());
+                assignStances.determineProAntiVaxEvangelists(rtGraph, StanceFile);
 
                 // initial setup for calculating stances
                 RetweetGraphAnalyser graphAnalyser = new RetweetGraphAnalyser();
 
-//                for (int i = 0; i < 20; i++) {
-//                    graphAnalyser.assignUserStances(rtGraph, usersSprint4);
-//                    graphAnalyser.assignUserStances(retweetedGraph, usersSprint4);
-//
-//                }
+                for (int i = 0; i < 20; i++) {
+                    graphAnalyser.assignUserStances(rtGraph);
+                    graphAnalyser.assignUserStances(retweetedGraph);
+
+                }
 
                 // get coverage of stances
-                //System.out.println("Coverage in graph: " + graphAnalyser.calculateCoverage(rtGraph, usersSprint4) + "%");
-                // System.out.println("Coverage in retweeted graph: " + graphAnalyser.calculateCoverage(retweetedGraph));
+                System.out.println("Coverage in graph: " + graphAnalyser.calculateCoverage(rtGraph) + "%");
+                System.out.println("Coverage in retweeted graph: " + graphAnalyser.calculateCoverage(retweetedGraph));
 
-//                System.out.println("Percentage of users without a stance: " + (graphAnalyser.calculateCoverage(rtGraph, usersSprint4) - 100) * -1 + "%");
-//
-//                System.out.println("Percentage positive stances: " + graphAnalyser.calculatePercentagePositiveStances(rtGraph, usersSprint4) + "%");
-//                System.out.println("Percentage negative stance: " + graphAnalyser.calculatePercentageNegativeStances(rtGraph,usersSprint4) + "%");
-//
-//                Users100 users100 = new Users100();
-//                users100.checkStance(retweetsHashMap);
+                System.out.println("Percentage of users without a stance: " + (graphAnalyser.calculateCoverage(rtGraph) - 100) * -1 + "%");
+
+                System.out.println("Percentage positive stances: " + graphAnalyser.calculatePercentagePositiveStances(rtGraph) + "%");
+                System.out.println("Percentage negative stance: " + graphAnalyser.calculatePercentageNegativeStances(rtGraph) + "%");
+
+                Users100 users100 = new Users100();
+                users100.checkStance(retweetsHashMap);
 
 
                 break;

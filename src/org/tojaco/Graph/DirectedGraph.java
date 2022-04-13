@@ -7,9 +7,9 @@ import java.util.*;
 public class DirectedGraph<T, E> implements Graph<T, E> {
 
     private final Map<Vertex<T>, ArrayList<Arc<E>>> graph = new HashMap<>();
-    private final Map<Object, Vertex<T>> allVerticesInGraph = new HashMap<>();
+    private final Map<String, Vertex<T>> allVerticesInGraph = new HashMap<>();
     public Map<Vertex<T>, ArrayList<Arc<E>>> getGraph() { return graph; }
-    public Map<Object, Vertex<T>> getAllVerticesInGraph() { return allVerticesInGraph; }
+    public Map<String, Vertex<T>> getAllVerticesInGraph() { return allVerticesInGraph; }
     public ArrayList<Arc<E>> getArcsByKey(Vertex<T> key) { return getGraph().get(key); }
 
     @Override
@@ -127,7 +127,7 @@ public class DirectedGraph<T, E> implements Graph<T, E> {
 
     public void controlUsers(Vertex user){
         if(!allVerticesInGraph.containsKey(user.getLabel())){
-            allVerticesInGraph.put(user.getLabel(), user);
+            allVerticesInGraph.put(user.getLabel().toString(), user);
         }
     }
 
@@ -139,7 +139,7 @@ public class DirectedGraph<T, E> implements Graph<T, E> {
             return allVerticesInGraph.get(label);
         }
         Vertex vertex = new Vertex<>(label);
-        allVerticesInGraph.put(label, vertex);
+        allVerticesInGraph.put(label.toString(), vertex);
         return vertex;
     }
 }

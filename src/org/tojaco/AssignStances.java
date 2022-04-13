@@ -1,5 +1,6 @@
 package org.tojaco;
 
+import org.tojaco.Graph.DirectedGraph;
 import org.tojaco.Graph.Vertex;
 
 import java.io.BufferedReader;
@@ -9,7 +10,7 @@ import java.io.IOException;
 
 public class AssignStances {
 
-    public void determineProAntiVaxEvangelists(TwitterUsers twitterUsers, File file) {
+    public void determineProAntiVaxEvangelists(DirectedGraph<TwitterUser, TwitterUser> graph, File file) {
 
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
@@ -19,17 +20,19 @@ public class AssignStances {
 
                     String[] lineContents = line.split(" ");
 
-                    Vertex<TwitterUser> vertex = twitterUsers.getVertex(lineContents[0]);
+                    Vertex<TwitterUser> vertex = graph.getVertex(lineContents[0]);
 
                     vertexError = vertex;
 
                     if (lineContents[1].equals("anti")){
                         if (vertex.getLabel().getUserHandle().equals(lineContents[0])) {
-                            twitterUsers.getUserStances().putIfAbsent(vertex, -1000);
+                            vertex.getLabel().setStance(-1000);
+                            //twitterUsers.getUserStances().putIfAbsent(vertex, -1000);
                         }
                     } else if (lineContents[1].equals("pro") ){
                         if (vertex.getLabel().getUserHandle().equals(lineContents[0])) {
-                            twitterUsers.getUserStances().putIfAbsent(vertex, 1000);
+                            vertex.getLabel().setStance(1000);
+                            //twitterUsers.getUserStances().putIfAbsent(vertex, 1000);
                         }
                     } //if it equals idk then skip
                 }
