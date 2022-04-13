@@ -25,6 +25,7 @@ public class MainUtil {
                 "\n2. Search for Tweets using the steaming API (Sprint 2)" +
                 "\n3. Build a retweet Graph (Sprint 3)" +
                 "\n4. Assign stances to Tweets (Sprint 4)" +
+                "\n5. Assign stances to HashTags (Sprint 5)" +
                 "\nOr enter -1 to quit");
 
         Scanner scanner = new Scanner(System.in);
