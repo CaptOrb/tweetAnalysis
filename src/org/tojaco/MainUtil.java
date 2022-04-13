@@ -24,6 +24,7 @@ public class MainUtil {
                 "\n2. Search for Tweets using the steaming API (Sprint 2)" +
                 "\n3. Build a retweet Graph (Sprint 3)" +
                 "\n4. Assign stances to Tweets (Sprint 4)" +
+                "\n5. Assign stances to HashTags (Sprint 5)" +
                 "\nOr enter -1 to quit");
 
         Scanner scanner = new Scanner(System.in);
@@ -62,9 +63,6 @@ public class MainUtil {
                 }
 
                 rtGraph = findGraphElements.toPutIntoHashMap(configuration, usersSprint3, 0, 1);
-
-                retweetedGraph = findGraphElements.toPutIntoHashMap(configuration, usersSprint3, 1, 0);
-
                 System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
 
                 showSprint3Options(rtGraph, usersSprint3);
@@ -132,7 +130,7 @@ public class MainUtil {
                 System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
 
                 findEvangelist = new FindEvangelists();
-                retweetsHashMap = findEvangelist.findTotalRetweets(retweetedGraph, usersSprint5);
+
 
                 assignStances = new AssignStances();
                 StanceFile = new File(configuration.getSTANCE_FILE());

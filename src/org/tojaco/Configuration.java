@@ -24,6 +24,8 @@ public class Configuration {
     private String GRAPH_DIRECTORY;
     private String RTGRAPH_OUTPUT_FILE;
     private String RTWEETEDGRAPH_OUTPUT_FILE;
+    private String USERS_TO_HASHTAGS;
+    private String HASHTAGS_TO_USERS;
     private String STANCE_FILE;
     private String LANGUAGE;
     private String BATCH_SIZE;
@@ -65,6 +67,12 @@ public class Configuration {
     public String getRTWEETEDGRAPH_OUTPUT_FILE() {
         return RTWEETEDGRAPH_OUTPUT_FILE;
     }
+
+    public String getUSERS_TO_HASHTAGS() {
+        return USERS_TO_HASHTAGS;
+    }
+
+    public String getHASHTAGS_TO_USERS() { return HASHTAGS_TO_USERS; }
 
     public String getSTANCE_FILE(){ return STANCE_FILE; }
 
@@ -128,6 +136,8 @@ public class Configuration {
             configuration.GRAPH_DIRECTORY = properties.getProperty("GRAPH_OUTPUT_DIRECTORY");
             configuration.RTGRAPH_OUTPUT_FILE = properties.getProperty("RTGRAPH_OUTPUT_FILE");
             configuration.RTWEETEDGRAPH_OUTPUT_FILE = properties.getProperty("RETWEETGPHOUTPUTFILE");
+            configuration.USERS_TO_HASHTAGS = properties.getProperty("USERS_TO_HASHTAGS");
+            configuration.HASHTAGS_TO_USERS = properties.getProperty("USERS_TO_HASHTAGS");
             configuration.STANCE_FILE = properties.getProperty("STANCE_FILE");
             configuration.SLEEP_TIME = properties.getProperty("SLEEPTIMEMS");
             configuration.LANGUAGE = properties.getProperty("LANGUAGE");

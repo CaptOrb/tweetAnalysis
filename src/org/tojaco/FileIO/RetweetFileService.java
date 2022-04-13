@@ -11,7 +11,8 @@ public class RetweetFileService<E> extends FileService {
 
     private ArrayList<String> retweets = new ArrayList<>();
 
-    private HashMap<String, List<String>> hashtags = new HashMap<>();
+    private ArrayList<String> hashtags = new ArrayList<>();
+    //private HashMap<String, List<String>> hashtags = new HashMap<>();
 
     public void setRetweets(ArrayList<String> retweets) {
         this.retweets = retweets;
@@ -21,11 +22,11 @@ public class RetweetFileService<E> extends FileService {
         return retweets;
     }
 
-    public HashMap<String, List<String>> getHashtags() {
+    public ArrayList<String> getHashtags() {
         return hashtags;
     }
 
-    public void setHashtags(HashMap<String, List<String>> hashtags) {
+    public void setHashtags(ArrayList<String> hashtags) {
         this.hashtags = hashtags;
     }
 
@@ -79,14 +80,14 @@ public class RetweetFileService<E> extends FileService {
                     }
                     //String[] tweetText = lineContents[2].split(" "); //split the tweet text
 
-                    List<String> hashtagsInLine = new ArrayList<>();
                     for(int i = 0; i<tweetText.length; i++){
-                        if(tweetText[i].startsWith("#"))
-                            hashtagsInLine.add(tweetText[i]); //appends \t and the hashtag
-                    }
-                    if(!(hashtagsInLine.size()<1)){
-                        hashtags.put(lineContents[1], hashtagsInLine);
-                        System.out.println(lineContents[1] +" "+ hashtagsInLine);
+                        String hashtagInLine = null;
+                        if(tweetText[i].startsWith("#")){
+                            hashtagInLine = tweetText[i];
+                        }
+                        if(hashtagInLine!=null){
+                            hashtags.add(lineContents[1] + "\t" + hashtagInLine);
+                        }
                     }
 
                 } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
