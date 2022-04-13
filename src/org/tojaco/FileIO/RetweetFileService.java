@@ -4,13 +4,31 @@ import org.tojaco.Graph.Arc;
 import org.tojaco.Graph.Vertex;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 // HANDLES reading and writing to/from the graph output file
 public class RetweetFileService<E> extends FileService {
+
+    private ArrayList<String> retweets = new ArrayList<>();
+
+    private HashMap<String, List<String>> hashtags = new HashMap<>();
+
+    public void setRetweets(ArrayList<String> retweets) {
+        this.retweets = retweets;
+    }
+
+    public ArrayList<String> getRetweets() {
+        return retweets;
+    }
+
+    public HashMap<String, List<String>> getHashtags() {
+        return hashtags;
+    }
+
+    public void setHashtags(HashMap<String, List<String>> hashtags) {
+        this.hashtags = hashtags;
+    }
+
 
     public void writeRetweetFile(Map<Vertex<E>, ArrayList<Arc<E>>> retweetHashMap, File file) throws IOException {
 
@@ -48,9 +66,6 @@ public class RetweetFileService<E> extends FileService {
 
     public ArrayList<String> readRetweetsIntoSet(File file) {
 
-        final ArrayList<String> retweets = new ArrayList<>();
-        final HashMap<String, List<String>> hashtags = new HashMap<>();
-
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -75,8 +90,8 @@ public class RetweetFileService<E> extends FileService {
                     }
 
                 } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-                    String[] lineContents1 = line.split("\t");
-                    System.out.println(lineContents[0]);
+//                    String[] lineContents1 = line.split("\t");
+//                    System.out.println(lineContents[0]);
                 } catch (Exception exception) {
 
                 }
@@ -85,6 +100,5 @@ public class RetweetFileService<E> extends FileService {
             fnfe.printStackTrace();
         }
         return retweets;
-
     }
 }
