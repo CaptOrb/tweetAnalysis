@@ -19,37 +19,23 @@ public class FindGraphElements {
         return retweets;
     }
 
-    public DirectedGraph<TwitterUser, TwitterUser> toPutIntoHashMap(Configuration configuration, TwitterUsers users, int a, int b) throws IOException {
-        DirectedGraph<TwitterUser, TwitterUser> rtGraph = new DirectedGraph<>();
+    public <T, E> DirectedGraph<T, E> toPutIntoHashMap(ArrayList<String> list, int a, int b) throws IOException {
+        DirectedGraph<T, E> rtGraph = new DirectedGraph<>();
 
         //Map<String, Vertex<String>> allVerticesInGraph = rtGraph.getAllVerticesInGraph();
-        for (String rt : retweets) {
+        for (String rt : list) {
             String[] line = rt.split("\t"); //line[0] contains user, line[1] contains the user they are retweeting
-            Vertex<TwitterUser> srcVertex = users.getVertex(line[a]);
-            Vertex<TwitterUser> destVertex = users.getVertex(line[b]);
-            Arc<TwitterUser> myArc = new Arc<>(destVertex, +1);
+            Vertex<T> srcVertex = rtGraph.getVertex(line[a]);
+            Vertex<E> destVertex = rtGraph.getVertex(line[b]);
+            Arc<E> myArc = new Arc<>(destVertex, +1);
 
             rtGraph.addArc(srcVertex, myArc);
             //to check that getLabelBetweenVertices works
             //System.out.println(srcVertex.getLabel() + " " + destVertex.getLabel() + " " + rtGraph.getLabelBetweenVertices(srcVertex,destVertex));
 
         }
-        RetweetFileService<TwitterUser> rs = new RetweetFileService<>();
-
-        String outputFile;
-        if (a == 0) {
-            outputFile = configuration.getRTGRAPH_OUTPUT_FILE();
-        } else {
-            outputFile = configuration.getRTWEETEDGRAPH_OUTPUT_FILE();
-        }
-
-        rs.writeRetweetFile(rtGraph.getGraph(),
-                new File(configuration.getGRAPH_DIRECTORY(),
-                        outputFile));
-
         return rtGraph;
     }
-
 
     public ArrayList<String> initialiseRetweets(File dataFile) {
         RetweetFileService<String> rfs = new RetweetFileService<>();

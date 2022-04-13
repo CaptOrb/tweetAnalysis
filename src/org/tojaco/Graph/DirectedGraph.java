@@ -1,5 +1,7 @@
 package org.tojaco.Graph;
 
+import org.tojaco.TwitterUser;
+
 import java.util.*;
 
 public class DirectedGraph<T, E> implements Graph<T, E> {
@@ -127,5 +129,17 @@ public class DirectedGraph<T, E> implements Graph<T, E> {
         if(!allVerticesInGraph.containsKey(user.getLabel())){
             allVerticesInGraph.put(user.getLabel(), user);
         }
+    }
+
+    public Vertex getVertex(Object label) {
+        // check list of existing users
+        // if user exists, then return user
+        // if not create a new user with given label and return
+        if (allVerticesInGraph.containsKey(label)) {
+            return allVerticesInGraph.get(label);
+        }
+        Vertex vertex = new Vertex<>(label);
+        allVerticesInGraph.put(label, vertex);
+        return vertex;
     }
 }
