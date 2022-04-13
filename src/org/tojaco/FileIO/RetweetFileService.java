@@ -7,7 +7,7 @@ import java.io.*;
 import java.util.*;
 
 // HANDLES reading and writing to/from the graph output file
-public class RetweetFileService<E> extends FileService {
+public class RetweetFileService extends FileService {
 
     private ArrayList<String> retweets = new ArrayList<>();
 
@@ -31,7 +31,7 @@ public class RetweetFileService<E> extends FileService {
     }
 
 
-    public void writeRetweetFile(Map<Vertex<E>, ArrayList<Arc<E>>> retweetHashMap, File file) throws IOException {
+    public<T,E> void writeRetweetFile(Map<Vertex<T>, ArrayList<Arc<E>>> retweetHashMap, File file) throws IOException {
 
         createFile(file.getParent(), file.getName());
 
@@ -39,7 +39,7 @@ public class RetweetFileService<E> extends FileService {
 
         try (PrintWriter pw = new PrintWriter(new FileWriter(file))) {
 
-            for (Vertex<E> vertex : retweetHashMap.keySet()) {
+            for (Vertex<T> vertex : retweetHashMap.keySet()) {
 
                 sb.append(vertex.getLabel().toString()).append(" [");
 

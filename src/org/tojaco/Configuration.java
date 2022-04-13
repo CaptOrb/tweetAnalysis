@@ -137,7 +137,7 @@ public class Configuration {
             configuration.RTGRAPH_OUTPUT_FILE = properties.getProperty("RTGRAPH_OUTPUT_FILE");
             configuration.RTWEETEDGRAPH_OUTPUT_FILE = properties.getProperty("RETWEETGPHOUTPUTFILE");
             configuration.USERS_TO_HASHTAGS = properties.getProperty("USERS_TO_HASHTAGS");
-            configuration.HASHTAGS_TO_USERS = properties.getProperty("USERS_TO_HASHTAGS");
+            configuration.HASHTAGS_TO_USERS = properties.getProperty("HASHTAGS_TO_USERS");
             configuration.STANCE_FILE = properties.getProperty("STANCE_FILE");
             configuration.SLEEP_TIME = properties.getProperty("SLEEPTIMEMS");
             configuration.LANGUAGE = properties.getProperty("LANGUAGE");
