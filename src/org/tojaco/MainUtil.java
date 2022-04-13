@@ -1,9 +1,10 @@
 package org.tojaco;
 
+import org.tojaco.FileIO.ReadHashtags;
 import org.tojaco.FileIO.TwitterFileService;
 import org.tojaco.Graph.Arc;
+import org.tojaco.Graph.DirectedGraph;
 import org.tojaco.Graph.Graph;
-import org.tojaco.Graph.RetweetGraph;
 import org.tojaco.Graph.Vertex;
 import org.tojaco.GraphAnalysis.RetweetGraphAnalyser;
 import org.tojaco.GraphAnalysis.Users100;
@@ -29,9 +30,9 @@ public class MainUtil {
         Scanner scanner = new Scanner(System.in);
         int option = scanner.nextInt();
 
-        FindRetweets findRetweets;
-        RetweetGraph<String> rtGraph;
-        RetweetGraph<String> retweetedGraph;
+        FindGraphElements findGraphElements;
+        DirectedGraph<TwitterUser, TwitterUser> rtGraph;
+        DirectedGraph<TwitterUser, TwitterUser> retweetedGraph;
 
         switch (option) {
             case 1:
@@ -54,16 +55,17 @@ public class MainUtil {
                 st.streamTweets();
                 break;
             case 3:
-                findRetweets = new FindRetweets();
-                TwitterUsers<String> usersSprint3 = new TwitterUsers<>();
+                findGraphElements = new FindGraphElements();
+                TwitterUsers usersSprint3 = new TwitterUsers();
 
                 if (dataFile.exists()) {
-                    findRetweets.initialiseRetweets(dataFile);
+                    findGraphElements.initialiseRetweets(dataFile);
+                    findGraphElements.initialiseHashtags(dataFile);
                 }
 
-                rtGraph = findRetweets.toPutIntoHashMap(configuration, usersSprint3, 0, 1);
+                rtGraph = findGraphElements.toPutIntoHashMap(configuration, usersSprint3, 0, 1);
 
-                retweetedGraph = findRetweets.toPutIntoHashMap(configuration, usersSprint3, 1, 0);
+                retweetedGraph = findGraphElements.toPutIntoHashMap(configuration, usersSprint3, 1, 0);
 
                 System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
 
@@ -72,20 +74,20 @@ public class MainUtil {
             case 4:
 
                 // graph for using implemented methods on
-                // see org.tojaco.Graph.RetweetGraph.java for description of public methods
+                // see org.tojaco.Graph.DirectedGraph.java for description of public methods
 
-                findRetweets = new FindRetweets();
+                findGraphElements = new FindGraphElements();
 
                 if (dataFile.exists()) {
-                    findRetweets.initialiseRetweets(dataFile);
+                    findGraphElements.initialiseRetweets(dataFile);
                 }
-                TwitterUsers<String> usersSprint4 = new TwitterUsers<>();
-                rtGraph = findRetweets.toPutIntoHashMap(configuration, usersSprint4, 0, 1);
-                retweetedGraph = findRetweets.toPutIntoHashMap(configuration, usersSprint4, 1, 0);
+                TwitterUsers usersSprint4 = new TwitterUsers();
+                rtGraph = findGraphElements.toPutIntoHashMap(configuration, usersSprint4, 0, 1);
+                retweetedGraph = findGraphElements.toPutIntoHashMap(configuration, usersSprint4, 1, 0);
                 System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
 
                 FindEvangelists findEvangelist = new FindEvangelists();
-                Map<Vertex<String>, Integer> retweetsHashMap = findEvangelist.findTotalRetweets(retweetedGraph, usersSprint4);
+                Map<Vertex<TwitterUser>, Integer> retweetsHashMap = findEvangelist.findTotalRetweets(retweetedGraph, usersSprint4);
 
                 AssignStances assignStances = new AssignStances();
                 File StanceFile = new File(configuration.getSTANCE_FILE());
@@ -102,7 +104,7 @@ public class MainUtil {
 
                 // get coverage of stances
                 System.out.println("Coverage in graph: " + graphAnalyser.calculateCoverage(rtGraph, usersSprint4) + "%");
-               // System.out.println("Coverage in retweeted graph: " + graphAnalyser.calculateCoverage(retweetedGraph));
+                // System.out.println("Coverage in retweeted graph: " + graphAnalyser.calculateCoverage(retweetedGraph));
 
                 System.out.println("Percentage of users without a stance: " + (graphAnalyser.calculateCoverage(rtGraph, usersSprint4) - 100) * -1 + "%");
 
@@ -114,11 +116,47 @@ public class MainUtil {
 
 
                 break;
-        }
 
+            case 5:
+
+                // graph for using implemented methods on
+                // see org.tojaco.Graph.DirectedGraph.java for description of public methods
+
+                ReadHashtags readHashtags = new ReadHashtags();
+                readHashtags.readHashTagsFromFile(dataFile);
+
+                findGraphElements = new FindGraphElements();
+
+                if (dataFile.exists()) {
+                    findGraphElements.initialiseRetweets(dataFile);
+                    findGraphElements.initialiseHashtags(dataFile);
+                }
+                TwitterUsers usersSprint5 = new TwitterUsers();
+                rtGraph = findGraphElements.toPutIntoHashMap(configuration, usersSprint5, 0, 1);
+                retweetedGraph = findGraphElements.toPutIntoHashMap(configuration, usersSprint5, 1, 0);
+                System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
+
+                findEvangelist = new FindEvangelists();
+                retweetsHashMap = findEvangelist.findTotalRetweets(retweetedGraph, usersSprint5);
+
+                assignStances = new AssignStances();
+                StanceFile = new File(configuration.getSTANCE_FILE());
+                assignStances.determineProAntiVaxEvangelists(usersSprint5, StanceFile);
+
+                // initial setup for calculating stances
+                graphAnalyser = new RetweetGraphAnalyser();
+
+                for (int i = 0; i < 20; i++) {
+                    graphAnalyser.assignUserStances(rtGraph, usersSprint5);
+                    graphAnalyser.assignUserStances(retweetedGraph, usersSprint5);
+
+                }
+
+                break;
+        }
     }
 
-    public static void showSprint3Options(RetweetGraph<String> rtGraph, TwitterUsers<String> users) {
+    public static void showSprint3Options(Graph<TwitterUser, TwitterUser> rtGraph, TwitterUsers users) {
         int option = 0;
 
         System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
@@ -140,13 +178,13 @@ public class MainUtil {
                     newArc[i] = scanner.next();
                 }
 
-                Vertex<String> start = users.getVertex(newArc[0]);
-                Vertex<String> end = users.getVertex(newArc[1]);
+                Vertex<TwitterUser> start = users.getVertex(newArc[0]);
+                Vertex<TwitterUser> end = users.getVertex(newArc[1]);
 
                 if (rtGraph.hasArcBetween(start, end)) {
                     System.out.println("There already exists an arc between these two vertices.");
                 } else {
-                    Arc<String> arc = new Arc<>(end, Integer.parseInt(newArc[2]));
+                    Arc<TwitterUser> arc = new Arc<>(end, Integer.parseInt(newArc[2]));
                     rtGraph.addArc(start, arc);
 
                     System.out.print("org.tojaco.Graph.Vertex with " + start + " and arc with " + end.toString() + " was added to the graph.\n");
@@ -162,9 +200,9 @@ public class MainUtil {
                     vertices[i] = scanner.next();
                 }
 
-                Vertex<String> vertex1 = users.getVertex(vertices[0]);
+                Vertex<TwitterUser> vertex1 = users.getVertex(vertices[0]);
 
-                Vertex<String> vertex2 = users.getVertex(vertices[1]);
+                Vertex<TwitterUser> vertex2 = users.getVertex(vertices[1]);
 
                 boolean hasArc = rtGraph.hasArcBetween(vertex1, vertex2);
 

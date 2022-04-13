@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class ReadHashtags {
-
     public ArrayList<String> readHashTagsFromFile(File file) {
         final ArrayList<String> hashtags = new ArrayList<>();
         String j=null;

@@ -5,17 +5,17 @@ import org.tojaco.Graph.*;
 import java.util.*;
 
 public class FindEvangelists {
-    private final Map<Vertex<String>, Integer> retweetsHashMap = new HashMap<>();
-    private final Map<Vertex<String>, Integer> evangelistsHashMap = new HashMap<>();
+    private final Map<Vertex<TwitterUser>, Integer> retweetsHashMap = new HashMap<>();
+    private final Map<Vertex<TwitterUser>, Integer> evangelistsHashMap = new HashMap<>();
 
-    public Map<Vertex<String>, Integer> getEvangelistsHashMap() {
+    public Map<Vertex<TwitterUser>, Integer> getEvangelistsHashMap() {
         return evangelistsHashMap;
     }
 
-    public Map<Vertex<String>, Integer> findTotalRetweets(Graph<String> retweetedGraph, TwitterUsers<String> users) {
+    public Map<Vertex<TwitterUser>, Integer> findTotalRetweets(DirectedGraph<TwitterUser, TwitterUser> retweetedGraph, TwitterUsers users) {
 
 
-        for (Vertex<String> vertex : retweetedGraph.getGraph().keySet()) {
+        for (Vertex<TwitterUser> vertex : retweetedGraph.getGraph().keySet()) {
             int totalRetweets = 0;
 
             for (int i = 0; i < retweetedGraph.getGraph().get(vertex).size(); i++) {
@@ -25,7 +25,7 @@ public class FindEvangelists {
             retweetsHashMap.put(vertex, totalRetweets);
         }
 
-        List<Map.Entry<Vertex<String>, Integer>> topNRetweeted = sortMostRetweeted(retweetsHashMap);
+        List<Map.Entry<Vertex<TwitterUser>, Integer>> topNRetweeted = sortMostRetweeted(retweetsHashMap);
 
         for (int i = 0; i < 200; i++) {
             evangelistsHashMap.put(topNRetweeted.get(i).getKey(), topNRetweeted.get(i).getValue());
