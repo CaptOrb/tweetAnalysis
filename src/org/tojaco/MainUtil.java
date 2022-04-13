@@ -73,7 +73,7 @@ public class MainUtil {
 //                    findGraphElements.initialiseRetweets(dataFile);
 //                }
 //
-//                rtGraph = findGraphElements.toPutIntoHashMap(usersSprint3, 0, 1);
+//                rtGraph = findGraphElements.createGraph(usersSprint3, 0, 1);
                 System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
 
                 //showSprint3Options(rtGraph, usersSprint3);
@@ -94,8 +94,8 @@ public class MainUtil {
 
                 getHashtags().addAll(rfs.getHashtags());
 
-                rtGraph = findGraphElements.toPutIntoHashMap(getRetweets(), 0, 1);
-                retweetedGraph = findGraphElements.toPutIntoHashMap(getRetweets(), 1, 0);
+                rtGraph = findGraphElements.createGraph(getRetweets(), 0, 1);
+                retweetedGraph = findGraphElements.createGraph(getRetweets(), 1, 0);
                 System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
 
 //                FindEvangelists findEvangelist = new FindEvangelists();
@@ -145,8 +145,8 @@ public class MainUtil {
 
                 getHashtags().addAll(rfs1.getHashtags());
 
-                rtGraph = findGraphElements.toPutIntoHashMap(getRetweets(), 0, 1);
-                retweetedGraph = findGraphElements.toPutIntoHashMap(getRetweets(), 1, 0);
+                rtGraph = findGraphElements.createGraph(getRetweets(), 0, 1);
+                retweetedGraph = findGraphElements.createGraph(getRetweets(), 1, 0);
                 System.out.println("Retweet graph added successfully to org.tojaco.Graph directory!");
 //
 //                findEvangelist = new FindEvangelists();
