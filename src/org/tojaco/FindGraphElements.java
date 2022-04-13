@@ -1,6 +1,5 @@
 package org.tojaco;
 
-import org.tojaco.FileIO.ReadHashtags;
 import org.tojaco.FileIO.RetweetFileService;
 import org.tojaco.Graph.*;
 import twitter4j.Twitter;
@@ -51,12 +50,6 @@ public class FindGraphElements {
         return rtGraph;
     }
 
-    public ArrayList<String> initialiseHashtags(File dataFile){
-        ReadHashtags rht= new ReadHashtags();
-        getHashtags().addAll(rht.readHashTagsFromFile(dataFile));
-
-        return hashtags;
-    }
 
     public ArrayList<String> initialiseRetweets(File dataFile) {
         RetweetFileService<String> rfs = new RetweetFileService<>();
