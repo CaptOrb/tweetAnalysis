@@ -1,18 +1,20 @@
 package org.tojaco.Graph;
 
+import org.tojaco.TwitterUser;
+
 import java.util.*;
 
-public class Graph<T> implements DirectedGraph<T> {
+public class Graph<T, E> implements DirectedGraph<T, E> {
 
-    private final Map<Vertex<T>, ArrayList<Arc<T>>> graph = new HashMap<>();
+    private final Map<Vertex<T>, ArrayList<Arc<E>>> graph = new HashMap<>();
     private final Map<T, Vertex<T>> allVerticesInGraph = new HashMap<>();
 
-    public Map<Vertex<T>, ArrayList<Arc<T>>> getGraph() { return graph; }
+    public Map<Vertex<T>, ArrayList<Arc<E>>> getGraph() { return graph; }
 
     public Map<T, Vertex<T>> getAllVerticesInGraph() { return allVerticesInGraph; }
 
     @Override
-    public void addArc(Vertex<T> source, Arc<T> arc) {
+    public void addArc(Vertex<T> source, Arc<E> arc) {
         // Check if vertex given has already been made as a key in the hashmap
         // If it has, access the values it corresponds to and add the corresponding value
         // If it hasn't, create it as a new key
@@ -25,11 +27,17 @@ public class Graph<T> implements DirectedGraph<T> {
             addToExistingKey(source, arc);
         }
         controlUsers(source);
-        controlUsers(arc.getVertex());
+        if( arc.getVertex().getLabel().getClass() == TwitterUser.class ) {
+            if (!allVerticesInGraph.containsKey(arc.getVertex())){
+                allVerticesInGraph.get(arc.getVertex());
+                Vertex<T> vertex = new Vertex<T>(arc.getVertex().getLabel());
+            }
+            controlUsers(arc.getVertex());
+        }
     }
 
     @Override
-    public void removeArc(Vertex<T> vertex, Arc<T> arc) {
+    public void removeArc(Vertex<T> vertex, Arc<E> arc) {
         if ( !graph.containsKey(vertex) ){
             System.out.println(vertex.toString() + " is not in the graph");
             return;
@@ -50,10 +58,10 @@ public class Graph<T> implements DirectedGraph<T> {
         }
     }
 
-    private void addToExistingKey(Vertex<T> vertex, Arc<T> arc){
+    private void addToExistingKey(Vertex<T> vertex, Arc<E> arc){
         // If list of arcs already contains the given arc we simply increase the weight of the arc by 1
         // If not add the new arc to the list
-        for(Arc<T> testArc : graph.get(vertex)){
+        for(Arc<E> testArc : graph.get(vertex)){
             if(testArc.getVertex() == arc.getVertex()){
                 testArc.incrementWeight();
                 return;
@@ -62,14 +70,14 @@ public class Graph<T> implements DirectedGraph<T> {
         graph.get(vertex).add(arc);
     }
 
-    private void addNewKeyValuePair(Vertex<T> vertex, Arc<T> arc){
-        ArrayList<Arc<T>> arcs = new ArrayList<>();
+    private void addNewKeyValuePair(Vertex<T> vertex, Arc<E> arc){
+        ArrayList<Arc<E>> arcs = new ArrayList<>();
         arcs.add(arc);
         graph.put(vertex, arcs);
     }
 
     @Override
-    public boolean hasArcBetween(Vertex<T> vertex1, Vertex<T> vertex2) {
+    public boolean hasArcBetween(Vertex<T> vertex1, Vertex<E> vertex2) {
         // check both vertices are in the graph initially
         if (!allVerticesInGraph.containsKey(vertex1.getLabel()) && allVerticesInGraph.containsKey(vertex2.getLabel())) {
             return false;
@@ -78,14 +86,14 @@ public class Graph<T> implements DirectedGraph<T> {
         // check if either vertex is a key
         // if so check its value for an arc containing the other vertex
         if (graph.containsKey(vertex1)) {
-            for (Arc<T> arc : graph.get(vertex1)) {
+            for (Arc<E> arc : graph.get(vertex1)) {
                 if (arc.getVertex() == vertex2) {
                     return true;
                 }
             }
         }
         if (graph.containsKey(vertex2)) {
-            for (Arc<T> arc : graph.get(vertex2)) {
+            for (Arc<E> arc : graph.get(vertex2)) {
                 if (arc.getVertex() == vertex1) {
                     return true;
                 }
@@ -96,7 +104,7 @@ public class Graph<T> implements DirectedGraph<T> {
     }
 
     @Override
-    public int getLabelBetweenVertices(Vertex<T> vertex1, Vertex<T> vertex2){
+    public int getLabelBetweenVertices(Vertex<T> vertex1, Vertex<E> vertex2){
 
         if (!allVerticesInGraph.containsKey(vertex1.getLabel()) && allVerticesInGraph.containsKey(vertex2.getLabel())) {
             return -1;
@@ -105,14 +113,14 @@ public class Graph<T> implements DirectedGraph<T> {
         // check if either vertex is a key
         // if so check its value for an arc containing the other vertex
         if (graph.containsKey(vertex1)) {
-            for (Arc<T> arc : graph.get(vertex1)) {
+            for (Arc<E> arc : graph.get(vertex1)) {
                 if (arc.getVertex() == vertex2) {
                     return arc.getWeight();
                 }
             }
         }
         if (graph.containsKey(vertex2)) {
-            for (Arc<T> arc : graph.get(vertex2)) {
+            for (Arc<E> arc : graph.get(vertex2)) {
                 if (arc.getVertex() == vertex1) {
                     return arc.getWeight();
                 }
@@ -122,11 +130,15 @@ public class Graph<T> implements DirectedGraph<T> {
         return -1;
     }
 
-
-
     public void controlUsers(Vertex<T> user){
         if(!allVerticesInGraph.containsKey(user.getLabel())){
             allVerticesInGraph.put(user.getLabel(), user);
         }
     }
+
+    //public void controlUsers2(Vertex<E> user){
+    //    if( !allVerticesInGraph.containsKey(user.getLabel())){
+    //        allVerticesInGraph.put(user.getLabel(), user);
+    //    }
+    //}
 }

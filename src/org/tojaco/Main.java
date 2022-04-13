@@ -20,9 +20,9 @@ public class Main {
 
             File dataFile = new File(configuration.getDataDirectory(), configuration.getDataFile());
 
-           // MainUtil.showProgramOptions(configuration, dataFile);
-            ReadHashtags readHashtags = new ReadHashtags();
-            readHashtags.readHashTagsFromFile(dataFile);
+            MainUtil.showProgramOptions(configuration, dataFile);
+            //ReadHashtags readHashtags = new ReadHashtags();
+           // readHashtags.readHashTagsFromFile(dataFile);
 
         } catch (IOException ex) {
             ex.printStackTrace();

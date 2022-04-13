@@ -7,6 +7,7 @@ import org.tojaco.Graph.RetweetGraph;
 import org.tojaco.Graph.Vertex;
 import org.tojaco.GraphAnalysis.RetweetGraphAnalyser;
 import org.tojaco.GraphAnalysis.Users100;
+import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
 
 import java.io.File;
