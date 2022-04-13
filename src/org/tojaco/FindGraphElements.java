@@ -11,9 +11,6 @@ import java.util.*;
 public class FindGraphElements {
 
     private final ArrayList<String> retweets = new ArrayList<>();
-    private final ArrayList<String> hashtags = new ArrayList<>();
-
-    public ArrayList<String> getHashtags() { return hashtags;}
 
     public ArrayList<String> getRetweets() {
         return retweets;
