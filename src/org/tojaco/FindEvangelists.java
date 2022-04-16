@@ -12,14 +12,14 @@ public class FindEvangelists {
         return evangelistsHashMap;
     }
 
-    public Map<Vertex<TwitterUser>, Integer> findTotalRetweets(DirectedGraph<TwitterUser, TwitterUser> retweetedGraph) {
+    public Map<Vertex<TwitterUser>, Integer> findTotalRetweets(DirectedGraph<TwitterUser, TwitterUser> graph) {
 
 
-        for (Vertex<TwitterUser> vertex : retweetedGraph.getGraph().keySet()) {
+        for (Vertex<TwitterUser> vertex : graph.getGraph().keySet()) {
             int totalRetweets = 0;
 
-            for (int i = 0; i < retweetedGraph.getGraph().get(vertex).size(); i++) {
-                totalRetweets += retweetedGraph.getGraph().get(vertex).get(i).getWeight();
+            for (int i = 0; i < graph.getGraph().get(vertex).size(); i++) {
+                totalRetweets += graph.getGraph().get(vertex).get(i).getWeight();
             }
 
             retweetsHashMap.put(vertex, totalRetweets);

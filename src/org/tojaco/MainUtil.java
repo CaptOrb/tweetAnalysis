@@ -138,7 +138,6 @@ public class MainUtil {
 
                 // get coverage of stances
                 System.out.println("Coverage in graph: " + graphAnalyser.calculateCoverage(rtGraph, graphElements) + "%");
-                System.out.println("Coverage in retweeted graph: " + graphAnalyser.calculateCoverage(retweetedGraph, graphElements));
 
                 System.out.println("Percentage of users without a stance: " + (graphAnalyser.calculateCoverage(rtGraph, graphElements) - 100) * -1 + "%");
 
@@ -177,6 +176,30 @@ public class MainUtil {
                         new File(configuration.getGRAPH_DIRECTORY(),
                                 configuration.getRTGRAPH_OUTPUT_FILE()));
 
+                System.out.println("Retweet graph and retweeted graph added successfully to Graph directory!");
+
+                assignStances = new AssignStances();
+                StanceFile = new File(configuration.getSTANCE_FILE());
+                assignStances.determineProAntiVaxEvangelists(graphElements,rtGraph, StanceFile);
+
+                // initial setup for calculating stances
+                graphAnalyser = new RetweetGraphAnalyser();
+
+                for (int i = 0; i < 20; i++) {
+                    graphAnalyser.assignUserStances(rtGraph);
+                    graphAnalyser.assignUserStances(retweetedGraph);
+
+                }
+
+                System.out.println("Coverage in graph: " + graphAnalyser.calculateCoverage(rtGraph, graphElements) + "%");
+
+                System.out.println("Percentage of users without a stance: " + (graphAnalyser.calculateCoverage(rtGraph, graphElements) - 100) * -1 + "%");
+
+                System.out.println("Percentage positive stances: " + graphAnalyser.calculatePercentagePositiveStances(rtGraph, graphElements) + "%");
+                System.out.println("Percentage negative stance: " + graphAnalyser.calculatePercentageNegativeStances(rtGraph, graphElements) + "%");
+
+
+
                 FindGraphElements<TwitterUser, Hashtag> fge1 = new FindGraphElements<>(new CreateUserVertex(), new CreateHashtagVertex());
                 DirectedGraph<TwitterUser, Hashtag> usertoHashTag;
                 usertoHashTag = fge1.createGraph(graphElements, getHashtags(), 0, 1);
@@ -193,22 +216,6 @@ public class MainUtil {
                 rfs1.writeRetweetFile(hashtagToUsers.getGraph(),
                         new File(configuration.getGRAPH_DIRECTORY(),
                                 configuration.getHASHTAGS_TO_USERS()));
-
-                System.out.println("Retweet graph added successfully to Graph directory!");
-
-
-//                assignStances = new AssignStances();
-//                StanceFile = new File(configuration.getSTANCE_FILE());
-//                assignStances.determineProAntiVaxEvangelists(usersSprint5, StanceFile);
-//
-//                // initial setup for calculating stances
-//                graphAnalyser = new RetweetGraphAnalyser();
-//
-//                for (int i = 0; i < 20; i++) {
-//                    graphAnalyser.assignUserStances(rtGraph, usersSprint5);
-//                    graphAnalyser.assignUserStances(retweetedGraph, usersSprint5);
-//
-//                }
 
                 break;
         }
