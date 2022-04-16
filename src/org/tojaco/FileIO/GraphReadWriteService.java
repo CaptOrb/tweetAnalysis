@@ -10,7 +10,7 @@ import java.util.*;
 // HANDLES reading and writing to/from the graph output file
 public class GraphReadWriteService extends FileService {
 
-   // private final ArrayList<String> retweets = new ArrayList<>();
+    // private final ArrayList<String> retweets = new ArrayList<>();
 
     private final ArrayList<String> hashtags = new ArrayList<>();
     //private HashMap<String, List<String>> hashtags = new HashMap<>();
@@ -32,7 +32,7 @@ public class GraphReadWriteService extends FileService {
     }*/
 
 
-    public<T,E> void writeFileFromGraph(DirectedGraph<T,E> graph, File file) throws IOException {
+    public <T, E> void writeFileFromGraph(DirectedGraph<T, E> graph, File file) throws IOException {
 
         createFile(file.getParent(), file.getName());
 
@@ -78,19 +78,23 @@ public class GraphReadWriteService extends FileService {
                 String[] lineContents = line.split("\t");
                 try {
                     Long.parseLong(lineContents[0]);
-                    String[] tweetText = lineContents[2].split(" "); //lineContents[2] is "RT @RetweetedUser tweetText" if it's a retweet
-                    if (tweetText[0].contains("RT") && tweetText[1].contains("@")) {
-                        String username = tweetText[1].replaceAll(":", ""); //remove : after the retweeted user
+
+                    String retweetedUserWithText = lineContents[2];
+                    String[] tweetText = retweetedUserWithText.split(" "); //lineContents[2] is "RT @RetweetedUser tweetText" if it's a retweet
+                    String retweetedUser = tweetText[1];
+
+                    if (isTextRetweet(tweetText)) {
+                        String username = retweetedUser.replaceAll(":", ""); //remove : after the retweeted user
                         retweets.add(lineContents[1] + "\t" + username); //adds @User + "\t" + @RetweetedUser and whatever they tweeted
                     }
-                    String temp = lineContents[2].trim().replaceAll(" +", " ");
+                    String temp = retweetedUserWithText.trim().replaceAll(" +", " ");
                     //String temp = lineContents[2].replaceAll("  ", " ");
                     tweetText = temp.split("[ ,;:'/?!]"); //split the tweet text
                     //tweetText= tweetText.split(" ");
-                    for(int i = 0; i<tweetText.length; i++){
+                    for (String tweetComponent : tweetText) {
                         String hashtagInLine = null;
-                        if (tweetText[i].startsWith("#")) {
-                            hashtagInLine = tweetText[i];
+                        if (tweetComponent.startsWith("#")) {
+                            hashtagInLine = tweetComponent;
                         }
                         if (hashtagInLine != null) {
                             hashtags.add(lineContents[1] + "\t" + hashtagInLine);
@@ -100,11 +104,17 @@ public class GraphReadWriteService extends FileService {
                 } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
 //                    String[] lineContents1 = line.split("\t");
 //                    System.out.println(lineContents[0]);
-                } catch (Exception ignored){}
+                } catch (Exception ignored) {
+                }
             }
         } catch (IOException | NullPointerException fnfe) {
             fnfe.printStackTrace();
         }
         return retweets;
+    }
+
+    private boolean isTextRetweet(String[] lineContents) {
+        return lineContents[0].contains("RT") && lineContents[1].startsWith("@");
+
     }
 }
