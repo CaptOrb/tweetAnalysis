@@ -222,7 +222,7 @@ public class MainUtil {
                                 configuration.getHASHTAGS_TO_USERS()));
 
 
-
+                //3a
                 for (int i = 0; i < 3; i++) { //theres no change in coverage from 3 to 4, but theres a change in coverage from 2 to 3
                     graphAnalyser.assignUserStances(usertoHashTag);
                     graphAnalyser.assignUserStances(hashtagToUsers);
