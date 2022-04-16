@@ -9,36 +9,39 @@ import org.tojaco.GraphElements;
 import org.tojaco.TwitterUser;
 import twitter4j.Twitter;
 
-public class RetweetGraphAnalyser {
-    public void assignUserStances(DirectedGraph<TwitterUser, TwitterUser> rtGraph){
+public class RetweetGraphAnalyser<T, E> {
+    public void assignUserStances(DirectedGraph<T, E> Graph){
         int totalOfStances = 0;
         int numArcs = 0;
-        for (Vertex<TwitterUser> vertex : rtGraph.getGraph().keySet()) {
+        for (Vertex<T> vertex : Graph.getGraph().keySet()) {
             totalOfStances = 0;
             numArcs = 0;
-            for (Arc<TwitterUser> arc : rtGraph.getGraph().get(vertex)) {
+            for (Arc<E> arc : Graph.getGraph().get(vertex)) {
                 //if( users.getUserStances().get(arc.getVertex()) != null ){
-                if (arc.getVertex().getLabel().hasStance()) {
-                    totalOfStances += arc.getVertex().getLabel().getStance();
+               // if (arc.getVertex().getLabel().hasStance()) {
+                 if(arc.getVertex().hasStance()){
+                    //totalOfStances += arc.getVertex().getLabel().getStance();
+                     totalOfStances += arc.getVertex().getStance();
                 //    totalOfStances += users.getUserStances().get(arc.getVertex());
                     numArcs++;
                 }
             }
             if (numArcs > 0) {
                 int stance = totalOfStances / numArcs;
-                vertex.getLabel().setStance(stance);
+                //vertex.getLabel().setStance(stance);
+                vertex.setStance(stance);
                 //users.getUserStances().putIfAbsent(vertex, stance);
             }
         }
     }
 
-    public float calculateCoverage(DirectedGraph<TwitterUser, TwitterUser> rtGraph, GraphElements graphElements){
+    public float calculateCoverage(DirectedGraph<T, E> rtGraph, GraphElements graphElements){
         // iterate all users in graph
         // if they have been given a stance then increment the stance counter
         float stances = 0;
-        for(Vertex<TwitterUser> vertex : graphElements.getAllVerticesInGraph().values()){
+        for(Vertex<T> vertex : graphElements.getAllVerticesInGraph().values()){
         //for (String user : rtGraph.getAllVerticesInGraph().keySet()){
-            if ( vertex.getLabel().hasStance() ){
+            if ( vertex.hasStance() ){
             //if ( users.getUserStances().get(users.getAllVerticesInGraph().get(user)) != null){
                 stances ++;
             }
@@ -46,14 +49,14 @@ public class RetweetGraphAnalyser {
         return (stances / graphElements.getAllVerticesInGraph().size()) * 100;
     }
 
-    public float calculatePercentagePositiveStances(DirectedGraph<TwitterUser, TwitterUser> rtGraph, GraphElements graphElements){
+    public float calculatePercentagePositiveStances(DirectedGraph<T, E> rtGraph, GraphElements graphElements){
         float positiveStances = 0;
         float hasStance = 0;
-        for(Vertex<TwitterUser> vertex : graphElements.getAllVerticesInGraph().values()){
-            if ( vertex.getLabel().hasStance()){
+        for(Vertex<T> vertex : graphElements.getAllVerticesInGraph().values()){
+            if ( vertex.hasStance()){
             //if ( users.getUserStances().get(vertex) != null) {
                 hasStance++;
-                if ( vertex.getLabel().getStance() > 0 ){
+                if ( vertex.getStance() > 0 ){
                 //if ( users.getUserStances().get(vertex) > 0) {
                     positiveStances++;
                 }
@@ -61,14 +64,14 @@ public class RetweetGraphAnalyser {
         }
         return (positiveStances / hasStance) * 100;
     }
-    public float calculatePercentageNegativeStances(DirectedGraph<TwitterUser, TwitterUser> rtGraph, GraphElements graphElements){
+    public float calculatePercentageNegativeStances(DirectedGraph<T, E> rtGraph, GraphElements graphElements){
         float negativeStances = 0;
         float hasStance = 0;
-        for(Vertex<TwitterUser> vertex : graphElements.getAllVerticesInGraph().values()){
-            if (vertex.getLabel().hasStance()){
+        for(Vertex<T> vertex : graphElements.getAllVerticesInGraph().values()){
+            if (vertex.hasStance()){
             //if (users.getUserStances().get(vertex) != null){
                 hasStance++;
-                if ( vertex.getLabel().getStance() < 0 ){
+                if ( vertex.getStance() < 0 ){
                 //if ( users.getUserStances().get(vertex) < 0 ){
                     negativeStances++;
                 }
