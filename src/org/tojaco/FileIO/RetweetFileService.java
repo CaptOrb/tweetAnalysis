@@ -78,8 +78,10 @@ public class RetweetFileService extends FileService {
                         String username = tweetText[1].replaceAll(":", ""); //remove : after the retweeted user
                         retweets.add(lineContents[1] + "\t" + username); //adds @User + "\t" + @RetweetedUser and whatever they tweeted
                     }
-                    tweetText = lineContents[2].split("[ ,]"); //split the tweet text
-
+                    String temp = lineContents[2].trim().replaceAll(" +", " ");
+                    //String temp = lineContents[2].replaceAll("  ", " ");
+                    tweetText = temp.split("[ ,;:'/?!]"); //split the tweet text
+                    //tweetText= tweetText.split(" ");
                     for(int i = 0; i<tweetText.length; i++){
                         String hashtagInLine = null;
                         if(tweetText[i].startsWith("#")){
