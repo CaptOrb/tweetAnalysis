@@ -178,6 +178,10 @@ public class MainUtil {
 
                 System.out.println("Retweet graph and retweeted graph added successfully to Graph directory!");
 
+                FindEvangelists findEvangelists = new FindEvangelists();
+                Map<Vertex<TwitterUser>, Integer> retweetHashMap = findEvangelists.findTotalRetweets(retweetedGraph);
+
+
                 assignStances = new AssignStances();
                 StanceFile = new File(configuration.getSTANCE_FILE());
                 assignStances.determineProAntiVaxEvangelists(graphElements,rtGraph, StanceFile);
@@ -185,7 +189,7 @@ public class MainUtil {
                 // initial setup for calculating stances
                 graphAnalyser = new RetweetGraphAnalyser();
 
-                for (int i = 0; i < 20; i++) {
+                for (int i = 0; i < 10; i++) {
                     graphAnalyser.assignUserStances(rtGraph);
                     graphAnalyser.assignUserStances(retweetedGraph);
 
@@ -199,7 +203,7 @@ public class MainUtil {
                 System.out.println("Percentage negative stance: " + graphAnalyser.calculatePercentageNegativeStances(rtGraph, graphElements) + "%");
 
 
-
+                System.out.println("Now calculating hashtag graphs...");
                 FindGraphElements<TwitterUser, Hashtag> fge1 = new FindGraphElements<>(new CreateUserVertex(), new CreateHashtagVertex());
                 DirectedGraph<TwitterUser, Hashtag> usertoHashTag;
                 usertoHashTag = fge1.createGraph(graphElements, getHashtags(), 0, 1);
@@ -217,7 +221,33 @@ public class MainUtil {
                         new File(configuration.getGRAPH_DIRECTORY(),
                                 configuration.getHASHTAGS_TO_USERS()));
 
+
+
+                for (int i = 0; i < 3; i++) { //theres no change in coverage from 3 to 4, but theres a change in coverage from 2 to 3
+                    graphAnalyser.assignUserStances(usertoHashTag);
+                    graphAnalyser.assignUserStances(hashtagToUsers);
+
+                }
+                //by running this again we get more coverage
+                for (int i = 0; i < 5; i++) { //by upping this to 10 there's no change in coverage
+                    graphAnalyser.assignUserStances(rtGraph);
+                    graphAnalyser.assignUserStances(retweetedGraph);
+
+                }
+                System.out.println("AFTER USING HASHTAGS:\nCoverage in graph: " + graphAnalyser.calculateCoverage(rtGraph, graphElements) + "%");
+
+                System.out.println("Percentage of users without a stance: " + (graphAnalyser.calculateCoverage(rtGraph, graphElements) - 100) * -1 + "%");
+
+                System.out.println("Percentage positive stances: " + graphAnalyser.calculatePercentagePositiveStances(rtGraph, graphElements) + "%");
+                System.out.println("Percentage negative stance: " + graphAnalyser.calculatePercentageNegativeStances(rtGraph, graphElements) + "%");
+
+                Users100 users100New = new Users100();
+               // users100New.checkStance(retweetHashMap);
+
+
+
                 break;
+
         }
     }
 
