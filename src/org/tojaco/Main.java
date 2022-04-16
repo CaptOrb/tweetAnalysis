@@ -1,9 +1,6 @@
 package org.tojaco;
 
-import org.tojaco.FileIO.RetweetFileService;
-
 import java.io.*;
-import java.util.ArrayList;
 
 public class Main {
 
@@ -27,7 +24,7 @@ public class Main {
             //readHashtags.readHashTagsFromFile(dataFile);
 
            // RetweetFileService<String> rtf = new RetweetFileService();
-            // rtf.readRetweetsIntoSet(dataFile);
+            // rtf.loadDataFromInputFile(dataFile);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
