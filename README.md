@@ -1,5 +1,5 @@
 # 3rdYearProject
-COMP30880 Software Engineering Project by Conor Barry, Jane O'Brien and Tom Higgins
+COMP30880 Software Engineering Project Sprint 2 by Conor Barry, Jane O'Brien and Tom Higgins
 
 Team NAME: ToJaCo
 
@@ -45,11 +45,23 @@ Answers obtained by running the jar file and selecting option 4 in the menu
 
 3c)
 
-- percentage of users who have stances: 98.202255%
-- percentage of users who don't have stances: 1.7977448%
+- percentage of users who have stances: 98.90558%
+- percentage of users who don't have stances: 1.0944214%
 
 - percentage of users who have anti vax stances: 59.75823%
 - percentage of users who have pro vax stances: 40.19258%
 
 For Sprint 4 the percentage of users who have stances was  95.3451693% so adding stances to hashtags and bootstrapping the results to update the user stances results in a 3.5604107% increase in the coverage of users in the graph.
 Interestingly, the ratio of Pro/Anti vax stance assignments changes very little compared to Sprint 4, with the percentages only varying by +- 2%
+
+4a) After calculating the stances for the hashtags, and setting all user stances back to 0/hasStance==false, and by percolating stances through the hashtag graph, the percentage of pro vax and anti vax is almost the same:
+
+Calculating stances using retweeted users only
+Percentage positive stances: 41.267586%
+Percentage negative stance: 58.732414%
+
+Calculating stances using hashtags only
+ercentage positive stances using ONLY hashtags: 40.33209%
+Percentage negative stance using ONLY hashtags: 59.667915%
+
+The percentages are only varying by +- 2%
