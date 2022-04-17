@@ -35,7 +35,7 @@ public class RetweetGraphAnalyser<T, E> {
         }
     }
 
-    public float calculateCoverage(DirectedGraph<T, E> rtGraph, GraphElements graphElements){
+    public float calculateCoverage(GraphElements graphElements){
         // iterate all users in graph
         // if they have been given a stance then increment the stance counter
         float stances = 0;

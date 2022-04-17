@@ -19,6 +19,10 @@ public class Vertex<T> {
     public void setStance(int stance){
         this.stance = stance;
         hasStance = true;
+
+        if(stance==0){
+            hasStance = false;
+        }
     }
 
     public boolean hasStance(){
