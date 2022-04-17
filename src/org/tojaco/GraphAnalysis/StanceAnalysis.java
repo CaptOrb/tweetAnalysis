@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 
-public class  StanceAnalysis<T>{
+public class StanceAnalysis<T>{
 
     //take 100 users and check if stance is correct
     public void checkStance100Users(Map<Vertex<T>, Integer> retweetsHashMap){
@@ -21,7 +21,7 @@ public class  StanceAnalysis<T>{
         }
     }
 
-    //3b?
+/*    //3b?
     public double UsersWithNoStance(Map<Vertex<T>, Integer> retweetsHashMap){
         ArrayList<Vertex<T>> usersNoStance = new ArrayList<Vertex<T>>();
         for(Map.Entry<Vertex<T>,Integer> entry : retweetsHashMap.entrySet()){
@@ -31,5 +31,5 @@ public class  StanceAnalysis<T>{
             }
         }
         return usersNoStance.size();
-    }
+    }*/
 }

@@ -183,9 +183,9 @@ public class MainUtil {
 
                 StanceAnalysis analysis = new StanceAnalysis();
                 analysis.checkStance100Users(retweetHashMap);
-                double num = analysis.UsersWithNoStance(retweetHashMap);
+ /*               double num = analysis.UsersWithNoStance(retweetHashMap);
                 System.out.println(num + " divided by " + retweetHashMap.size() +"(except idk why it says only 42,905 users, theres like more than 300,000) = "+ (num/retweetHashMap.size())*100 + "%");
-
+*/
                 outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, false);
 
                 System.out.println("Now calculating hashtag graphs...");
@@ -207,7 +207,7 @@ public class MainUtil {
                                 configuration.getHASHTAGS_TO_USERS()));
 
 
-                //3a
+                //3a and 3b
                 for (int i = 0; i < 3; i++) { //theres no change in coverage from 3 to 4, but theres a change in coverage from 2 to 3
                     graphAnalyser.assignUserStances(usertoHashTag);
                     graphAnalyser.assignUserStances(hashtagToUsers);
