@@ -220,8 +220,9 @@ public class MainUtil {
 
                 }
                 outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, true);
-                StanceAnalysis users100New = new StanceAnalysis();
+                StanceAnalysis analyse = new StanceAnalysis();
                 // users100New.checkStance(retweetHashMap);
+                analyse.assignStancesByHashtags(hashtagToUsers,graphElements);
 
                 break;
         }

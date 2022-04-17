@@ -61,4 +61,8 @@ public class StanceAnalysis<T,E>{
         System.out.println("Percentage negative stance using ONLY hashtags: " + graphAnalyser.calculatePercentageNegativeStances(hashtagsToUsers, graphElements) + "%");
 
     }
+
+    public void find100Hashtags(DirectedGraph<T,E> hashtagsToUsers, GraphElements graphElements){
+
+    }
 }
