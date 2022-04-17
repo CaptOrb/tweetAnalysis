@@ -225,11 +225,11 @@ public class MainUtil {
                 outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, true);
                 StanceAnalysis analyse = new StanceAnalysis();
                 // users100New.checkStance(retweetHashMap);
-                analyse.assignStancesByHashtags( hashtagToUsers,graphElements);
+                analyse.assignStancesByHashtags( hashtagToUsers,graphElements, rtGraph);
 
                 analyse.find100Hashtags(hashtagToUsers);
 
-                analyse.find100HashtagsS5(rtGraph, hashtagToUsers);
+               // analyse.find100HashtagsS5(rtGraph, hashtagToUsers);
 
                 break;
         }
