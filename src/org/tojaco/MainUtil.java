@@ -233,8 +233,8 @@ public class MainUtil {
         if(hashtagsUsed){
             System.out.println("AFTER USING HASHTAGS:");
         }
-        System.out.println("Coverage in graph: " + graphAnalyser.calculateCoverage(graph) + "%");
-        System.out.println("Percentage of users without a stance: " + (graphAnalyser.calculateCoverage(graph) - 100) * -1 + "%");
+        System.out.println("Coverage in graph: " + graphAnalyser.calculateCoverage(graphElements) + "%");
+        System.out.println("Percentage of users without a stance: " + (graphAnalyser.calculateCoverage(graphElements) - 100) * -1 + "%");
         System.out.println("Percentage positive stances: " + graphAnalyser.calculatePercentagePositiveStances(graph, graphElements) + "%");
         System.out.println("Percentage negative stance: " + graphAnalyser.calculatePercentageNegativeStances(graph, graphElements) + "%");
 
