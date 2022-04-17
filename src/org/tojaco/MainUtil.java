@@ -4,7 +4,7 @@ import org.tojaco.FileIO.GraphReadWriteService;
 import org.tojaco.FileIO.TwitterFileService;
 import org.tojaco.Graph.*;
 import org.tojaco.GraphAnalysis.RetweetGraphAnalyser;
-import org.tojaco.GraphAnalysis.Users100;
+import org.tojaco.GraphAnalysis.StanceAnalysis;
 import twitter4j.TwitterFactory;
 
 import java.io.File;
@@ -96,7 +96,7 @@ public class MainUtil {
 
                 findGraphElements = new FindGraphElements<>(new CreateUserVertex(), new CreateUserVertex());
 
-                 rfs = new GraphReadWriteService();
+                rfs = new GraphReadWriteService();
 
                 if (dataFile.exists()) {
                     getRetweets().addAll(rfs.loadDataFromInputFile(dataFile));
@@ -134,8 +134,8 @@ public class MainUtil {
                 }
 
                 outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, false);
-                Users100 users100 = new Users100();
-                users100.checkStance(retweetsHashMap);
+                StanceAnalysis users100 = new StanceAnalysis();
+                users100.checkStance100Users(retweetsHashMap);
 
                 break;
 
@@ -181,7 +181,12 @@ public class MainUtil {
 
                 }
 
-               outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, false);
+                StanceAnalysis analysis = new StanceAnalysis();
+                analysis.checkStance100Users(retweetHashMap);
+                double num = analysis.UsersWithNoStance(retweetHashMap);
+                System.out.println(num + " divided by " + retweetHashMap.size() +"(except idk why it says only 42,905 users, theres like more than 300,000) = "+ (num/retweetHashMap.size())*100 + "%");
+
+                outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, false);
 
                 System.out.println("Now calculating hashtag graphs...");
                 FindGraphElements<TwitterUser, Hashtag> fge1 = new FindGraphElements<>(new CreateUserVertex(), new CreateHashtagVertex());
@@ -215,13 +220,27 @@ public class MainUtil {
 
                 }
                 outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, true);
-                Users100 users100New = new Users100();
-               // users100New.checkStance(retweetHashMap);
+                StanceAnalysis users100New = new StanceAnalysis();
+                // users100New.checkStance(retweetHashMap);
 
                 break;
-
         }
     }
+
+    private static void outputGraphAnalysis(RetweetGraphAnalyser graphAnalyser, DirectedGraph graph, GraphElements graphElements
+            , boolean hashtagsUsed){
+
+        if(hashtagsUsed){
+            System.out.println("AFTER USING HASHTAGS:");
+        }
+        System.out.println("Coverage in graph: " + graphAnalyser.calculateCoverage(graph, graphElements) + "%");
+        System.out.println("Percentage of users without a stance: " + (graphAnalyser.calculateCoverage(graph, graphElements) - 100) * -1 + "%");
+        System.out.println("Percentage positive stances: " + graphAnalyser.calculatePercentagePositiveStances(graph, graphElements) + "%");
+        System.out.println("Percentage negative stance: " + graphAnalyser.calculatePercentageNegativeStances(graph, graphElements) + "%");
+
+    }
+
+
 
     public static void showSprint3Options(Graph<TwitterUser, TwitterUser> rtGraph, GraphElements graphElements) {
         int option = 0;
@@ -254,7 +273,7 @@ public class MainUtil {
                     Arc<TwitterUser> arc = new Arc<>(end, Integer.parseInt(newArc[2]));
                     rtGraph.addArc(start, arc);
 
-                    System.out.print("Vertex with " + start + " and arc with " + end.toString() + " was added to the graph.\n");
+                    System.out.print("Graph.Vertex with " + start + " and arc with " + end.toString() + " was added to the graph.\n");
 
                 }
             }
@@ -281,18 +300,5 @@ public class MainUtil {
 
             }
         }
-    }
-
-    private static void outputGraphAnalysis(RetweetGraphAnalyser graphAnalyser, DirectedGraph graph, GraphElements graphElements
-    , boolean hashtagsUsed){
-
-        if(hashtagsUsed){
-            System.out.println("AFTER USING HASHTAGS:");
-        }
-        System.out.println("Coverage in graph: " + graphAnalyser.calculateCoverage(graph, graphElements) + "%");
-        System.out.println("Percentage of users without a stance: " + (graphAnalyser.calculateCoverage(graph, graphElements) - 100) * -1 + "%");
-        System.out.println("Percentage positive stances: " + graphAnalyser.calculatePercentagePositiveStances(graph, graphElements) + "%");
-        System.out.println("Percentage negative stance: " + graphAnalyser.calculatePercentageNegativeStances(graph, graphElements) + "%");
-
     }
 }
