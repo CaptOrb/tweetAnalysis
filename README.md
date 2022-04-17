@@ -13,7 +13,7 @@ RUNNING FROM JAR
 
 If running from source ensure to add the Twitter4J library to the classpath.
 
-Answers to Sprint 4 questions 
+#Answers to Sprint 4 questions 
 
 - The tasks were divided evenly between the team members. See commit history for a clearer idea of who carried out which tasks, but pair work was often carried out with just one person committing the finished result.
 
@@ -39,14 +39,17 @@ Answers obtained by running the jar file and selecting option 4 in the menu
 
 4d) Based on the precision scores given above it doesn't appear that there is an apparent bias in our algorithm. 
 
-Answers to Sprint 5 questions
+#Answers to Sprint 5 questions
 
 - The tasks were divided evenly between the team members. See commit history for a clearer idea of who carried out which tasks, but pair work was often carried out with just one person committing the finished result.
 
 3c)
 
-- percentage of users who have stances: 98.90558%%
-- percentage of users who don't have stances: 1.0944214%%
+- percentage of users who have stances: 98.90558%
+- percentage of users who don't have stances: 1.0944214%
 
 - percentage of users who have anti vax stances: 59.75823%
 - percentage of users who have pro vax stances: 40.19258%
+
+For Sprint the percentage of users who have stances was  95.3451693% so adding stances to hashtags and bootstrapping the results to update the user stances results in a 3.5604107% increase in the coverage of users in the graph.
+Interestingly, the ratio of Pro/Anti vax stance assignments changes very little compared to Sprint 4, with the percentages only varying by +- 2%
