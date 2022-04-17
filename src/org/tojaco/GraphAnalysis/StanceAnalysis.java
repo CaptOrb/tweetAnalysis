@@ -45,28 +45,29 @@ public class StanceAnalysis<T, E> {
             if (vertex.getLabel().hasStance()) {
                 vertex.getLabel().setStance(0); //in Vertex.java, by setting stance to 0 we set hasStance to false
             }
-            for (Arc<Stanceable> arc : hashtagsToUsers.getGraph().get(vertex)) {
+    /*        for (Arc<Stanceable> arc : hashtagsToUsers.getGraph().get(vertex)) {
                 if (arc.getVertex().getLabel().hasStance()) {
                     arc.getVertex().getLabel().setStance(0); //in Vertex.java, by setting stance to 0 we set hasStance to false
 
-                }
-                //now calculate stances for users just based solely on the hashtags they use
+                }*/
 
-                GraphAnalyser graphAnalyser = new GraphAnalyser();
 
-                for (int i = 0; i < 5; i++) { //by upping this to 10 there's no change in coverage
-                    graphAnalyser.assignUserStances(hashtagsToUsers);
-                }
-
-                System.out.println("\n4a, set stances for users using hashtags only:");
-
-                System.out.println("Coverage in graph HashtagToUsers graph using ONLY hashtags: " + graphAnalyser.calculateCoverage(graph, graphElements) + "%");
-                System.out.println("Percentage of users without a stance using ONLY hashtags: " + (graphAnalyser.calculateCoverage(graph, graphElements) - 100) * -1 + "%");
-                System.out.println("Percentage positive stances using ONLY hashtags: " + graphAnalyser.calculatePercentagePositiveStances(hashtagsToUsers, graphElements) + "%");
-                System.out.println("Percentage negative stance using ONLY hashtags: " + graphAnalyser.calculatePercentageNegativeStances(hashtagsToUsers, graphElements) + "%");
-
-            }
+            //}
         }
+        //now calculate stances for users just based solely on the hashtags they use
+
+        GraphAnalyser graphAnalyser = new GraphAnalyser();
+
+        for (int i = 0; i < 5; i++) { //by upping this to 10 there's no change in coverage
+            graphAnalyser.assignUserStances(hashtagsToUsers);
+        }
+
+        System.out.println("\n4a, set stances for users using hashtags only:");
+
+        System.out.println("Coverage in graph HashtagToUsers graph using ONLY hashtags: " + graphAnalyser.calculateCoverage(graph, graphElements) + "%");
+        System.out.println("Percentage of users without a stance using ONLY hashtags: " + (graphAnalyser.calculateCoverage(graph, graphElements) - 100) * -1 + "%");
+        System.out.println("Percentage positive stances using ONLY hashtags: " + graphAnalyser.calculatePercentagePositiveStances(hashtagsToUsers, graphElements) + "%");
+        System.out.println("Percentage negative stance using ONLY hashtags: " + graphAnalyser.calculatePercentageNegativeStances(hashtagsToUsers, graphElements) + "%");
     }
 
     public HashMap<Stanceable, Integer> find100HashtagsS5(DirectedGraph<TwitterUser, TwitterUser> retweetGraph, DirectedGraph<Hashtag, TwitterUser> userToHashTags) {
