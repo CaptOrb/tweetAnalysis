@@ -49,12 +49,11 @@ public class GraphAnalyser<T, E> {
         return (stances / graph.getAllVerticesInGraph().size()) * 100;
     }
 
-    public float calculatePercentagePositiveStances(DirectedGraph<T, E> rtGraph, GraphElements graphElements){
+    public float calculatePercentagePositiveStances(DirectedGraph<TwitterUser, TwitterUser> rtGraph, GraphElements graphElements){
         float positiveStances = 0;
         float hasStance = 0;
-        for(Vertex<T> vertex : graphElements.getAllVerticesInGraph().values()){
+        for(Vertex<T> vertex : rtGraph.getAllVerticesInGraph().values()){
             if ( vertex.hasStance()){
-            //if ( users.getUserStances().get(vertex) != null) {
                 hasStance++;
                 if ( vertex.getStance() > 0 ){
                 //if ( users.getUserStances().get(vertex) > 0) {
@@ -64,15 +63,13 @@ public class GraphAnalyser<T, E> {
         }
         return (positiveStances / hasStance) * 100;
     }
-    public float calculatePercentageNegativeStances(DirectedGraph<T, E> rtGraph, GraphElements graphElements){
+    public float calculatePercentageNegativeStances(DirectedGraph<TwitterUser, TwitterUser> rtGraph, GraphElements graphElements){
         float negativeStances = 0;
         float hasStance = 0;
-        for(Vertex<T> vertex : graphElements.getAllVerticesInGraph().values()){
+        for(Vertex<T> vertex : rtGraph.getAllVerticesInGraph().values()){
             if (vertex.hasStance()){
-            //if (users.getUserStances().get(vertex) != null){
                 hasStance++;
                 if ( vertex.getStance() < 0 ){
-                //if ( users.getUserStances().get(vertex) < 0 ){
                     negativeStances++;
                 }
             }
