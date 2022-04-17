@@ -35,7 +35,7 @@ public class GraphAnalyser<T, E> {
         }
     }
 
-    public float calculateCoverage(DirectedGraph<TwitterUser, TwitterUser> graph, GraphElements graphElements){
+    public float calculateCoverage(DirectedGraph<T, E> graph, GraphElements graphElements){
         // iterate all users in graph
         // if they have been given a stance then increment the stance counter
         float stances = 0;
