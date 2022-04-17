@@ -1,5 +1,5 @@
 # 3rdYearProject
-COMP30880 Software Engineering Project Sprint 2 by Conor Barry, Jane O'Brien and Tom Higgins
+COMP30880 Software Engineering Project by Conor Barry, Jane O'Brien and Tom Higgins
 
 Team NAME: ToJaCo
 
@@ -45,8 +45,8 @@ Answers obtained by running the jar file and selecting option 4 in the menu
 
 3c)
 
-- percentage of users who have stances: 98.90558%
-- percentage of users who don't have stances: 1.0944214%
+- percentage of users who have stances: 98.202255%
+- percentage of users who don't have stances: 1.7977448%
 
 - percentage of users who have anti vax stances: 59.75823%
 - percentage of users who have pro vax stances: 40.19258%

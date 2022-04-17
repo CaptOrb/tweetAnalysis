@@ -183,8 +183,9 @@ public class MainUtil {
 
                 StanceAnalysis analysis = new StanceAnalysis();
                 analysis.checkStance100Users(retweetHashMap);
- //               double num = analysis.UsersWithNoStance(retweetHashMap);
-
+ /*               double num = analysis.UsersWithNoStance(retweetHashMap);
+                System.out.println(num + " divided by " + retweetHashMap.size() +"(except idk why it says only 42,905 users, theres like more than 300,000) = "+ (num/retweetHashMap.size())*100 + "%");
+*/
                 outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, false);
 
                 System.out.println("Now calculating hashtag graphs...");
@@ -219,29 +220,21 @@ public class MainUtil {
 
                 }
                 outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, true);
-
-
-
-                //4a compare users who have a stance calculated only by the users they retweet vs only by the hashtags
-                //we already calculated the stances of the hashtags, so now we must reset the stances of users and see
-                // if the hashtags they use give them the same pro or anti stance
-                //will use a sample size of 50 to compare
-                StanceAnalysis analyse = new StanceAnalysis();
-                // analyse.checkStance(retweetHashMap);
-                analyse.assignStancesByHashtags(hashtagToUsers,graphElements);
+                StanceAnalysis users100New = new StanceAnalysis();
+                // users100New.checkStance(retweetHashMap);
 
                 break;
         }
     }
 
-    public static void outputGraphAnalysis(RetweetGraphAnalyser graphAnalyser, DirectedGraph graph, GraphElements graphElements
+    private static void outputGraphAnalysis(RetweetGraphAnalyser graphAnalyser, DirectedGraph graph, GraphElements graphElements
             , boolean hashtagsUsed){
 
         if(hashtagsUsed){
-            System.out.println("\nAFTER USING HASHTAGS:");
+            System.out.println("AFTER USING HASHTAGS:");
         }
-        System.out.println("Coverage in graph: " + graphAnalyser.calculateCoverage(graphElements) + "%");
-        System.out.println("Percentage of users without a stance: " + (graphAnalyser.calculateCoverage(graphElements) - 100) * -1 + "%");
+        System.out.println("Coverage in graph: " + graphAnalyser.calculateCoverage(graph) + "%");
+        System.out.println("Percentage of users without a stance: " + (graphAnalyser.calculateCoverage(graph) - 100) * -1 + "%");
         System.out.println("Percentage positive stances: " + graphAnalyser.calculatePercentagePositiveStances(graph, graphElements) + "%");
         System.out.println("Percentage negative stance: " + graphAnalyser.calculatePercentageNegativeStances(graph, graphElements) + "%");
 
