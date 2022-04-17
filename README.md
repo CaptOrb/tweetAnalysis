@@ -1,5 +1,5 @@
 # 3rdYearProject
-COMP30880 Software Engineering Project Sprint 2 by Conor Barry, Jane O'Brien and Tom Higgins
+COMP30880 Software Engineering Project by Conor Barry, Jane O'Brien and Tom Higgins
 
 Team NAME: ToJaCo
 
