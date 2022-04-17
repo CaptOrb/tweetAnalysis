@@ -46,7 +46,7 @@ public class GraphAnalyser<T, E> {
                 stances ++;
             }
         }
-        return (stances / graphElements.getAllVerticesInGraph().size()) * 100;
+        return (stances / graph.getAllVerticesInGraph().size()) * 100;
     }
 
     public float calculatePercentagePositiveStances(DirectedGraph<T, E> rtGraph, GraphElements graphElements){
