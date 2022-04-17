@@ -14,10 +14,6 @@ public class Vertex<T> {
         return label;
     }
 
-/*    public String toString(){
-            return "Label: " + label.toString();
-    }*/
-
     public int getStance() { return stance; }
 
     public void setStance(int stance){

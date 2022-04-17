@@ -17,7 +17,6 @@ public class FindGraphElements<T, E> {
     public DirectedGraph<T, E> createGraph(GraphElements graphElements, ArrayList<String> list, int a, int b) throws IOException {
         DirectedGraph<T, E> rtGraph = new DirectedGraph<>();
 
-        //Map<String, Vertex<String>> allVerticesInGraph = rtGraph.getAllVerticesInGraph();
         for (String rt : list) {
             String[] line = rt.split("\t"); //line[0] contains user, line[1] contains the user they are retweeting
             Vertex<T> srcVertex = graphElements.getVertex(line[a], srcVertexCreator);

@@ -20,11 +20,6 @@ public class Main {
 
            MainUtil.showProgramOptions(configuration, dataFile);
 
-            //ReadHashtags readHashtags = new ReadHashtags();
-            //readHashtags.readHashTagsFromFile(dataFile);
-
-           // RetweetFileService<String> rtf = new RetweetFileService();
-            // rtf.loadDataFromInputFile(dataFile);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
