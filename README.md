@@ -51,6 +51,5 @@ Answers obtained by running the jar file and selecting option 4 in the menu
 - percentage of users who have anti vax stances: 59.75823%
 - percentage of users who have pro vax stances: 40.19258%
 
-For Sprint the percentage of users who have stances was  95.3451693% so adding stances to hashtags and bootstrapping the results to update the user stances results in a 3.5604107% increase in the coverage of users in the graph.
-
+For Sprint 4 the percentage of users who have stances was  95.3451693% so adding stances to hashtags and bootstrapping the results to update the user stances results in a 3.5604107% increase in the coverage of users in the graph.
 Interestingly, the ratio of Pro/Anti vax stance assignments changes very little compared to Sprint 4, with the percentages only varying by +- 2%
