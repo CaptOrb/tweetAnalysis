@@ -57,14 +57,13 @@ Interestingly, the ratio of Pro/Anti vax stance assignments changes very little 
 4a) After calculating the stances for the hashtags, and setting all user stances back to 0/hasStance==false, and by percolating stances through the hashtag graph, the percentage of pro vax and anti vax is almost the same:
 
 Calculating stances using retweeted users only
-Percentage positive stances: 41.267586%
-Percentage negative stance: 58.732414%
+Percentage positive stances: 41.108273%
+Percentage negative stance: 58.89173%
 
 Calculating stances using hashtags only
-ercentage positive stances using ONLY hashtags: 40.33209%
-Percentage negative stance using ONLY hashtags: 59.667915%
+ercentage positive stances using ONLY hashtags: 37.95751%
+Percentage negative stance using ONLY hashtags: 62.04249%
 
-The percentages are only varying by +- 2%
 
 4b) The two perspectives agree with each other for roughly 98% of the stances, and disagree with each other for roughly 2% of the stances based on the results from 4a.
 
