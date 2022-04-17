@@ -3,7 +3,7 @@ package org.tojaco;
 import org.tojaco.FileIO.GraphReadWriteService;
 import org.tojaco.FileIO.TwitterFileService;
 import org.tojaco.Graph.*;
-import org.tojaco.GraphAnalysis.RetweetGraphAnalyser;
+import org.tojaco.GraphAnalysis.GraphAnalyser;
 import org.tojaco.GraphAnalysis.StanceAnalysis;
 import twitter4j.TwitterFactory;
 
@@ -125,7 +125,7 @@ public class MainUtil {
                 assignStances.determineProAntiVaxEvangelists(graphElements, rtGraph, StanceFile);
 
                 // initial setup for calculating stances
-                RetweetGraphAnalyser graphAnalyser = new RetweetGraphAnalyser();
+                GraphAnalyser graphAnalyser = new GraphAnalyser();
 
                 for (int i = 0; i < 20; i++) {
                     graphAnalyser.assignUserStances(rtGraph);
@@ -173,7 +173,7 @@ public class MainUtil {
                 assignStances.determineProAntiVaxEvangelists(graphElements,rtGraph, StanceFile);
 
                 // initial setup for calculating stances
-                graphAnalyser = new RetweetGraphAnalyser();
+                graphAnalyser = new GraphAnalyser();
 
                 for (int i = 0; i < 10; i++) {
                     graphAnalyser.assignUserStances(rtGraph);
@@ -224,11 +224,13 @@ public class MainUtil {
                 // users100New.checkStance(retweetHashMap);
                 analyse.assignStancesByHashtags(hashtagToUsers,graphElements);
 
+                analyse.find100Hashtags(hashtagToUsers);
+
                 break;
         }
     }
 
-    private static void outputGraphAnalysis(RetweetGraphAnalyser graphAnalyser, DirectedGraph graph, GraphElements graphElements
+    private static void outputGraphAnalysis(GraphAnalyser graphAnalyser, DirectedGraph graph, GraphElements graphElements
             , boolean hashtagsUsed){
 
         if(hashtagsUsed){

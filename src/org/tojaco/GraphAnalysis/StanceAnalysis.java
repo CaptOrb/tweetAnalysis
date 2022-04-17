@@ -3,10 +3,7 @@ import org.tojaco.Graph.Arc;
 import org.tojaco.Graph.DirectedGraph;
 import org.tojaco.Graph.Vertex;
 import org.tojaco.GraphElements;
-import org.tojaco.MainUtil;
-import org.tojaco.TwitterUser;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 
@@ -47,7 +44,7 @@ public class StanceAnalysis<T,E>{
         }
         //now calculate stances for users just based solely on the hashtags they use
 
-        RetweetGraphAnalyser graphAnalyser = new RetweetGraphAnalyser();
+        GraphAnalyser graphAnalyser = new GraphAnalyser();
 
         for (int i = 0; i < 5; i++) { //by upping this to 10 there's no change in coverage
             graphAnalyser.assignUserStances(hashtagsToUsers);
@@ -62,7 +59,14 @@ public class StanceAnalysis<T,E>{
 
     }
 
-    public void find100Hashtags(DirectedGraph<T,E> hashtagsToUsers, GraphElements graphElements){
+    public void find100Hashtags(DirectedGraph<T,E> hashtagsToUsers){
+        int i=0;
+        for (Vertex<T> vertex : hashtagsToUsers.getGraph().keySet()) {
+            i++;
+            //System.out.println(vertex.getLabel() + ", Stance: " + vertex.getStance());
+            if(i==100)
+                break;
 
+        }
     }
 }

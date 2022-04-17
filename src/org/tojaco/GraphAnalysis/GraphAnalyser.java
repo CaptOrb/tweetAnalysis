@@ -9,7 +9,7 @@ import org.tojaco.GraphElements;
 import org.tojaco.TwitterUser;
 import twitter4j.Twitter;
 
-public class RetweetGraphAnalyser<T, E> {
+public class GraphAnalyser<T, E> {
     public void assignUserStances(DirectedGraph<T, E> Graph){
         int totalOfStances = 0;
         int numArcs = 0;
