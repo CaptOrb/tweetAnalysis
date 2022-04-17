@@ -37,14 +37,11 @@ public class StanceAnalysis<T, E> {
         return usersNoStance.size();
     }*/
 
-    public void assignStancesByHashtags(DirectedGraph<T, E> hashtagsToUsers, GraphElements graphElements) {
+    public void assignStancesByHashtags(DirectedGraph<T, E> hashtagsToUsers, GraphElements graphElements, DirectedGraph graph) {
         for (Vertex<T> vertex : hashtagsToUsers.getGraph().keySet()) {
-            if (vertex.hasStance()) {
-                vertex.setStance(0); //in Vertex.java, by setting stance to 0 we set hasStance to false
-            }
             for (Arc<E> arc : hashtagsToUsers.getGraph().get(vertex)) {
-                if (arc.getVertex().hasStance()) {
-                    arc.getVertex().setStance(0); //in Vertex.java, by setting stance to 0 we set hasStance to false
+                if (vertex.hasStance()) {
+                    vertex.setStance(0); //in Vertex.java, by setting stance to 0 we set hasStance to false
                 }
             }
         }
@@ -58,8 +55,8 @@ public class StanceAnalysis<T, E> {
 
         System.out.println("\n4a, set stances for users using hashtags only:");
 
-        System.out.println("Coverage in graph HashtagToUsers graph using ONLY hashtags: " + graphAnalyser.calculateCoverage(hashtagsToUsers, graphElements) + "%");
-        System.out.println("Percentage of users without a stance using ONLY hashtags: " + (graphAnalyser.calculateCoverage(hashtagsToUsers, graphElements) - 100) * -1 + "%");
+        System.out.println("Coverage in graph HashtagToUsers graph using ONLY hashtags: " + graphAnalyser.calculateCoverage(graph, graphElements) + "%");
+        System.out.println("Percentage of users without a stance using ONLY hashtags: " + (graphAnalyser.calculateCoverage(graph, graphElements) - 100) * -1 + "%");
         System.out.println("Percentage positive stances using ONLY hashtags: " + graphAnalyser.calculatePercentagePositiveStances(hashtagsToUsers, graphElements) + "%");
         System.out.println("Percentage negative stance using ONLY hashtags: " + graphAnalyser.calculatePercentageNegativeStances(hashtagsToUsers, graphElements) + "%");
 
@@ -102,7 +99,7 @@ public class StanceAnalysis<T, E> {
         for (Map.Entry<Vertex<T>, ArrayList<Arc<E>>> vertex : retweetGraph.getGraph().entrySet()) {
             if (i < 100) {
 
-                //System.out.println(vertex.getKey().getLabel() + " " + vertex.getKey().getStance());
+                System.out.println(vertex.getKey().getLabel() + " " + vertex.getKey().getStance());
                 i++;
             }
         }
