@@ -37,7 +37,7 @@ public class StanceAnalysis<T, E> {
         return usersNoStance.size();
     }*/
 
-    public void assignStancesByHashtags(DirectedGraph<T, E> hashtagsToUsers, GraphElements graphElements) {
+    public void assignStancesByHashtags(DirectedGraph<T, E> hashtagsToUsers, GraphElements graphElements, DirectedGraph graph) {
         for (Vertex<T> vertex : hashtagsToUsers.getGraph().keySet()) {
             for (Arc<E> arc : hashtagsToUsers.getGraph().get(vertex)) {
                 if (vertex.hasStance()) {
@@ -55,8 +55,8 @@ public class StanceAnalysis<T, E> {
 
         System.out.println("\n4a, set stances for users using hashtags only:");
 
-        System.out.println("Coverage in graph HashtagToUsers graph using ONLY hashtags: " + graphAnalyser.calculateCoverage(graphElements) + "%");
-        System.out.println("Percentage of users without a stance using ONLY hashtags: " + (graphAnalyser.calculateCoverage(graphElements) - 100) * -1 + "%");
+        System.out.println("Coverage in graph HashtagToUsers graph using ONLY hashtags: " + graphAnalyser.calculateCoverage(graph, graphElements) + "%");
+        System.out.println("Percentage of users without a stance using ONLY hashtags: " + (graphAnalyser.calculateCoverage(graph, graphElements) - 100) * -1 + "%");
         System.out.println("Percentage positive stances using ONLY hashtags: " + graphAnalyser.calculatePercentagePositiveStances(hashtagsToUsers, graphElements) + "%");
         System.out.println("Percentage negative stance using ONLY hashtags: " + graphAnalyser.calculatePercentageNegativeStances(hashtagsToUsers, graphElements) + "%");
 

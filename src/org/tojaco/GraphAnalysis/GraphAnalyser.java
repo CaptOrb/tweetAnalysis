@@ -35,13 +35,13 @@ public class GraphAnalyser<T, E> {
         }
     }
 
-    public float calculateCoverage(GraphElements graphElements){
+    public float calculateCoverage(DirectedGraph<TwitterUser, TwitterUser> graph, GraphElements graphElements){
         // iterate all users in graph
         // if they have been given a stance then increment the stance counter
         float stances = 0;
-        for(Vertex<T> vertex : graphElements.getAllVerticesInGraph().values()){
-        //for (String user : rtGraph.getAllVerticesInGraph().keySet()){
-            if ( vertex.hasStance() ){
+        //for(Vertex<T> vertex : graphElements.getAllVerticesInGraph().values()){
+        for (String user : graph.getAllVerticesInGraph().keySet()){
+            if ( graph.getAllVerticesInGraph().get(user).hasStance() ){
             //if ( users.getUserStances().get(users.getAllVerticesInGraph().get(user)) != null){
                 stances ++;
             }
