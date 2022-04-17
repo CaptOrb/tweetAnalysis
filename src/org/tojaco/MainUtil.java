@@ -222,11 +222,11 @@ public class MainUtil {
                 outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, true);
                 StanceAnalysis analyse = new StanceAnalysis();
                 // users100New.checkStance(retweetHashMap);
-                analyse.assignStancesByHashtags(hashtagToUsers,graphElements);
-
-                analyse.find100Hashtags(hashtagToUsers);
-
-                analyse.find100HashtagsS5(rtGraph, hashtagToUsers);
+//                analyse.assignStancesByHashtags(hashtagToUsers,usertoHashTag);
+//
+//                analyse.find100Hashtags(hashtagToUsers);
+//
+//                analyse.find100HashtagsS5(rtGraph, hashtagToUsers);
 
                 break;
         }
@@ -238,10 +238,10 @@ public class MainUtil {
         if(hashtagsUsed){
             System.out.println("AFTER USING HASHTAGS:");
         }
-        System.out.println("Coverage in graph: " + graphAnalyser.calculateCoverage(graphElements) + "%");
-        System.out.println("Percentage of users without a stance: " + (graphAnalyser.calculateCoverage(graphElements) - 100) * -1 + "%");
-        System.out.println("Percentage positive stances: " + graphAnalyser.calculatePercentagePositiveStances(graph, graphElements) + "%");
-        System.out.println("Percentage negative stance: " + graphAnalyser.calculatePercentageNegativeStances(graph, graphElements) + "%");
+        System.out.println("Coverage in graph: " + graphAnalyser.calculateCoverage(graph) + "%");
+        System.out.println("Percentage of users without a stance: " + (graphAnalyser.calculateCoverage(graph) - 100) * -1 + "%");
+        System.out.println("Percentage positive stances: " + graphAnalyser.calculatePercentagePositiveStances(graph) + "%");
+        System.out.println("Percentage negative stance: " + graphAnalyser.calculatePercentageNegativeStances(graph) + "%");
 
     }
 

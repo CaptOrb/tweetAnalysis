@@ -35,24 +35,24 @@ public class GraphAnalyser<T, E> {
         }
     }
 
-    public float calculateCoverage(GraphElements graphElements){
+    public float calculateCoverage(DirectedGraph<T,E> graph){
         // iterate all users in graph
         // if they have been given a stance then increment the stance counter
         float stances = 0;
-        for(Vertex<T> vertex : graphElements.getAllVerticesInGraph().values()){
+        for(Vertex<T> vertex : graph.getGraph().keySet()){
         //for (String user : rtGraph.getAllVerticesInGraph().keySet()){
             if ( vertex.hasStance() ){
             //if ( users.getUserStances().get(users.getAllVerticesInGraph().get(user)) != null){
                 stances ++;
             }
         }
-        return (stances / graphElements.getAllVerticesInGraph().size()) * 100;
+        return (stances / graph.getGraph().keySet().size()) * 100;
     }
 
-    public float calculatePercentagePositiveStances(DirectedGraph<T, E> rtGraph, GraphElements graphElements){
+    public float calculatePercentagePositiveStances(DirectedGraph<T, E> Graph){
         float positiveStances = 0;
         float hasStance = 0;
-        for(Vertex<T> vertex : graphElements.getAllVerticesInGraph().values()){
+        for(Vertex<T> vertex : Graph.getGraph().keySet()){
             if ( vertex.hasStance()){
             //if ( users.getUserStances().get(vertex) != null) {
                 hasStance++;
@@ -64,10 +64,10 @@ public class GraphAnalyser<T, E> {
         }
         return (positiveStances / hasStance) * 100;
     }
-    public float calculatePercentageNegativeStances(DirectedGraph<T, E> rtGraph, GraphElements graphElements){
+    public float calculatePercentageNegativeStances(DirectedGraph<T, E> Graph){
         float negativeStances = 0;
         float hasStance = 0;
-        for(Vertex<T> vertex : graphElements.getAllVerticesInGraph().values()){
+        for(Vertex<T> vertex : Graph.getGraph().keySet()){
             if (vertex.hasStance()){
             //if (users.getUserStances().get(vertex) != null){
                 hasStance++;
