@@ -4,7 +4,7 @@ import org.tojaco.FileIO.RetweetFileService;
 import org.tojaco.FileIO.TwitterFileService;
 import org.tojaco.Graph.*;
 import org.tojaco.GraphAnalysis.RetweetGraphAnalyser;
-import org.tojaco.GraphAnalysis.StanceAnalysis;
+import org.tojaco.GraphAnalysis.Users100;
 import twitter4j.TwitterFactory;
 
 import java.io.File;
@@ -144,8 +144,8 @@ public class MainUtil {
                 System.out.println("Percentage positive stances: " + graphAnalyser.calculatePercentagePositiveStances(rtGraph, graphElements) + "%");
                 System.out.println("Percentage negative stance: " + graphAnalyser.calculatePercentageNegativeStances(rtGraph, graphElements) + "%");
 
-                StanceAnalysis users100 = new StanceAnalysis();
-                users100.checkStance100Users(retweetsHashMap);
+                Users100 users100 = new Users100();
+                users100.checkStance(retweetsHashMap);
 
 
                 break;
@@ -195,12 +195,6 @@ public class MainUtil {
 
                 }
 
-                StanceAnalysis analyse = new StanceAnalysis();
-                analyse.checkStance100Users(retweetHashMap); //100 users from sprint 4
-                ArrayList<Vertex<TwitterUser>> usersNoStance = analyse.UsersWithNoStance(retweetHashMap);
-
-                //need to keep track of users without a stance, and then check their stances after using the hashtag trees
-
                 System.out.println("Coverage in graph: " + graphAnalyser.calculateCoverage(rtGraph, graphElements) + "%");
 
                 System.out.println("Percentage of users without a stance: " + (graphAnalyser.calculateCoverage(rtGraph, graphElements) - 100) * -1 + "%");
@@ -234,7 +228,6 @@ public class MainUtil {
                     graphAnalyser.assignUserStances(hashtagToUsers);
 
                 }
-
                 //by running this again we get more coverage
                 for (int i = 0; i < 5; i++) { //by upping this to 10 there's no change in coverage
                     graphAnalyser.assignUserStances(rtGraph);
@@ -247,6 +240,11 @@ public class MainUtil {
 
                 System.out.println("Percentage positive stances: " + graphAnalyser.calculatePercentagePositiveStances(rtGraph, graphElements) + "%");
                 System.out.println("Percentage negative stance: " + graphAnalyser.calculatePercentageNegativeStances(rtGraph, graphElements) + "%");
+
+                Users100 users100New = new Users100();
+               // users100New.checkStance(retweetHashMap);
+
+
 
                 break;
 
