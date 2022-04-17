@@ -182,6 +182,11 @@ public class MainUtil {
 
                 }
 
+                StanceAnalysis analysis = new StanceAnalysis();
+                analysis.checkStance100Users(retweetHashMap);
+                double num = analysis.UsersWithNoStance(retweetHashMap);
+                System.out.println(num + " divided by " + retweetHashMap.size() +"(except idk why it says only 42,905 users, theres like more than 300,000) = "+ (num/retweetHashMap.size())*100 + "%");
+
                 outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, false);
 
                 System.out.println("Now calculating hashtag graphs...");

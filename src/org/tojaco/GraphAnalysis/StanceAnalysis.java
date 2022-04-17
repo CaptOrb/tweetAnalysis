@@ -22,7 +22,7 @@ public class  StanceAnalysis<T>{
     }
 
     //3b?
-    public ArrayList<Vertex<T>> UsersWithNoStance(Map<Vertex<T>, Integer> retweetsHashMap){
+    public double UsersWithNoStance(Map<Vertex<T>, Integer> retweetsHashMap){
         ArrayList<Vertex<T>> usersNoStance = new ArrayList<Vertex<T>>();
         for(Map.Entry<Vertex<T>,Integer> entry : retweetsHashMap.entrySet()){
             if(!(entry.getKey().hasStance())){
@@ -30,6 +30,6 @@ public class  StanceAnalysis<T>{
                 //System.out.println(entry.getKey()); //was used to find users with no stance, probably better to write to a file :-) instead just copied and pasted into UsesNoStances
             }
         }
-        return usersNoStance;
+        return usersNoStance.size();
     }
 }
