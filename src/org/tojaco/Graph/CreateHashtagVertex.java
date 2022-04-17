@@ -1,9 +1,6 @@
 package org.tojaco.Graph;
 
-import org.tojaco.Hashtag;
-import org.tojaco.TwitterUser;
-
-import java.util.HashMap;
+import org.tojaco.GraphElements.Hashtag;
 
 public class CreateHashtagVertex implements VertexCreator<Hashtag> {
     public Vertex<Hashtag> createVertex(String label){

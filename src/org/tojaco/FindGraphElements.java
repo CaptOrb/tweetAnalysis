@@ -1,6 +1,7 @@
 package org.tojaco;
 
 import org.tojaco.Graph.*;
+import org.tojaco.GraphElements.GraphElements;
 
 import java.io.IOException;
 import java.util.*;

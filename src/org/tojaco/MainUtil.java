@@ -5,6 +5,9 @@ import org.tojaco.FileIO.TwitterFileService;
 import org.tojaco.Graph.*;
 import org.tojaco.GraphAnalysis.GraphAnalyser;
 import org.tojaco.GraphAnalysis.StanceAnalysis;
+import org.tojaco.GraphElements.GraphElements;
+import org.tojaco.GraphElements.Hashtag;
+import org.tojaco.GraphElements.TwitterUser;
 import twitter4j.TwitterFactory;
 
 import java.io.File;

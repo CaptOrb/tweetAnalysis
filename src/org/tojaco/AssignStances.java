@@ -1,6 +1,8 @@
 package org.tojaco;
 
 import org.tojaco.Graph.*;
+import org.tojaco.GraphElements.GraphElements;
+import org.tojaco.GraphElements.TwitterUser;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -26,12 +28,12 @@ public class AssignStances {
 
                     if (lineContents[1].equals("anti")){
                         if (vertex.getLabel().getUserHandle().equals(lineContents[0])) {
-                            vertex.setStance(-1000);
+                            vertex.getLabel().setStance(-1000);
                             //twitterUsers.getUserStances().putIfAbsent(vertex, -1000);
                         }
                     } else if (lineContents[1].equals("pro") ){
                         if (vertex.getLabel().getUserHandle().equals(lineContents[0])) {
-                            vertex.setStance(1000);
+                            vertex.getLabel().setStance(1000);
                             //twitterUsers.getUserStances().putIfAbsent(vertex, 1000);
                         }
                     } //if it equals idk then skip

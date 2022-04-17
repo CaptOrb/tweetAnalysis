@@ -1,6 +1,6 @@
 package org.tojaco.Graph;
 
-import org.tojaco.TwitterUser;
+import org.tojaco.GraphElements.TwitterUser;
 
 public class CreateUserVertex implements VertexCreator<TwitterUser>{
     public Vertex<TwitterUser> createVertex(String label){

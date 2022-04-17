@@ -2,8 +2,11 @@ package org.tojaco.GraphAnalysis;
 
 import org.tojaco.Graph.Arc;
 import org.tojaco.Graph.DirectedGraph;
+import org.tojaco.GraphElements.Stanceable;
 import org.tojaco.Graph.Vertex;
-import org.tojaco.GraphElements;
+import org.tojaco.GraphElements.GraphElements;
+import org.tojaco.GraphElements.Hashtag;
+import org.tojaco.GraphElements.TwitterUser;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,14 +40,14 @@ public class StanceAnalysis<T, E> {
         return usersNoStance.size();
     }*/
 
-    public void assignStancesByHashtags(DirectedGraph<T, E> hashtagsToUsers, GraphElements graphElements) {
-        for (Vertex<T> vertex : hashtagsToUsers.getGraph().keySet()) {
-            if (vertex.hasStance()) {
-                vertex.setStance(0); //in Vertex.java, by setting stance to 0 we set hasStance to false
+    public void assignStancesByHashtags(DirectedGraph<Stanceable, Stanceable> hashtagsToUsers, GraphElements graphElements) {
+        for (Vertex<Stanceable> vertex : hashtagsToUsers.getGraph().keySet()) {
+            if (vertex.getLabel().hasStance()) {
+                vertex.getLabel().setStance(0); //in Vertex.java, by setting stance to 0 we set hasStance to false
             }
-            for (Arc<E> arc : hashtagsToUsers.getGraph().get(vertex)) {
-                if (arc.getVertex().hasStance()) {
-                    arc.getVertex().setStance(0); //in Vertex.java, by setting stance to 0 we set hasStance to false
+            for (Arc<Stanceable> arc : hashtagsToUsers.getGraph().get(vertex)) {
+                if (arc.getVertex().getLabel().hasStance()) {
+                    arc.getVertex().getLabel().setStance(0); //in Vertex.java, by setting stance to 0 we set hasStance to false
                 }
             }
         }
@@ -76,30 +79,30 @@ public class StanceAnalysis<T, E> {
         }
     }
 
-    public HashMap<T, Integer> find100HashtagsS5(DirectedGraph<T, E> retweetGraph, DirectedGraph<T, E> userToHashTags) {
+    public HashMap<Stanceable, Integer> find100HashtagsS5(DirectedGraph<TwitterUser, TwitterUser> retweetGraph, DirectedGraph<Hashtag, TwitterUser> userToHashTags) {
 
-        HashMap<T, Integer> randomUsersWithHashTag = new HashMap<>();
+        HashMap<Stanceable, Integer> randomUsersWithHashTag = new HashMap<>();
 
         // focus only on users who retweet 10 or more other users (for the retweet-based stances)
-        for (Map.Entry<Vertex<T>, ArrayList<Arc<E>>> vertex : retweetGraph.getGraph().entrySet()) {
+        for (Map.Entry<Vertex<TwitterUser>, ArrayList<Arc<TwitterUser>>> vertex : retweetGraph.getGraph().entrySet()) {
 
             if (vertex.getValue().size() >= 10) {
-                randomUsersWithHashTag.putIfAbsent(vertex.getKey().getLabel(), vertex.getKey().getStance());
+                randomUsersWithHashTag.putIfAbsent(vertex.getKey().getLabel(), vertex.getKey().getLabel().getStance());
             }
         }
 
         //who use 10 or more different hashtags (for the hashtag-based stances)
-        for (Map.Entry<Vertex<T>, ArrayList<Arc<E>>> vertex2 : userToHashTags.getGraph().entrySet()) {
+        for (Map.Entry<Vertex<Hashtag>, ArrayList<Arc<TwitterUser>>> vertex2 : userToHashTags.getGraph().entrySet()) {
             if (vertex2.getValue().size() >= 10) {
 
-                randomUsersWithHashTag.putIfAbsent(vertex2.getKey().getLabel(), vertex2.getKey().getStance());
+                randomUsersWithHashTag.putIfAbsent(vertex2.getKey().getLabel(), vertex2.getKey().getLabel().getStance());
             }
         }
 
         int i = 0;
 
         // test output results
-        for (Map.Entry<Vertex<T>, ArrayList<Arc<E>>> vertex : retweetGraph.getGraph().entrySet()) {
+        for (Map.Entry<Vertex<TwitterUser>, ArrayList<Arc<TwitterUser>>> vertex : retweetGraph.getGraph().entrySet()) {
             if (i < 100) {
 
                 //System.out.println(vertex.getKey().getLabel() + " " + vertex.getKey().getStance());

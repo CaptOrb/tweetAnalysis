@@ -1,7 +1,5 @@
 package org.tojaco.Graph;
 
-import org.tojaco.TwitterUser;
-
 import java.util.*;
 
 public class DirectedGraph<T, E> implements Graph<T, E> {

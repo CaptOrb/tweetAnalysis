@@ -2,8 +2,6 @@ package org.tojaco.Graph;
 
 public class Vertex<T> {
     private final T label;
-    private int stance;
-    private boolean hasStance;
 
     public Vertex(T label) {
 
@@ -12,21 +10,6 @@ public class Vertex<T> {
 
     public T getLabel() {
         return label;
-    }
-
-    public int getStance() { return stance; }
-
-    public void setStance(int stance){
-        this.stance = stance;
-        hasStance = true;
-
-        if(stance==0){
-            hasStance = false;
-        }
-    }
-
-    public boolean hasStance(){
-        return hasStance;
     }
 
     public String toString(){
