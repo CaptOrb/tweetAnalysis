@@ -40,7 +40,7 @@ public class StanceAnalysis<T, E> {
         return usersNoStance.size();
     }*/
 
-    public void assignStancesByHashtags(DirectedGraph<Stanceable, Stanceable> hashtagsToUsers, GraphElements graphElements) {
+    public void assignStancesByHashtags(DirectedGraph<Stanceable, Stanceable> hashtagsToUsers, GraphElements graphElements, DirectedGraph graph) {
         for (Vertex<Stanceable> vertex : hashtagsToUsers.getGraph().keySet()) {
             if (vertex.getLabel().hasStance()) {
                 vertex.getLabel().setStance(0); //in Vertex.java, by setting stance to 0 we set hasStance to false
@@ -48,39 +48,24 @@ public class StanceAnalysis<T, E> {
             for (Arc<Stanceable> arc : hashtagsToUsers.getGraph().get(vertex)) {
                 if (arc.getVertex().getLabel().hasStance()) {
                     arc.getVertex().getLabel().setStance(0); //in Vertex.java, by setting stance to 0 we set hasStance to false
-    public void assignStancesByHashtags(DirectedGraph<T, E> hashtagsToUsers, GraphElements graphElements, DirectedGraph graph) {
-        for (Vertex<T> vertex : hashtagsToUsers.getGraph().keySet()) {
-            for (Arc<E> arc : hashtagsToUsers.getGraph().get(vertex)) {
-                if (vertex.hasStance()) {
-                    vertex.setStance(0); //in Vertex.java, by setting stance to 0 we set hasStance to false
+
                 }
+                //now calculate stances for users just based solely on the hashtags they use
+
+                GraphAnalyser graphAnalyser = new GraphAnalyser();
+
+                for (int i = 0; i < 5; i++) { //by upping this to 10 there's no change in coverage
+                    graphAnalyser.assignUserStances(hashtagsToUsers);
+                }
+
+                System.out.println("\n4a, set stances for users using hashtags only:");
+
+                System.out.println("Coverage in graph HashtagToUsers graph using ONLY hashtags: " + graphAnalyser.calculateCoverage(graph, graphElements) + "%");
+                System.out.println("Percentage of users without a stance using ONLY hashtags: " + (graphAnalyser.calculateCoverage(graph, graphElements) - 100) * -1 + "%");
+                System.out.println("Percentage positive stances using ONLY hashtags: " + graphAnalyser.calculatePercentagePositiveStances(hashtagsToUsers, graphElements) + "%");
+                System.out.println("Percentage negative stance using ONLY hashtags: " + graphAnalyser.calculatePercentageNegativeStances(hashtagsToUsers, graphElements) + "%");
+
             }
-        }
-        //now calculate stances for users just based solely on the hashtags they use
-
-        GraphAnalyser graphAnalyser = new GraphAnalyser();
-
-        for (int i = 0; i < 5; i++) { //by upping this to 10 there's no change in coverage
-            graphAnalyser.assignUserStances(hashtagsToUsers);
-        }
-
-        System.out.println("\n4a, set stances for users using hashtags only:");
-
-        System.out.println("Coverage in graph HashtagToUsers graph using ONLY hashtags: " + graphAnalyser.calculateCoverage(graph, graphElements) + "%");
-        System.out.println("Percentage of users without a stance using ONLY hashtags: " + (graphAnalyser.calculateCoverage(graph, graphElements) - 100) * -1 + "%");
-        System.out.println("Percentage positive stances using ONLY hashtags: " + graphAnalyser.calculatePercentagePositiveStances(hashtagsToUsers, graphElements) + "%");
-        System.out.println("Percentage negative stance using ONLY hashtags: " + graphAnalyser.calculatePercentageNegativeStances(hashtagsToUsers, graphElements) + "%");
-
-    }
-
-    public void find100Hashtags(DirectedGraph<T, E> hashtagsToUsers) {
-        int i = 0;
-        for (Vertex<T> vertex : hashtagsToUsers.getGraph().keySet()) {
-            i++;
-            //System.out.println(vertex.getLabel() + ", Stance: " + vertex.getStance());
-            if (i == 100)
-                break;
-
         }
     }
 
@@ -115,5 +100,16 @@ public class StanceAnalysis<T, E> {
             }
         }
         return randomUsersWithHashTag;
+    }
+
+    public void find100Hashtags(DirectedGraph<T, E> hashtagsToUsers) {
+        int i = 0;
+        for (Vertex<T> vertex : hashtagsToUsers.getGraph().keySet()) {
+            i++;
+            //System.out.println(vertex.getLabel() + ", Stance: " + vertex.getStance());
+            if (i == 100)
+                break;
+
+        }
     }
 }
