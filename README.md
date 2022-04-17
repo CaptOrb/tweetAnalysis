@@ -65,3 +65,7 @@ ercentage positive stances using ONLY hashtags: 40.33209%
 Percentage negative stance using ONLY hashtags: 59.667915%
 
 The percentages are only varying by +- 2%
+
+4b) The two perspectives agree with each other for roughly 98% of the stances, and disagree with each other for roughly 2% of the stances based on the results from 4a.
+
+4c)

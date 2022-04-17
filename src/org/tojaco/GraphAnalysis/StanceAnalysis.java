@@ -69,4 +69,8 @@ public class StanceAnalysis<T,E>{
 
         }
     }
+
+    public void findUsers(DirectedGraph<T,E> UsersToHashtags){
+
+    }
 }
