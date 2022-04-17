@@ -149,7 +149,6 @@ public class MainUtil {
                 if (dataFile.exists()) {
                     getRetweets().addAll(rfs.loadDataFromInputFile(dataFile));
                 }
-                //TwitterUsers usersSprint5 = new TwitterUsers();
 
                 getHashtags().addAll(rfs.getHashtags());
 
