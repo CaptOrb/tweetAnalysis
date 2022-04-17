@@ -1,10 +1,10 @@
 package org.tojaco;
 
-import org.tojaco.FileIO.RetweetFileService;
+import org.tojaco.FileIO.GraphReadWriteService;
 import org.tojaco.FileIO.TwitterFileService;
 import org.tojaco.Graph.*;
 import org.tojaco.GraphAnalysis.RetweetGraphAnalyser;
-import org.tojaco.GraphAnalysis.Users100;
+import org.tojaco.GraphAnalysis.StanceAnalysis;
 import twitter4j.TwitterFactory;
 
 import java.io.File;
@@ -44,8 +44,7 @@ public class MainUtil {
         FindGraphElements findGraphElements;
         DirectedGraph<TwitterUser, TwitterUser> rtGraph;
         DirectedGraph<TwitterUser, TwitterUser> retweetedGraph;
-
-        String GRAPH_OUTPUT_DIR = configuration.getGRAPH_DIRECTORY();
+        GraphReadWriteService rfs = new GraphReadWriteService();
 
         switch (option) {
             case 1:
@@ -70,21 +69,19 @@ public class MainUtil {
             case 3:
                 findGraphElements = new FindGraphElements<>(new CreateUserVertex(), new CreateUserVertex());
 
-                RetweetFileService rfs = new RetweetFileService();
-
                 if (dataFile.exists()) {
-                    getRetweets().addAll(rfs.readRetweetsIntoSet(dataFile));
+                    getRetweets().addAll(rfs.loadDataFromInputFile(dataFile));
                 }
 
                 rtGraph = findGraphElements.createGraph(graphElements, getRetweets(), 0, 1);
 
                 retweetedGraph = findGraphElements.createGraph(graphElements, getRetweets(), 1, 0);
 
-                rfs.writeRetweetFile(rtGraph.getGraph(),
+                rfs.writeFileFromGraph(rtGraph,
                         new File(configuration.getGRAPH_DIRECTORY(),
                                 configuration.getRTGRAPH_OUTPUT_FILE()));
 
-                rfs.writeRetweetFile(retweetedGraph.getGraph(),
+                rfs.writeFileFromGraph(retweetedGraph,
                         new File(configuration.getGRAPH_DIRECTORY(),
                                 configuration.getRTWEETEDGRAPH_OUTPUT_FILE()));
                 System.out.println("Retweet graph added successfully to Graph directory!");
@@ -99,10 +96,10 @@ public class MainUtil {
 
                 findGraphElements = new FindGraphElements<>(new CreateUserVertex(), new CreateUserVertex());
 
-                 rfs = new RetweetFileService();
+                rfs = new GraphReadWriteService();
 
                 if (dataFile.exists()) {
-                    getRetweets().addAll(rfs.readRetweetsIntoSet(dataFile));
+                    getRetweets().addAll(rfs.loadDataFromInputFile(dataFile));
                 }
 
                 getHashtags().addAll(rfs.getHashtags());
@@ -111,11 +108,11 @@ public class MainUtil {
                 rtGraph = findGraphElements.createGraph(graphElements, getRetweets(), 0, 1);
                 retweetedGraph = findGraphElements.createGraph(graphElements, getRetweets(), 1, 0);
 
-                rfs.writeRetweetFile(rtGraph.getGraph(),
+                rfs.writeFileFromGraph(rtGraph,
                         new File(configuration.getGRAPH_DIRECTORY(),
                                 configuration.getRTGRAPH_OUTPUT_FILE()));
 
-                rfs.writeRetweetFile(retweetedGraph.getGraph(),
+                rfs.writeFileFromGraph(retweetedGraph,
                         new File(configuration.getGRAPH_DIRECTORY(),
                                 configuration.getRTWEETEDGRAPH_OUTPUT_FILE()));
                 System.out.println("Retweet graph added successfully to Graph directory!");
@@ -136,17 +133,9 @@ public class MainUtil {
 
                 }
 
-                // get coverage of stances
-                System.out.println("Coverage in graph: " + graphAnalyser.calculateCoverage(rtGraph, graphElements) + "%");
-
-                System.out.println("Percentage of users without a stance: " + (graphAnalyser.calculateCoverage(rtGraph, graphElements) - 100) * -1 + "%");
-
-                System.out.println("Percentage positive stances: " + graphAnalyser.calculatePercentagePositiveStances(rtGraph, graphElements) + "%");
-                System.out.println("Percentage negative stance: " + graphAnalyser.calculatePercentageNegativeStances(rtGraph, graphElements) + "%");
-
-                Users100 users100 = new Users100();
-                users100.checkStance(retweetsHashMap);
-
+                outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, false);
+                StanceAnalysis users100 = new StanceAnalysis();
+                users100.checkStance100Users(retweetsHashMap);
 
                 break;
 
@@ -157,22 +146,21 @@ public class MainUtil {
 
                 findGraphElements = new FindGraphElements(new CreateUserVertex(), new CreateUserVertex());
 
-                RetweetFileService rfs1 = new RetweetFileService();
                 if (dataFile.exists()) {
-                    getRetweets().addAll(rfs1.readRetweetsIntoSet(dataFile));
+                    getRetweets().addAll(rfs.loadDataFromInputFile(dataFile));
                 }
                 //TwitterUsers usersSprint5 = new TwitterUsers();
 
-                getHashtags().addAll(rfs1.getHashtags());
+                getHashtags().addAll(rfs.getHashtags());
 
                 rtGraph = findGraphElements.createGraph(graphElements, getRetweets(), 0, 1);
                 retweetedGraph = findGraphElements.createGraph(graphElements, getRetweets(), 1, 0);
 
-                rfs1.writeRetweetFile(rtGraph.getGraph(),
+                rfs.writeFileFromGraph(rtGraph,
                         new File(configuration.getGRAPH_DIRECTORY(),
                                 configuration.getRTGRAPH_OUTPUT_FILE()));
 
-                rfs1.writeRetweetFile(retweetedGraph.getGraph(),
+                rfs.writeFileFromGraph(retweetedGraph,
                         new File(configuration.getGRAPH_DIRECTORY(),
                                 configuration.getRTGRAPH_OUTPUT_FILE()));
 
@@ -180,7 +168,6 @@ public class MainUtil {
 
                 FindEvangelists findEvangelists = new FindEvangelists();
                 Map<Vertex<TwitterUser>, Integer> retweetHashMap = findEvangelists.findTotalRetweets(retweetedGraph);
-
 
                 assignStances = new AssignStances();
                 StanceFile = new File(configuration.getSTANCE_FILE());
@@ -195,20 +182,14 @@ public class MainUtil {
 
                 }
 
-                System.out.println("Coverage in graph: " + graphAnalyser.calculateCoverage(rtGraph, graphElements) + "%");
-
-                System.out.println("Percentage of users without a stance: " + (graphAnalyser.calculateCoverage(rtGraph, graphElements) - 100) * -1 + "%");
-
-                System.out.println("Percentage positive stances: " + graphAnalyser.calculatePercentagePositiveStances(rtGraph, graphElements) + "%");
-                System.out.println("Percentage negative stance: " + graphAnalyser.calculatePercentageNegativeStances(rtGraph, graphElements) + "%");
-
+                outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, false);
 
                 System.out.println("Now calculating hashtag graphs...");
                 FindGraphElements<TwitterUser, Hashtag> fge1 = new FindGraphElements<>(new CreateUserVertex(), new CreateHashtagVertex());
                 DirectedGraph<TwitterUser, Hashtag> usertoHashTag;
                 usertoHashTag = fge1.createGraph(graphElements, getHashtags(), 0, 1);
 
-                rfs1.writeRetweetFile(usertoHashTag.getGraph(),
+                rfs.writeFileFromGraph(usertoHashTag,
                         new File(configuration.getGRAPH_DIRECTORY(),
                                 configuration.getUSERS_TO_HASHTAGS()));
 
@@ -217,7 +198,7 @@ public class MainUtil {
                 DirectedGraph<Hashtag, TwitterUser> hashtagToUsers;
                 hashtagToUsers = fge2.createGraph(graphElements, getHashtags(), 1, 0);
 
-                rfs1.writeRetweetFile(hashtagToUsers.getGraph(),
+                rfs.writeFileFromGraph(hashtagToUsers,
                         new File(configuration.getGRAPH_DIRECTORY(),
                                 configuration.getHASHTAGS_TO_USERS()));
 
@@ -234,22 +215,28 @@ public class MainUtil {
                     graphAnalyser.assignUserStances(retweetedGraph);
 
                 }
-                System.out.println("AFTER USING HASHTAGS:\nCoverage in graph: " + graphAnalyser.calculateCoverage(rtGraph, graphElements) + "%");
-
-                System.out.println("Percentage of users without a stance: " + (graphAnalyser.calculateCoverage(rtGraph, graphElements) - 100) * -1 + "%");
-
-                System.out.println("Percentage positive stances: " + graphAnalyser.calculatePercentagePositiveStances(rtGraph, graphElements) + "%");
-                System.out.println("Percentage negative stance: " + graphAnalyser.calculatePercentageNegativeStances(rtGraph, graphElements) + "%");
-
-                Users100 users100New = new Users100();
-               // users100New.checkStance(retweetHashMap);
-
-
+                outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, true);
+                StanceAnalysis users100New = new StanceAnalysis();
+                // users100New.checkStance(retweetHashMap);
 
                 break;
-
         }
     }
+
+    private static void outputGraphAnalysis(RetweetGraphAnalyser graphAnalyser, DirectedGraph graph, GraphElements graphElements
+            , boolean hashtagsUsed){
+
+        if(hashtagsUsed){
+            System.out.println("AFTER USING HASHTAGS:");
+        }
+        System.out.println("Coverage in graph: " + graphAnalyser.calculateCoverage(graph, graphElements) + "%");
+        System.out.println("Percentage of users without a stance: " + (graphAnalyser.calculateCoverage(graph, graphElements) - 100) * -1 + "%");
+        System.out.println("Percentage positive stances: " + graphAnalyser.calculatePercentagePositiveStances(graph, graphElements) + "%");
+        System.out.println("Percentage negative stance: " + graphAnalyser.calculatePercentageNegativeStances(graph, graphElements) + "%");
+
+    }
+
+
 
     public static void showSprint3Options(Graph<TwitterUser, TwitterUser> rtGraph, GraphElements graphElements) {
         int option = 0;
