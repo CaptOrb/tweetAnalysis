@@ -13,7 +13,7 @@ RUNNING FROM JAR
 
 If running from source ensure to add the Twitter4J library to the classpath.
 
-#Answers to Sprint 4 questions 
+# Answers to Sprint 4 questions 
 
 - The tasks were divided evenly between the team members. See commit history for a clearer idea of who carried out which tasks, but pair work was often carried out with just one person committing the finished result.
 
@@ -39,7 +39,7 @@ Answers obtained by running the jar file and selecting option 4 in the menu
 
 4d) Based on the precision scores given above it doesn't appear that there is an apparent bias in our algorithm. 
 
-#Answers to Sprint 5 questions
+# Answers to Sprint 5 questions
 
 - The tasks were divided evenly between the team members. See commit history for a clearer idea of who carried out which tasks, but pair work was often carried out with just one person committing the finished result.
 
