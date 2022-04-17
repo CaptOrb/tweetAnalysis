@@ -226,6 +226,8 @@ public class MainUtil {
 
                 analyse.find100Hashtags(hashtagToUsers);
 
+                analyse.find100HashtagsS5(rtGraph, hashtagToUsers);
+
                 break;
         }
     }
