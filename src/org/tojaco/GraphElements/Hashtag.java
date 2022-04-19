@@ -5,9 +5,18 @@ import java.util.List;
 
 public class Hashtag implements Stanceable {
     private final String tag;
+
+
     private final List<String> words = new ArrayList<>();
     private int stance;
     private boolean hasStance;
+
+    public List<String> getWords() {
+        return words;
+    }
+    public void addWord(String wordInHashtag){
+        words.add(wordInHashtag);
+    }
 
     public int getStance() { return stance; }
     public void setStance(int stance){
