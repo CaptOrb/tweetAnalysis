@@ -12,7 +12,7 @@ public class HashtagSplitter<T,E>{
             String hashtagWords[] = hashtag.toString().split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
             for(int i=0; i<hashtagWords.length;i++){
                 hashtag.getLabel().addWord(hashtagWords[i].replaceAll("#","").replaceAll("\n",""));
-                System.out.println(hashtagWords[i].replaceAll("#","").replaceAll("\n",""));
+             //   System.out.println(hashtagWords[i].replaceAll("#","").replaceAll("\n",""));
             }
         }
     }

@@ -1,6 +1,7 @@
 package org.tojaco;
 
 import org.tojaco.FileIO.GraphReadWriteService;
+import org.tojaco.FileIO.LexiconFileService;
 import org.tojaco.FileIO.TwitterFileService;
 import org.tojaco.Graph.*;
 import org.tojaco.GraphAnalysis.GraphAnalyser;
@@ -20,6 +21,7 @@ public class MainUtil {
 
     private static final ArrayList<String> retweets = new ArrayList<>();
     private static final ArrayList<String> hashtags = new ArrayList<>();
+    private static final ArrayList<String> lexicon = new ArrayList<>();
 
     public static ArrayList<String> getRetweets() {
         return retweets;
@@ -27,6 +29,10 @@ public class MainUtil {
 
     public static ArrayList<String> getHashtags() {
         return hashtags;
+    }
+
+    public static ArrayList<String> getLexicon() {
+        return lexicon;
     }
 
     public static void showProgramOptions(Configuration configuration, File dataFile) throws IOException {
@@ -174,7 +180,7 @@ public class MainUtil {
 
                 assignStances = new AssignStances();
                 StanceFile = new File(configuration.getSTANCE_FILE());
-                assignStances.determineProAntiVaxEvangelists(graphElements,rtGraph, StanceFile);
+                assignStances.determineProAntiVaxEvangelists(graphElements, rtGraph, StanceFile);
 
                 // initial setup for calculating stances
                 graphAnalyser = new GraphAnalyser();
@@ -224,13 +230,13 @@ public class MainUtil {
 
                 }
                 outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, true);
-               // StanceAnalysis analyse = new StanceAnalysis();
+                // StanceAnalysis analyse = new StanceAnalysis();
                 // users100New.checkStance(retweetHashMap);
-               // analyse.assignStancesByHashtags( hashtagToUsers,graphElements, rtGraph);
+                // analyse.assignStancesByHashtags( hashtagToUsers,graphElements, rtGraph);
 
                 //analyse.find100Hashtags(hashtagToUsers);
 
-               // analyse.find100HashtagsS5(rtGraph, hashtagToUsers);
+                // analyse.find100HashtagsS5(rtGraph, hashtagToUsers);
 
 
                 break;
@@ -284,13 +290,28 @@ public class MainUtil {
                 HashtagSplitter hashtagSplitter = new HashtagSplitter();
                 hashtagSplitter.splitHashtags(hashtagToUsers);
 
+                GraphElements graphElementsLexicon = new GraphElements();
+
+                File lexiconFile = new File("Lexicon", "labeled tag elements.txt");
+
+                LexiconFileService lfs = new LexiconFileService();
+
+                if (lexiconFile.exists()) {
+                    getLexicon().addAll(lfs.readLexiconFile(lexiconFile));
+                }
+
+                System.out.println(getLexicon().get(0) + " HELLO!");
+
+                DirectedGraph lexiconGraph = findGraphElements.createGraph(graphElementsLexicon, getLexicon(), 0, 1);
+
+
         }
     }
 
     private static void outputGraphAnalysis(GraphAnalyser graphAnalyser, DirectedGraph graph, GraphElements graphElements
-            , boolean hashtagsUsed){
+            , boolean hashtagsUsed) {
 
-        if(hashtagsUsed){
+        if (hashtagsUsed) {
             System.out.println("AFTER USING HASHTAGS:");
         }
         System.out.println("Coverage in graph: " + graphAnalyser.calculateCoverage(graph, graphElements) + "%");
@@ -299,7 +320,6 @@ public class MainUtil {
         System.out.println("Percentage negative stance: " + graphAnalyser.calculatePercentageNegativeStances(graph, graphElements) + "%");
 
     }
-
 
 
     public static void showSprint3Options(Graph<TwitterUser, TwitterUser> rtGraph, GraphElements graphElements) {
