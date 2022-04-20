@@ -290,9 +290,6 @@ public class MainUtil {
                 HashtagSplitter hashtagSplitter = new HashtagSplitter();
                 hashtagSplitter.splitHashtagsByCamelCase(hashtagToUsers);
 
-                HashtagSummarizer hashtagSummarizer = new HashtagSummarizer();
-                hashtagSummarizer.summarizeHashtag(hashtagToUsers);
-
                 GraphElements graphElementsLexicon = new GraphElements();
 
                 File lexiconFile = new File("Lexicon", "labeled tag elements.txt");
@@ -305,9 +302,10 @@ public class MainUtil {
 
                 System.out.println(getLexicon().get(0) + " HELLO!");
 
-                DirectedGraph lexiconGraph = findGraphElements.createGraph(graphElementsLexicon, getLexicon(), 0, 1);
-
-
+                FindGraphElements lexGraphElements = new FindGraphElements(new CreateStringVertex(), new CreateStringVertex());
+                DirectedGraph lexiconGraph = lexGraphElements.createGraph(graphElementsLexicon, getLexicon(), 0, 1);
+                HashtagSummarizer hashtagSummarizer = new HashtagSummarizer();
+                hashtagSummarizer.summarizeHashtag(hashtagToUsers, lexiconGraph, graphElementsLexicon);
         }
     }
 

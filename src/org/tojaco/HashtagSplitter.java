@@ -4,6 +4,8 @@ import org.tojaco.Graph.DirectedGraph;
 import org.tojaco.Graph.Vertex;
 import org.tojaco.GraphElements.Hashtag;
 
+import java.util.Locale;
+
 
 public class HashtagSplitter<T,E>{
 
@@ -12,7 +14,7 @@ public class HashtagSplitter<T,E>{
             String hashtagWord[] = hashtag.toString().split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
             for(int i=0; i<hashtagWord.length;i++){
                 if(!(hashtagWord[i].contains("…"))){
-                    hashtag.getLabel().addWord(hashtagWord[i].replaceAll("[#.,]",""));
+                    hashtag.getLabel().addWord(hashtagWord[i].replaceAll("[#.,]","").toLowerCase());
                 }
                 //System.out.print(hashtagWord[i].replaceAll("#",""));
             }
