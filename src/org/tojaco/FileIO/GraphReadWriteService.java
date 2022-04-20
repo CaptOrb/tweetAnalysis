@@ -32,7 +32,7 @@ public class GraphReadWriteService extends FileService {
     }*/
 
 
-    public <T, E> void writeFileFromGraph(DirectedGraph<T, E> graph, File file) throws IOException {
+    public <T, E> void writeFileFromGraph(DirectedGraph<T, E> graph, File file, boolean weight) throws IOException {
 
         createFile(file.getParent(), file.getName());
 
@@ -52,7 +52,9 @@ public class GraphReadWriteService extends FileService {
                     } else {
                         sb.append(graphHashMap.get(vertex).get(i).getVertex().getLabel());
                     }
-                    sb.append("(").append(graphHashMap.get(vertex).get(i).getWeight()).append(")");
+                    if(weight==true) {
+                        sb.append("(").append(graphHashMap.get(vertex).get(i).getWeight()).append(")");
+                    }
 
                 }
 

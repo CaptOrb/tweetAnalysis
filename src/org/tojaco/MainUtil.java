@@ -89,11 +89,11 @@ public class MainUtil {
 
                 rfs.writeFileFromGraph(rtGraph,
                         new File(configuration.getGRAPH_DIRECTORY(),
-                                configuration.getRTGRAPH_OUTPUT_FILE()));
+                                configuration.getRTGRAPH_OUTPUT_FILE()),true);
 
                 rfs.writeFileFromGraph(retweetedGraph,
                         new File(configuration.getGRAPH_DIRECTORY(),
-                                configuration.getRTWEETEDGRAPH_OUTPUT_FILE()));
+                                configuration.getRTWEETEDGRAPH_OUTPUT_FILE()),true);
                 System.out.println("Retweet graph added successfully to Graph directory!");
 
 
@@ -120,11 +120,11 @@ public class MainUtil {
 
                 rfs.writeFileFromGraph(rtGraph,
                         new File(configuration.getGRAPH_DIRECTORY(),
-                                configuration.getRTGRAPH_OUTPUT_FILE()));
+                                configuration.getRTGRAPH_OUTPUT_FILE()),true);
 
                 rfs.writeFileFromGraph(retweetedGraph,
                         new File(configuration.getGRAPH_DIRECTORY(),
-                                configuration.getRTWEETEDGRAPH_OUTPUT_FILE()));
+                                configuration.getRTWEETEDGRAPH_OUTPUT_FILE()),true);
                 System.out.println("Retweet graph added successfully to Graph directory!");
 
                 FindEvangelists findEvangelist = new FindEvangelists();
@@ -167,11 +167,11 @@ public class MainUtil {
 
                 rfs.writeFileFromGraph(rtGraph,
                         new File(configuration.getGRAPH_DIRECTORY(),
-                                configuration.getRTGRAPH_OUTPUT_FILE()));
+                                configuration.getRTGRAPH_OUTPUT_FILE()),true);
 
                 rfs.writeFileFromGraph(retweetedGraph,
                         new File(configuration.getGRAPH_DIRECTORY(),
-                                configuration.getRTGRAPH_OUTPUT_FILE()));
+                                configuration.getRTGRAPH_OUTPUT_FILE()),true);
 
                 System.out.println("Retweet graph and retweeted graph added successfully to Graph directory!");
 
@@ -205,7 +205,7 @@ public class MainUtil {
 
                 rfs.writeFileFromGraph(usertoHashTag,
                         new File(configuration.getGRAPH_DIRECTORY(),
-                                configuration.getUSERS_TO_HASHTAGS()));
+                                configuration.getUSERS_TO_HASHTAGS()),true);
 
 
                 FindGraphElements<Hashtag, TwitterUser> fge2 = new FindGraphElements<>(new CreateHashtagVertex(), new CreateUserVertex());
@@ -214,7 +214,7 @@ public class MainUtil {
 
                 rfs.writeFileFromGraph(hashtagToUsers,
                         new File(configuration.getGRAPH_DIRECTORY(),
-                                configuration.getHASHTAGS_TO_USERS()));
+                                configuration.getHASHTAGS_TO_USERS()),true);
 
 
                 //3a and 3b
@@ -258,11 +258,11 @@ public class MainUtil {
 
                 rfs.writeFileFromGraph(rtGraph,
                         new File(configuration.getGRAPH_DIRECTORY(),
-                                configuration.getRTGRAPH_OUTPUT_FILE()));
+                                configuration.getRTGRAPH_OUTPUT_FILE()),true);
 
                 rfs.writeFileFromGraph(retweetedGraph,
                         new File(configuration.getGRAPH_DIRECTORY(),
-                                configuration.getRTGRAPH_OUTPUT_FILE()));
+                                configuration.getRTGRAPH_OUTPUT_FILE()),true);
 
                 System.out.println("Retweet graph and retweeted graph added successfully to Graph directory!");
 
@@ -276,7 +276,7 @@ public class MainUtil {
 
                 rfs.writeFileFromGraph(usertoHashTag,
                         new File(configuration.getGRAPH_DIRECTORY(),
-                                configuration.getUSERS_TO_HASHTAGS()));
+                                configuration.getUSERS_TO_HASHTAGS()),true);
 
                 fge2 = new FindGraphElements<>(new CreateHashtagVertex(), new CreateUserVertex());
 
@@ -285,10 +285,13 @@ public class MainUtil {
 
                 rfs.writeFileFromGraph(hashtagToUsers,
                         new File(configuration.getGRAPH_DIRECTORY(),
-                                configuration.getHASHTAGS_TO_USERS()));
+                                configuration.getHASHTAGS_TO_USERS()),true);
 
                 HashtagSplitter hashtagSplitter = new HashtagSplitter();
                 hashtagSplitter.splitHashtagsByCamelCase(hashtagToUsers);
+
+                HashtagSummarizer hashtagSummarizer = new HashtagSummarizer();
+                hashtagSummarizer.summarizeHashtag(hashtagToUsers);
 
                 GraphElements graphElementsLexicon = new GraphElements();
 
@@ -302,10 +305,10 @@ public class MainUtil {
 
                 System.out.println(getLexicon().get(0) + " HELLO!");
 
-                FindGraphElements lexGraphElements = new FindGraphElements(new CreateStringVertex(), new CreateStringVertex());
-                DirectedGraph lexiconGraph = lexGraphElements.createGraph(graphElementsLexicon, getLexicon(), 0, 1);
-                HashtagSummarizer hashtagSummarizer = new HashtagSummarizer();
-                hashtagSummarizer.summarizeHashtag(hashtagToUsers, lexiconGraph, graphElementsLexicon);
+                DirectedGraph lexiconGraph = findGraphElements.createGraph(graphElementsLexicon, getLexicon(), 0, 1);
+
+                rfs.writeFileFromGraph(lexiconGraph, new File("Graph", "thisbetterwork.txt"),false);
+
         }
     }
 
