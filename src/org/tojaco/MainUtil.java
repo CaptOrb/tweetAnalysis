@@ -282,7 +282,7 @@ public class MainUtil {
                                 configuration.getHASHTAGS_TO_USERS()));
 
                 HashtagSplitter hashtagSplitter = new HashtagSplitter();
-                hashtagSplitter.splitHashtags(hashtagToUsers);
+                hashtagSplitter.splitHashtagsByCamelCase(hashtagToUsers);
 
                 HashtagSummarizer hashtagSummarizer = new HashtagSummarizer();
                 hashtagSummarizer.summarizeHashtag(hashtagToUsers);
