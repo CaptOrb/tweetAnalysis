@@ -223,13 +223,16 @@ public class MainUtil {
 
                 }
                 outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, true);
-                StanceAnalysis analyse = new StanceAnalysis();
+               // StanceAnalysis analyse = new StanceAnalysis();
                 // users100New.checkStance(retweetHashMap);
-                analyse.assignStancesByHashtags( hashtagToUsers,graphElements, rtGraph);
+               // analyse.assignStancesByHashtags( hashtagToUsers,graphElements, rtGraph);
 
-                analyse.find100Hashtags(hashtagToUsers);
+                //analyse.find100Hashtags(hashtagToUsers);
 
                // analyse.find100HashtagsS5(rtGraph, hashtagToUsers);
+
+                HashtagSplitter hashtagSplitter = new HashtagSplitter();
+                hashtagSplitter.splitHashtags(hashtagToUsers);
 
                 break;
         }
