@@ -23,15 +23,15 @@ public class LexiconFileService {
 
                     for (int i = 2; i < lineContents.length; i++) {
                         destVertex = lineContents[i];
-                        destVertex = destVertex.replaceAll("\\[", "").replaceAll("]", "").replaceAll(",", "").replaceAll(" ", "\t");
+                        destVertex = destVertex.replaceAll("\\[", "").replaceAll("]", "").replaceAll(",", "");
 
                         //test will be the dest vertex
 
                         // then add the combined tag and test to the arraylist.
 
-                        System.out.print(" " + i + " is " + destVertex);
+                        System.out.print(tag + " " + i + " is " + destVertex);
 
-                        lexicon.add(tag + destVertex);
+                        lexicon.add(tag + "\t" + destVertex);
                     }
                     System.out.println("\n");
 
