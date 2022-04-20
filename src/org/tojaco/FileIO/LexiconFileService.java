@@ -15,28 +15,19 @@ public class LexiconFileService {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] lineContents = line.split(" ");
-                try {
 
-                    // tag will be the source vertex
-                    String tag = lineContents[1];
-                    String destVertex;
+                // tag will be the source vertex
+                String word = lineContents[1];
+                String feature;
 
-                    for (int i = 2; i < lineContents.length; i++) {
-                        destVertex = lineContents[i];
-                        destVertex = destVertex.replaceAll("\\[", "").replaceAll("]", "").replaceAll(",", "");
+                for (int i = 2; i < lineContents.length; i++) {
 
-                        //test will be the dest vertex
+                    feature = lineContents[i].replaceAll("\\[", "").replaceAll("]", "").replaceAll(",", "");
 
-                        // then add the combined tag and test to the arraylist.
-
-                        System.out.print(tag + " " + i + " is " + destVertex);
-
-                        lexicon.add(tag + "\t" + destVertex);
-                    }
-                    System.out.println("\n");
-
-                } catch (Exception e) {}
+                    lexicon.add(word + "\t" + feature);
+                }
             }
+
         } catch (IOException | NullPointerException fnfe) {
             fnfe.printStackTrace();
         }

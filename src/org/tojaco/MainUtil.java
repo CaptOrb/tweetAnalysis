@@ -208,9 +208,9 @@ public class MainUtil {
                                 configuration.getUSERS_TO_HASHTAGS()),true);
 
 
-                FindGraphElements<Hashtag, TwitterUser> fge2 = new FindGraphElements<>(new CreateHashtagVertex(), new CreateUserVertex());
+                FindGraphElements<Hashtag, TwitterUser> findGraphElements2 = new FindGraphElements<>(new CreateHashtagVertex(), new CreateUserVertex());
                 DirectedGraph<Hashtag, TwitterUser> hashtagToUsers;
-                hashtagToUsers = fge2.createGraph(graphElements, getHashtags(), 1, 0);
+                hashtagToUsers = findGraphElements2.createGraph(graphElements, getHashtags(), 1, 0);
 
                 rfs.writeFileFromGraph(hashtagToUsers,
                         new File(configuration.getGRAPH_DIRECTORY(),
@@ -256,13 +256,13 @@ public class MainUtil {
                 rtGraph = findGraphElements.createGraph(graphElements, getRetweets(), 0, 1);
                 retweetedGraph = findGraphElements.createGraph(graphElements, getRetweets(), 1, 0);
 
-                rfs.writeFileFromGraph(rtGraph,
-                        new File(configuration.getGRAPH_DIRECTORY(),
-                                configuration.getRTGRAPH_OUTPUT_FILE()),true);
+              //  rfs.writeFileFromGraph(rtGraph,
+                //        new File(configuration.getGRAPH_DIRECTORY(),
+                  //              configuration.getRTGRAPH_OUTPUT_FILE()),true);
 
-                rfs.writeFileFromGraph(retweetedGraph,
-                        new File(configuration.getGRAPH_DIRECTORY(),
-                                configuration.getRTGRAPH_OUTPUT_FILE()),true);
+               // rfs.writeFileFromGraph(retweetedGraph,
+               //         new File(configuration.getGRAPH_DIRECTORY(),
+                 //               configuration.getRTGRAPH_OUTPUT_FILE()),true);
 
                 System.out.println("Retweet graph and retweeted graph added successfully to Graph directory!");
 
@@ -274,18 +274,17 @@ public class MainUtil {
 
                 usertoHashTag = fge1.createGraph(graphElements, getHashtags(), 0, 1);
 
-                rfs.writeFileFromGraph(usertoHashTag,
-                        new File(configuration.getGRAPH_DIRECTORY(),
-                                configuration.getUSERS_TO_HASHTAGS()),true);
+               // rfs.writeFileFromGraph(usertoHashTag,
+                //        new File(configuration.getGRAPH_DIRECTORY(),
+                //                configuration.getUSERS_TO_HASHTAGS()),true);
 
-                fge2 = new FindGraphElements<>(new CreateHashtagVertex(), new CreateUserVertex());
+                findGraphElements2 = new FindGraphElements<>(new CreateHashtagVertex(), new CreateUserVertex());
 
+                hashtagToUsers = findGraphElements2.createGraph(graphElements, getHashtags(), 1, 0);
 
-                hashtagToUsers = fge2.createGraph(graphElements, getHashtags(), 1, 0);
-
-                rfs.writeFileFromGraph(hashtagToUsers,
-                        new File(configuration.getGRAPH_DIRECTORY(),
-                                configuration.getHASHTAGS_TO_USERS()),true);
+               // rfs.writeFileFromGraph(hashtagToUsers,
+                     //   new File(configuration.getGRAPH_DIRECTORY(),
+                       //         configuration.getHASHTAGS_TO_USERS()),true);
 
                 HashtagSplitter hashtagSplitter = new HashtagSplitter();
                 hashtagSplitter.splitHashtagsByCamelCase(hashtagToUsers);
@@ -300,13 +299,11 @@ public class MainUtil {
                     getLexicon().addAll(lfs.readLexiconFile(lexiconFile));
                 }
 
-                System.out.println(getLexicon().get(0) + " HELLO!");
-
                 DirectedGraph lexiconGraph = findGraphElements.createGraph(graphElementsLexicon, getLexicon(), 0, 1);
                 HashtagSummarizer hashtagSummarizer = new HashtagSummarizer();
                 hashtagSummarizer.summarizeHashtag(hashtagToUsers, lexiconGraph, graphElementsLexicon);
 
-                rfs.writeFileFromGraph(lexiconGraph, new File("Graph", "thisbetterwork.txt"),false);
+                rfs.writeFileFromGraph(lexiconGraph, new File(configuration.getGRAPH_DIRECTORY(), "thisbetterwork.txt"),false);
 
         }
     }
