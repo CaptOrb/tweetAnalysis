@@ -22,7 +22,7 @@ public class LexiconFileService {
                     String test = lineContents[2];
                     String test2 = lineContents[3];
 
-                    System.out.println(term + " 1" +  " 2" + test + " " + test2 + " 3");
+                    System.out.println("1 is" + term +  " 2 is " + test + " " + "3 is "+ test2);
 
 
 
