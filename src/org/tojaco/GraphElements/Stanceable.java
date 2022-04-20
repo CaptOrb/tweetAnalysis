@@ -1,9 +1,9 @@
 package org.tojaco.GraphElements;
 
 public interface Stanceable {
-    public int getStance();
+    int getStance();
 
-    public void setStance(int stance);
+    void setStance(int stance);
 
-    public boolean hasStance();
+    boolean hasStance();
 }

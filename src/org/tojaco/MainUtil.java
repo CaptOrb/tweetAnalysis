@@ -299,7 +299,8 @@ public class MainUtil {
                     getLexicon().addAll(lfs.readLexiconFile(lexiconFile));
                 }
 
-                DirectedGraph lexiconGraph = findGraphElements.createGraph(graphElementsLexicon, getLexicon(), 0, 1);
+                FindGraphElements<String, String> findGraphElementsLex = new FindGraphElements<>(new CreateStringVertex(), new CreateStringVertex());
+                DirectedGraph lexiconGraph = findGraphElementsLex.createGraph(graphElementsLexicon, getLexicon(), 0, 1);
                 HashtagSummarizer hashtagSummarizer = new HashtagSummarizer();
                 hashtagSummarizer.summarizeHashtag(hashtagToUsers, lexiconGraph, graphElementsLexicon);
 
