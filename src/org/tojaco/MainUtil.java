@@ -307,7 +307,7 @@ public class MainUtil {
 
                 DirectedGraph lexiconGraph = findGraphElements.createGraph(graphElementsLexicon, getLexicon(), 0, 1);
 
-                rfs.writeFileFromGraph(lexiconGraph, new File("Graph", "thisbetterwork.txt"));
+                rfs.writeFileFromGraph(lexiconGraph, new File("Graph", "thisbetterwork.txt"),false);
 
         }
     }
