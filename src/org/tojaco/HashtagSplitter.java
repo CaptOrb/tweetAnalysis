@@ -7,12 +7,14 @@ import org.tojaco.GraphElements.Hashtag;
 
 public class HashtagSplitter<T,E>{
 
-    public void splitHashtags(DirectedGraph<Hashtag, E> hashtagToUsers){
+    public void splitHashtagsByCamelCase(DirectedGraph<Hashtag, E> hashtagToUsers){
         for(Vertex<Hashtag> hashtag: hashtagToUsers.getGraph().keySet()){
-            String hashtagWords[] = hashtag.toString().split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
-            for(int i=0; i<hashtagWords.length;i++){
-                hashtag.getLabel().addWord(hashtagWords[i].replaceAll("#","").replaceAll("\n",""));
-             //   System.out.println(hashtagWords[i].replaceAll("#","").replaceAll("\n",""));
+            String hashtagWord[] = hashtag.toString().split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
+            for(int i=0; i<hashtagWord.length;i++){
+                if(!(hashtagWord[i].contains("…"))){
+                    hashtag.getLabel().addWord(hashtagWord[i].replaceAll("[#.,]",""));
+                }
+                //System.out.print(hashtagWord[i].replaceAll("#",""));
             }
         }
     }

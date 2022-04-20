@@ -44,7 +44,7 @@ public class MainUtil {
                 "\n3. Build a retweet Graph (Sprint 3)" +
                 "\n4. Assign stances to Tweets (Sprint 4)" +
                 "\n5. Assign stances to HashTags (Sprint 5)" +
-                "\n6. Get the Gist of an Hashtag (Sprint 6)" +
+                "\n6. Get the gist of a Hashtag (Sprint 6)" +
                 "\nOr enter -1 to quit");
 
         Scanner scanner = new Scanner(System.in);
@@ -288,7 +288,10 @@ public class MainUtil {
                                 configuration.getHASHTAGS_TO_USERS()));
 
                 HashtagSplitter hashtagSplitter = new HashtagSplitter();
-                hashtagSplitter.splitHashtags(hashtagToUsers);
+                hashtagSplitter.splitHashtagsByCamelCase(hashtagToUsers);
+
+                HashtagSummarizer hashtagSummarizer = new HashtagSummarizer();
+                hashtagSummarizer.summarizeHashtag(hashtagToUsers);
 
                 GraphElements graphElementsLexicon = new GraphElements();
 
