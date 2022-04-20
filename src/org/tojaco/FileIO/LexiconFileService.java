@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 public class LexiconFileService {
 
-
     public ArrayList<String> readLexiconFile(File file) {
         ArrayList<String> lexicon = new ArrayList<>();
 
@@ -18,18 +17,25 @@ public class LexiconFileService {
                 String[] lineContents = line.split(" ");
                 try {
 
-                    String term = lineContents[1];
-                    String test = lineContents[2];
-                    String test2 = lineContents[3];
+                    // tag will be the source vertex
+                    String tag = lineContents[1];
+                    String destVertex;
 
-                    System.out.println("1 is" + term +  " 2 is " + test + " " + "3 is "+ test2);
+                    for (int i = 2; i < lineContents.length; i++) {
+                        destVertex = lineContents[i];
+                        destVertex = destVertex.replaceAll("\\[", "").replaceAll("]", "").replaceAll(",", "").replaceAll(" ", "\t");
 
+                        //test will be the dest vertex
 
+                        // then add the combined tag and test to the arraylist.
 
-                } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-//
-                } catch (Exception ignored) {
-                }
+                        System.out.print(" " + i + " is " + destVertex);
+
+                        lexicon.add(tag + destVertex);
+                    }
+                    System.out.println("\n");
+
+                } catch (Exception e) {}
             }
         } catch (IOException | NullPointerException fnfe) {
             fnfe.printStackTrace();
