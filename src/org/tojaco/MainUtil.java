@@ -32,12 +32,13 @@ public class MainUtil {
     public static void showProgramOptions(Configuration configuration, File dataFile) throws IOException {
         TwitterFileService ts = new TwitterFileService();
 
-        System.out.println("Enter 1, 2, 3, 4 or 5. " +
+        System.out.println("Enter 1, 2, 3, 4, 5 or 6 " +
                 "\n1. Search for Tweets using search API (Sprint 1)" +
                 "\n2. Search for Tweets using the steaming API (Sprint 2)" +
                 "\n3. Build a retweet Graph (Sprint 3)" +
                 "\n4. Assign stances to Tweets (Sprint 4)" +
                 "\n5. Assign stances to HashTags (Sprint 5)" +
+                "\n6. Get the Gist of an Hashtag (Sprint 6)" +
                 "\nOr enter -1 to quit");
 
         Scanner scanner = new Scanner(System.in);
@@ -231,10 +232,58 @@ public class MainUtil {
 
                // analyse.find100HashtagsS5(rtGraph, hashtagToUsers);
 
+
+                break;
+
+            case 6:
+                // graph for using implemented methods on
+                // see org.tojaco.Graph.DirectedGraph.java for description of public methods
+
+                findGraphElements = new FindGraphElements(new CreateUserVertex(), new CreateUserVertex());
+
+                if (dataFile.exists()) {
+                    getRetweets().addAll(rfs.loadDataFromInputFile(dataFile));
+                }
+
+                getHashtags().addAll(rfs.getHashtags());
+
+                rtGraph = findGraphElements.createGraph(graphElements, getRetweets(), 0, 1);
+                retweetedGraph = findGraphElements.createGraph(graphElements, getRetweets(), 1, 0);
+
+                rfs.writeFileFromGraph(rtGraph,
+                        new File(configuration.getGRAPH_DIRECTORY(),
+                                configuration.getRTGRAPH_OUTPUT_FILE()));
+
+                rfs.writeFileFromGraph(retweetedGraph,
+                        new File(configuration.getGRAPH_DIRECTORY(),
+                                configuration.getRTGRAPH_OUTPUT_FILE()));
+
+                System.out.println("Retweet graph and retweeted graph added successfully to Graph directory!");
+
+                findEvangelists = new FindEvangelists();
+                retweetHashMap = findEvangelists.findTotalRetweets(retweetedGraph);
+
+                System.out.println("Now calculating hashtag graphs...");
+                fge1 = new FindGraphElements<>(new CreateUserVertex(), new CreateHashtagVertex());
+
+                usertoHashTag = fge1.createGraph(graphElements, getHashtags(), 0, 1);
+
+                rfs.writeFileFromGraph(usertoHashTag,
+                        new File(configuration.getGRAPH_DIRECTORY(),
+                                configuration.getUSERS_TO_HASHTAGS()));
+
+                fge2 = new FindGraphElements<>(new CreateHashtagVertex(), new CreateUserVertex());
+
+
+                hashtagToUsers = fge2.createGraph(graphElements, getHashtags(), 1, 0);
+
+                rfs.writeFileFromGraph(hashtagToUsers,
+                        new File(configuration.getGRAPH_DIRECTORY(),
+                                configuration.getHASHTAGS_TO_USERS()));
+
                 HashtagSplitter hashtagSplitter = new HashtagSplitter();
                 hashtagSplitter.splitHashtags(hashtagToUsers);
 
-                break;
         }
     }
 
