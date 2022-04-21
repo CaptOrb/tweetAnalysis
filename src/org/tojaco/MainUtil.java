@@ -299,13 +299,17 @@ public class MainUtil {
                     getLexicon().addAll(lfs.readLexiconFile(lexiconFile));
                 }
 
-                FindGraphElements<String, String> findGraphElementsLex = new FindGraphElements<>(new CreateStringVertex(), new CreateStringVertex());
-                DirectedGraph lexiconGraph = findGraphElementsLex.createGraph(graphElementsLexicon, getLexicon(), 0, 1);
+                FindGraphElements<Hashtag, String> findGraphElementsLex = new FindGraphElements<>(new CreateHashtagVertex(), new CreateStringVertex());
+                DirectedGraph<Hashtag,String> lexiconGraph = findGraphElementsLex.createGraph(graphElementsLexicon, getLexicon(), 0, 1);
                 HashtagSummarizer hashtagSummarizer = new HashtagSummarizer();
-                hashtagSummarizer.summarizeHashtag(hashtagToUsers, lexiconGraph, graphElementsLexicon);
+
+                DirectedGraph<Hashtag,String> sumHashTagGraph = hashtagSummarizer.summarizeHashtag(hashtagToUsers, lexiconGraph, graphElementsLexicon);
+
+            /*    for(Map.Entry<Vertex<Hashtag>, ArrayList<Arc<String>>> v : sumHashTagGraph.getGraph().entrySet()){
+                    System.out.println(v.getKey().getLabel() + " " + v.getValue());
+                } */
 
                 rfs.writeFileFromGraph(lexiconGraph, new File(configuration.getGRAPH_DIRECTORY(), "thisbetterwork.txt"),false);
-
         }
     }
 
