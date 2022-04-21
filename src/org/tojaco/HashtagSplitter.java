@@ -21,9 +21,10 @@ public class HashtagSplitter<T,E>{
         }
     }
 
-    public void splitHashtagsByLexicon(DirectedGraph<Hashtag, E> lexiconGraph){
-        for(Vertex<Hashtag> hashtag: lexiconGraph.getGraph().keySet()){
-            // todo
-        }
-    }
+ /*   public void splitHashtagsByLexicon(DirectedGraph<Hashtag, E> hashTagsToUsers, DirectedGraph<String, String> lexiconGraph){
+        for(Vertex<String> hashtag: lexiconGraph.getGraph().keySet()){
+
+            System.out.println(hashtag.getLabel() + " ");
+        }*/
+   // }
 }
