@@ -1,10 +1,11 @@
 package org.tojaco;
 
+import org.tojaco.Graph.Arc;
 import org.tojaco.Graph.DirectedGraph;
 import org.tojaco.Graph.Vertex;
 import org.tojaco.GraphElements.Hashtag;
 
-import java.util.Locale;
+import java.util.*;
 
 
 public class HashtagSplitter<T,E>{
@@ -21,10 +22,26 @@ public class HashtagSplitter<T,E>{
         }
     }
 
- /*   public void splitHashtagsByLexicon(DirectedGraph<Hashtag, E> hashTagsToUsers, DirectedGraph<String, String> lexiconGraph){
-        for(Vertex<String> hashtag: lexiconGraph.getGraph().keySet()){
+    public void splitHashtagsByLexicon(DirectedGraph<Hashtag, E> sumHashTagGraph){
+        for(Map.Entry<Vertex<Hashtag>, ArrayList<Arc<E>>> entrySet: sumHashTagGraph.getGraph().entrySet()){
 
-            System.out.println(hashtag.getLabel() + " ");
-        }*/
-   // }
+            Vertex<Hashtag> hashtag = entrySet.getKey();
+
+            for(int i = 0; i < entrySet.getValue().size(); i++) {
+
+                String componentOfHashTag = entrySet.getValue().get(i).toString();
+                if (!hashtag.getLabel().toString().contains(componentOfHashTag)) {
+                    // not all component words matched - no reason to continue
+                    break;
+                }
+
+                // successfully matched all component parts
+                if (i == entrySet.getValue().size()){
+                    hashtag.getLabel().addWord(componentOfHashTag);
+                }
+
+                // System.out.println(hashtag.getLabel() + " ");
+            }
+        }
+    }
 }

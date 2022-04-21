@@ -40,7 +40,7 @@ public class MainUtil {
 
         System.out.println("Enter 1, 2, 3, 4, 5 or 6 " +
                 "\n1. Search for Tweets using search API (Sprint 1)" +
-                "\n2. Search for Tweets using the steaming API (Sprint 2)" +
+                "\n2. Search for Tweets using the streaming API (Sprint 2)" +
                 "\n3. Build a retweet Graph (Sprint 3)" +
                 "\n4. Assign stances to Tweets (Sprint 4)" +
                 "\n5. Assign stances to HashTags (Sprint 5)" +
@@ -305,11 +305,13 @@ public class MainUtil {
 
                 DirectedGraph<Hashtag,String> sumHashTagGraph = hashtagSummarizer.summarizeHashtag(hashtagToUsers, lexiconGraph, graphElementsLexicon);
 
-            /*    for(Map.Entry<Vertex<Hashtag>, ArrayList<Arc<String>>> v : sumHashTagGraph.getGraph().entrySet()){
+               /* for(Map.Entry<Vertex<Hashtag>, ArrayList<Arc<String>>> v : sumHashTagGraph.getGraph().entrySet()){
                     System.out.println(v.getKey().getLabel() + " " + v.getValue());
-                } */
+                }
 
-              //  hashtagSplitter.splitHashtagsByLexicon(lexiconGraph);
+                */
+
+                hashtagSplitter.splitHashtagsByLexicon(sumHashTagGraph);
 
 
                 rfs.writeFileFromGraph(lexiconGraph, new File(configuration.getGRAPH_DIRECTORY(), "thisbetterwork.txt"),false);
