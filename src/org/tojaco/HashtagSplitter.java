@@ -16,8 +16,6 @@ public class HashtagSplitter<T, E> {
         return lexiconDictionary;
     }
 
-    private List<String> wordSplitList = new LinkedList<>();
-
     public void splitHashtagsByCamelCase(DirectedGraph<Hashtag, E> hashtagToUsers) {
         for (Vertex<Hashtag> hashtag : hashtagToUsers.getGraph().keySet()) {
             String hashtagWord[] = hashtag.toString().split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
@@ -33,7 +31,7 @@ public class HashtagSplitter<T, E> {
         }
     }
 
-    public boolean splitHashtagsByLexiconHelper(String hashTag, Set<String> lexiconDictionary) {
+    public boolean splitHashtagsByLexiconHelper(String hashTag, Hashtag hashtagObj, Set<String> lexiconDictionary) {
 
         hashTag = hashTag.replaceAll("[#]", "").toLowerCase();
 
@@ -47,8 +45,11 @@ public class HashtagSplitter<T, E> {
                 String remainSubStr = hashTag.substring(i);
 
                 if ((lexiconDictionary.contains(firstWord))
-                        && (splitHashtagsByLexiconHelper(remainSubStr, lexiconDictionary))) {
-                    wordSplitList.add(firstWord);
+                        && (splitHashtagsByLexiconHelper(remainSubStr, hashtagObj,lexiconDictionary))) {
+
+                    if(!hashtagObj.getWords().contains(firstWord)){
+                        hashtagObj.addWord(firstWord);
+                    }
                     return true;
                 }
             }
@@ -69,15 +70,13 @@ public class HashtagSplitter<T, E> {
 
         for (Map.Entry<Vertex<Hashtag>, ArrayList<Arc<E>>> entrySet : sumHashTagGraph.getGraph().entrySet()) {
 
-            Vertex<Hashtag> hashtag = entrySet.getKey();
+            Hashtag hashtag = entrySet.getKey().getLabel();
 
-            wordSplitList.clear();
-
-            boolean splitSuccess = splitHashtagsByLexiconHelper(hashtag.toString(), lexiconDictionary);
+            boolean splitSuccess = splitHashtagsByLexiconHelper(hashtag.toString(), hashtag, lexiconDictionary);
 
             if (splitSuccess) {
                 System.out.print(hashtag + " was split into:\t");
-                for (String s : wordSplitList) {
+                for (String s : hashtag.getWords()) {
                     System.out.print(s + " ");
                 }
                 System.out.println();
