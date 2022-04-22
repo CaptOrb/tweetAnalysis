@@ -91,7 +91,7 @@ public class GraphReadWriteService extends FileService {
                     }
                     String temp = retweetedUserWithText.trim().replaceAll(" +", " ");
                     //String temp = lineContents[2].replaceAll("  ", " ");
-                    tweetText = temp.split("[ ,;:'/?!]"); //split the tweet text
+                    tweetText = temp.split("[^a-zA-Z#]+"); //split the tweet text
                     //tweetText= tweetText.split(" ");
                     for (String tweetComponent : tweetText) {
                         String hashtagInLine = null;

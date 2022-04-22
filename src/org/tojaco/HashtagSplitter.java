@@ -16,18 +16,22 @@ public class HashtagSplitter<T,E>{
             for(int i=0; i<hashtagWord.length;i++){
                 if(!(hashtagWord[i].contains("…"))){
                     hashtag.getLabel().addWord(hashtagWord[i].replaceAll("[#.,]","").toLowerCase());
+                    //System.out.println(hashtagWord[i].replaceAll("[#.,]",""));
                 }
+
                 //System.out.print(hashtagWord[i].replaceAll("#",""));
             }
+            //System.out.println();
         }
     }
 
     public void splitHashtagsByLexicon(DirectedGraph<Hashtag, E> sumHashTagGraph){
+
         for(Map.Entry<Vertex<Hashtag>, ArrayList<Arc<E>>> entrySet: sumHashTagGraph.getGraph().entrySet()){
 
             Vertex<Hashtag> hashtag = entrySet.getKey();
 
-            System.out.println(hashtag);
+            //System.out.println(hashtag);
 
 
 
