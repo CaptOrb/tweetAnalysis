@@ -21,12 +21,15 @@ public class HashtagSplitter<T, E> {
     public void splitHashtagsByCamelCase(DirectedGraph<Hashtag, E> hashtagToUsers) {
         for (Vertex<Hashtag> hashtag : hashtagToUsers.getGraph().keySet()) {
             String hashtagWord[] = hashtag.toString().split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
-            for (int i = 0; i < hashtagWord.length; i++) {
-                if (!(hashtagWord[i].contains("…"))) {
-                    hashtag.getLabel().addWord(hashtagWord[i].replaceAll("[#.,]", "").toLowerCase());
+            for(int i=0; i<hashtagWord.length;i++){
+                if(!(hashtagWord[i].contains("…"))){
+                    hashtag.getLabel().addWord(hashtagWord[i].replaceAll("[#.,]","").toLowerCase());
+                    //System.out.println(hashtagWord[i].replaceAll("[#.,]",""));
                 }
+
                 //System.out.print(hashtagWord[i].replaceAll("#",""));
             }
+            //System.out.println();
         }
     }
 
