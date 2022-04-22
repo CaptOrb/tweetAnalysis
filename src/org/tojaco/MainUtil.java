@@ -304,12 +304,12 @@ public class MainUtil {
                 HashtagSummarizer hashtagSummarizer = new HashtagSummarizer();
 
                 DirectedGraph<Hashtag,String> sumHashTagGraph = hashtagSummarizer.summarizeHashtag(hashtagToUsers, lexiconGraph, graphElementsLexicon);
-
-               /* for(Map.Entry<Vertex<Hashtag>, ArrayList<Arc<String>>> v : sumHashTagGraph.getGraph().entrySet()){
+/*
+                for(Map.Entry<Vertex<Hashtag>, ArrayList<Arc<String>>> v : sumHashTagGraph.getGraph().entrySet()){
                     System.out.println(v.getKey().getLabel() + " " + v.getValue());
-                }
+                }*/
 
-                */
+
 
                 hashtagSplitter.splitHashtagsByLexicon(sumHashTagGraph);
 

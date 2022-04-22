@@ -27,21 +27,10 @@ public class HashtagSplitter<T,E>{
 
             Vertex<Hashtag> hashtag = entrySet.getKey();
 
-            for(int i = 0; i < entrySet.getValue().size(); i++) {
+            System.out.println(hashtag);
 
-                String componentOfHashTag = entrySet.getValue().get(i).toString();
-                if (!hashtag.getLabel().toString().contains(componentOfHashTag)) {
-                    // not all component words matched - no reason to continue
-                    break;
-                }
 
-                // successfully matched all component parts
-                if (i == entrySet.getValue().size()){
-                    hashtag.getLabel().addWord(componentOfHashTag);
-                }
 
-                // System.out.println(hashtag.getLabel() + " ");
-            }
         }
     }
 }
