@@ -301,6 +301,7 @@ public class MainUtil {
 
                 FindGraphElements<String, String> findGraphElementsLex = new FindGraphElements<>(new CreateStringVertex(), new CreateStringVertex());
                 DirectedGraph<String,String> lexiconGraph = findGraphElementsLex.createGraph(graphElementsLexicon, getLexicon(), 0, 1);
+
                 HashtagSummarizer hashtagSummarizer = new HashtagSummarizer();
 
                 DirectedGraph<Hashtag,String> sumHashTagGraph = hashtagSummarizer.summarizeHashtag(hashtagToUsers, lexiconGraph, graphElementsLexicon);
@@ -309,7 +310,7 @@ public class MainUtil {
                     System.out.println(v.getKey().getLabel() + " " + v.getValue());
                 }*/
 
-
+                hashtagSplitter.initialiseLexiconDictionary(lexiconGraph);
 
                 hashtagSplitter.splitHashtagsByLexicon(sumHashTagGraph);
 
