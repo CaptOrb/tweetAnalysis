@@ -33,7 +33,7 @@ public class HashtagSplitter<T, E> {
         }
     }
 
-    public boolean breakHashTagByLexicon(String hashTag, Set<String> lexiconDictionary) {
+    public boolean splitHashtagsByLexiconHelper(String hashTag, Set<String> lexiconDictionary) {
 
         hashTag = hashTag.replaceAll("[#]", "").toLowerCase();
 
@@ -46,7 +46,8 @@ public class HashtagSplitter<T, E> {
                 String firstWord = hashTag.substring(0, i);
                 String remainSubStr = hashTag.substring(i);
 
-                if ((lexiconDictionary.contains(firstWord)) && (breakHashTagByLexicon(remainSubStr, lexiconDictionary))) {
+                if ((lexiconDictionary.contains(firstWord))
+                        && (splitHashtagsByLexiconHelper(remainSubStr, lexiconDictionary))) {
                     wordSplitList.add(firstWord);
                     return true;
                 }
@@ -60,8 +61,6 @@ public class HashtagSplitter<T, E> {
 
             Vertex<Hashtag> key = entrySet.getKey();
 
-            // System.out.println(hashtag.toString());
-
             lexiconDictionary.add(key.toString());
         }
     }
@@ -74,7 +73,15 @@ public class HashtagSplitter<T, E> {
 
             wordSplitList.clear();
 
-            breakHashTagByLexicon(hashtag.toString(), lexiconDictionary);
+            boolean splitSuccess = splitHashtagsByLexiconHelper(hashtag.toString(), lexiconDictionary);
+
+            if (splitSuccess) {
+                System.out.print(hashtag + " was split into:\t");
+                for (String s : wordSplitList) {
+                    System.out.print(s + " ");
+                }
+                System.out.println();
+            }
 
         }
     }
