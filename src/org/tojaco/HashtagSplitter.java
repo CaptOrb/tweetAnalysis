@@ -45,20 +45,13 @@ public class HashtagSplitter<T, E> {
                     System.out.println(hashtagWord[i].replaceAll("[#.,]",""));
                 }
 
+                //System.out.print(hashtagWord[i].replaceAll("#",""));
             }
             System.out.println();
         }
     }
 
-
-    //split by A for FauciIsAHero, so after an A is found and its followed by one capital letter then split it (must be followed by other letters)
-    // but PNAS shouldn't be split, regex for if A is followed by only ONE capital letter then don't split it
-
-    public void splitByA(Vertex<Hashtag> hashtag, String str){
-        //if(str.contain)
-    }
-
-    public boolean breakHashTagByLexicon(String hashTag, Set<String> lexiconDictionary) {
+    public boolean splitHashtagsByLexiconHelper(String hashTag, Hashtag hashtagObj, Set<String> lexiconDictionary) {
 
         hashTag = hashTag.replaceAll("[#]", "").toLowerCase();
 
@@ -71,8 +64,12 @@ public class HashtagSplitter<T, E> {
                 String firstWord = hashTag.substring(0, i);
                 String remainSubStr = hashTag.substring(i);
 
-                if ((lexiconDictionary.contains(firstWord)) && (breakHashTagByLexicon(remainSubStr, lexiconDictionary))) {
-                    wordSplitList.add(firstWord);
+                if ((lexiconDictionary.contains(firstWord))
+                        && (splitHashtagsByLexiconHelper(remainSubStr, hashtagObj,lexiconDictionary))) {
+
+                    if(!hashtagObj.getWords().contains(firstWord)){
+                        hashtagObj.addWord(firstWord);
+                    }
                     return true;
                 }
             }
@@ -95,11 +92,17 @@ public class HashtagSplitter<T, E> {
 
         for (Map.Entry<Vertex<Hashtag>, ArrayList<Arc<E>>> entrySet : sumHashTagGraph.getGraph().entrySet()) {
 
-            Vertex<Hashtag> hashtag = entrySet.getKey();
+            Hashtag hashtag = entrySet.getKey().getLabel();
 
-            wordSplitList.clear();
+            boolean splitSuccess = splitHashtagsByLexiconHelper(hashtag.toString(), hashtag, lexiconDictionary);
 
-            breakHashTagByLexicon(hashtag.toString(), lexiconDictionary);
+            if (splitSuccess) {
+                System.out.print(hashtag + " was split into:\t");
+                for (String s : hashtag.getWords()) {
+                    System.out.print(s + " ");
+                }
+                System.out.println();
+            }
 
         }
     }
