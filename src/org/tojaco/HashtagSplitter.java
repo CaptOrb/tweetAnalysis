@@ -20,34 +20,36 @@ public class HashtagSplitter<T, E> {
 
     public void splitHashtagsByCamelCase(DirectedGraph<Hashtag, E> hashtagToUsers) {
         for (Vertex<Hashtag> hashtag : hashtagToUsers.getGraph().keySet()) {
-            String hashtagWord[] = hashtag.toString().split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
+            String hashtagWord[] = hashtag.toString().split("(?<=[a-z])(?=[A-Z])");
             for(int i=0; i<hashtagWord.length;i++){
-                if(hashtagWord[i].startsWith("A") && (hashtagWord[i].length())!=1) {
-
-                    char secondLetter = hashtagWord[i].charAt(1);
-                    char thirdLetter = 'a';
-                    if(hashtagWord[i].length()>2) {
-                        thirdLetter = hashtagWord[i].charAt(2);
-                    }
-                    if(secondLetter>= 'A' && secondLetter <= 'Z' && thirdLetter >= 'a' && thirdLetter <='z' ){
-                        String IndefArticle = hashtagWord[i].substring(0,1); //start index is inclusive, end index is exclusive
-                        String restOfWord = hashtagWord[i].substring(1);
-                        hashtag.getLabel().addWord(IndefArticle.replaceAll("[#.,]","").toLowerCase());
-                        hashtag.getLabel().addWord(restOfWord.replaceAll("[#.,]","").toLowerCase());
-                        System.out.println(IndefArticle.replaceAll("[#.,]",""));
-                        System.out.println(restOfWord.replaceAll("[#.,]",""));
-                    } else{
-                        hashtag.getLabel().addWord(hashtagWord[i].replaceAll("[#.,]","").toLowerCase());
-                        System.out.println(hashtagWord[i].replaceAll("[#.,]",""));
-                    }
-                } else{
-                    hashtag.getLabel().addWord(hashtagWord[i].replaceAll("[#.,]","").toLowerCase());
-                    System.out.println(hashtagWord[i].replaceAll("[#.,]",""));
-                }
-
-                //System.out.print(hashtagWord[i].replaceAll("#",""));
+                checkIfA(hashtagWord[i], hashtag);
             }
             System.out.println();
+        }
+    }
+
+    public void checkIfA(String hashtagWord, Vertex<Hashtag> hashtag){
+        if(hashtagWord.startsWith("A") && (hashtagWord.length())!=1) {
+
+            char secondLetter = hashtagWord.charAt(1);
+            char thirdLetter = 'a';
+            if(hashtagWord.length()>2) {
+                thirdLetter = hashtagWord.charAt(2);
+            }
+            if(secondLetter>= 'A' && secondLetter <= 'Z' && thirdLetter >= 'a' && thirdLetter <='z' ){
+                String IndefArticle = hashtagWord.substring(0,1); //start index is inclusive, end index is exclusive
+                String restOfWord = hashtagWord.substring(1);
+                hashtag.getLabel().addWord(IndefArticle.replaceAll("[#.,]","").toLowerCase());
+                hashtag.getLabel().addWord(restOfWord.replaceAll("[#.,]","").toLowerCase());
+                System.out.println(IndefArticle.replaceAll("[#.,]",""));
+                System.out.println(restOfWord.replaceAll("[#.,]",""));
+            } else{
+                hashtag.getLabel().addWord(hashtagWord.replaceAll("[#.,]","").toLowerCase());
+                System.out.println(hashtagWord.replaceAll("[#.,]",""));
+            }
+        } else{
+            hashtag.getLabel().addWord(hashtagWord.replaceAll("[#.,]","").toLowerCase());
+            System.out.println(hashtagWord.replaceAll("[#.,]",""));
         }
     }
 
@@ -61,6 +63,7 @@ public class HashtagSplitter<T, E> {
 
             // keep matching each character until we find a valid word
             for (int i = 1; i <= hashTag.length(); i++) {
+
                 String firstWord = hashTag.substring(0, i);
                 String remainSubStr = hashTag.substring(i);
 
