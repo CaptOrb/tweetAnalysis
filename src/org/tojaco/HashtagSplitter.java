@@ -92,7 +92,7 @@ public class HashtagSplitter<T, E> {
 
             splitHashtagsByLexiconHelper(hashtag.toString(), hashtag, lexiconDictionary);
 
-         //   hashtag.editListOfWords();
+            hashtag.editListOfWords();
 
             System.out.print(hashtag + " was split into:\t");
             for (String s : hashtag.getWords()) {
