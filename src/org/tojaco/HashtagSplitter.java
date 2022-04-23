@@ -16,8 +16,6 @@ public class HashtagSplitter<T, E> {
         return lexiconDictionary;
     }
 
-    private List<String> wordSplitList = new LinkedList<>();
-
     public void splitHashtagsByCamelCase(DirectedGraph<Hashtag, E> hashtagToUsers) {
         for (Vertex<Hashtag> hashtag : hashtagToUsers.getGraph().keySet()) {
             String hashtagWord[] = hashtag.toString().split("(?<=[a-z])(?=[A-Z])");
@@ -82,12 +80,7 @@ public class HashtagSplitter<T, E> {
 
     public void initialiseLexiconDictionary(DirectedGraph<Hashtag, E> sumHashTagGraph) {
         for (Map.Entry<Vertex<Hashtag>, ArrayList<Arc<E>>> entrySet : sumHashTagGraph.getGraph().entrySet()) {
-
-            Vertex<Hashtag> key = entrySet.getKey();
-
-            // System.out.println(hashtag.toString());
-
-            lexiconDictionary.add(key.toString());
+            lexiconDictionary.add(entrySet.getKey().toString());
         }
     }
 
