@@ -312,7 +312,7 @@ public class MainUtil {
 
                 hashtagSplitter.initialiseLexiconDictionary(lexiconGraph);
 
-                hashtagSplitter.splitHashtagsByLexicon(sumHashTagGraph);
+                hashtagSplitter.splitHashtagsByLexicon(hashtagToUsers);
 
 
                 rfs.writeFileFromGraph(lexiconGraph, new File(configuration.getGRAPH_DIRECTORY(), "thisbetterwork.txt"),false);

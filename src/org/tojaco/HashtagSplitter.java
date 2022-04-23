@@ -90,17 +90,15 @@ public class HashtagSplitter<T, E> {
 
             Hashtag hashtag = entrySet.getKey().getLabel();
 
-            boolean splitSuccess = splitHashtagsByLexiconHelper(hashtag.toString(), hashtag, lexiconDictionary);
+            splitHashtagsByLexiconHelper(hashtag.toString(), hashtag, lexiconDictionary);
 
-            hashtag.editListOfWords();
+         //   hashtag.editListOfWords();
 
-            if (splitSuccess) {
-                System.out.print(hashtag + " was split into:\t");
-                for (String s : hashtag.getWords()) {
+            System.out.print(hashtag + " was split into:\t");
+            for (String s : hashtag.getWords()) {
                     System.out.print(s + " ");
                 }
                 System.out.println();
-            }
 
         }
     }
