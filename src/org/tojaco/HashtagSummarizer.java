@@ -38,4 +38,28 @@ public class HashtagSummarizer<T,E> {
 
         return hashtagToWords;
     }
+
+    public void assignGistOfTags(DirectedGraph<Hashtag, String> summarizedTags){
+        for (Vertex<Hashtag> hashtagVertex : summarizedTags.getGraph().keySet()){
+            int accepting = 0, rejecting = 0;
+            for (Arc<String> arc : summarizedTags.getGraph().get(hashtagVertex)) {
+                if ( arc.getVertex().getLabel().equals("accepting") ){
+                    accepting = arc.getWeight();
+                }
+                else if( arc.getVertex().getLabel().equals("rejecting")){
+                    rejecting = arc.getWeight();
+                }
+                else if( arc.getVertex().getLabel().contains("ref:") ){
+                    hashtagVertex.getLabel().addRef(arc.getVertex().getLabel());
+                }
+            }
+            if( accepting != 0 || rejecting != 0) {
+                if (accepting > rejecting) {
+                    hashtagVertex.getLabel().setAcceptance("accepting");
+                } else {
+                    hashtagVertex.getLabel().setAcceptance("rejecting");
+                }
+            }
+        }
+    }
 }
