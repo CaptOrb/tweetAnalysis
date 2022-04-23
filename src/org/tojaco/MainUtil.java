@@ -313,9 +313,13 @@ public class MainUtil {
                 hashtagSplitter.initialiseLexiconDictionary(lexiconGraph);
 
                 hashtagSplitter.splitHashtagsByLexicon(sumHashTagGraph);
-
-
                 rfs.writeFileFromGraph(lexiconGraph, new File(configuration.getGRAPH_DIRECTORY(), "thisbetterwork.txt"),false);
+
+                GraphElements graphElements2 = new GraphElements();
+
+                DirectedGraph<Hashtag,String> hashtagToWordGraph = hashtagSummarizer.hashtagMadeUpOf(hashtagToUsers,graphElements2);
+
+                rfs.writeFileFromGraph( hashtagToWordGraph, new File(configuration.getGRAPH_DIRECTORY(), "hashtagsToWords.txt"), false);
         }
     }
 

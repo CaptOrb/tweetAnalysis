@@ -22,4 +22,20 @@ public class HashtagSummarizer<T,E> {
 
         return hashtagAnalyses;
     }
+
+    public DirectedGraph<Hashtag, String> hashtagMadeUpOf(DirectedGraph<Hashtag, E> hashtagToUsers, GraphElements graphElements) {
+        DirectedGraph<Hashtag, String> hashtagToWords = new DirectedGraph<>();
+
+        for (Vertex<Hashtag> hashtag : hashtagToUsers.getGraph().keySet()) {
+            for (int i = 0; i < hashtag.getLabel().getWords().size(); i++) {
+                VertexCreator<String> vertexCreator = new CreateStringVertex();
+                Vertex<String> destVertex = graphElements.getVertex(hashtag.getLabel().getWords().get(i), vertexCreator);
+                Arc<String> myArc = new Arc<>(destVertex, +1);
+                hashtagToWords.addArc(hashtag, myArc);
+            }
+
+        }
+
+        return hashtagToWords;
+    }
 }
