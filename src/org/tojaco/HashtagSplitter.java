@@ -99,6 +99,8 @@ public class HashtagSplitter<T, E> {
 
             boolean splitSuccess = splitHashtagsByLexiconHelper(hashtag.toString(), hashtag, lexiconDictionary);
 
+            hashtag.editListOfWords();
+
             if (splitSuccess) {
                 System.out.print(hashtag + " was split into:\t");
                 for (String s : hashtag.getWords()) {
