@@ -319,6 +319,9 @@ public class MainUtil {
                 rfs.writeFileFromGraph( hashtagToWordGraph, new File(configuration.getGRAPH_DIRECTORY(), configuration.getHASHTAG_TO_WORDS()), false);
 
                 hashtagSummarizer.assignGistOfTags(sumHashTagGraph);
+
+                rfs.writeFileFromGraph(sumHashTagGraph, new File(configuration.getGRAPH_DIRECTORY(),
+                        configuration.getHASHTAG_SUMMARY_FILE()) , true);
         }
     }
 

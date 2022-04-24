@@ -29,6 +29,7 @@ public class Configuration {
     private String LEXICON_FILE;
     private String HASHTAG_TO_WORDS;
     private String STANCE_FILE;
+    private String HASHTAG_SUMMARY_FILE;
     private String LANGUAGE;
     private String BATCH_SIZE;
     private String SLEEP_TIME;
@@ -81,6 +82,8 @@ public class Configuration {
     public String getHASHTAG_TO_WORDS() { return HASHTAG_TO_WORDS; }
 
     public String getSTANCE_FILE(){ return STANCE_FILE; }
+
+    public String getHASHTAG_SUMMARY_FILE() { return HASHTAG_SUMMARY_FILE; }
 
     public String getACCESS_TOKEN() {
         return ACCESS_TOKEN;
@@ -145,6 +148,7 @@ public class Configuration {
             configuration.USERS_TO_HASHTAGS = properties.getProperty("USERS_TO_HASHTAGS");
             configuration.HASHTAGS_TO_USERS = properties.getProperty("HASHTAGS_TO_USERS");
             configuration.LEXICON_FILE = properties.getProperty("LEXICON_FILE");
+            configuration.HASHTAG_SUMMARY_FILE = properties.getProperty("HASHTAG_SUMMARY_FILE");
             configuration.HASHTAG_TO_WORDS = properties.getProperty("HASHTAG_TO_WORDS");
             configuration.STANCE_FILE = properties.getProperty("STANCE_FILE");
             configuration.SLEEP_TIME = properties.getProperty("SLEEPTIMEMS");

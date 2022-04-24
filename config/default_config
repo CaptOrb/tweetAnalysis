@@ -13,6 +13,7 @@ USERS_TO_HASHTAGS=usersToHashtags.txt
 HASHTAGS_TO_USERS=hashtagsToUsers.txt
 LEXICON_FILE=lexiconGraph.txt
 HASHTAG_TO_WORDS=hashtagsToWords.txt
+HASHTAG_SUMMARY_FILE=hashtagSummaries.txt
 STANCE_FILE=stances.txt
 SLEEPTIMEMS=1000
 LANGUAGE=en
