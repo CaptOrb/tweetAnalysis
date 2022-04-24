@@ -19,14 +19,13 @@ public class HashtagSplitter<T, E> {
         for (Vertex<Hashtag> hashtag : hashtagToUsers.getGraph().keySet()) {
             String hashtagWord[] = hashtag.toString().split("(?<=[a-z])(?=[A-Z])");
             for(int i=0; i<hashtagWord.length;i++){
-                checkIfA(hashtagWord[i], hashtag);
+                checkIfAOrI(hashtagWord[i], hashtag);
             }
-            System.out.println();
         }
     }
 
-    public void checkIfA(String hashtagWord, Vertex<Hashtag> hashtag){
-        if(hashtagWord.startsWith("A") && (hashtagWord.length())!=1) {
+    public void checkIfAOrI(String hashtagWord, Vertex<Hashtag> hashtag){
+        if((hashtagWord.startsWith("A") || hashtagWord.startsWith("I")) && (hashtagWord.length())!=1) {
 
             char secondLetter = hashtagWord.charAt(1);
             char thirdLetter = 'a';
@@ -111,9 +110,9 @@ public class HashtagSplitter<T, E> {
 
     public void splitHashtagsByLexicon(DirectedGraph<Hashtag, E> sumHashTagGraph) {
 
-        for (Map.Entry<Vertex<Hashtag>, ArrayList<Arc<E>>> entrySet : sumHashTagGraph.getGraph().entrySet()) {
+        for (Vertex<Hashtag> hashtag : sumHashTagGraph.getGraph().keySet()) {
 
-            Hashtag hashtag = entrySet.getKey().getLabel();
+            //Hashtag hashtag = entrySet.getKey().getLabel();
 
             List<List<String>> splitStr = new LinkedList<>();
 
@@ -122,8 +121,9 @@ public class HashtagSplitter<T, E> {
             // then add the word splits
             for (List<String> listResult : splitStr) {
                 for (String word : listResult) {
-                    if (!hashtag.getWords().contains(word)) {
-                        hashtag.addWord(word);
+                    if (!hashtag.getLabel().getWords().contains(word)) {
+                        //checkIfAOrI(word, hashtag);
+                        hashtag.getLabel().addWord(word);
                     }
                 }
             }
@@ -131,10 +131,10 @@ public class HashtagSplitter<T, E> {
             // not sure whether to comment this out or not e.g. #GETVACCINATEDNOW was split into: getvaccinatednow
             // #freeamerica was split into:	freeamerica rather than free america etc
             // where it should have been split up further and it does get split further if we dont call this.
-            hashtag.editListOfWords();
+            hashtag.getLabel().editListOfWords();
 
             System.out.print(hashtag + " was split into:\t");
-            for (String s : hashtag.getWords()) {
+            for (String s : hashtag.getLabel().getWords()) {
                 System.out.print(s + " ");
             }
             System.out.println();
