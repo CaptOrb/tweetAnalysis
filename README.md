@@ -68,3 +68,9 @@ Percentage negative stance using ONLY hashtags: 62.04249%
 4b) The two perspectives agree with each other for roughly 98% of the stances, and disagree with each other for roughly 2% of the stances based on the results from 4a.
 
 4c)
+
+# Answers to Sprint 6 questions
+
+- All tasks were completely successfully, except we didn't use interfaces as we weren't sure how best to utilise them.
+- The tasks were divided evenly between the team members. See commit history for a clearer idea of who carried out which tasks, but pair work was often carried out with just one person committing the finished result.
+- Best way to use the graphs: All graphs are outputted to the graph directory e.g. hashTagsToWords.txt contains a mapping from hashtags to the tag splits, hashtagSummaries.txt contains a mapping from hashtag to its summary and lexiconGraph.txt contains the lexicongraph. 
