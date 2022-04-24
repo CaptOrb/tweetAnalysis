@@ -317,6 +317,8 @@ public class MainUtil {
                 DirectedGraph<Hashtag,String> hashtagToWordGraph = hashtagSummarizer.hashtagMadeUpOf(hashtagToUsers,graphElements2);
 
                 rfs.writeFileFromGraph( hashtagToWordGraph, new File(configuration.getGRAPH_DIRECTORY(), "hashtagsToWords.txt"), false);
+
+                hashtagSummarizer.assignGistOfTags(sumHashTagGraph);
         }
     }
 

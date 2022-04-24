@@ -1,6 +1,7 @@
 package org.tojaco.GraphElements;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -9,6 +10,8 @@ public class Hashtag implements Stanceable {
     private final List<String> words = new ArrayList<String>();
     private int stance;
     private boolean hasStance;
+    private String acceptance;
+    private List<String> refs = new ArrayList<>();
 
     public List<String> getWords() {
         return words;
@@ -63,10 +66,24 @@ public class Hashtag implements Stanceable {
 
     public Hashtag(String tag){
         this.tag = tag;
+        acceptance = "";
     }
 
     public String toString(){
         return tag.toString();
+    }
+
+    // combination of acceptance and refs
+    public String getGist(){ return acceptance + refs; }
+
+    public void setAcceptance( String acceptance ){
+        this.acceptance = acceptance;
+    }
+
+    public List<String> getRefs(){ return refs; }
+
+    public void addRef( String ref ){
+        refs.add(ref);
     }
 
 }
