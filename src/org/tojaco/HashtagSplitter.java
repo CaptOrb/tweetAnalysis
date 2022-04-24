@@ -75,33 +75,6 @@ public class HashtagSplitter<T, E> {
         }
     }
 
-/*    public boolean splitHashtagsByLexiconHelper(String hashTag, Hashtag hashtagObj, Set<String> lexiconDictionary, Stack<String> words) {
-
-        hashTag = hashTag.replaceAll("[#]", "").toLowerCase();
-
-        if (hashTag.length() == 0) {
-            return true;
-        } else {
-
-            // keep matching each character until we find a valid word
-            for (int i = 1; i <= hashTag.length(); i++) {
-
-                String firstWord = hashTag.substring(0, i);
-                String remainSubStr = hashTag.substring(i);
-
-                if ((lexiconDictionary.contains(firstWord))
-                        && (splitHashtagsByLexiconHelper(remainSubStr, hashtagObj,lexiconDictionary, words))) {
-
-                    if(!hashtagObj.getWords().contains(firstWord)){
-                        hashtagObj.addWord(firstWord);
-                    }
-                    return true;
-                }
-            }
-        }
-        return false;
-    }*/
-
     public void initialiseLexiconDictionary(DirectedGraph<Hashtag, E> sumHashTagGraph) {
         for (Map.Entry<Vertex<Hashtag>, ArrayList<Arc<E>>> entrySet : sumHashTagGraph.getGraph().entrySet()) {
             lexiconDictionary.add(entrySet.getKey().toString());
@@ -111,8 +84,6 @@ public class HashtagSplitter<T, E> {
     public void splitHashtagsByLexicon(DirectedGraph<Hashtag, E> sumHashTagGraph) {
 
         for (Vertex<Hashtag> hashtag : sumHashTagGraph.getGraph().keySet()) {
-
-            //Hashtag hashtag = entrySet.getKey().getLabel();
 
             List<List<String>> splitStr = new LinkedList<>();
 
@@ -129,13 +100,6 @@ public class HashtagSplitter<T, E> {
             }
 
             hashtag.getLabel().editListOfWords();
-
-            System.out.print(hashtag + " was split into:\t");
-            for (String s : hashtag.getLabel().getWords()) {
-                System.out.print(s + " ");
-            }
-            System.out.println();
-
         }
     }
 }
