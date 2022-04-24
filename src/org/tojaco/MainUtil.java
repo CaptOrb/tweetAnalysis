@@ -310,13 +310,13 @@ public class MainUtil {
 
                 hashtagSplitter.splitHashtagsByLexicon(hashtagToUsers);
 
-                rfs.writeFileFromGraph(lexiconGraph, new File(configuration.getGRAPH_DIRECTORY(), "lexiconGraph.txt"),false);
+                rfs.writeFileFromGraph(lexiconGraph, new File(configuration.getGRAPH_DIRECTORY(), configuration.getLEXICON_FILE()),false);
 
                 GraphElements graphElements2 = new GraphElements();
 
                 DirectedGraph<Hashtag,String> hashtagToWordGraph = hashtagSummarizer.hashtagMadeUpOf(hashtagToUsers,graphElements2);
 
-                rfs.writeFileFromGraph( hashtagToWordGraph, new File(configuration.getGRAPH_DIRECTORY(), "hashtagsToWords.txt"), false);
+                rfs.writeFileFromGraph( hashtagToWordGraph, new File(configuration.getGRAPH_DIRECTORY(), configuration.getHASHTAG_TO_WORDS()), false);
 
                 hashtagSummarizer.assignGistOfTags(sumHashTagGraph);
         }
