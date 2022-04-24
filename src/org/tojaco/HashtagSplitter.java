@@ -128,9 +128,10 @@ public class HashtagSplitter<T, E> {
                 }
             }
 
-            // commented this out for now because it gives some wrong results e.g. #GETVACCINATEDNOW was split into: getvaccinatednow
-            // where it should have been split up further
-           //  hashtag.editListOfWords();
+            // not sure whether to comment this out or not e.g. #GETVACCINATEDNOW was split into: getvaccinatednow
+            // #freeamerica was split into:	freeamerica rather than free america etc
+            // where it should have been split up further and it does get split further if we dont call this.
+            hashtag.editListOfWords();
 
             System.out.print(hashtag + " was split into:\t");
             for (String s : hashtag.getWords()) {
