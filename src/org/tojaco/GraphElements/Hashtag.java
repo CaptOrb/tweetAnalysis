@@ -2,7 +2,7 @@ package org.tojaco.GraphElements;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
+
 
 public class Hashtag implements Stanceable {
     private final String tag;

@@ -7,7 +7,6 @@ import org.tojaco.GraphElements.Hashtag;
 
 import java.util.*;
 
-
 public class HashtagSplitter<T, E> {
 
     private final Set<String> lexiconDictionary = new HashSet<>();
@@ -39,19 +38,45 @@ public class HashtagSplitter<T, E> {
                 String restOfWord = hashtagWord.substring(1);
                 hashtag.getLabel().addWord(IndefArticle.replaceAll("[#.,]","").toLowerCase());
                 hashtag.getLabel().addWord(restOfWord.replaceAll("[#.,]","").toLowerCase());
-                System.out.println(IndefArticle.replaceAll("[#.,]",""));
-                System.out.println(restOfWord.replaceAll("[#.,]",""));
+              //  System.out.println(IndefArticle.replaceAll("[#.,]",""));
+                //System.out.println(restOfWord.replaceAll("[#.,]",""));
             } else{
                 hashtag.getLabel().addWord(hashtagWord.replaceAll("[#.,]","").toLowerCase());
-                System.out.println(hashtagWord.replaceAll("[#.,]",""));
+                //System.out.println(hashtagWord.replaceAll("[#.,]",""));
             }
         } else{
             hashtag.getLabel().addWord(hashtagWord.replaceAll("[#.,]","").toLowerCase());
-            System.out.println(hashtagWord.replaceAll("[#.,]",""));
+            //System.out.println(hashtagWord.replaceAll("[#.,]",""));
         }
     }
 
-    public boolean splitHashtagsByLexiconHelper(String hashTag, Hashtag hashtagObj, Set<String> lexiconDictionary) {
+    public static void splitHashtagsByLexiconHelper(String hashtag, Set<String> lexiconDictionary,
+                                                    Stack<String> tagComponent, List<List<String>> splitStr) {
+
+        hashtag = hashtag.replaceAll("[#]", "").toLowerCase();
+
+        for (int i = 0; i < hashtag.length(); i++) {
+            String substring = hashtag.substring(0, i + 1);
+
+            if (lexiconDictionary.contains(substring)) {
+
+                // we use a stack to maintain the order of the words
+                tagComponent.push(substring);
+
+                if (i == hashtag.length() - 1) {
+                    splitStr.add(new ArrayList<>(tagComponent));
+                } else {
+                    // recursive call
+                    splitHashtagsByLexiconHelper(hashtag.substring(i + 1),
+                            lexiconDictionary, tagComponent, splitStr);
+                }
+                // pop matched word from the stack
+                tagComponent.pop();
+            }
+        }
+    }
+
+/*    public boolean splitHashtagsByLexiconHelper(String hashTag, Hashtag hashtagObj, Set<String> lexiconDictionary, Stack<String> words) {
 
         hashTag = hashTag.replaceAll("[#]", "").toLowerCase();
 
@@ -66,7 +91,7 @@ public class HashtagSplitter<T, E> {
                 String remainSubStr = hashTag.substring(i);
 
                 if ((lexiconDictionary.contains(firstWord))
-                        && (splitHashtagsByLexiconHelper(remainSubStr, hashtagObj,lexiconDictionary))) {
+                        && (splitHashtagsByLexiconHelper(remainSubStr, hashtagObj,lexiconDictionary, words))) {
 
                     if(!hashtagObj.getWords().contains(firstWord)){
                         hashtagObj.addWord(firstWord);
@@ -76,7 +101,7 @@ public class HashtagSplitter<T, E> {
             }
         }
         return false;
-    }
+    }*/
 
     public void initialiseLexiconDictionary(DirectedGraph<Hashtag, E> sumHashTagGraph) {
         for (Map.Entry<Vertex<Hashtag>, ArrayList<Arc<E>>> entrySet : sumHashTagGraph.getGraph().entrySet()) {
@@ -90,15 +115,28 @@ public class HashtagSplitter<T, E> {
 
             Hashtag hashtag = entrySet.getKey().getLabel();
 
-            splitHashtagsByLexiconHelper(hashtag.toString(), hashtag, lexiconDictionary);
+            List<List<String>> splitStr = new LinkedList<>();
 
-         //   hashtag.editListOfWords();
+            splitHashtagsByLexiconHelper(hashtag.toString(), lexiconDictionary, new Stack<>(), splitStr);
+
+            // then add the word splits
+            for (List<String> listResult : splitStr) {
+                for (String word : listResult) {
+                    if (!hashtag.getWords().contains(word)) {
+                        hashtag.addWord(word);
+                    }
+                }
+            }
+
+            // commented this out for now because it gives some wrong results e.g. #GETVACCINATEDNOW was split into: getvaccinatednow
+            // where it should have been split up further
+           //  hashtag.editListOfWords();
 
             System.out.print(hashtag + " was split into:\t");
             for (String s : hashtag.getWords()) {
-                    System.out.print(s + " ");
-                }
-                System.out.println();
+                System.out.print(s + " ");
+            }
+            System.out.println();
 
         }
     }

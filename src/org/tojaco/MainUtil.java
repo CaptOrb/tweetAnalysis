@@ -305,17 +305,12 @@ public class MainUtil {
                 HashtagSummarizer hashtagSummarizer = new HashtagSummarizer();
 
                 DirectedGraph<Hashtag,String> sumHashTagGraph = hashtagSummarizer.summarizeHashtag(hashtagToUsers, lexiconGraph, graphElementsLexicon);
-/*
-                for(Map.Entry<Vertex<Hashtag>, ArrayList<Arc<String>>> v : sumHashTagGraph.getGraph().entrySet()){
-                    System.out.println(v.getKey().getLabel() + " " + v.getValue());
-                }*/
 
                 hashtagSplitter.initialiseLexiconDictionary(lexiconGraph);
 
                 hashtagSplitter.splitHashtagsByLexicon(hashtagToUsers);
 
-
-                rfs.writeFileFromGraph(lexiconGraph, new File(configuration.getGRAPH_DIRECTORY(), "thisbetterwork.txt"),false);
+                rfs.writeFileFromGraph(lexiconGraph, new File(configuration.getGRAPH_DIRECTORY(), "lexiconGraph.txt"),false);
 
                 GraphElements graphElements2 = new GraphElements();
 
@@ -370,7 +365,7 @@ public class MainUtil {
                     Arc<TwitterUser> arc = new Arc<>(end, Integer.parseInt(newArc[2]));
                     rtGraph.addArc(start, arc);
 
-                    System.out.print("Graph.Vertex with " + start + " and arc with " + end.toString() + " was added to the graph.\n");
+                    System.out.print("Vertex with " + start + " and arc with " + end.toString() + " was added to the graph.\n");
 
                 }
             }
