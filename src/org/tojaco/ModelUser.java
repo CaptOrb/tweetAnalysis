@@ -26,7 +26,6 @@ public class ModelUser {
     public void addSummaryOfHashtagToUserQualities(DirectedGraph<TwitterUser, Hashtag> userToHashtag){
 
         for(Map.Entry<Vertex<TwitterUser>, ArrayList<Arc<Hashtag>>> entry: userToHashtag.getGraph().entrySet()) {
-           System.out.println(entry.getKey());
             for(int i=0; i<entry.getValue().size(); i++){
                 entry.getKey().getLabel().addQuality(entry.getValue().get(i).getVertex().getLabel().getQualities());
             }
@@ -45,7 +44,6 @@ public class ModelUser {
 
             }
         }
-
         return usersToQualities;
     }
 }
