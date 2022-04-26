@@ -12,6 +12,16 @@ public class Hashtag implements Stanceable {
     private boolean hasStance;
     private String acceptance;
     private List<String> refs = new ArrayList<>();
+    private List<String> qualities = new ArrayList<>();
+
+    public List<String> getQualities() {
+        return qualities;
+    }
+
+    public void addQuality(String qualityOfUser){
+        qualities.add(qualityOfUser);
+    }
+
 
     public List<String> getWords() {
         return words;
