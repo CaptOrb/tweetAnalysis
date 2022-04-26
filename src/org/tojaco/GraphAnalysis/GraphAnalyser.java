@@ -75,4 +75,5 @@ public class GraphAnalyser<T, E> {
         return (negativeStances / hasStance) * 100;
     }
 
+
 }
