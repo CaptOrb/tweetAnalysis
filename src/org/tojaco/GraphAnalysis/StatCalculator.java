@@ -37,11 +37,11 @@ public class StatCalculator {
 
     public double calculateConditionalProbability(DirectedGraph<TwitterUser, String> userModel, String prop1, String prop2) {
 
-        Set<Vertex<TwitterUser>> userKeySet = userModel.getGraph().keySet();
+        Set<Vertex<TwitterUser>> userList = userModel.getGraph().keySet();
 
-        double probUserWithPropOne = getProportionList(userKeySet, prop1).size() / (double) userKeySet.size();
+        double probUserWithPropOne = getProportionList(userList, prop1).size() / (double) userList.size();
 
-        double probUserWithPropTwo = getProportionList(userKeySet, prop2).size() / (double) userKeySet.size();
+        double probUserWithPropTwo = getProportionList(userList, prop2).size() / (double) userList.size();
 
         double probUserWithBothProps = probUserWithPropOne * probUserWithPropTwo;
 
