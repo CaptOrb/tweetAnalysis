@@ -322,6 +322,19 @@ public class MainUtil {
 
                 rfs.writeFileFromGraph(sumHashTagGraph, new File(configuration.getGRAPH_DIRECTORY(),
                         configuration.getHASHTAG_SUMMARY_FILE()) , true);
+
+                //to be added to sprint 7
+                ModelUser modelUser = new ModelUser();
+                //modelUser.findHashtagsForEachUser(usertoHashTag, sumHashTagGraph);
+                modelUser.addSummaryOfHashtag(sumHashTagGraph);
+                modelUser.addSummaryOfHashtagToUserQualities(usertoHashTag);
+
+                DirectedGraph<TwitterUser, String> usersToQualities = new DirectedGraph();
+
+                usersToQualities = modelUser.makeUserToQualityGraph(usertoHashTag, graphElements);
+
+                rfs.writeFileFromGraph(usersToQualities, new File(configuration.getGRAPH_DIRECTORY(),
+                        configuration.getUSER_QUALITIES()) , true);
         }
     }
 

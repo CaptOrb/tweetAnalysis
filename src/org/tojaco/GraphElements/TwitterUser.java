@@ -1,9 +1,22 @@
 package org.tojaco.GraphElements;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TwitterUser implements Stanceable {
     private final String userHandle;
     private int stance;
     private boolean hasStance;
+    private List<String> qualities = new ArrayList<>();
+
+
+    public List<String> getQualities() {
+        return qualities;
+    }
+
+    public void addQuality(List<String> qualitysFromHashtags){
+        qualities.addAll(qualitysFromHashtags);
+    }
 
     public TwitterUser(String userHandle){
         this.userHandle = userHandle;

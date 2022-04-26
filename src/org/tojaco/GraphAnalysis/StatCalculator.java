@@ -3,13 +3,12 @@ package org.tojaco.GraphAnalysis;
 import org.tojaco.Graph.Arc;
 import org.tojaco.Graph.DirectedGraph;
 import org.tojaco.Graph.Vertex;
-import org.tojaco.Graph.VertexCreator;
 import org.tojaco.GraphElements.Hashtag;
 import org.tojaco.GraphElements.TwitterUser;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 public class StatCalculator {
     DirectedGraph<TwitterUser, String> userModel;
@@ -20,10 +19,10 @@ public class StatCalculator {
         this.hashtagSummaries = hashtagSummaries;
     }
 
-    private List<TwitterUser> getProportionList(List<TwitterUser> totalSet, String subsetCondition){
+    private List<TwitterUser> getProportionList(Set<Vertex<TwitterUser>> totalSet, String subsetCondition){
         List<TwitterUser> subset = new ArrayList<>();
-        for( TwitterUser user : totalSet ){
-            Vertex<TwitterUser> vertex = userModel.getAllVerticesInGraph().get(user.getUserHandle());
+        for( Vertex<TwitterUser> user : totalSet ){
+            Vertex<TwitterUser> vertex = userModel.getAllVerticesInGraph().get(user.getLabel().getUserHandle());
             for( Arc<String> arc : userModel.getGraph().get(vertex) ){
                 if ( arc.getVertex().getLabel().equals(subsetCondition) ){
                     subset.add(vertex.getLabel());
@@ -59,29 +58,16 @@ public class StatCalculator {
     }
 
     public double calculateConditionalProbability(DirectedGraph<TwitterUser, String> userModel, String prop1, String prop2) {
-        double propOneGivenPropTwo;
 
-        int totalPropOne = 0;
-        int totalPropTwo = 0;
-        int totalProp = 0;
+        Set<Vertex<TwitterUser>> userList = userModel.getGraph().keySet();
 
-        for (Map.Entry<Vertex<TwitterUser>, ArrayList<Arc<String>>> user : userModel.getGraph().entrySet()) {
+        double probUserWithPropOne = getProportionList(userList, prop1).size() / (double) userList.size();
 
-            totalProp += user.getValue().size();
+        double probUserWithPropTwo = getProportionList(userList, prop2).size() / (double) userList.size();
 
-            for (Arc<String> arc : user.getValue()) {
+        double probUserWithBothProps = probUserWithPropOne * probUserWithPropTwo;
 
-                if (arc.toString().contains(prop1)) {
-                    totalPropOne++;
-                }
-
-                if (arc.toString().contains(prop2)) {
-                    totalPropTwo++;
-                }
-            }
-        }
-
-        return 0.00;
+        return probUserWithBothProps / probUserWithPropTwo;
     }
 
 }
