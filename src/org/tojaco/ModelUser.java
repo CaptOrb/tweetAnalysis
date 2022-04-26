@@ -1,8 +1,6 @@
 package org.tojaco;
 
-import org.tojaco.Graph.Arc;
-import org.tojaco.Graph.DirectedGraph;
-import org.tojaco.Graph.Vertex;
+import org.tojaco.Graph.*;
 import org.tojaco.GraphElements.GraphElements;
 import org.tojaco.GraphElements.Hashtag;
 import org.tojaco.GraphElements.TwitterUser;
@@ -12,6 +10,7 @@ import java.util.Map;
 
 public class ModelUser {
 
+    //by adding list of qualities to each hashtag, and then adding the qualities of the hashtags that user uses, we create model of that user
 
     public void addSummaryOfHashtag(DirectedGraph<Hashtag, String> hashtagToSummary){
         for(Map.Entry<Vertex<Hashtag>, ArrayList<Arc<String>>> entry: hashtagToSummary.getGraph().entrySet()){
@@ -29,13 +28,24 @@ public class ModelUser {
         for(Map.Entry<Vertex<TwitterUser>, ArrayList<Arc<Hashtag>>> entry: userToHashtag.getGraph().entrySet()) {
            System.out.println(entry.getKey());
             for(int i=0; i<entry.getValue().size(); i++){
-                //for(int j=0; j<entry.getValue().get(j).getVertex().getLabel().getQualities().size(); j++){
-                    entry.getKey().getLabel().addQuality(entry.getValue().get(i).getVertex().getLabel().getQualities());
-                //}
-            }
-            for(int i = 0; i<entry.getKey().getLabel().getQualities().size(); i++){
-                System.out.println(entry.getKey().getLabel().getQualities().get(i));
+                entry.getKey().getLabel().addQuality(entry.getValue().get(i).getVertex().getLabel().getQualities());
             }
         }
+    }
+
+    public DirectedGraph<TwitterUser, String> makeUserToQualityGraph(DirectedGraph<TwitterUser, Hashtag> usersToHashtags, GraphElements graphElements){
+        DirectedGraph<TwitterUser, String> usersToQualities = new DirectedGraph();
+
+        for(Vertex<TwitterUser> user: usersToHashtags.getGraph().keySet()) {
+            for(int i=0; i<user.getLabel().getQualities().size();i++){
+                VertexCreator<String> vertexCreator = new CreateStringVertex();
+                Vertex<String> destVertex = graphElements.getVertex(user.getLabel().getQualities().get(i), vertexCreator);
+                Arc<String> myArc = new Arc<>(destVertex, +1);
+                usersToQualities.addArc(user, myArc);
+
+            }
+        }
+
+        return usersToQualities;
     }
 }
