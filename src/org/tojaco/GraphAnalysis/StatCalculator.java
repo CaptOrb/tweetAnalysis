@@ -35,6 +35,28 @@ public class StatCalculator {
         return subset;
     }
 
+    private Double calculateAntiStancesProportion( List<TwitterUser> usersSample ){
+        double subset = 0.0;
+        for ( TwitterUser user : usersSample ){
+            if( user.getStance() < 0 ){
+                subset++;
+            }
+        }
+        return subset/usersSample.size();
+    }
+
+    private Double calculateMeanOfRandomSamplesOfSizeM(int m ) {
+        List<Double> probabilities = new ArrayList<>();
+
+        for(int i = 0; i < 100; i ++) {
+            List<TwitterUser> sampleUsers = new ArrayList<>();
+            for (Vertex<TwitterUser> vertex : userModel.getGraph().keySet()) {
+                sampleUsers.add(vertex.getLabel());
+
+            }
+        }
+        return 0.0;
+    }
 
     public double calculateConditionalProbability(DirectedGraph<TwitterUser, String> userModel, String prop1, String prop2) {
         double propOneGivenPropTwo;
