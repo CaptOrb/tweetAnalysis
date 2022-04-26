@@ -7,6 +7,7 @@ import org.tojaco.Graph.VertexCreator;
 import org.tojaco.GraphElements.Hashtag;
 import org.tojaco.GraphElements.TwitterUser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StatCalculator {
@@ -18,18 +19,19 @@ public class StatCalculator {
         this.hashtagSummaries = hashtagSummaries;
     }
 
-    private Double calculateProportion(List<TwitterUser> totalSet, String subsetCondition){
-        Double subsetSize = 0.0;
+    private List<TwitterUser> getProportionList(List<TwitterUser> totalSet, String subsetCondition){
+        List<TwitterUser> subset = new ArrayList<>();
         for( TwitterUser user : totalSet ){
             Vertex<TwitterUser> vertex = userModel.getAllVerticesInGraph().get(user.getUserHandle());
             for( Arc<String> arc : userModel.getGraph().get(vertex) ){
                 if ( arc.getVertex().getLabel().equals(subsetCondition) ){
-                    subsetSize++;
+                    subset.add(vertex.getLabel());
+                    break;
                 }
             }
         }
 
-        return subsetSize/totalSet.size();
+        return subset;
     }
 
 }
