@@ -22,6 +22,31 @@ public class Hashtag implements Stanceable {
         qualities.add(qualityOfUser);
     }
 
+    public void editQualityList(){
+        if(qualities.size()>=2){
+            for(int i=0; i<qualities.size();i++){
+                if(qualities.get(i).startsWith("ref:")){
+                    findAcceptingRejecting(i);
+                }
+            }
+        }
+    }
+
+    public void findAcceptingRejecting(int index){
+        for(int i=0; i<qualities.size();i++){
+            if(qualities.get(i).equals("accepting")){
+                String ref = "+" + qualities.get(index);
+                qualities.remove(i);
+                qualities.add(ref);
+            }
+            if(qualities.get(i).equals("rejecting")){
+                String ref = "-" + qualities.get(index);
+                qualities.remove(i);
+                qualities.add(ref);
+            }
+        }
+    }
+
 
     public List<String> getWords() {
         return words;

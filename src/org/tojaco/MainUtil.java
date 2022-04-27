@@ -173,7 +173,7 @@ public class MainUtil {
 
                 rfs.writeFileFromGraph(retweetedGraph,
                         new File(configuration.getGRAPH_DIRECTORY(),
-                                configuration.getRTGRAPH_OUTPUT_FILE()),true);
+                                configuration.getRTWEETEDGRAPH_OUTPUT_FILE()),true);
 
                 System.out.println("Retweet graph and retweeted graph added successfully to Graph directory!");
 
@@ -422,9 +422,10 @@ public class MainUtil {
                 rfs.writeFileFromGraph(usersToQualities, new File(configuration.getGRAPH_DIRECTORY(),
                         configuration.getUSER_QUALITIES()) , true);
 
-                StatCalculator statCalculator = new StatCalculator(usersToQualities, sumHashTagGraph);
+                StatCalculator statCalculator = new StatCalculator(usersToQualities);
 
-                statCalculator.calculateZScore(false);
+                // not 100% done yet
+                statCalculator.calConditionalProbability(usersToQualities);
 
                 break;
         }
