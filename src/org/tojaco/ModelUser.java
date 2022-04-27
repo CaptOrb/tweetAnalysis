@@ -78,27 +78,31 @@ public class ModelUser {
         int responsibilities = 0;
         if(listOfQualities.size()>2) {
 
-            List<String> toRemove = new ArrayList<>();
+           // List<String> toRemove = new ArrayList<>();
             for (int i = 0; i < listOfQualities.size(); i++) {
                 if (listOfQualities.get(i).equals("accepting")) {
                     accepting++;
-                    toRemove.add(listOfQualities.get(i));
 
                 } else if (listOfQualities.get(i).equals("rejecting")) {
                     rejecting++;
-                    toRemove.add(listOfQualities.get(i));
                 }
-            }
-            for (int i = 0; i < toRemove.size(); i++) {
-                listOfQualities.remove(toRemove.get(i));
-            }
 
-            if (accepting > rejecting && accepting > 0 && rejecting > 0) {
-                listOfQualities.add("accepting > rejecting");
-            } else if (rejecting > accepting && accepting > 0 && rejecting > 0) {
-                listOfQualities.add("rejecting > accepting");
-            } else if(accepting == rejecting && accepting > 0 && rejecting > 0) { //don't want to add rejecting & accepting if they don't use  those words
-                listOfQualities.add("rejecting & accepting");
+            }
+            if(accepting > 0 && rejecting > 0){ //don't want to add accepting or rejecting if they don't use those words
+                boolean toRemove = false;
+                if (accepting > rejecting) {
+                    listOfQualities.add("accepting > rejecting");
+                    toRemove = true;
+                } else if (rejecting > accepting) {
+                    listOfQualities.add("rejecting > accepting");
+                    toRemove = true;
+                } else if(accepting == rejecting) {
+                    toRemove = true;
+                    listOfQualities.add("rejecting & accepting");
+                }
+                if(toRemove){
+                    listOfQualities.removeIf(str -> str.equals("accepting") || str.equals("rejecting"));
+                }
             }
         }
 
