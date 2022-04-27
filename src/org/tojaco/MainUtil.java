@@ -430,7 +430,7 @@ public class MainUtil {
                 modelUser.addSummaryOfHashtag(sumHashTagGraph);
                 modelUser.addSummaryOfHashtagToUserQualities(usertoHashTag);
 
-                DirectedGraph<TwitterUser, String> usersToQualities = new DirectedGraph();
+                DirectedGraph<TwitterUser, String> usersToQualities = new DirectedGraph<>();
 
                 usersToQualities = modelUser.makeUserToQualityGraph(usertoHashTag, graphElements);
 
@@ -440,7 +440,9 @@ public class MainUtil {
                 StatCalculator statCalculator = new StatCalculator(usersToQualities);
 
                 // not 100% done yet
-                statCalculator.calConditionalProbability(usersToQualities);
+                //statCalculator.calConditionalProbability(usersToQualities);
+
+                statCalculator.calculateZScore(false, "-ref:fauci");
 
                 break;
         }

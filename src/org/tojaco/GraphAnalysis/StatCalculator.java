@@ -16,20 +16,21 @@ public class StatCalculator {
     private final DirectedGraph<TwitterUser, String> userModel;
     private DirectedGraph<Hashtag, String> hashtagSummaries;
     private List<TwitterUser> usersList;
+    private List<TwitterUser> proUsers;
+    private List<TwitterUser> antiUsers;
 
     public StatCalculator(DirectedGraph<TwitterUser, String> userModel){
         this.userModel = userModel;
-        this.hashtagSummaries = hashtagSummaries;
         usersList = new ArrayList<>();
         for (Vertex<TwitterUser> user : userModel.getGraph().keySet()){
             usersList.add(user.getLabel());
         }
     }
 
-    private List<TwitterUser> getProportionList(Set<Vertex<TwitterUser>> totalSet, String subsetCondition){
+    private List<TwitterUser> getProportionList(List<TwitterUser> totalSet, String subsetCondition){
         List<TwitterUser> subset = new ArrayList<>();
-        for( Vertex<TwitterUser> user : totalSet ){
-            Vertex<TwitterUser> vertex = userModel.getAllVerticesInGraph().get(user.getLabel().getUserHandle());
+        for( TwitterUser user : totalSet ){
+            Vertex<TwitterUser> vertex = userModel.getAllVerticesInGraph().get(user.getUserHandle());
             for( Arc<String> arc : userModel.getGraph().get(vertex) ){
                 if ( arc.getVertex().getLabel().equals(subsetCondition) ){
                     subset.add(vertex.getLabel());
@@ -39,6 +40,17 @@ public class StatCalculator {
         }
 
         return subset;
+    }
+
+    private void getProAntiList(){
+        for( TwitterUser user : usersList ){
+            if ( user.getStance() < 0 ){
+                antiUsers.add(user);
+            }
+            else if( user.getStance() > 0 ){
+                proUsers.add(user);
+            }
+        }
     }
 
     private Double calculateAntiStancesProportion( List<TwitterUser> usersSample ){
@@ -84,22 +96,30 @@ public class StatCalculator {
         return Math.sqrt(sumOfSquaredDiffs / points.size() );
     }
 
-    public Double calculateZScore( boolean positivity ){
-        // TODO
+    public Double calculateZScore( boolean positivity, String property ){
         double anti;
+        List<TwitterUser> m;
+        List<Double> sampleMeans;
+        double mew, sD;
         if( !positivity ){
-            anti = calculateAntiStancesProportion(usersList);
+            getProAntiList();
+            m = getProportionList(antiUsers, property);
+            sampleMeans = calculateMeanOfRandomSamplesOfSizeM(m.size());
+            mew = calculateDoubleMean(sampleMeans);
+            sD = calculateSD(sampleMeans, mew);
+            double difference = calculateAntiStancesProportion(m) - mew;
+            return sD/difference;
         }
         return 0.0;
     }
 
     public double calConditionalProbabilityWithProps(DirectedGraph<TwitterUser, String> userModel, String prop1, String prop2) {
 
-        Set<Vertex<TwitterUser>> userList = userModel.getGraph().keySet();
+        //Set<Vertex<TwitterUser>> userList = userModel.getGraph().keySet();
 
-        double probUserWithPropOne = getProportionList(userList, prop1).size() / (double) userList.size();
+        double probUserWithPropOne = getProportionList(usersList, prop1).size() / (double) usersList.size();
 
-        double probUserWithPropTwo = getProportionList(userList, prop2).size() / (double) userList.size();
+        double probUserWithPropTwo = getProportionList(usersList, prop2).size() / (double) usersList.size();
 
         double probUserWithBothProps = probUserWithPropOne * probUserWithPropTwo;
 
