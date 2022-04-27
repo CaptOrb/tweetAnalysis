@@ -6,6 +6,7 @@ import org.tojaco.FileIO.TwitterFileService;
 import org.tojaco.Graph.*;
 import org.tojaco.GraphAnalysis.GraphAnalyser;
 import org.tojaco.GraphAnalysis.StanceAnalysis;
+import org.tojaco.GraphAnalysis.StatCalculator;
 import org.tojaco.GraphElements.GraphElements;
 import org.tojaco.GraphElements.Hashtag;
 import org.tojaco.GraphElements.TwitterUser;
@@ -420,6 +421,10 @@ public class MainUtil {
 
                 rfs.writeFileFromGraph(usersToQualities, new File(configuration.getGRAPH_DIRECTORY(),
                         configuration.getUSER_QUALITIES()) , true);
+
+                StatCalculator statCalculator = new StatCalculator(usersToQualities, sumHashTagGraph);
+
+                statCalculator.calculateZScore(false);
 
                 break;
         }

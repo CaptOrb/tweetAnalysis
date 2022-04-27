@@ -5,6 +5,7 @@ import org.tojaco.Graph.DirectedGraph;
 import org.tojaco.Graph.Vertex;
 import org.tojaco.GraphElements.Hashtag;
 import org.tojaco.GraphElements.TwitterUser;
+import twitter4j.Twitter;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,12 +13,17 @@ import java.util.List;
 import java.util.Set;
 
 public class StatCalculator {
-    DirectedGraph<TwitterUser, String> userModel;
-    DirectedGraph<Hashtag, String> hashtagSummaries;
+    private final DirectedGraph<TwitterUser, String> userModel;
+    private DirectedGraph<Hashtag, String> hashtagSummaries;
+    private List<TwitterUser> usersList;
 
-    StatCalculator(DirectedGraph<TwitterUser, String> userModel, DirectedGraph<Hashtag, String> hashtagSummaries){
+    public StatCalculator(DirectedGraph<TwitterUser, String> userModel, DirectedGraph<Hashtag, String> hashtagSummaries){
         this.userModel = userModel;
         this.hashtagSummaries = hashtagSummaries;
+        usersList = new ArrayList<>();
+        for (Vertex<TwitterUser> user : userModel.getGraph().keySet()){
+            usersList.add(user.getLabel());
+        }
     }
 
     private List<TwitterUser> getProportionList(Set<Vertex<TwitterUser>> totalSet, String subsetCondition){
@@ -78,8 +84,12 @@ public class StatCalculator {
         return Math.sqrt(sumOfSquaredDiffs / points.size() );
     }
 
-    public Double calculateZScore(){
+    public Double calculateZScore( boolean positivity ){
         // TODO
+        double anti;
+        if( !positivity ){
+            anti = calculateAntiStancesProportion(usersList);
+        }
         return 0.0;
     }
 
