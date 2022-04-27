@@ -14,12 +14,10 @@ public class ModelUser {
 
     public void addSummaryOfHashtag(DirectedGraph<Hashtag, String> hashtagToSummary){
         for(Map.Entry<Vertex<Hashtag>, ArrayList<Arc<String>>> entry: hashtagToSummary.getGraph().entrySet()){
-            //System.out.println(entry.getKey().toString());
             for(int i=0; i<entry.getValue().size(); i++){
                 entry.getKey().getLabel().addQuality(entry.getValue().get(i).getVertex().toString());
-                //System.out.print(" " + entry.getValue().get(i).getVertex().toString());
             }
-            //System.out.println();
+            entry.getKey().getLabel().editQualityList();
         }
     }
 
