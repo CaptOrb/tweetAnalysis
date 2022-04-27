@@ -373,6 +373,20 @@ public class MainUtil {
                         new File(configuration.getGRAPH_DIRECTORY(),
                                 configuration.getHASHTAGS_TO_USERS()),true);
 
+                graphAnalyser = new GraphAnalyser();
+
+                for (int i = 0; i < 3; i++) { //theres no change in coverage from 3 to 4, but theres a change in coverage from 2 to 3
+                    graphAnalyser.assignUserStances(usertoHashTag);
+                    graphAnalyser.assignUserStances(hashtagToUsers);
+
+                }
+                //by running this again we get more coverage
+                for (int i = 0; i < 5; i++) { //by upping this to 10 there's no change in coverage
+                    graphAnalyser.assignUserStances(rtGraph);
+                    graphAnalyser.assignUserStances(retweetedGraph);
+
+                }
+
                 hashtagSplitter = new HashtagSplitter();
                 hashtagSplitter.splitHashtagsByCamelCase(hashtagToUsers);
 
