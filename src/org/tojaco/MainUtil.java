@@ -239,7 +239,7 @@ public class MainUtil {
 
                 analyse.find100Hashtags(hashtagToUsers);
 
-                 analyse.find100HashtagsS5(rtGraph, hashtagToUsers);
+                analyse.find100HashtagsS5(rtGraph, hashtagToUsers);
 
 
                 break;
@@ -393,7 +393,6 @@ public class MainUtil {
                 }
 
                 analyse = new StanceAnalysis();
-                // users100New.checkStance(retweetHashMap);
                 analyse.assignStancesByHashtags( hashtagToUsers,graphElements, rtGraph);
 
                 analyse.find100Hashtags(hashtagToUsers);
@@ -438,7 +437,6 @@ public class MainUtil {
                         configuration.getHASHTAG_SUMMARY_FILE()) , true);
 
                 ModelUser modelUser = new ModelUser();
-                //modelUser.findHashtagsForEachUser(usertoHashTag, sumHashTagGraph);
                 modelUser.addSummaryOfHashtag(sumHashTagGraph);
                 modelUser.addSummaryOfHashtagToUserQualities(usertoHashTag);
 
@@ -449,6 +447,7 @@ public class MainUtil {
                 rfs.writeFileFromGraph(usersToQualities, new File(configuration.getGRAPH_DIRECTORY(),
                         configuration.getUSER_QUALITIES()) , true);
 
+                System.out.println("USER TO QUALITIES GRAPH OUTPUTTED SUCCESSFULLY.");
                 StatCalculator statCalculator = new StatCalculator(usersToQualities);
 
                 // not 100% done yet
