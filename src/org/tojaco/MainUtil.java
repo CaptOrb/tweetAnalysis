@@ -426,7 +426,6 @@ public class MainUtil {
                         configuration.getHASHTAG_SUMMARY_FILE()) , true);
 
                 ModelUser modelUser = new ModelUser();
-                //modelUser.findHashtagsForEachUser(usertoHashTag, sumHashTagGraph);
                 modelUser.addSummaryOfHashtag(sumHashTagGraph);
                 modelUser.addSummaryOfHashtagToUserQualities(usertoHashTag);
 
@@ -440,7 +439,7 @@ public class MainUtil {
                 StatCalculator statCalculator = new StatCalculator(usersToQualities);
 
                 // not 100% done yet
-                statCalculator.calConditionalProbability(usersToQualities);
+               // statCalculator.calConditionalProbability(usersToQualities);
 
                 break;
         }

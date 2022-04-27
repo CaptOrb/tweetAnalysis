@@ -6,6 +6,7 @@ import org.tojaco.GraphElements.Hashtag;
 import org.tojaco.GraphElements.TwitterUser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -57,18 +58,41 @@ public class ModelUser {
     }
 
     public List<String> editList(List<String> listOfQualities){
+
+        HashMap<String, Integer> qualities = new HashMap();
+        qualities.put("accepting", 0);
+        qualities.put("rejecting", 0);
+        qualities.put("rightwing", 0);
+        qualities.put("leftwing", 0);
+        qualities.put("problem", 0);
+        qualities.put("solution", 0);
+        qualities.put("rights", 0);
+        qualities.put("responsibilities", 0);
         int accepting = 0;
         int rejecting = 0;
+        int leftwing = 0;
+        int rightwing = 0;
+        int problem = 0;
+        int solution = 0;
+        int rights = 0;
+        int responsibilities = 0;
         if(listOfQualities.size()>2) {
+
+            List<String> toRemove = new ArrayList<>();
             for (int i = 0; i < listOfQualities.size(); i++) {
                 if (listOfQualities.get(i).equals("accepting")) {
                     accepting++;
-                    listOfQualities.remove(i);
+                    toRemove.add(listOfQualities.get(i));
+
                 } else if (listOfQualities.get(i).equals("rejecting")) {
                     rejecting++;
-                    listOfQualities.remove(i);
+                    toRemove.add(listOfQualities.get(i));
                 }
             }
+            for (int i = 0; i < toRemove.size(); i++) {
+                listOfQualities.remove(toRemove.get(i));
+            }
+
             if (accepting > rejecting && accepting > 0 && rejecting > 0) {
                 listOfQualities.add("accepting > rejecting");
             } else if (rejecting > accepting && accepting > 0 && rejecting > 0) {
