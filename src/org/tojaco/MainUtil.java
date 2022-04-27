@@ -56,6 +56,8 @@ public class MainUtil {
         DirectedGraph<TwitterUser, TwitterUser> rtGraph;
         DirectedGraph<TwitterUser, TwitterUser> retweetedGraph;
         GraphReadWriteService rfs = new GraphReadWriteService();
+        File lexiconFile = new File(configuration.getLEXICON_FOLDER(), configuration.getLEXICON_DATA_FILE());
+
 
         switch (option) {
             case 1:
@@ -172,7 +174,7 @@ public class MainUtil {
 
                 rfs.writeFileFromGraph(retweetedGraph,
                         new File(configuration.getGRAPH_DIRECTORY(),
-                                configuration.getRTGRAPH_OUTPUT_FILE()),true);
+                                configuration.getRTWEETEDGRAPH_OUTPUT_FILE()),true);
 
                 System.out.println("Retweet graph and retweeted graph added successfully to Graph directory!");
 
@@ -263,7 +265,7 @@ public class MainUtil {
 
                 rfs.writeFileFromGraph(retweetedGraph,
                         new File(configuration.getGRAPH_DIRECTORY(),
-                                configuration.getRTGRAPH_OUTPUT_FILE()),true);
+                                configuration.getRTWEETEDGRAPH_OUTPUT_FILE()),true);
 
                 System.out.println("Retweet graph and retweeted graph added successfully to Graph directory!");
 
@@ -292,7 +294,6 @@ public class MainUtil {
 
                 GraphElements graphElementsLexicon = new GraphElements();
 
-                File lexiconFile = new File("Lexicon", "labeled tag elements.txt");
 
                 LexiconFileService lfs = new LexiconFileService();
 
@@ -348,7 +349,7 @@ public class MainUtil {
 
                 rfs.writeFileFromGraph(retweetedGraph,
                         new File(configuration.getGRAPH_DIRECTORY(),
-                                configuration.getRTGRAPH_OUTPUT_FILE()),true);
+                                configuration.getRTWEETEDGRAPH_OUTPUT_FILE()),true);
 
                 System.out.println("Retweet graph and retweeted graph added successfully to Graph directory!");
 
@@ -376,8 +377,6 @@ public class MainUtil {
                 hashtagSplitter.splitHashtagsByCamelCase(hashtagToUsers);
 
                  graphElementsLexicon = new GraphElements();
-
-                 lexiconFile = new File("Lexicon", "labeled tag elements.txt");
 
                  lfs = new LexiconFileService();
 
