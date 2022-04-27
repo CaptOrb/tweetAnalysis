@@ -28,18 +28,6 @@ public class StanceAnalysis<T, E> {
         }
     }
 
-/*    //This is all the users with no stances :-)
-    public double UsersWithNoStance(Map<Vertex<T>, Integer> retweetsHashMap){
-        ArrayList<Vertex<T>> usersNoStance = new ArrayList<Vertex<T>>();
-        for(Map.Entry<Vertex<T>,Integer> entry : retweetsHashMap.entrySet()){
-            if(!(entry.getKey().hasStance())){
-                usersNoStance.add(entry.getKey());
-                //System.out.println(entry.getKey()); //was used to find users with no stance, probably better to write to a file :-) instead just copied and pasted into UsesNoStances
-            }
-        }
-        return usersNoStance.size();
-    }*/
-
     public void assignStancesByHashtags(DirectedGraph<Stanceable, Stanceable> hashtagsToUsers, GraphElements graphElements, DirectedGraph graph) {
         for (Vertex<Stanceable> vertex : hashtagsToUsers.getGraph().keySet()) {
             if (vertex.getLabel().hasStance()) {

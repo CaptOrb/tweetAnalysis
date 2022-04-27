@@ -7,7 +7,7 @@ public class TwitterUser implements Stanceable {
     private final String userHandle;
     private int stance;
     private boolean hasStance;
-    private List<String> qualities = new ArrayList<>();
+    private final List<String> qualities = new ArrayList<>();
 
 
     public List<String> getQualities() {
