@@ -233,13 +233,13 @@ public class MainUtil {
 
                 }
                 outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, true);
-                // StanceAnalysis analyse = new StanceAnalysis();
+                 StanceAnalysis analyse = new StanceAnalysis();
                 // users100New.checkStance(retweetHashMap);
-                // analyse.assignStancesByHashtags( hashtagToUsers,graphElements, rtGraph);
+                 analyse.assignStancesByHashtags( hashtagToUsers,graphElements, rtGraph);
 
-                //analyse.find100Hashtags(hashtagToUsers);
+                analyse.find100Hashtags(hashtagToUsers);
 
-                // analyse.find100HashtagsS5(rtGraph, hashtagToUsers);
+                 analyse.find100HashtagsS5(rtGraph, hashtagToUsers);
 
 
                 break;
@@ -352,6 +352,10 @@ public class MainUtil {
                         new File(configuration.getGRAPH_DIRECTORY(),
                                 configuration.getRTWEETEDGRAPH_OUTPUT_FILE()),true);
 
+                assignStances = new AssignStances();
+                StanceFile = new File(configuration.getSTANCE_FILE());
+                assignStances.determineProAntiVaxEvangelists(graphElements, rtGraph, StanceFile);
+
                 System.out.println("Retweet graph and retweeted graph added successfully to Graph directory!");
 
                 findEvangelists = new FindEvangelists();
@@ -387,6 +391,14 @@ public class MainUtil {
                     graphAnalyser.assignUserStances(retweetedGraph);
 
                 }
+
+                analyse = new StanceAnalysis();
+                // users100New.checkStance(retweetHashMap);
+                analyse.assignStancesByHashtags( hashtagToUsers,graphElements, rtGraph);
+
+                analyse.find100Hashtags(hashtagToUsers);
+
+                analyse.find100HashtagsS5(rtGraph, hashtagToUsers);
 
                 hashtagSplitter = new HashtagSplitter();
                 hashtagSplitter.splitHashtagsByCamelCase(hashtagToUsers);
@@ -440,7 +452,7 @@ public class MainUtil {
                 StatCalculator statCalculator = new StatCalculator(usersToQualities);
 
                 // not 100% done yet
-                statCalculator.calConditionalProbability(usersToQualities);
+                //statCalculator.calConditionalProbability(usersToQualities);
 
                 break;
         }
