@@ -261,7 +261,7 @@ public class MainUtil {
 
                 rfs.writeFileFromGraph(rtGraph,
                         new File(configuration.getGRAPH_DIRECTORY(),
-                               configuration.getRTWEETEDGRAPH_OUTPUT_FILE()),true);
+                               configuration.getRTGRAPH_OUTPUT_FILE()),true);
 
                 rfs.writeFileFromGraph(retweetedGraph,
                         new File(configuration.getGRAPH_DIRECTORY(),
