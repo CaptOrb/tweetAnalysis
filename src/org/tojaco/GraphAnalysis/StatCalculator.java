@@ -45,16 +45,30 @@ public class StatCalculator {
         return subset/usersSample.size();
     }
 
-    private Double calculateMeanOfRandomSamplesOfSizeM(int m ) {
+    private List<Double> calculateMeanOfRandomSamplesOfSizeM(int m ) {
         List<Double> probabilities = new ArrayList<>();
 
         for(int i = 0; i < 100; i ++) {
             List<TwitterUser> sampleUsers = new ArrayList<>();
             for (Vertex<TwitterUser> vertex : userModel.getGraph().keySet()) {
                 sampleUsers.add(vertex.getLabel());
-
+                probabilities.add( calculateAntiStancesProportion(sampleUsers) );
             }
         }
+        return probabilities;
+    }
+
+    private Double calculateDoubleMean(List<Double> list){
+        Double total = 0.0;
+        for ( Double curr : list ){
+            total += curr;
+        }
+
+        return total/list.size();
+    }
+
+    private Double calculateSD(List<Double> points, double mew){
+        // TODO
         return 0.0;
     }
 
