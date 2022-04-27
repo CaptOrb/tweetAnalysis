@@ -12,7 +12,6 @@ import java.util.Set;
 
 public class StatCalculator {
     private final DirectedGraph<TwitterUser, String> userModel;
-    private DirectedGraph<Hashtag, String> hashtagSummaries;
     private List<TwitterUser> usersList;
     private List<TwitterUser> proUsers;
     private List<TwitterUser> antiUsers;
@@ -111,9 +110,7 @@ public class StatCalculator {
         return 0.0;
     }
 
-    public double calConditionalProbabilityWithProps(DirectedGraph<TwitterUser, String> userModel, String prop1, String prop2) {
-
-        //Set<Vertex<TwitterUser>> userList = userModel.getGraph().keySet();
+    public double calConditionalProbabilityWithProps(String prop1, String prop2) {
 
         double probUserWithPropOne = getProportionList(usersList, prop1).size() / (double) usersList.size();
 
@@ -135,7 +132,7 @@ public class StatCalculator {
             for (int i = 0; i < stringArc.size(); i++) {
                 for (int j = 1; j < stringArc.size(); j++) {
 
-                    calConditionalProbabilityWithProps(userModel, stringArc.get(i).getVertex().getLabel(),
+                    calConditionalProbabilityWithProps(stringArc.get(i).getVertex().getLabel(),
                             stringArc.get(j).getVertex().getLabel());
                 }
             }
