@@ -20,6 +20,8 @@ public class StatCalculator {
     public StatCalculator(DirectedGraph<TwitterUser, String> userModel){
         this.userModel = userModel;
         usersList = new ArrayList<>();
+        antiUsers = new ArrayList<>();
+        proUsers = new ArrayList<>();
         for (Vertex<TwitterUser> user : userModel.getGraph().keySet()){
             usersList.add(user.getLabel());
         }
@@ -68,8 +70,8 @@ public class StatCalculator {
             List<TwitterUser> sampleUsers = new ArrayList<>();
             for (Vertex<TwitterUser> vertex : userModel.getGraph().keySet()) {
                 sampleUsers.add(vertex.getLabel());
-                probabilities.add( calculateAntiStancesProportion(sampleUsers) );
             }
+            probabilities.add( calculateAntiStancesProportion(sampleUsers) );
         }
         return probabilities;
     }

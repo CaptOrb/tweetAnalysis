@@ -454,6 +454,8 @@ public class MainUtil {
                 // not 100% done yet
                 //statCalculator.calConditionalProbability(usersToQualities);
 
+                Double zscore = statCalculator.calculateZScore(false, "-ref:fauci");
+
                 break;
         }
     }
