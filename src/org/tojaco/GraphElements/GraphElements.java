@@ -11,18 +11,6 @@ public class GraphElements {
 
     public Map<String, Vertex> getAllVerticesInGraph() { return allVerticesInGraph; }
 
-//    public Vertex<TwitterUser> getVertex(String label) {
-//        // check list of existing users
-//        // if user exists, then return user
-//        // if not create a new user with given label and return
-//        if (allVerticesInGraph.containsKey(label)) {
-//            return allVerticesInGraph.get(label);
-//        }
-//        Vertex<TwitterUser> vertex = new Vertex<TwitterUser>(new TwitterUser(label));
-//        allVerticesInGraph.put(label, vertex);
-//        return vertex;
-//    }
-
     public Vertex getVertex(String label, VertexCreator vertexCreator) {
         // check list of existing users
         // if user exists, then return user
@@ -31,7 +19,6 @@ public class GraphElements {
             return allVerticesInGraph.get(label);
         }
         Vertex vertex = vertexCreator.createVertex(label);
-        //Vertex vertex = new Vertex<>(label);
         allVerticesInGraph.put(label.toString(), vertex);
         return vertex;
     }
