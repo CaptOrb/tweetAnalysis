@@ -174,7 +174,7 @@ public class MainUtil {
 
                 rfs.writeFileFromGraph(retweetedGraph,
                         new File(configuration.getGRAPH_DIRECTORY(),
-                                configuration.getRTGRAPH_OUTPUT_FILE()),true);
+                                configuration.getRTWEETEDGRAPH_OUTPUT_FILE()),true);
 
                 System.out.println("Retweet graph and retweeted graph added successfully to Graph directory!");
 
@@ -265,7 +265,7 @@ public class MainUtil {
 
                 rfs.writeFileFromGraph(retweetedGraph,
                         new File(configuration.getGRAPH_DIRECTORY(),
-                                configuration.getRTGRAPH_OUTPUT_FILE()),true);
+                                configuration.getRTWEETEDGRAPH_OUTPUT_FILE()),true);
 
                 System.out.println("Retweet graph and retweeted graph added successfully to Graph directory!");
 
@@ -349,7 +349,7 @@ public class MainUtil {
 
                 rfs.writeFileFromGraph(retweetedGraph,
                         new File(configuration.getGRAPH_DIRECTORY(),
-                                configuration.getRTGRAPH_OUTPUT_FILE()),true);
+                                configuration.getRTWEETEDGRAPH_OUTPUT_FILE()),true);
 
                 System.out.println("Retweet graph and retweeted graph added successfully to Graph directory!");
 
@@ -377,7 +377,6 @@ public class MainUtil {
                 hashtagSplitter.splitHashtagsByCamelCase(hashtagToUsers);
 
                  graphElementsLexicon = new GraphElements();
-
 
                  lfs = new LexiconFileService();
 
