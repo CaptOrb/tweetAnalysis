@@ -17,7 +17,7 @@ public class StatCalculator {
     private DirectedGraph<Hashtag, String> hashtagSummaries;
     private List<TwitterUser> usersList;
 
-    public StatCalculator(DirectedGraph<TwitterUser, String> userModel, DirectedGraph<Hashtag, String> hashtagSummaries){
+    public StatCalculator(DirectedGraph<TwitterUser, String> userModel){
         this.userModel = userModel;
         this.hashtagSummaries = hashtagSummaries;
         usersList = new ArrayList<>();
