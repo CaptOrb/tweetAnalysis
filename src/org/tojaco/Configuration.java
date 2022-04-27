@@ -26,6 +26,10 @@ public class Configuration {
     private String RTWEETEDGRAPH_OUTPUT_FILE;
     private String USERS_TO_HASHTAGS;
     private String HASHTAGS_TO_USERS;
+
+    private String LEXICON_FOLDER;
+
+    private String LEXICON_DATA_FILE;
     private String LEXICON_FILE;
     private String HASHTAG_TO_WORDS;
     private String USER_QUALITIES;
@@ -77,6 +81,14 @@ public class Configuration {
     }
 
     public String getHASHTAGS_TO_USERS() { return HASHTAGS_TO_USERS; }
+
+    public String getLEXICON_FOLDER() {
+        return LEXICON_FOLDER;
+    }
+
+    public String getLEXICON_DATA_FILE() {
+        return LEXICON_DATA_FILE;
+    }
 
     public String getLEXICON_FILE() { return LEXICON_FILE; }
 
@@ -150,7 +162,9 @@ public class Configuration {
             configuration.RTWEETEDGRAPH_OUTPUT_FILE = properties.getProperty("RETWEETGPHOUTPUTFILE");
             configuration.USERS_TO_HASHTAGS = properties.getProperty("USERS_TO_HASHTAGS");
             configuration.HASHTAGS_TO_USERS = properties.getProperty("HASHTAGS_TO_USERS");
+            configuration.LEXICON_FOLDER = properties.getProperty("LEXICON_FOLDER");
             configuration.LEXICON_FILE = properties.getProperty("LEXICON_FILE");
+            configuration.LEXICON_DATA_FILE = properties.getProperty("LEXICON_DATA_FILE");
             configuration.HASHTAG_SUMMARY_FILE = properties.getProperty("HASHTAG_SUMMARY_FILE");
             configuration.HASHTAG_TO_WORDS = properties.getProperty("HASHTAG_TO_WORDS");
             configuration.USER_QUALITIES = properties.getProperty("USER_QUALITIES");
