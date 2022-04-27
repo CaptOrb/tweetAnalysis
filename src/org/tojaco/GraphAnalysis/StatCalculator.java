@@ -67,6 +67,8 @@ public class StatCalculator {
         return total/list.size();
     }
 
+    // standard deviation calculation:
+
     private Double calculateSD(List<Double> points, double mew){
         // calculate sum of squared differences
         double sumOfSquaredDiffs = 0.0;
