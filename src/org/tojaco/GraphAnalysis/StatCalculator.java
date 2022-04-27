@@ -5,8 +5,6 @@ import org.tojaco.Graph.DirectedGraph;
 import org.tojaco.Graph.Vertex;
 import org.tojaco.GraphElements.Hashtag;
 import org.tojaco.GraphElements.TwitterUser;
-import twitter4j.Twitter;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

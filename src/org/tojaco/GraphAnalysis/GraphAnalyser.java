@@ -14,20 +14,14 @@ public class GraphAnalyser<T, E> {
             totalOfStances = 0;
             numArcs = 0;
             for (Arc<Stanceable> arc : Graph.getGraph().get(vertex)) {
-                //if( users.getUserStances().get(arc.getVertex()) != null ){
-               // if (arc.getVertex().getLabel().hasStance()) {
                  if(arc.getVertex().getLabel().hasStance()){
-                    //totalOfStances += arc.getVertex().getLabel().getStance();
                      totalOfStances += arc.getVertex().getLabel().getStance();
-                //    totalOfStances += users.getUserStances().get(arc.getVertex());
-                    numArcs++;
+                     numArcs++;
                 }
             }
             if (numArcs > 0) {
                 int stance = totalOfStances / numArcs;
-                //vertex.getLabel().setStance(stance);
                 vertex.getLabel().setStance(stance);
-                //users.getUserStances().putIfAbsent(vertex, stance);
             }
         }
     }

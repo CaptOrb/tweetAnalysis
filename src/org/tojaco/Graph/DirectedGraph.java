@@ -129,16 +129,4 @@ public class DirectedGraph<T, E> implements Graph<T, E> {
         }
     }
 
-//    public Vertex getVertex(String label, VertexCreator vertexCreator) {
-//        // check list of existing users
-//        // if user exists, then return user
-//        // if not create a new user with given label and return
-//        if (allVerticesInGraph.containsKey(label)) {
-//            return allVerticesInGraph.get(label);
-//        }
-//        Vertex vertex = vertexCreator.createVertex(label);
-//        //Vertex vertex = new Vertex<>(label);
-//        allVerticesInGraph.put(label.toString(), vertex);
-//        return vertex;
-//    }
 }
