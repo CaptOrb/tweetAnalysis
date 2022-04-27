@@ -6,6 +6,7 @@ import org.tojaco.GraphElements.Hashtag;
 import org.tojaco.GraphElements.TwitterUser;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class ModelUser {
@@ -32,16 +33,51 @@ public class ModelUser {
 
     public DirectedGraph<TwitterUser, String> makeUserToQualityGraph(DirectedGraph<TwitterUser, Hashtag> usersToHashtags, GraphElements graphElements){
         DirectedGraph<TwitterUser, String> usersToQualities = new DirectedGraph();
+        //to display e.g. rejecting>accepting, I want to show just the one vertex 'rejecting>accepting'
+        //rather than the separate vertices 'rejecting(3)' 'accepting(2)', but we can't edit the list directly
+        //as we don't want to lose the words on their own and have to split them up if we want to work with them in future
 
         for(Vertex<TwitterUser> user: usersToHashtags.getGraph().keySet()) {
+            List<String> userQualities = new ArrayList<>();
+
             for(int i=0; i<user.getLabel().getQualities().size();i++){
+                userQualities.add(user.getLabel().getQualities().get(i));
+
+            }
+            List<String> editedListQualities = editList(userQualities);
+
+            for(int i=0; i<editedListQualities.size();i++){
                 VertexCreator<String> vertexCreator = new CreateStringVertex();
-                Vertex<String> destVertex = graphElements.getVertex(user.getLabel().getQualities().get(i), vertexCreator);
+                Vertex<String> destVertex = graphElements.getVertex(editedListQualities.get(i), vertexCreator);
                 Arc<String> myArc = new Arc<>(destVertex, +1);
                 usersToQualities.addArc(user, myArc);
-
             }
         }
         return usersToQualities;
+    }
+
+    public List<String> editList(List<String> listOfQualities){
+        int accepting = 0;
+        int rejecting = 0;
+        if(listOfQualities.size()>2) {
+            for (int i = 0; i < listOfQualities.size(); i++) {
+                if (listOfQualities.get(i).equals("accepting")) {
+                    accepting++;
+                    listOfQualities.remove(i);
+                } else if (listOfQualities.get(i).equals("rejecting")) {
+                    rejecting++;
+                    listOfQualities.remove(i);
+                }
+            }
+            if (accepting > rejecting && accepting > 0 && rejecting > 0) {
+                listOfQualities.add("accepting > rejecting");
+            } else if (rejecting > accepting && accepting > 0 && rejecting > 0) {
+                listOfQualities.add("rejecting > accepting");
+            } else if(accepting == rejecting && accepting > 0 && rejecting > 0) { //don't want to add rejecting & accepting if they don't use  those words
+                listOfQualities.add("rejecting & accepting");
+            }
+        }
+
+        return listOfQualities;
     }
 }
