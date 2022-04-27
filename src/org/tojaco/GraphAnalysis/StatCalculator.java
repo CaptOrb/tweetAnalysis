@@ -68,6 +68,15 @@ public class StatCalculator {
     }
 
     private Double calculateSD(List<Double> points, double mew){
+        // calculate sum of squared differences
+        double sumOfSquaredDiffs = 0.0;
+        for ( Double point : points ) {
+            sumOfSquaredDiffs += Math.pow( ( point - mew ), 2 );
+        }
+        return Math.sqrt(sumOfSquaredDiffs / points.size() );
+    }
+
+    public Double calculateZScore(){
         // TODO
         return 0.0;
     }
