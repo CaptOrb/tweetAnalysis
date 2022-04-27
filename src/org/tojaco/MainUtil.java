@@ -6,6 +6,7 @@ import org.tojaco.FileIO.TwitterFileService;
 import org.tojaco.Graph.*;
 import org.tojaco.GraphAnalysis.GraphAnalyser;
 import org.tojaco.GraphAnalysis.StanceAnalysis;
+import org.tojaco.GraphAnalysis.StatCalculator;
 import org.tojaco.GraphElements.GraphElements;
 import org.tojaco.GraphElements.Hashtag;
 import org.tojaco.GraphElements.TwitterUser;
@@ -56,8 +57,7 @@ public class MainUtil {
         DirectedGraph<TwitterUser, TwitterUser> rtGraph;
         DirectedGraph<TwitterUser, TwitterUser> retweetedGraph;
         GraphReadWriteService rfs = new GraphReadWriteService();
-        File lexiconFile = new File(configuration.getLEXICON_FOLDER(), configuration.getLEXICON_DATA_FILE());
-
+        File lexiconFile;
 
         switch (option) {
             case 1:
@@ -294,6 +294,7 @@ public class MainUtil {
 
                 GraphElements graphElementsLexicon = new GraphElements();
 
+                lexiconFile = new File(configuration.getLEXICON_FOLDER(), configuration.getLEXICON_DATA_FILE());
 
                 LexiconFileService lfs = new LexiconFileService();
 
@@ -373,10 +374,26 @@ public class MainUtil {
                         new File(configuration.getGRAPH_DIRECTORY(),
                                 configuration.getHASHTAGS_TO_USERS()),true);
 
+                graphAnalyser = new GraphAnalyser();
+
+                for (int i = 0; i < 3; i++) { //theres no change in coverage from 3 to 4, but theres a change in coverage from 2 to 3
+                    graphAnalyser.assignUserStances(usertoHashTag);
+                    graphAnalyser.assignUserStances(hashtagToUsers);
+
+                }
+                //by running this again we get more coverage
+                for (int i = 0; i < 5; i++) { //by upping this to 10 there's no change in coverage
+                    graphAnalyser.assignUserStances(rtGraph);
+                    graphAnalyser.assignUserStances(retweetedGraph);
+
+                }
+
                 hashtagSplitter = new HashtagSplitter();
                 hashtagSplitter.splitHashtagsByCamelCase(hashtagToUsers);
 
                  graphElementsLexicon = new GraphElements();
+
+                 lexiconFile = new File(configuration.getLEXICON_FOLDER(), configuration.getLEXICON_DATA_FILE());
 
                  lfs = new LexiconFileService();
 
@@ -419,6 +436,11 @@ public class MainUtil {
 
                 rfs.writeFileFromGraph(usersToQualities, new File(configuration.getGRAPH_DIRECTORY(),
                         configuration.getUSER_QUALITIES()) , true);
+
+                StatCalculator statCalculator = new StatCalculator(usersToQualities);
+
+                // not 100% done yet
+                statCalculator.calConditionalProbability(usersToQualities);
 
                 break;
         }
