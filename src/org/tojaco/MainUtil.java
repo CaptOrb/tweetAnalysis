@@ -22,7 +22,6 @@ public class MainUtil {
 
     private static final ArrayList<String> retweets = new ArrayList<>();
     private static final ArrayList<String> hashtags = new ArrayList<>();
-    private static final ArrayList<String> lexicon = new ArrayList<>();
 
     public static ArrayList<String> getRetweets() {
         return retweets;
@@ -30,10 +29,6 @@ public class MainUtil {
 
     public static ArrayList<String> getHashtags() {
         return hashtags;
-    }
-
-    public static ArrayList<String> getLexicon() {
-        return lexicon;
     }
 
     public static void showProgramOptions(Configuration configuration, File dataFile) throws IOException {
@@ -58,6 +53,7 @@ public class MainUtil {
         DirectedGraph<TwitterUser, TwitterUser> retweetedGraph;
         GraphReadWriteService rfs = new GraphReadWriteService();
         File lexiconFile;
+        Lexicon lexicon;
 
         switch (option) {
             case 1:
@@ -298,20 +294,22 @@ public class MainUtil {
 
                 LexiconFileService lfs = new LexiconFileService();
 
+                lexicon = new Lexicon();
+
                 if (lexiconFile.exists()) {
-                    getLexicon().addAll(lfs.readLexiconFile(lexiconFile));
+                    lexicon.addToLexiconWithFeatures(lfs.readLexiconFile(lexiconFile));
                 }
 
                 FindGraphElements<String, String> findGraphElementsLex = new FindGraphElements<>(new CreateStringVertex(), new CreateStringVertex());
-                DirectedGraph<String,String> lexiconGraph = findGraphElementsLex.createGraph(graphElementsLexicon, getLexicon(), 0, 1);
+                DirectedGraph<String,String> lexiconGraph = findGraphElementsLex.createGraph(graphElementsLexicon, lexicon.getLexiconTermsWithFeatures(), 0, 1);
 
                 HashtagSummarizer hashtagSummarizer = new HashtagSummarizer();
 
                 DirectedGraph<Hashtag,String> sumHashTagGraph = hashtagSummarizer.summarizeHashtag(hashtagToUsers, lexiconGraph, graphElementsLexicon);
 
-                hashtagSplitter.initialiseLexiconDictionary(lexiconGraph);
+                lexicon.initialiseLexiconDictionary(lexiconGraph);
 
-                hashtagSplitter.splitHashtagsByLexicon(hashtagToUsers);
+                hashtagSplitter.splitHashtagsByLexicon(hashtagToUsers, lexicon.getLexiconDictionary());
 
                 rfs.writeFileFromGraph(lexiconGraph, new File(configuration.getGRAPH_DIRECTORY(), configuration.getLEXICON_FILE()),false);
 
@@ -319,7 +317,7 @@ public class MainUtil {
 
                 DirectedGraph<Hashtag,String> hashtagToWordGraph = hashtagSummarizer.hashtagMadeUpOf(hashtagToUsers,graphElements2);
 
-                rfs.writeFileFromGraph( hashtagToWordGraph, new File(configuration.getGRAPH_DIRECTORY(), configuration.getHASHTAG_TO_WORDS()), false);
+                rfs.writeFileFromGraph(hashtagToWordGraph, new File(configuration.getGRAPH_DIRECTORY(), configuration.getHASHTAG_TO_WORDS()), false);
 
                 hashtagSummarizer.assignGistOfTags(sumHashTagGraph);
 
@@ -408,20 +406,22 @@ public class MainUtil {
 
                  lfs = new LexiconFileService();
 
+                lexicon = new Lexicon();
+
                 if (lexiconFile.exists()) {
-                    getLexicon().addAll(lfs.readLexiconFile(lexiconFile));
+                    lexicon.addToLexiconWithFeatures(lfs.readLexiconFile(lexiconFile));
                 }
 
                 findGraphElementsLex = new FindGraphElements<>(new CreateStringVertex(), new CreateStringVertex());
-                lexiconGraph = findGraphElementsLex.createGraph(graphElementsLexicon, getLexicon(), 0, 1);
+                lexiconGraph = findGraphElementsLex.createGraph(graphElementsLexicon, lexicon.getLexiconTermsWithFeatures(), 0, 1);
 
                 hashtagSummarizer = new HashtagSummarizer();
 
                 sumHashTagGraph = hashtagSummarizer.summarizeHashtag(hashtagToUsers, lexiconGraph, graphElementsLexicon);
 
-                hashtagSplitter.initialiseLexiconDictionary(lexiconGraph);
+                lexicon.initialiseLexiconDictionary(lexiconGraph);
 
-                hashtagSplitter.splitHashtagsByLexicon(hashtagToUsers);
+                hashtagSplitter.splitHashtagsByLexicon(hashtagToUsers, lexicon.getLexiconDictionary());
 
                 rfs.writeFileFromGraph(lexiconGraph, new File(configuration.getGRAPH_DIRECTORY(), configuration.getLEXICON_FILE()),false);
 
@@ -452,6 +452,8 @@ public class MainUtil {
 
                 // not 100% done yet
                 //statCalculator.calConditionalProbability(usersToQualities);
+
+                Double zscore = statCalculator.calculateZScore(false, "-ref:fauci");
 
                 break;
         }
