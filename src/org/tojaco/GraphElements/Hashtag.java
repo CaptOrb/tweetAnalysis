@@ -36,12 +36,12 @@ public class Hashtag implements Stanceable {
         for(int i=0; i<qualities.size();i++){
             if(qualities.get(i).equals("accepting")){
                 String ref = "+" + qualities.get(index);
-                qualities.remove(i);
+                qualities.remove(index);
                 qualities.add(ref);
             }
             if(qualities.get(i).equals("rejecting")){
                 String ref = "-" + qualities.get(index);
-                qualities.remove(i);
+                qualities.remove(index);
                 qualities.add(ref);
             }
         }
