@@ -1,6 +1,5 @@
 package org.tojaco;
 
-import org.tojaco.Graph.Arc;
 import org.tojaco.Graph.DirectedGraph;
 import org.tojaco.Graph.Vertex;
 import org.tojaco.GraphElements.Hashtag;
@@ -8,12 +7,6 @@ import org.tojaco.GraphElements.Hashtag;
 import java.util.*;
 
 public class HashtagSplitter<T, E> {
-
-    private final Set<String> lexiconDictionary = new HashSet<>();
-
-    public Set<String> getLexiconDictionary() {
-        return lexiconDictionary;
-    }
 
     public void splitHashtagsByCamelCase(DirectedGraph<Hashtag, E> hashtagToUsers) {
         for (Vertex<Hashtag> hashtag : hashtagToUsers.getGraph().keySet()) {
@@ -75,13 +68,7 @@ public class HashtagSplitter<T, E> {
         }
     }
 
-    public void initialiseLexiconDictionary(DirectedGraph<Hashtag, E> sumHashTagGraph) {
-        for (Map.Entry<Vertex<Hashtag>, ArrayList<Arc<E>>> entrySet : sumHashTagGraph.getGraph().entrySet()) {
-            lexiconDictionary.add(entrySet.getKey().toString());
-        }
-    }
-
-    public void splitHashtagsByLexicon(DirectedGraph<Hashtag, E> sumHashTagGraph) {
+    public void splitHashtagsByLexicon(DirectedGraph<Hashtag, E> sumHashTagGraph, Set<String> lexiconDictionary) {
 
         for (Vertex<Hashtag> hashtag : sumHashTagGraph.getGraph().keySet()) {
 
