@@ -33,17 +33,31 @@ public class Hashtag implements Stanceable {
     }
 
     public void findAcceptingRejecting(int index){
+        int accepting = 0;
+        int rejecting = 0;
+
         for(int i=0; i<qualities.size();i++){
             if(qualities.get(i).equals("accepting")){
-                String ref = "+" + qualities.get(index);
-                qualities.remove(index);
-                qualities.add(ref);
+                accepting++;
             }
             if(qualities.get(i).equals("rejecting")){
-                String ref = "-" + qualities.get(index);
-                qualities.remove(index);
-                qualities.add(ref);
+                rejecting++;
             }
+        }
+        if(accepting>rejecting){
+            String ref = "+" + qualities.get(index);
+            qualities.remove(index);
+            qualities.add(ref);
+        }
+        if(rejecting>accepting){
+            String ref = "-" + qualities.get(index);
+            qualities.remove(index);
+            qualities.add(ref);
+        }
+        if(accepting != 0 && rejecting !=0 && accepting == rejecting){ //e.g. #DontGetVaccinated
+            String ref = "-" + qualities.get(index);
+            qualities.remove(index);
+            qualities.add(ref);
         }
     }
 
