@@ -34,7 +34,7 @@ public class MainUtil {
     public static void showProgramOptions(Configuration configuration, File dataFile) throws IOException {
         TwitterFileService ts = new TwitterFileService();
 
-        System.out.println("Enter 1, 2, 3, 4, 5 or 7 " +
+        System.out.println("Enter 1, 2, 3, 4, 5, 6 or 7 " +
                 "\n1. Search for Tweets using search API (Sprint 1)" +
                 "\n2. Search for Tweets using the streaming API (Sprint 2)" +
                 "\n3. Build a retweet Graph (Sprint 3)" +
@@ -142,7 +142,7 @@ public class MainUtil {
 
                 }
 
-                outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, false);
+                outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, false, false);
                 StanceAnalysis users100 = new StanceAnalysis();
                 users100.checkStance100Users(retweetsHashMap);
 
@@ -195,12 +195,14 @@ public class MainUtil {
  /*               double num = analysis.UsersWithNoStance(retweetHashMap);
                 System.out.println(num + " divided by " + retweetHashMap.size() +"(except idk why it says only 42,905 users, theres like more than 300,000) = "+ (num/retweetHashMap.size())*100 + "%");
 */
-                outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, false);
+                outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, false, false);
 
                 System.out.println("Now calculating hashtag graphs...");
                 FindGraphElements<TwitterUser, Hashtag> fge1 = new FindGraphElements<>(new CreateUserVertex(), new CreateHashtagVertex());
                 DirectedGraph<TwitterUser, Hashtag> usertoHashTag;
                 usertoHashTag = fge1.createGraph(graphElements, getHashtags(), 0, 1);
+
+                outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, true, false);
 
                 rfs.writeFileFromGraph(usertoHashTag,
                         new File(configuration.getGRAPH_DIRECTORY(),
@@ -228,10 +230,12 @@ public class MainUtil {
                     graphAnalyser.assignUserStances(retweetedGraph);
 
                 }
-                outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, true);
+                outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, true, false);
                  StanceAnalysis analyse = new StanceAnalysis();
                 // users100New.checkStance(retweetHashMap);
                  analyse.assignStancesByHashtags( hashtagToUsers,graphElements, rtGraph);
+
+                outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, false, true);
 
                 analyse.find100Hashtags(hashtagToUsers);
 
@@ -460,10 +464,14 @@ public class MainUtil {
     }
 
     private static void outputGraphAnalysis(GraphAnalyser graphAnalyser, DirectedGraph graph, GraphElements graphElements
-            , boolean hashtagsUsed) {
+            , boolean hashtagsUsed, boolean hashtagsOnly) {
 
         if (hashtagsUsed) {
             System.out.println("AFTER USING HASHTAGS:");
+        }
+
+        if(hashtagsOnly){
+            System.out.println("\n4a, Set stances for users using hashtags only:");
         }
         System.out.println("Coverage in graph: " + graphAnalyser.calculateCoverage(graph, graphElements) + "%");
         System.out.println("Percentage of users without a stance: " + (graphAnalyser.calculateCoverage(graph, graphElements) - 100) * -1 + "%");
