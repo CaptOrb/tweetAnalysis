@@ -451,7 +451,7 @@ public class MainUtil {
                 StatCalculator statCalculator = new StatCalculator(usersToQualities);
 
                 // not 100% done yet
-                //statCalculator.calConditionalProbability(usersToQualities);
+                //statCalculator.automateConditionalProbCalculation(lexicon);
 
                 Double zscore = statCalculator.calculateZScore(false, "-ref:fauci");
 

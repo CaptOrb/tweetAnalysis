@@ -3,12 +3,10 @@ package org.tojaco.GraphAnalysis;
 import org.tojaco.Graph.Arc;
 import org.tojaco.Graph.DirectedGraph;
 import org.tojaco.Graph.Vertex;
-import org.tojaco.GraphElements.Hashtag;
 import org.tojaco.GraphElements.TwitterUser;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import org.tojaco.Lexicon;
+
+import java.util.*;
 
 public class StatCalculator {
     private final DirectedGraph<TwitterUser, String> userModel;
@@ -123,21 +121,14 @@ public class StatCalculator {
         return probUserWithBothProps / probUserWithPropTwo;
     }
 
-    public void calConditionalProbability(DirectedGraph<TwitterUser, String> userModel) {
+    public void automateConditionalProbCalculation(Lexicon<String> lexicon) {
 
         // TODO ignore Z-Score of < 2
 
-        Collection<ArrayList<Arc<String>>> allFeatures = userModel.getGraph().values();
+        HashMap<String, String> featureOppositeQualities = lexicon.getOppositeQualities();
 
-        for (ArrayList<Arc<String>> stringArc : allFeatures) {
-
-            for (int i = 0; i < stringArc.size(); i++) {
-                for (int j = 1; j < stringArc.size(); j++) {
-
-                    calConditionalProbabilityWithProps(stringArc.get(i).getVertex().getLabel(),
-                            stringArc.get(j).getVertex().getLabel());
-                }
-            }
+        for (Map.Entry<String, String> featureMapping : featureOppositeQualities.entrySet()) {
+            calConditionalProbabilityWithProps(featureMapping.getKey(), featureMapping.getValue());
         }
     }
 }
