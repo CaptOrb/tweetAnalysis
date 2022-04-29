@@ -62,10 +62,8 @@ public class ModelUser {
         if(listOfQualities.size()>2) {
         Lexicon oppositeQualitiesHashmap = new Lexicon();
         HashMap<String, String> opposites = oppositeQualitiesHashmap.getOppositeQualities();
-        int changeList = 0;
-           // List<String> toRemove = new ArrayList<>();
             for(Map.Entry<String, String> entry : opposites.entrySet()) {
-               changeList = isFocusedOn(entry.getKey(), entry.getValue(), listOfQualities);
+               int changeList = isFocusedOn(entry.getKey(), entry.getValue(), listOfQualities);
 
                if( changeList==1){
                    listOfQualities.add(entry.getKey() + " > " + entry.getValue());
@@ -76,10 +74,9 @@ public class ModelUser {
                    listOfQualities.removeIf(str -> str.equals(entry.getKey()) || str.equals(entry.getValue()));
                }
                else if(changeList==3){
-                   listOfQualities.add(entry.getValue() + " & " + entry.getKey());
+                   listOfQualities.add(entry.getValue() + " = " + entry.getKey());
                    listOfQualities.removeIf(str -> str.equals(entry.getKey()) || str.equals(entry.getValue()));
                }
-               //if it equals 4 or 5 we just leave the list as it is
             }
         }
         return listOfQualities;
@@ -89,8 +86,6 @@ public class ModelUser {
     // returns 1 if a user focuses more on property1
     // returns 2 if a user focuses more on property2
     // returns 3 if a user focuses on both properties equally
-    //returns 4 if user only ever focused on property1
-    //returns 5 if user only ever focused on property2
 
     public int isFocusedOn(String property1, String property2, List<String> listOfQualities){
         int property1Count = 0, property2Count = 0;
