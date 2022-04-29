@@ -192,9 +192,7 @@ public class MainUtil {
 
                 StanceAnalysis analysis = new StanceAnalysis();
                 analysis.checkStance100Users(retweetHashMap);
- /*               double num = analysis.UsersWithNoStance(retweetHashMap);
-                System.out.println(num + " divided by " + retweetHashMap.size() +"(except idk why it says only 42,905 users, theres like more than 300,000) = "+ (num/retweetHashMap.size())*100 + "%");
-*/
+
                 outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, false, false);
 
                 System.out.println("Now calculating hashtag graphs...");
@@ -202,7 +200,7 @@ public class MainUtil {
                 DirectedGraph<TwitterUser, Hashtag> usertoHashTag;
                 usertoHashTag = fge1.createGraph(graphElements, getHashtags(), 0, 1);
 
-                outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, true, false);
+                //outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, true, false);
 
                 rfs.writeFileFromGraph(usertoHashTag,
                         new File(configuration.getGRAPH_DIRECTORY(),

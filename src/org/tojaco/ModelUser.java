@@ -29,6 +29,15 @@ public class ModelUser {
             for(int i=0; i<entry.getValue().size(); i++){
                 entry.getKey().getLabel().addQuality(entry.getValue().get(i).getVertex().getLabel().getQualities());
             }
+            if(entry.getKey().getLabel().getStance()<0){
+                List<String> proOrAnti = new ArrayList<>();
+                proOrAnti.add("anti");
+                entry.getKey().getLabel().addQuality(proOrAnti);
+            } else if(entry.getKey().getLabel().getStance()>0){
+                List<String> proOrAnti = new ArrayList<>();
+                proOrAnti.add("pro");
+                entry.getKey().getLabel().addQuality(proOrAnti);
+            }
         }
     }
 
@@ -41,11 +50,6 @@ public class ModelUser {
         for(Vertex<TwitterUser> user: usersToHashtags.getGraph().keySet()) {
             List<String> userQualities = new ArrayList<>();
             //to make z score calculation easier, but don't add to actual graph of user qualities
-            if(user.getLabel().getStance()<0){
-                userQualities.add("anti");
-            } else if(user.getLabel().getStance()>0){
-                userQualities.add("pro");
-            }
             for(int i=0; i<user.getLabel().getQualities().size();i++){
                 userQualities.add(user.getLabel().getQualities().get(i));
 
