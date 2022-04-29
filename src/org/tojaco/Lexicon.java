@@ -61,7 +61,7 @@ public class Lexicon<E> {
     }
 
     public HashMap<String, String> getOppositeQualities() {
-        if(oppositeQualities == null){
+        if(oppositeQualities.isEmpty()){
             initOppositesHashmap();
         }
         return oppositeQualities;
