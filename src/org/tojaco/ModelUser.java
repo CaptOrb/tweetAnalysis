@@ -40,7 +40,12 @@ public class ModelUser {
 
         for(Vertex<TwitterUser> user: usersToHashtags.getGraph().keySet()) {
             List<String> userQualities = new ArrayList<>();
-
+            //to make z score calculation easier, but don't add to actual graph of user qualities
+            if(user.getLabel().getStance()<0){
+                userQualities.add("anti");
+            } else if(user.getLabel().getStance()>0){
+                userQualities.add("pro");
+            }
             for(int i=0; i<user.getLabel().getQualities().size();i++){
                 userQualities.add(user.getLabel().getQualities().get(i));
 
@@ -58,6 +63,8 @@ public class ModelUser {
     }
 
     public List<String> editList(List<String> listOfQualities){
+
+        listOfQualities.removeIf(str -> str.equals("pro") || str.equals("anti"));
 
         if(listOfQualities.size()>2) {
         Lexicon oppositeQualitiesHashmap = new Lexicon();
