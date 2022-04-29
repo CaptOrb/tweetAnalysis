@@ -14,14 +14,14 @@ import java.util.*;
 public class StatCalculator {
     private final DirectedGraph<TwitterUser, String> userModel;
     private List<TwitterUser> usersList;
-    private List<TwitterUser> proUsers;
-    private List<TwitterUser> antiUsers;
+    private List<TwitterUser> property1Users;
+    private List<TwitterUser> notProperty1Users;
 
     public StatCalculator(DirectedGraph<TwitterUser, String> userModel){
         this.userModel = userModel;
         usersList = new ArrayList<>();
-        antiUsers = new ArrayList<>();
-        proUsers = new ArrayList<>();
+        property1Users = new ArrayList<>();
+        notProperty1Users = new ArrayList<>();
         for (Vertex<TwitterUser> user : userModel.getGraph().keySet()){
             usersList.add(user.getLabel());
         }
@@ -42,15 +42,28 @@ public class StatCalculator {
         return subset;
     }
 
-    private void getProAntiList(){
-        for( TwitterUser user : usersList ){
-            if ( user.getStance() < 0 ){
-                antiUsers.add(user);
-            }
-            else if( user.getStance() > 0 ){
-                proUsers.add(user);
+    private void fillPropertyLists( String property ){
+        for( TwitterUser user : usersList ) {
+            Vertex<TwitterUser> vertex = userModel.getAllVerticesInGraph().get(user.getUserHandle());
+            for (String arc : vertex.getLabel().getQualities()) {
+                if (arc.equals(property)) {
+                    property1Users.add(vertex.getLabel());
+                    break;
+                }
+                else{
+                    notProperty1Users.add(vertex.getLabel());
+                }
             }
         }
+
+//        for( TwitterUser user : usersList ){
+//            if ( user.getStance() < 0 ){
+//                antiUsers.add(user);
+//            }
+//            else if( user.getStance() > 0 ){
+//                proUsers.add(user);
+//            }
+//        }
     }
 
     private Double calculateAntiStancesProportion( List<TwitterUser> usersSample ){
@@ -63,18 +76,19 @@ public class StatCalculator {
         return subset/usersSample.size();
     }
 
-    private List<Double> calculateMeanOfRandomSamplesOfSizeM(int m ) {
+    private List<Double> calculateMeanOfRandomSamplesOfSizeM(int m, String property1 ) {
         List<Double> probabilities = new ArrayList<>();
 
         Random generator = new Random();
         Object[] values = usersList.toArray();
         for(int i = 0; i < 100; i ++) {
             List<TwitterUser> sampleUsers = new ArrayList<>();
-            for (int j = 0; j < 100; j++) {
+            for (int j = 0; j < m; j++) {
                 Object randomValue = values[generator.nextInt(values.length)];
                 sampleUsers.add((TwitterUser)randomValue);
             }
-            probabilities.add( calculateAntiStancesProportion(sampleUsers) );
+            List<TwitterUser> usersWithProperty1 = getProportionList(sampleUsers, property1);
+            probabilities.add( (double) usersWithProperty1.size() / usersWithProperty1.size() );
         }
         return probabilities;
     }
@@ -101,21 +115,19 @@ public class StatCalculator {
         return Math.sqrt(sumOfSquaredDiffs / points.size() );
     }
 
-    public Double calculateZScore( boolean positivity, String property ){
-        double anti;
+    public Double calculateZScore( String property1, String property2 ){
         List<TwitterUser> m;
         List<Double> sampleMeans;
         double mew, sD;
-        if( !positivity ){
-            getProAntiList();
-            m = getProportionList(usersList, property);
-            sampleMeans = calculateMeanOfRandomSamplesOfSizeM(m.size());
-            mew = calculateDoubleMean(sampleMeans);
-            sD = calculateSD(sampleMeans, mew);
-            double difference = calculateAntiStancesProportion(m) - mew;
-            return sD/difference;
-        }
-        return 0.0;
+//        if( !positivity ){
+        fillPropertyLists(property1);
+        m = getProportionList(usersList, property2);
+        sampleMeans = calculateMeanOfRandomSamplesOfSizeM(m.size(), property1);
+        mew = calculateDoubleMean(sampleMeans);
+        sD = calculateSD(sampleMeans, mew);
+        double difference = calculateAntiStancesProportion(m) - mew;
+        return sD/difference;
+        //}
     }
 
     public double calConditionalProbabilityWithProps(String prop1, String prop2) {

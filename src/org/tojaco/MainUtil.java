@@ -459,7 +459,8 @@ public class MainUtil {
                 // not 100% done yet
                 statCalculator.automateConditionalProbCalculation(lexicon);
 
-                Double zscore = statCalculator.calculateZScore(false, "-ref:fauci");
+                Double zscore = statCalculator.calculateZScore("anti", "-ref:fauci");
+                String s = "asd";
 
                 break;
         }
