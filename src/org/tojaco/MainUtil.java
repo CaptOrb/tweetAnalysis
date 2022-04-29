@@ -379,6 +379,7 @@ public class MainUtil {
                 rfs.writeFileFromGraph(hashtagToUsers,
                         new File(configuration.getGRAPH_DIRECTORY(),
                                 configuration.getHASHTAGS_TO_USERS()),true);
+                System.out.println("Hashtag graphs added successfully to Graph directory!");
 
                 graphAnalyser = new GraphAnalyser();
 
@@ -402,6 +403,8 @@ public class MainUtil {
                 analyse.find100Hashtags(hashtagToUsers);
 
               //  analyse.find100HashtagsS5(rtGraph, hashtagToUsers);
+
+                System.out.println("Now calculating lexicon graph and hashtags to their individual words graph...");
 
                 hashtagSplitter = new HashtagSplitter();
                 hashtagSplitter.splitHashtagsByCamelCase(hashtagToUsers);
@@ -442,18 +445,18 @@ public class MainUtil {
                 rfs.writeFileFromGraph(sumHashTagGraph, new File(configuration.getGRAPH_DIRECTORY(),
                         configuration.getHASHTAG_SUMMARY_FILE()) , true);
 
+                System.out.println("Now calculating User to Qualities graph...");
+
                 ModelUser modelUser = new ModelUser();
                 modelUser.addSummaryOfHashtag(sumHashTagGraph);
                 modelUser.addSummaryOfHashtagToUserQualities(usertoHashTag);
 
-                DirectedGraph<TwitterUser, String> usersToQualities = new DirectedGraph();
-
-                usersToQualities = modelUser.makeUserToQualityGraph(usertoHashTag, graphElements);
+                DirectedGraph<TwitterUser, String> usersToQualities = modelUser.makeUserToQualityGraph(usertoHashTag, graphElements);
 
                 rfs.writeFileFromGraph(usersToQualities, new File(configuration.getGRAPH_DIRECTORY(),
                         configuration.getUSER_QUALITIES()) , true);
 
-                System.out.println("USER TO QUALITIES GRAPH OUTPUTTED SUCCESSFULLY.");
+                System.out.println("User to Qualities graph added successfully to Graph directory!");
                 StatCalculator statCalculator = new StatCalculator(usersToQualities);
 
                 // not 100% done yet
@@ -485,8 +488,6 @@ public class MainUtil {
 
     public static void showSprint3Options(Graph<TwitterUser, TwitterUser> rtGraph, GraphElements graphElements) {
         int option = 0;
-
-        System.out.println("Retweet graph added successfully to Graph directory!");
 
         while (option != -1) {
 
