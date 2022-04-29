@@ -14,8 +14,8 @@ public class TwitterUser implements Stanceable {
         return qualities;
     }
 
-    public void addQuality(List<String> qualitysFromHashtags){
-        qualities.addAll(qualitysFromHashtags);
+    public void addQuality(List<String> qualitiesFromHashtags){
+        qualities.addAll(qualitiesFromHashtags);
     }
 
     public TwitterUser(String userHandle){

@@ -10,27 +10,11 @@ import java.util.*;
 // HANDLES reading and writing to/from the graph output file
 public class GraphReadWriteService extends FileService {
 
-    // private final ArrayList<String> retweets = new ArrayList<>();
-
     private final ArrayList<String> hashtags = new ArrayList<>();
-    //private HashMap<String, List<String>> hashtags = new HashMap<>();
-
-    /*public void setRetweets(ArrayList<String> retweets) {
-        this.retweets = retweets;
-    }*/
-
-   /* public ArrayList<String> getRetweets() {
-        return retweets;
-    }*/
 
     public ArrayList<String> getHashtags() {
         return hashtags;
     }
-
-    /*public void setHashtags(ArrayList<String> hashtags) {
-        this.hashtags = hashtags;
-    }*/
-
 
     public <T, E> void writeFileFromGraph(DirectedGraph<T, E> graph, File file, boolean weight) throws IOException {
 
@@ -104,8 +88,6 @@ public class GraphReadWriteService extends FileService {
                     }
 
                 } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-//                    String[] lineContents1 = line.split("\t");
-//                    System.out.println(lineContents[0]);
                 } catch (Exception ignored) {
                 }
             }
