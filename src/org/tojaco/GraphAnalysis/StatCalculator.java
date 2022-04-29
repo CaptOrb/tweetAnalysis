@@ -31,8 +31,8 @@ public class StatCalculator {
         List<TwitterUser> subset = new ArrayList<>();
         for( TwitterUser user : totalSet ){
             Vertex<TwitterUser> vertex = userModel.getAllVerticesInGraph().get(user.getUserHandle());
-            for( Arc<String> arc : userModel.getGraph().get(vertex) ){
-                if ( arc.getVertex().getLabel().equals(subsetCondition) ){
+            for( String quality : vertex.getLabel().getQualities() ){
+                if ( quality.equals(subsetCondition) ){
                     subset.add(vertex.getLabel());
                     break;
                 }
