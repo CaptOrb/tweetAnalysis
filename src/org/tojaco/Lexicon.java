@@ -37,7 +37,7 @@ public class Lexicon<E> {
     //public HashMap<String, String> oppositesHashmap() {
        // HashMap<String, String> oppositeQualities = new HashMap<>();
 
-    private HashMap<String, String> initOppositesHashmap() {
+    private void initOppositesHashmap() {
         oppositeQualities.put("problem", "solution");
         oppositeQualities.put("accepting", "rejecting");
         oppositeQualities.put("scientific", "religious");
@@ -57,7 +57,6 @@ public class Lexicon<E> {
         oppositeQualities.put("personal", null);
         oppositeQualities.put("political", null);
 
-        return oppositeQualities;
     }
 
     public HashMap<String, String> getOppositeQualities() {

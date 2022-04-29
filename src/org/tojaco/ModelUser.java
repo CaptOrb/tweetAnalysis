@@ -112,14 +112,6 @@ public class ModelUser {
             else if(property1Count == property2Count){
                 return 3 ;
             }
-        } else{
-            if(property1Count>0 && property2Count == 0){
-                return 4;
-            }
-            else if(property2Count>0 && property1Count == 0){
-                return 5;
-            }
-
         }
         return 0;
     }
