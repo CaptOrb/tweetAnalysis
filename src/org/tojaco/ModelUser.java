@@ -59,53 +59,55 @@ public class ModelUser {
 
     public List<String> editList(List<String> listOfQualities){
 
-        HashMap<String, Integer> qualities = new HashMap();
-        qualities.put("accepting", 0);
-        qualities.put("rejecting", 0);
-        qualities.put("rightwing", 0);
-        qualities.put("leftwing", 0);
-        qualities.put("problem", 0);
-        qualities.put("solution", 0);
-        qualities.put("rights", 0);
-        qualities.put("responsibilities", 0);
-        int accepting = 0;
-        int rejecting = 0;
-        int leftwing = 0;
-        int rightwing = 0;
-        int problem = 0;
-        int solution = 0;
-        int rights = 0;
-        int responsibilities = 0;
         if(listOfQualities.size()>2) {
+        Lexicon oppositeQualitiesHashmap = new Lexicon();
+        HashMap<String, String> opposites = oppositeQualitiesHashmap.getOppositeQualities();
+            for(Map.Entry<String, String> entry : opposites.entrySet()) {
+               int changeList = isFocusedOn(entry.getKey(), entry.getValue(), listOfQualities);
 
-           // List<String> toRemove = new ArrayList<>();
-            for (int i = 0; i < listOfQualities.size(); i++) {
-                if (listOfQualities.get(i).equals("accepting")) {
-                    accepting++;
-
-                } else if (listOfQualities.get(i).equals("rejecting")) {
-                    rejecting++;
-                }
-
-            }
-            if(accepting > 0 && rejecting > 0){ //don't want to add accepting or rejecting if they don't use those words
-                boolean toRemove = false;
-                if (accepting > rejecting) {
-                    listOfQualities.add("accepting > rejecting");
-                    toRemove = true;
-                } else if (rejecting > accepting) {
-                    listOfQualities.add("rejecting > accepting");
-                    toRemove = true;
-                } else if(accepting == rejecting) {
-                    toRemove = true;
-                    listOfQualities.add("rejecting & accepting");
-                }
-                if(toRemove){
-                    listOfQualities.removeIf(str -> str.equals("accepting") || str.equals("rejecting"));
-                }
+               if( changeList==1){
+                   listOfQualities.add(entry.getKey() + " > " + entry.getValue());
+                   listOfQualities.removeIf(str -> str.equals(entry.getKey()) || str.equals(entry.getValue()));
+               }
+               else if(changeList==2){
+                   listOfQualities.add(entry.getValue() + " > " + entry.getKey());
+                   listOfQualities.removeIf(str -> str.equals(entry.getKey()) || str.equals(entry.getValue()));
+               }
+               else if(changeList==3){
+                   listOfQualities.add(entry.getValue() + " = " + entry.getKey());
+                   listOfQualities.removeIf(str -> str.equals(entry.getKey()) || str.equals(entry.getValue()));
+               }
             }
         }
-
         return listOfQualities;
+    }
+
+
+    // returns 1 if a user focuses more on property1
+    // returns 2 if a user focuses more on property2
+    // returns 3 if a user focuses on both properties equally
+
+    public int isFocusedOn(String property1, String property2, List<String> listOfQualities){
+        int property1Count = 0, property2Count = 0;
+        for(int i=0; i<listOfQualities.size(); i++) {
+            if (listOfQualities.get(i).equals(property1)){
+                property1Count++;
+            }
+            else if (listOfQualities.get(i).equals(property2)){
+                property2Count++;
+            }
+        }
+        if(property1Count!=0 && property2Count!=0){
+            if( property1Count > property2Count ){
+                return 1 ; //"property1 > property2" both having at least one of each
+            }
+            else if (property2Count > property1Count ){
+                 return 2 ;
+            }
+            else if(property1Count == property2Count){
+                return 3 ;
+            }
+        }
+        return 0;
     }
 }

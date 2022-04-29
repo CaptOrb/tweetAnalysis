@@ -30,15 +30,11 @@ public class HashtagSplitter<T, E> {
                 String restOfWord = hashtagWord.substring(1);
                 hashtag.getLabel().addWord(IndefArticle.replaceAll("[#.,]","").toLowerCase());
                 hashtag.getLabel().addWord(restOfWord.replaceAll("[#.,]","").toLowerCase());
-              //  System.out.println(IndefArticle.replaceAll("[#.,]",""));
-                //System.out.println(restOfWord.replaceAll("[#.,]",""));
             } else{
                 hashtag.getLabel().addWord(hashtagWord.replaceAll("[#.,]","").toLowerCase());
-                //System.out.println(hashtagWord.replaceAll("[#.,]",""));
             }
         } else{
             hashtag.getLabel().addWord(hashtagWord.replaceAll("[#.,]","").toLowerCase());
-            //System.out.println(hashtagWord.replaceAll("[#.,]",""));
         }
     }
 

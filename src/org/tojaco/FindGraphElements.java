@@ -16,7 +16,7 @@ public class FindGraphElements<T, E> {
     }
 
     public DirectedGraph<T, E> createGraph(GraphElements graphElements, ArrayList<String> list, int a, int b) throws IOException {
-        DirectedGraph<T, E> rtGraph = new DirectedGraph<>();
+        DirectedGraph<T, E> graph = new DirectedGraph<>();
 
         for (String rt : list) {
             String[] line = rt.split("\t"); //line[0] contains user, line[1] contains the user they are retweeting
@@ -24,12 +24,12 @@ public class FindGraphElements<T, E> {
             Vertex<E> destVertex = graphElements.getVertex(line[b], destVertexCreator);
             Arc<E> myArc = new Arc<>(destVertex, +1);
 
-            rtGraph.addArc(srcVertex, myArc);
+            graph.addArc(srcVertex, myArc);
             //to check that getLabelBetweenVertices works
             //System.out.println(srcVertex.getLabel() + " " + destVertex.getLabel() + " " + rtGraph.getLabelBetweenVertices(srcVertex,destVertex));
 
         }
-        return rtGraph;
+        return graph;
     }
 
 }

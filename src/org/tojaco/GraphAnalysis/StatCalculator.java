@@ -3,8 +3,10 @@ package org.tojaco.GraphAnalysis;
 import org.tojaco.Graph.Arc;
 import org.tojaco.Graph.DirectedGraph;
 import org.tojaco.Graph.Vertex;
-import org.tojaco.GraphElements.Hashtag;
 import org.tojaco.GraphElements.TwitterUser;
+import org.tojaco.Lexicon;
+
+import java.util.*;
 import twitter4j.Twitter;
 
 import java.util.*;
@@ -64,18 +66,9 @@ public class StatCalculator {
     private List<Double> calculateMeanOfRandomSamplesOfSizeM(int m ) {
         List<Double> probabilities = new ArrayList<>();
 
-//        for(int i = 0; i < 100; i ++) {
-//            List<TwitterUser> sampleUsers = new ArrayList<>();
-//            for (Vertex<TwitterUser> vertex : userModel.getGraph().keySet()) {
-//                sampleUsers.add(vertex.getLabel());
-//            }
-//            probabilities.add( calculateAntiStancesProportion(sampleUsers) );
-//        }
-//        int i = 0;
-
         Random generator = new Random();
         Object[] values = usersList.toArray();
-        for( int i = 0; i < 100; i++ ) {
+        for(int i = 0; i < 100; i ++) {
             List<TwitterUser> sampleUsers = new ArrayList<>();
             for (int j = 0; j < 100; j++) {
                 Object randomValue = values[generator.nextInt(values.length)];
@@ -83,16 +76,6 @@ public class StatCalculator {
             }
             probabilities.add( calculateAntiStancesProportion(sampleUsers) );
         }
-//        for ( int j = 0; j < 100; j++) {
-//            List<TwitterUser> sampleUsers = new ArrayList<>();
-//            for (Vertex<TwitterUser> vertex : userModel.getGraph().keySet()) {
-//                sampleUsers.add((vertex.getLabel()));
-//                if (sampleUsers.size() == 100) {
-//                    break;
-//                }
-//            }
-//            probabilities.add( calculateAntiStancesProportion(sampleUsers) );
-//        }
         return probabilities;
     }
 
@@ -146,21 +129,14 @@ public class StatCalculator {
         return probUserWithBothProps / probUserWithPropTwo;
     }
 
-    public void calConditionalProbability(DirectedGraph<TwitterUser, String> userModel) {
+    public void automateConditionalProbCalculation(Lexicon<String> lexicon) {
 
         // TODO ignore Z-Score of < 2
 
-        Collection<ArrayList<Arc<String>>> allFeatures = userModel.getGraph().values();
+        HashMap<String, String> featureOppositeQualities = lexicon.getOppositeQualities();
 
-        for (ArrayList<Arc<String>> stringArc : allFeatures) {
-
-            for (int i = 0; i < stringArc.size(); i++) {
-                for (int j = 1; j < stringArc.size(); j++) {
-
-                    calConditionalProbabilityWithProps(stringArc.get(i).getVertex().getLabel(),
-                            stringArc.get(j).getVertex().getLabel());
-                }
-            }
+        for (Map.Entry<String, String> featureMapping : featureOppositeQualities.entrySet()) {
+            calConditionalProbabilityWithProps(featureMapping.getKey(), featureMapping.getValue());
         }
     }
 }

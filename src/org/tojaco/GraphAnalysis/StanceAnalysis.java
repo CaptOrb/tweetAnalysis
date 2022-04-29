@@ -49,13 +49,6 @@ public class StanceAnalysis<T, E> {
         for (int i = 0; i < 5; i++) { //by upping this to 10 there's no change in coverage
             graphAnalyser.assignUserStances(hashtagsToUsers);
         }
-
-        System.out.println("\n4a, set stances for users using hashtags only:");
-
-        System.out.println("Coverage in graph HashtagToUsers graph using ONLY hashtags: " + graphAnalyser.calculateCoverage(graph, graphElements) + "%");
-        System.out.println("Percentage of users without a stance using ONLY hashtags: " + (graphAnalyser.calculateCoverage(graph, graphElements) - 100) * -1 + "%");
-        System.out.println("Percentage positive stances using ONLY hashtags: " + graphAnalyser.calculatePercentagePositiveStances(hashtagsToUsers, graphElements) + "%");
-        System.out.println("Percentage negative stance using ONLY hashtags: " + graphAnalyser.calculatePercentageNegativeStances(hashtagsToUsers, graphElements) + "%");
     }
 
     public HashMap<Stanceable, Integer> find100HashtagsS5(DirectedGraph<TwitterUser, TwitterUser> retweetGraph, DirectedGraph<Hashtag, TwitterUser> userToHashTags) {
@@ -84,7 +77,7 @@ public class StanceAnalysis<T, E> {
         for (Map.Entry<Vertex<TwitterUser>, ArrayList<Arc<TwitterUser>>> vertex : retweetGraph.getGraph().entrySet()) {
             if (i < 100) {
 
-                System.out.println(vertex.getKey().getLabel() + " " + vertex.getKey().getLabel().getStance());
+                //System.out.println(vertex.getKey().getLabel() + " " + vertex.getKey().getLabel().getStance());
                 i++;
             }
         }

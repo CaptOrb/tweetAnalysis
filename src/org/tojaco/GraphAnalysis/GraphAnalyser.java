@@ -30,11 +30,9 @@ public class GraphAnalyser<T, E> {
         // iterate all users in graph
         // if they have been given a stance then increment the stance counter
         float stances = 0;
-        //for(Vertex<T> vertex : graphElements.getAllVerticesInGraph().values()){
         for (String user : graph.getAllVerticesInGraph().keySet()){
             Vertex<Stanceable> vertex = graph.getAllVerticesInGraph().get(user);
             if ( vertex.getLabel().hasStance() ){
-            //if ( users.getUserStances().get(users.getAllVerticesInGraph().get(user)) != null){
                 stances ++;
             }
         }
@@ -48,7 +46,6 @@ public class GraphAnalyser<T, E> {
             if ( vertex.getLabel().hasStance()){
                 hasStance++;
                 if ( vertex.getLabel().getStance() > 0 ){
-                //if ( users.getUserStances().get(vertex) > 0) {
                     positiveStances++;
                 }
             }
@@ -68,6 +65,4 @@ public class GraphAnalyser<T, E> {
         }
         return (negativeStances / hasStance) * 100;
     }
-
-
 }
