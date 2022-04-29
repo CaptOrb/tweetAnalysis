@@ -5,10 +5,9 @@ import org.tojaco.Graph.DirectedGraph;
 import org.tojaco.Graph.Vertex;
 import org.tojaco.GraphElements.Hashtag;
 import org.tojaco.GraphElements.TwitterUser;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import twitter4j.Twitter;
+
+import java.util.*;
 
 public class StatCalculator {
     private final DirectedGraph<TwitterUser, String> userModel;
@@ -65,13 +64,35 @@ public class StatCalculator {
     private List<Double> calculateMeanOfRandomSamplesOfSizeM(int m ) {
         List<Double> probabilities = new ArrayList<>();
 
-        for(int i = 0; i < 100; i ++) {
+//        for(int i = 0; i < 100; i ++) {
+//            List<TwitterUser> sampleUsers = new ArrayList<>();
+//            for (Vertex<TwitterUser> vertex : userModel.getGraph().keySet()) {
+//                sampleUsers.add(vertex.getLabel());
+//            }
+//            probabilities.add( calculateAntiStancesProportion(sampleUsers) );
+//        }
+//        int i = 0;
+
+        Random generator = new Random();
+        Object[] values = usersList.toArray();
+        for( int i = 0; i < 100; i++ ) {
             List<TwitterUser> sampleUsers = new ArrayList<>();
-            for (Vertex<TwitterUser> vertex : userModel.getGraph().keySet()) {
-                sampleUsers.add(vertex.getLabel());
+            for (int j = 0; j < 100; j++) {
+                Object randomValue = values[generator.nextInt(values.length)];
+                sampleUsers.add((TwitterUser)randomValue);
             }
             probabilities.add( calculateAntiStancesProportion(sampleUsers) );
         }
+//        for ( int j = 0; j < 100; j++) {
+//            List<TwitterUser> sampleUsers = new ArrayList<>();
+//            for (Vertex<TwitterUser> vertex : userModel.getGraph().keySet()) {
+//                sampleUsers.add((vertex.getLabel()));
+//                if (sampleUsers.size() == 100) {
+//                    break;
+//                }
+//            }
+//            probabilities.add( calculateAntiStancesProportion(sampleUsers) );
+//        }
         return probabilities;
     }
 
@@ -86,11 +107,13 @@ public class StatCalculator {
 
     // standard deviation calculation:
 
-    private Double calculateSD(List<Double> points, double mew){
+    private Double calculateSD(List<Double> points, double μ){
         // calculate sum of squared differences
         double sumOfSquaredDiffs = 0.0;
         for ( Double point : points ) {
-            sumOfSquaredDiffs += Math.pow( ( point - mew ), 2 );
+            double diff = point - μ ;
+            double squaredDiff = diff * diff;
+            sumOfSquaredDiffs += squaredDiff;
         }
         return Math.sqrt(sumOfSquaredDiffs / points.size() );
     }
@@ -102,7 +125,7 @@ public class StatCalculator {
         double mew, sD;
         if( !positivity ){
             getProAntiList();
-            m = getProportionList(antiUsers, property);
+            m = getProportionList(usersList, property);
             sampleMeans = calculateMeanOfRandomSamplesOfSizeM(m.size());
             mew = calculateDoubleMean(sampleMeans);
             sD = calculateSD(sampleMeans, mew);
