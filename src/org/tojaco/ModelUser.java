@@ -61,7 +61,7 @@ public class ModelUser {
 
         if(listOfQualities.size()>2) {
         Lexicon oppositeQaulitiesHashmap = new Lexicon();
-        HashMap<String, String> opposites = oppositeQaulitiesHashmap.oppositesHashmap();
+        HashMap<String, String> opposites = oppositeQaulitiesHashmap.getOppositeQualities();
         int changeList = 0;
            // List<String> toRemove = new ArrayList<>();
             for(Map.Entry<String, String> entry : opposites.entrySet()) {
@@ -80,14 +80,8 @@ public class ModelUser {
                    listOfQualities.removeIf(str -> str.equals(entry.getKey()) || str.equals(entry.getValue()));
                }
                //if it equals 4 or 5 we just leave the list as it is
-
             }
-
-                    //listOfQualities.removeIf(str -> str.equals("accepting") || str.equals("rejecting"));
-
-
         }
-
         return listOfQualities;
     }
 
