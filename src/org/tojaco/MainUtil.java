@@ -394,7 +394,7 @@ public class MainUtil {
 
                 }
 
-                outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, true);
+                //outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, true);
 
                 analyse = new StanceAnalysis();
                 analyse.assignStancesByHashtags( hashtagToUsers,graphElements, rtGraph);
