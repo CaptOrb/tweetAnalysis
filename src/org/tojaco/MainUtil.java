@@ -395,7 +395,7 @@ public class MainUtil {
 
                 analyse.find100Hashtags(hashtagToUsers);
 
-                analyse.find100HashtagsS5(rtGraph, hashtagToUsers);
+              //  analyse.find100HashtagsS5(rtGraph, hashtagToUsers);
 
                 hashtagSplitter = new HashtagSplitter();
                 hashtagSplitter.splitHashtagsByCamelCase(hashtagToUsers);
@@ -451,7 +451,7 @@ public class MainUtil {
                 StatCalculator statCalculator = new StatCalculator(usersToQualities);
 
                 // not 100% done yet
-                //statCalculator.calConditionalProbability(usersToQualities);
+                statCalculator.automateConditionalProbCalculation(lexicon);
 
                 Double zscore = statCalculator.calculateZScore(false, "-ref:fauci");
 
