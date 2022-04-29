@@ -395,7 +395,7 @@ public class MainUtil {
 
                 analyse.find100Hashtags(hashtagToUsers);
 
-                analyse.find100HashtagsS5(rtGraph, hashtagToUsers);
+              //  analyse.find100HashtagsS5(rtGraph, hashtagToUsers);
 
                 hashtagSplitter = new HashtagSplitter();
                 hashtagSplitter.splitHashtagsByCamelCase(hashtagToUsers);

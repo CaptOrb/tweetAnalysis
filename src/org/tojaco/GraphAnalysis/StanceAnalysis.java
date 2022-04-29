@@ -84,7 +84,7 @@ public class StanceAnalysis<T, E> {
         for (Map.Entry<Vertex<TwitterUser>, ArrayList<Arc<TwitterUser>>> vertex : retweetGraph.getGraph().entrySet()) {
             if (i < 100) {
 
-                System.out.println(vertex.getKey().getLabel() + " " + vertex.getKey().getLabel().getStance());
+                //System.out.println(vertex.getKey().getLabel() + " " + vertex.getKey().getLabel().getStance());
                 i++;
             }
         }
