@@ -60,8 +60,8 @@ public class ModelUser {
     public List<String> editList(List<String> listOfQualities){
 
         if(listOfQualities.size()>2) {
-        Lexicon oppositeQaulitiesHashmap = new Lexicon();
-        HashMap<String, String> opposites = oppositeQaulitiesHashmap.getOppositeQualities();
+        Lexicon oppositeQualitiesHashmap = new Lexicon();
+        HashMap<String, String> opposites = oppositeQualitiesHashmap.getOppositeQualities();
         int changeList = 0;
            // List<String> toRemove = new ArrayList<>();
             for(Map.Entry<String, String> entry : opposites.entrySet()) {
