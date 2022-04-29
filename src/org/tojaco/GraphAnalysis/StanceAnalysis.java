@@ -50,13 +50,13 @@ public class StanceAnalysis<T, E> {
             graphAnalyser.assignUserStances(hashtagsToUsers);
         }
 
-        System.out.println("\n4a, set stances for users using hashtags only:");
+        /*System.out.println("\n4a, set stances for users using hashtags only:");
 
         System.out.println("Coverage in graph HashtagToUsers graph using ONLY hashtags: " + graphAnalyser.calculateCoverage(graph, graphElements) + "%");
         System.out.println("Percentage of users without a stance using ONLY hashtags: " + (graphAnalyser.calculateCoverage(graph, graphElements) - 100) * -1 + "%");
         System.out.println("Percentage positive stances using ONLY hashtags: " + graphAnalyser.calculatePercentagePositiveStances(hashtagsToUsers, graphElements) + "%");
         System.out.println("Percentage negative stance using ONLY hashtags: " + graphAnalyser.calculatePercentageNegativeStances(hashtagsToUsers, graphElements) + "%");
-    }
+  */  }
 
     public HashMap<Stanceable, Integer> find100HashtagsS5(DirectedGraph<TwitterUser, TwitterUser> retweetGraph, DirectedGraph<Hashtag, TwitterUser> userToHashTags) {
 
