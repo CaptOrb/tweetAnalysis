@@ -457,6 +457,7 @@ public class MainUtil {
                 System.out.println("User to Qualities graph added successfully to Graph directory!");
                 StatCalculator statCalculator = new StatCalculator(usersToQualities);
 
+                System.out.println("Now automating collection of significant conditional probabilities");
                 // not 100% done yet
                 statCalculator.automateConditionalProbCalculation(lexicon);
 
