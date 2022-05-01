@@ -170,11 +170,13 @@ public class StatCalculator {
     }
 
     public void outputSignificantConditionalProbabilities(){
+        System.out.println("\nMost significant conditional probabilities found");
+        System.out.format("%20s%20s%20s", "Property", "Probability", "Z-Score");
+        System.out.println();
 
-        System.out.println("Most significant conditional probabilities found");
-        System.out.println("\nProperty\t\tProbability\t\t\tZScore");
         for(Map.Entry<String, Double> list : significantConditionalProbabilities.entrySet()) {
-                System.out.println(list.getKey() + "\t\t" + list.getValue() + "\t\t\t" + condtionalPropZScore.get(list.getKey()));
+            System.out.format("%20s%20f%20f", list.getKey(), list.getValue(), condtionalPropZScore.get(list.getKey()));
+            System.out.println();
         }
     }
 }
