@@ -13,6 +13,8 @@ public class StatCalculator {
     private final List<TwitterUser> property1Users;
     private final List<TwitterUser> notProperty1Users;
 
+    private final Map<String, Double> condtionalPropZScore = new HashMap<>();
+
     private final Map<String, Double> significantConditionalProbabilities = new HashMap<>();
 
     public StatCalculator(DirectedGraph<TwitterUser, String> userModel){
@@ -145,17 +147,19 @@ public class StatCalculator {
 
         for (Map.Entry<String, List<String>> featureMapping : lexicon.getStanceGivenConditionList().entrySet()) {
 
-
             for(String condition: featureMapping.getValue()) {
 
                 double zScore = calculateZScore(featureMapping.getKey(), condition);
+
+
                 double conditionalProbability = calConditionalProbabilityWithProps(featureMapping.getKey(),
                         condition);
 
                 if (zScore >= 2) {
 
-
                     String propertyBeingChecked = featureMapping.getKey() + " : " + condition;
+
+                    condtionalPropZScore.put(propertyBeingChecked, zScore);
 
                     significantConditionalProbabilities.put(propertyBeingChecked,
                             conditionalProbability);
@@ -168,9 +172,9 @@ public class StatCalculator {
     public void outputSignificantConditionalProbabilities(){
 
         System.out.println("Most significant conditional probabilities found");
-        System.out.println("\nConditional Property\t\tConditional Probability");
+        System.out.println("\nProperty\t\tProbability\t\t\tZScore");
         for(Map.Entry<String, Double> list : significantConditionalProbabilities.entrySet()) {
-                System.out.println(list.getKey() + "\t\t" + list.getValue());
+                System.out.println(list.getKey() + "\t\t" + list.getValue() + "\t\t\t" + condtionalPropZScore.get(list.getKey()));
         }
     }
 }
