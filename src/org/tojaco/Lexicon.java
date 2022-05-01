@@ -6,6 +6,8 @@ import org.tojaco.Graph.Vertex;
 import org.tojaco.GraphElements.Hashtag;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Lexicon<E> {
 
@@ -31,7 +33,7 @@ public class Lexicon<E> {
         }
     }
 
-    HashMap<String, String> oppositeQualities = new HashMap<>();
+    private final HashMap<String, String> oppositeQualities = new HashMap<>();
 
     private void initOppositesHashmap() {
         oppositeQualities.put("problem", "solution");
@@ -59,5 +61,38 @@ public class Lexicon<E> {
             initOppositesHashmap();
         }
         return oppositeQualities;
+    }
+
+    private final Map<String, String> stanceGivenConditionList = Stream.of(new String[][] {
+            { "anti", "-ref:fauci" },
+            { "-ref:fauci", "anti" },
+            { "-ref:vaccine", "anti" },
+            { "ref:vaccine", "pro" },
+            { "ref:pfizer", "pro" },
+            { "anti", "-ref:pfizer" },
+            { "anti", "-ref:corona" },
+            { "pro", "ref:corona" },
+            { "pro", "ref:tony_holohan" },
+            { "anti", "-ref:tony_holohan" },
+            { "anti", "ref:distrust" },
+            { "pro", "ref:media" },
+            { "anti", "-ref:media" },
+            { "pro", "ref:janssen" },
+            { "anti", "-ref:janssen" },
+            { "ref:janssen", "pro" },
+            { "-ref:janssen", "anti" },
+            { "pro", "leftwing" },
+            { "anti", "leftwing" },
+            { "pro", "rightwing" },
+            { "anti", "rightwing" },
+            { "ref:vaccine", "ref:boosted" },
+            { "-ref:vaccine", "boosted" },
+            { "vaccinated", "ref:vaccine" },
+            { "vaccinated", "-ref:vaccine" },
+            { "nojab", "anti" },
+    }).collect(Collectors.toMap(data -> data[0], data -> data[1]));
+
+    public Map<String, String> getStanceGivenConditionList() {
+        return stanceGivenConditionList;
     }
 }

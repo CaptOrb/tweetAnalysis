@@ -462,7 +462,9 @@ public class MainUtil {
 
                 double condProb = statCalculator.calConditionalProbabilityWithProps("anti", "-ref:fauci");
                 Double zscore = statCalculator.calculateZScore("ref:africa", "solution");
-                String s = "asd";
+
+                //System.out.println(zscore);
+               // String s = "asd";
 
                 break;
         }
