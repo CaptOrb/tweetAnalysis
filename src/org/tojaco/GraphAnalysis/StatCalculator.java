@@ -13,7 +13,7 @@ public class StatCalculator {
     private final List<TwitterUser> property1Users;
     private final List<TwitterUser> notProperty1Users;
 
-    private final Map<String, Double> condtionalPropZScore = new HashMap<>();
+    private final Map<String, Double> conditionalPropZSScore = new HashMap<>();
 
     private final Map<String, Double> significantConditionalProbabilities = new HashMap<>();
 
@@ -151,7 +151,6 @@ public class StatCalculator {
 
                 double zScore = calculateZScore(featureMapping.getKey(), condition);
 
-
                 double conditionalProbability = calConditionalProbabilityWithProps(featureMapping.getKey(),
                         condition);
 
@@ -159,7 +158,7 @@ public class StatCalculator {
 
                     String propertyBeingChecked = featureMapping.getKey() + " : " + condition;
 
-                    condtionalPropZScore.put(propertyBeingChecked, zScore);
+                    conditionalPropZSScore.put(propertyBeingChecked, zScore);
 
                     significantConditionalProbabilities.put(propertyBeingChecked,
                             conditionalProbability);
@@ -175,7 +174,7 @@ public class StatCalculator {
         System.out.println();
 
         for(Map.Entry<String, Double> list : significantConditionalProbabilities.entrySet()) {
-            System.out.format("%20s%20f%20f", list.getKey(), list.getValue(), condtionalPropZScore.get(list.getKey()));
+            System.out.format("%20s%20f%20f", list.getKey(), list.getValue(), conditionalPropZSScore.get(list.getKey()));
             System.out.println();
         }
     }
