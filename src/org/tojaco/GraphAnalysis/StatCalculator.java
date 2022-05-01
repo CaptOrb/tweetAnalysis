@@ -1,21 +1,17 @@
 package org.tojaco.GraphAnalysis;
 
-import org.tojaco.Graph.Arc;
 import org.tojaco.Graph.DirectedGraph;
 import org.tojaco.Graph.Vertex;
 import org.tojaco.GraphElements.TwitterUser;
 import org.tojaco.Lexicon;
 
 import java.util.*;
-import twitter4j.Twitter;
-
-import java.util.*;
 
 public class StatCalculator {
     private final DirectedGraph<TwitterUser, String> userModel;
-    private List<TwitterUser> usersList;
-    private List<TwitterUser> property1Users;
-    private List<TwitterUser> notProperty1Users;
+    private final List<TwitterUser> usersList;
+    private final List<TwitterUser> property1Users;
+    private final List<TwitterUser> notProperty1Users;
 
     public StatCalculator(DirectedGraph<TwitterUser, String> userModel){
         this.userModel = userModel;
@@ -145,12 +141,17 @@ public class StatCalculator {
 
     public void automateConditionalProbCalculation(Lexicon<String> lexicon) {
 
-        // TODO ignore Z-Score of < 2
+        for (Map.Entry<String, String> featureMapping : lexicon.getStanceGivenConditionList().entrySet()) {
 
-        HashMap<String, String> featureOppositeQualities = lexicon.getOppositeQualities();
+            double zScore = calculateZScore(featureMapping.getKey(),featureMapping.getValue());
+            double conditionalProbability = calConditionalProbabilityWithProps(featureMapping.getKey(),
+                    featureMapping.getValue());
 
-        for (Map.Entry<String, String> featureMapping : featureOppositeQualities.entrySet()) {
-            calConditionalProbabilityWithProps(featureMapping.getKey(), featureMapping.getValue());
+            if (zScore > 2){
+
+                // TODO: add to a list or something?
+
+            }
         }
     }
 }
