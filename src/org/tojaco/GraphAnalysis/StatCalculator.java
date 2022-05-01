@@ -156,14 +156,14 @@ public class StatCalculator {
         sampleMeans = calculateMeanOfRandomSamplesOfSizeM(positivity, m.size());
         mew = calculateDoubleMean(sampleMeans);
         sD = calculateSD(sampleMeans, mew);
+        double difference;
         if( !positivity ){
-            double difference = calculateAntiStancesProportion(m) - mew;
-            return difference/sD;
+            difference = calculateAntiStancesProportion(m) - mew;
         }
         else{
-            double difference = calculateProStancesProportion(m) - mew;
-            return difference/sD;
+            difference = calculateProStancesProportion(m) - mew;
         }
+        return difference/sD;
     }
 
     public double calConditionalProbabilityWithProps(String prop1, String prop2) {
