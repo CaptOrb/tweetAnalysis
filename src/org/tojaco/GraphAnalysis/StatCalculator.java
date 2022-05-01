@@ -211,11 +211,11 @@ public class StatCalculator {
 
     public void outputSignificantConditionalProbabilities(){
         System.out.println("\nMost significant conditional probabilities found");
-        System.out.format("%20s%20s%20s", "Property", "Probability", "Z-Score");
+        System.out.format("%30s%30s%30s", "Property", "Probability", "Z-Score");
         System.out.println();
 
         for(Map.Entry<String, Double> list : significantConditionalProbabilities.entrySet()) {
-            System.out.format("%20s%20f%20f", list.getKey(), list.getValue(), conditionalPropZSScore.get(list.getKey()));
+            System.out.format("%30s%30f%30f", list.getKey(), list.getValue(), conditionalPropZSScore.get(list.getKey()));
             System.out.println();
         }
     }

@@ -81,10 +81,13 @@ Percentage negative stance using ONLY hashtags: 62.04249%
 - The tasks were divided evenly between the team members. See commit history for a clearer idea of who carried out which tasks, but pair work was often carried out with just one person committing the finished result.
 - Our code calculates and outputs the significant conditional probabilities that take the form P( pro/anti | ref:x ), and we plan to expand it to also calculate for P( ref:x | pro/anti )
 - some significant probabilities we found were:
-        Property             Probability         Z-Score
-  pro : rightwing            0.419196            3.503769
-  anti : -ref:tony_holohan   1.000000            6.086220
-  anti : -ref:media          0.867737            3.480262
-  anti : ref:fauci           0.985401            6.047479
-  anti : -ref:pfizer         0.976415            6.967480
-  anti : -ref:corona         0.832000            2.365533
+
+| Property      |    Probability     | L Z-Score  |
+| ----------- |:------------------:| -----:|
+| pro : rightwing     |      0.419196      | 3.503769|
+| anti : -ref:tony_holohan       |      1.000000      | 6.049106 |
+|  anti : -ref:media    |     0.867737       | 3.598639 |
+| anti : ref:fauci     | 0.985401  | 6.513596   |
+| anti : -ref:pfizer    |  0.976415  | 5.799930  |
+| anti : -ref:corona     |  0.832000  |  2.349956 |
+
