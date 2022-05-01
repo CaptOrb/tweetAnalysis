@@ -88,7 +88,7 @@ public class StatCalculator {
                 sampleUsers.add((TwitterUser)randomValue);
             }
             List<TwitterUser> usersWithProperty1 = getProportionList(sampleUsers, property1);
-            probabilities.add( (double) usersWithProperty1.size() / usersWithProperty1.size() );
+            probabilities.add( (double) usersWithProperty1.size() / m );
         }
         return probabilities;
     }
@@ -125,8 +125,9 @@ public class StatCalculator {
         sampleMeans = calculateMeanOfRandomSamplesOfSizeM(m.size(), property1);
         mew = calculateDoubleMean(sampleMeans);
         sD = calculateSD(sampleMeans, mew);
-        double difference = calculateAntiStancesProportion(m) - mew;
-        return sD/difference;
+        double difference = (double) getProportionList(m, property1).size()/m.size() - mew;
+        double zScore = difference/sD;
+        return zScore;
         //}
     }
 
@@ -135,10 +136,11 @@ public class StatCalculator {
         double probUserWithPropOne = getProportionList(usersList, prop1).size() / (double) usersList.size();
 
         double probUserWithPropTwo = getProportionList(usersList, prop2).size() / (double) usersList.size();
+        double intersection = getProportionList(getProportionList(usersList, prop1), prop2).size() / (double) usersList.size();
 
         double probUserWithBothProps = probUserWithPropOne * probUserWithPropTwo;
 
-        return probUserWithBothProps / probUserWithPropTwo;
+        return intersection / probUserWithPropTwo;
     }
 
     public void automateConditionalProbCalculation(Lexicon<String> lexicon) {
