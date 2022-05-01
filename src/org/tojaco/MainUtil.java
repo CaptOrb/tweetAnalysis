@@ -458,18 +458,17 @@ public class MainUtil {
                 StatCalculator statCalculator = new StatCalculator(usersToQualities);
 
                 System.out.println("Now automating collection of significant conditional probabilities");
-                // not 100% done yet
+// not 100% done yet
                 statCalculator.automateConditionalProbCalculation(lexicon);
 
                 statCalculator.outputSignificantConditionalProbabilities();
 
-                //double condProb = statCalculator.calConditionalProbabilityWithProps("anti", "-ref:fauci");
-               // Double zscore = statCalculator.calculateZScore("ref:africa", "solution");
+//double condProb = statCalculator.calConditionalProbabilityWithProps("anti", "-ref:fauci");
+//Double zscore = statCalculator.calculateZScore(false, "solution");
 
-                //System.out.println(zscore);
-               // String s = "asd";
+//System.out.println(zscore);
+                String s = "asd";
 
-                break;
         }
     }
 

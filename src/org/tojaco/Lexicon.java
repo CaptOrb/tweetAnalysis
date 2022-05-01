@@ -71,10 +71,10 @@ public class Lexicon<E> {
     private void initStanceGivenConditionList() {
 
         addToStanceGivenConditionList("anti", "ref:fauci");
-        addToStanceGivenConditionList("-ref:fauci", "anti");
-        addToStanceGivenConditionList("-ref:vaccine", "anti");
-        addToStanceGivenConditionList("ref:vaccine", "pro");
-        addToStanceGivenConditionList("ref:pfizer", "pro");
+//addToStanceGivenConditionList("-ref:fauci", "anti");
+//addToStanceGivenConditionList("-ref:vaccine", "anti");
+//addToStanceGivenConditionList("ref:vaccine", "pro");
+//addToStanceGivenConditionList("ref:pfizer", "pro");
         addToStanceGivenConditionList("anti", "-ref:pfizer");
         addToStanceGivenConditionList("anti", "-ref:corona");
         addToStanceGivenConditionList("pro", "ref:corona");
@@ -85,17 +85,18 @@ public class Lexicon<E> {
         addToStanceGivenConditionList("anti", "-ref:media");
         addToStanceGivenConditionList("pro", "ref:janssen");
         addToStanceGivenConditionList("anti", "-ref:janssen");
-        addToStanceGivenConditionList("ref:janssen", "pro");
-        addToStanceGivenConditionList("-ref:janssen", "anti");
+//addToStanceGivenConditionList("ref:janssen", "pro");
+//addToStanceGivenConditionList("-ref:janssen", "anti");
         addToStanceGivenConditionList("pro", "leftwing");
         addToStanceGivenConditionList("anti", "leftwing");
         addToStanceGivenConditionList("pro", "rightwing");
         addToStanceGivenConditionList("anti", "rightwing");
-        addToStanceGivenConditionList("ref:vaccine", "ref:boosted");
-        addToStanceGivenConditionList("-ref:vaccine", "boosted");
-        addToStanceGivenConditionList("vaccinated", "ref:vaccine");
-        addToStanceGivenConditionList("vaccinated", "-ref:vaccine");
-        addToStanceGivenConditionList("nojab", "anti");
+//addToStanceGivenConditionList("ref:vaccine", "ref:boosted");
+//addToStanceGivenConditionList("-ref:vaccine", "boosted");
+//addToStanceGivenConditionList("vaccinated", "ref:vaccine");
+//addToStanceGivenConditionList("vaccinated", "-ref:vaccine");
+//addToStanceGivenConditionList("nojab", "anti");
+
     }
 
     public Map<String, List<String>> getStanceGivenConditionList() {
