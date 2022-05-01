@@ -6,10 +6,13 @@ import org.tojaco.Graph.Vertex;
 import org.tojaco.GraphElements.Hashtag;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Lexicon<E> {
+
+    Lexicon(){
+        initOppositesHashmap();
+        initStanceGivenConditionList();
+    }
 
     private final Set<String> lexiconDictionary = new HashSet<>();
 
@@ -57,42 +60,45 @@ public class Lexicon<E> {
     }
 
     public HashMap<String, String> getOppositeQualities() {
-        if(oppositeQualities.isEmpty()){
-            initOppositesHashmap();
-        }
         return oppositeQualities;
     }
+    Map<String, List<String>> stanceGivenConditionList = new LinkedHashMap<>();
+    private void addToStanceGivenConditionList(String key, String newValue) {
+        List<String> currentValue = stanceGivenConditionList.computeIfAbsent(key, k -> new ArrayList<>());
+        currentValue.add(newValue);
+    }
 
-    private final Map<String, String> stanceGivenConditionList = Stream.of(new String[][] {
-            { "anti", "-ref:fauci" },
-            { "-ref:fauci", "anti" },
-            { "-ref:vaccine", "anti" },
-            { "ref:vaccine", "pro" },
-            { "ref:pfizer", "pro" },
-            { "anti", "-ref:pfizer" },
-            { "anti", "-ref:corona" },
-            { "pro", "ref:corona" },
-            { "pro", "ref:tony_holohan" },
-            { "anti", "-ref:tony_holohan" },
-            { "anti", "ref:distrust" },
-            { "pro", "ref:media" },
-            { "anti", "-ref:media" },
-            { "pro", "ref:janssen" },
-            { "anti", "-ref:janssen" },
-            { "ref:janssen", "pro" },
-            { "-ref:janssen", "anti" },
-            { "pro", "leftwing" },
-            { "anti", "leftwing" },
-            { "pro", "rightwing" },
-            { "anti", "rightwing" },
-            { "ref:vaccine", "ref:boosted" },
-            { "-ref:vaccine", "boosted" },
-            { "vaccinated", "ref:vaccine" },
-            { "vaccinated", "-ref:vaccine" },
-            { "nojab", "anti" },
-    }).collect(Collectors.toMap(data -> data[0], data -> data[1]));
+    private void initStanceGivenConditionList() {
 
-    public Map<String, String> getStanceGivenConditionList() {
+        addToStanceGivenConditionList("anti", "ref:fauci");
+        addToStanceGivenConditionList("-ref:fauci", "anti");
+        addToStanceGivenConditionList("-ref:vaccine", "anti");
+        addToStanceGivenConditionList("ref:vaccine", "pro");
+        addToStanceGivenConditionList("ref:pfizer", "pro");
+        addToStanceGivenConditionList("anti", "-ref:pfizer");
+        addToStanceGivenConditionList("anti", "-ref:corona");
+        addToStanceGivenConditionList("pro", "ref:corona");
+        addToStanceGivenConditionList("pro", "ref:tony_holohan");
+        addToStanceGivenConditionList("anti", "-ref:tony_holohan");
+        addToStanceGivenConditionList("anti", "ref:distrust");
+        addToStanceGivenConditionList("pro", "ref:media");
+        addToStanceGivenConditionList("anti", "-ref:media");
+        addToStanceGivenConditionList("pro", "ref:janssen");
+        addToStanceGivenConditionList("anti", "-ref:janssen");
+        addToStanceGivenConditionList("ref:janssen", "pro");
+        addToStanceGivenConditionList("-ref:janssen", "anti");
+        addToStanceGivenConditionList("pro", "leftwing");
+        addToStanceGivenConditionList("anti", "leftwing");
+        addToStanceGivenConditionList("pro", "rightwing");
+        addToStanceGivenConditionList("anti", "rightwing");
+        addToStanceGivenConditionList("ref:vaccine", "ref:boosted");
+        addToStanceGivenConditionList("-ref:vaccine", "boosted");
+        addToStanceGivenConditionList("vaccinated", "ref:vaccine");
+        addToStanceGivenConditionList("vaccinated", "-ref:vaccine");
+        addToStanceGivenConditionList("nojab", "anti");
+    }
+
+    public Map<String, List<String>> getStanceGivenConditionList() {
         return stanceGivenConditionList;
     }
 }

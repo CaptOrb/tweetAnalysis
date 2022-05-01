@@ -13,6 +13,8 @@ public class StatCalculator {
     private final List<TwitterUser> property1Users;
     private final List<TwitterUser> notProperty1Users;
 
+    private final Map<String, Double> significantConditionalProbabilities = new HashMap<>();
+
     public StatCalculator(DirectedGraph<TwitterUser, String> userModel){
         this.userModel = userModel;
         usersList = new ArrayList<>();
@@ -141,17 +143,34 @@ public class StatCalculator {
 
     public void automateConditionalProbCalculation(Lexicon<String> lexicon) {
 
-        for (Map.Entry<String, String> featureMapping : lexicon.getStanceGivenConditionList().entrySet()) {
+        for (Map.Entry<String, List<String>> featureMapping : lexicon.getStanceGivenConditionList().entrySet()) {
 
-            double zScore = calculateZScore(featureMapping.getKey(),featureMapping.getValue());
-            double conditionalProbability = calConditionalProbabilityWithProps(featureMapping.getKey(),
-                    featureMapping.getValue());
 
-            if (zScore > 2){
+            for(String condition: featureMapping.getValue()) {
 
-                // TODO: add to a list or something?
+                double zScore = calculateZScore(featureMapping.getKey(), condition);
+                double conditionalProbability = calConditionalProbabilityWithProps(featureMapping.getKey(),
+                        condition);
 
+                if (zScore >= 2) {
+
+
+                    String propertyBeingChecked = featureMapping.getKey() + " : " + condition;
+
+                    significantConditionalProbabilities.put(propertyBeingChecked,
+                            conditionalProbability);
+
+                }
             }
+        }
+    }
+
+    public void outputSignificantConditionalProbabilities(){
+
+        System.out.println("Most significant conditional probabilities found");
+        System.out.println("\nConditional Property\t\tConditional Probability");
+        for(Map.Entry<String, Double> list : significantConditionalProbabilities.entrySet()) {
+                System.out.println(list.getKey() + "\t\t" + list.getValue());
         }
     }
 }

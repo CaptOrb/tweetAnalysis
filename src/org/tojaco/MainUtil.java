@@ -460,8 +460,10 @@ public class MainUtil {
                 // not 100% done yet
                 statCalculator.automateConditionalProbCalculation(lexicon);
 
-                double condProb = statCalculator.calConditionalProbabilityWithProps("anti", "-ref:fauci");
-                Double zscore = statCalculator.calculateZScore("ref:africa", "solution");
+                statCalculator.outputSignificantConditionalProbabilities();
+
+                //double condProb = statCalculator.calConditionalProbabilityWithProps("anti", "-ref:fauci");
+               // Double zscore = statCalculator.calculateZScore("ref:africa", "solution");
 
                 //System.out.println(zscore);
                // String s = "asd";
