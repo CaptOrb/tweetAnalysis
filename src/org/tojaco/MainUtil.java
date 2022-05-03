@@ -326,7 +326,10 @@ public class MainUtil {
                 rfs.writeFileFromGraph(sumHashTagGraph, new File(configuration.getGRAPH_DIRECTORY(),
                         configuration.getHASHTAG_SUMMARY_FILE()) , true);
 
+                GraphReadWriteService graphReadWriteService = new GraphReadWriteService();
+                graphReadWriteService.writeGephiFile(rtGraph, new File(configuration.getGRAPH_DIRECTORY(), configuration.getGEPHI_FILE_1()), configuration);
                 break;
+
 
             case 7:
 
@@ -471,9 +474,9 @@ public class MainUtil {
 
                 break;
 
-            case 8:
-                GraphReadWriteService graphReadWriteService = new GraphReadWriteService();
-                graphReadWriteService.writeGephiFile(rtGraph, new File(configuration.getGRAPH_DIRECTORY(), configuration.getGEPHI_FILE_1()), configuration);
+//            case 8:
+//                GraphReadWriteService graphReadWriteService = new GraphReadWriteService();
+//                graphReadWriteService.writeGephiFile(rtGraph, new File(configuration.getGRAPH_DIRECTORY(), configuration.getGEPHI_FILE_1()), configuration);
         }
 
     }

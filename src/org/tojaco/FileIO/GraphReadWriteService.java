@@ -110,27 +110,24 @@ public class GraphReadWriteService extends FileService {
         StringBuilder sb = new StringBuilder();
 
         try (PrintWriter pw = new PrintWriter(new FileWriter(file))) {
+            sb.append("nodedef>name VARCHAR"/*,label VARCHAR,class VARCHAR, visible BOOLEAN," +
+                        "labelvisible BOOLEAN,width DOUBLE,height DOUBLE,x DOUBLE,y DOUBLE,color VARCHAR"*/);
+            pw.println(sb);
+            sb.setLength(0);
+            pw.flush();
 
-//            for (Vertex<T> vertex : graphHashMap.keySet()) {
-//
-//                sb.append(vertex.getLabel().toString()).append(" [");
-//
-//                for (int i = 0; i < graphHashMap.get(vertex).size(); i++) {
-//                    if (i > 0) {
-//                        sb.append(", ").append(graphHashMap.get(vertex).get(i).getVertex().getLabel());
-//                    } else {
-//                        sb.append(graphHashMap.get(vertex).get(i).getVertex().getLabel());
-//                    }
-//                    if(weight==true) {
-//                        sb.append("(").append(graphHashMap.get(vertex).get(i).getWeight()).append(")");
-//                    }
-                   // }
-                sb.append("nodedef>name VARCHAR,label VARCHAR,class VARCHAR, visible BOOLEAN," +
-                        "labelvisible BOOLEAN,width DOUBLE,height DOUBLE,x DOUBLE,y DOUBLE,color VARCHAR");
+            for(String name : graph.getAllVerticesInGraph().keySet() ){
+                sb.append(name);
                 pw.println(sb);
                 sb.setLength(0);
                 pw.flush();
             }
+
+//            sb.append("edgedef>node1 VARCHAR,node2 VARCHAR,directed BOOLEAN,color VARCHAR");
+//            pw.println(sb);
+//            sb.setLength(0);
+//            pw.flush();
+        }
 
         catch (IOException e) {
             e.printStackTrace();
