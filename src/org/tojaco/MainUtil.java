@@ -49,7 +49,7 @@ public class MainUtil {
 
         GraphElements graphElements = new GraphElements();
         FindGraphElements findGraphElements;
-        DirectedGraph<TwitterUser, TwitterUser> rtGraph;
+        DirectedGraph<TwitterUser, TwitterUser> rtGraph = new DirectedGraph<>();
         DirectedGraph<TwitterUser, TwitterUser> retweetedGraph;
         GraphReadWriteService rfs = new GraphReadWriteService();
         File lexiconFile;
@@ -469,7 +469,13 @@ public class MainUtil {
 //System.out.println(zscore);
                 String s = "asd";
 
+                break;
+
+            case 8:
+                GraphReadWriteService graphReadWriteService = new GraphReadWriteService();
+                graphReadWriteService.writeGephiFile(rtGraph, new File(configuration.getGRAPH_DIRECTORY(), configuration.getGEPHI_FILE_1()), configuration);
         }
+
     }
 
     private static void outputGraphAnalysis(GraphAnalyser graphAnalyser, DirectedGraph graph, GraphElements graphElements

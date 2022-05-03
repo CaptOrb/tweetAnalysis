@@ -1,8 +1,11 @@
 package org.tojaco.FileIO;
 
+import org.tojaco.Configuration;
 import org.tojaco.Graph.Arc;
 import org.tojaco.Graph.DirectedGraph;
 import org.tojaco.Graph.Vertex;
+import org.tojaco.GraphElements.TwitterUser;
+import twitter4j.Twitter;
 
 import java.io.*;
 import java.util.*;
@@ -99,6 +102,45 @@ public class GraphReadWriteService extends FileService {
 
     private boolean isTextRetweet(String[] lineContents) {
         return lineContents[0].contains("RT") && lineContents[1].startsWith("@");
+
+    }
+
+    public void writeGephiFile(DirectedGraph<TwitterUser, TwitterUser> graph, File file, Configuration configuration) throws IOException {
+        createFile(file.getParent(), file.getName());
+        StringBuilder sb = new StringBuilder();
+
+        try (PrintWriter pw = new PrintWriter(new FileWriter(file))) {
+
+//            for (Vertex<T> vertex : graphHashMap.keySet()) {
+//
+//                sb.append(vertex.getLabel().toString()).append(" [");
+//
+//                for (int i = 0; i < graphHashMap.get(vertex).size(); i++) {
+//                    if (i > 0) {
+//                        sb.append(", ").append(graphHashMap.get(vertex).get(i).getVertex().getLabel());
+//                    } else {
+//                        sb.append(graphHashMap.get(vertex).get(i).getVertex().getLabel());
+//                    }
+//                    if(weight==true) {
+//                        sb.append("(").append(graphHashMap.get(vertex).get(i).getWeight()).append(")");
+//                    }
+                   // }
+                sb.append("nodedef>name VARCHAR,label VARCHAR,class VARCHAR, visible BOOLEAN," +
+                        "labelvisible BOOLEAN,width DOUBLE,height DOUBLE,x DOUBLE,y DOUBLE,color VARCHAR");
+                pw.println(sb);
+                sb.setLength(0);
+                pw.flush();
+            }
+
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+//        File file = createFile(configuration.getDataDirectory(), configuration.getUserFile());
+//
+//        PrintWriter pw = new PrintWriter(new FileWriter(file, true))
+//        pw.println("nodedef>name VARCHAR,label VARCHAR,class VARCHAR, visible BOOLEAN," +
+//                "labelvisible BOOLEAN,width DOUBLE,height DOUBLE,x DOUBLE,y DOUBLE,color VARCHAR");
 
     }
 }
