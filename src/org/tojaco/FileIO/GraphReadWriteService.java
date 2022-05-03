@@ -116,17 +116,30 @@ public class GraphReadWriteService extends FileService {
             sb.setLength(0);
             pw.flush();
 
-            for(String name : graph.getAllVerticesInGraph().keySet() ){
-                sb.append(name);
+            for(Vertex<TwitterUser> vertex: graph.getGraph().keySet()){
+                sb.append(vertex.getLabel().getUserHandle() + ", ");
+                if(vertex.getLabel().hasStance()){
+                    sb.append(vertex.getLabel().getStance() + " ");
+                }else {
+                    sb.append("neutral ");
+                }
                 pw.println(sb);
                 sb.setLength(0);
                 pw.flush();
             }
 
-//            sb.append("edgedef>node1 VARCHAR,node2 VARCHAR,directed BOOLEAN,color VARCHAR");
-//            pw.println(sb);
-//            sb.setLength(0);
-//            pw.flush();
+
+            sb.append("edgedef>node1 VARCHAR,node2 VARCHAR,directed BOOLEAN,color VARCHAR");
+            pw.println(sb);
+            sb.setLength(0);
+            pw.flush();
+
+            for(Vertex<TwitterUser> vertex: graph.getGraph().keySet()){
+                sb.append(vertex.getLabel().getUserHandle() + ", ");
+                for(Arc<TwitterUser> arc : graph.getGraph().get(vertex)){
+                    sb.append(arc.getVertex().getLabel() + " ");
+                }
+            }
         }
 
         catch (IOException e) {
