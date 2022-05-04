@@ -108,7 +108,6 @@ public class GraphReadWriteService extends FileService {
     public void writeGephiFile(DirectedGraph<TwitterUser, TwitterUser> graph, File file, Configuration configuration) throws IOException {
         createFile(file.getParent(), file.getName());
         StringBuilder sb = new StringBuilder();
-
         try (PrintWriter pw = new PrintWriter(new FileWriter(file))) {
             sb.append("nodedef>name VARCHAR"/*,label VARCHAR,class VARCHAR, visible BOOLEAN," +
                         "labelvisible BOOLEAN,width DOUBLE,height DOUBLE,x DOUBLE,y DOUBLE,color VARCHAR"*/);

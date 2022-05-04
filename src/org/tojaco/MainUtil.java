@@ -42,6 +42,7 @@ public class MainUtil {
                 "\n5. Assign stances to HashTags (Sprint 5)" +
                 "\n6. Get the gist of a Hashtag (Sprint 6)" +
                 "\n7. Assign a \"psychological profile\" to each user in the dataset  (Sprint 7)" +
+                "\n7. Generate .gdf files for Gephi  (Sprint 8)" +
                 "\nOr enter -1 to quit");
 
         Scanner scanner = new Scanner(System.in);
@@ -88,11 +89,11 @@ public class MainUtil {
 
                 rfs.writeFileFromGraph(rtGraph,
                         new File(configuration.getGRAPH_DIRECTORY(),
-                                configuration.getRTGRAPH_OUTPUT_FILE()),true);
+                                configuration.getRTGRAPH_OUTPUT_FILE()), true);
 
                 rfs.writeFileFromGraph(retweetedGraph,
                         new File(configuration.getGRAPH_DIRECTORY(),
-                                configuration.getRTWEETEDGRAPH_OUTPUT_FILE()),true);
+                                configuration.getRTWEETEDGRAPH_OUTPUT_FILE()), true);
                 System.out.println("Retweet graph added successfully to Graph directory!");
 
 
@@ -119,11 +120,11 @@ public class MainUtil {
 
                 rfs.writeFileFromGraph(rtGraph,
                         new File(configuration.getGRAPH_DIRECTORY(),
-                                configuration.getRTGRAPH_OUTPUT_FILE()),true);
+                                configuration.getRTGRAPH_OUTPUT_FILE()), true);
 
                 rfs.writeFileFromGraph(retweetedGraph,
                         new File(configuration.getGRAPH_DIRECTORY(),
-                                configuration.getRTWEETEDGRAPH_OUTPUT_FILE()),true);
+                                configuration.getRTWEETEDGRAPH_OUTPUT_FILE()), true);
                 System.out.println("Retweet graph added successfully to Graph directory!");
 
                 FindEvangelists findEvangelist = new FindEvangelists();
@@ -166,11 +167,11 @@ public class MainUtil {
 
                 rfs.writeFileFromGraph(rtGraph,
                         new File(configuration.getGRAPH_DIRECTORY(),
-                                configuration.getRTGRAPH_OUTPUT_FILE()),true);
+                                configuration.getRTGRAPH_OUTPUT_FILE()), true);
 
                 rfs.writeFileFromGraph(retweetedGraph,
                         new File(configuration.getGRAPH_DIRECTORY(),
-                                configuration.getRTWEETEDGRAPH_OUTPUT_FILE()),true);
+                                configuration.getRTWEETEDGRAPH_OUTPUT_FILE()), true);
 
                 System.out.println("Retweet graph and retweeted graph added successfully to Graph directory!");
 
@@ -204,7 +205,7 @@ public class MainUtil {
 
                 rfs.writeFileFromGraph(usertoHashTag,
                         new File(configuration.getGRAPH_DIRECTORY(),
-                                configuration.getUSERS_TO_HASHTAGS()),true);
+                                configuration.getUSERS_TO_HASHTAGS()), true);
 
 
                 FindGraphElements<Hashtag, TwitterUser> findGraphElements2 = new FindGraphElements<>(new CreateHashtagVertex(), new CreateUserVertex());
@@ -213,7 +214,7 @@ public class MainUtil {
 
                 rfs.writeFileFromGraph(hashtagToUsers,
                         new File(configuration.getGRAPH_DIRECTORY(),
-                                configuration.getHASHTAGS_TO_USERS()),true);
+                                configuration.getHASHTAGS_TO_USERS()), true);
 
 
                 //3a and 3b
@@ -229,9 +230,9 @@ public class MainUtil {
 
                 }
                 outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, true, false);
-                 StanceAnalysis analyse = new StanceAnalysis();
+                StanceAnalysis analyse = new StanceAnalysis();
                 // users100New.checkStance(retweetHashMap);
-                 analyse.assignStancesByHashtags( hashtagToUsers,graphElements, rtGraph);
+                analyse.assignStancesByHashtags(hashtagToUsers, graphElements, rtGraph);
 
                 outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, false, true);
 
@@ -259,11 +260,11 @@ public class MainUtil {
 
                 rfs.writeFileFromGraph(rtGraph,
                         new File(configuration.getGRAPH_DIRECTORY(),
-                               configuration.getRTGRAPH_OUTPUT_FILE()),true);
+                                configuration.getRTGRAPH_OUTPUT_FILE()), true);
 
                 rfs.writeFileFromGraph(retweetedGraph,
                         new File(configuration.getGRAPH_DIRECTORY(),
-                                configuration.getRTWEETEDGRAPH_OUTPUT_FILE()),true);
+                                configuration.getRTWEETEDGRAPH_OUTPUT_FILE()), true);
 
                 System.out.println("Retweet graph and retweeted graph added successfully to Graph directory!");
 
@@ -277,15 +278,15 @@ public class MainUtil {
 
                 rfs.writeFileFromGraph(usertoHashTag,
                         new File(configuration.getGRAPH_DIRECTORY(),
-                                configuration.getUSERS_TO_HASHTAGS()),true);
+                                configuration.getUSERS_TO_HASHTAGS()), true);
 
                 findGraphElements2 = new FindGraphElements<>(new CreateHashtagVertex(), new CreateUserVertex());
 
                 hashtagToUsers = findGraphElements2.createGraph(graphElements, getHashtags(), 1, 0);
 
                 rfs.writeFileFromGraph(hashtagToUsers,
-                       new File(configuration.getGRAPH_DIRECTORY(),
-                               configuration.getHASHTAGS_TO_USERS()),true);
+                        new File(configuration.getGRAPH_DIRECTORY(),
+                                configuration.getHASHTAGS_TO_USERS()), true);
 
                 HashtagSplitter hashtagSplitter = new HashtagSplitter();
                 hashtagSplitter.splitHashtagsByCamelCase(hashtagToUsers);
@@ -303,28 +304,28 @@ public class MainUtil {
                 }
 
                 FindGraphElements<String, String> findGraphElementsLex = new FindGraphElements<>(new CreateStringVertex(), new CreateStringVertex());
-                DirectedGraph<String,String> lexiconGraph = findGraphElementsLex.createGraph(graphElementsLexicon, lexicon.getLexiconTermsWithFeatures(), 0, 1);
+                DirectedGraph<String, String> lexiconGraph = findGraphElementsLex.createGraph(graphElementsLexicon, lexicon.getLexiconTermsWithFeatures(), 0, 1);
 
                 HashtagSummarizer hashtagSummarizer = new HashtagSummarizer();
 
-                DirectedGraph<Hashtag,String> sumHashTagGraph = hashtagSummarizer.summarizeHashtag(hashtagToUsers, lexiconGraph, graphElementsLexicon);
+                DirectedGraph<Hashtag, String> sumHashTagGraph = hashtagSummarizer.summarizeHashtag(hashtagToUsers, lexiconGraph, graphElementsLexicon);
 
                 lexicon.initialiseLexiconDictionary(lexiconGraph);
 
                 hashtagSplitter.splitHashtagsByLexicon(hashtagToUsers, lexicon.getLexiconDictionary());
 
-                rfs.writeFileFromGraph(lexiconGraph, new File(configuration.getGRAPH_DIRECTORY(), configuration.getLEXICON_FILE()),false);
+                rfs.writeFileFromGraph(lexiconGraph, new File(configuration.getGRAPH_DIRECTORY(), configuration.getLEXICON_FILE()), false);
 
                 GraphElements graphElements2 = new GraphElements();
 
-                DirectedGraph<Hashtag,String> hashtagToWordGraph = hashtagSummarizer.hashtagMadeUpOf(hashtagToUsers,graphElements2);
+                DirectedGraph<Hashtag, String> hashtagToWordGraph = hashtagSummarizer.hashtagMadeUpOf(hashtagToUsers, graphElements2);
 
                 rfs.writeFileFromGraph(hashtagToWordGraph, new File(configuration.getGRAPH_DIRECTORY(), configuration.getHASHTAG_TO_WORDS()), false);
 
                 hashtagSummarizer.assignGistOfTags(sumHashTagGraph);
 
                 rfs.writeFileFromGraph(sumHashTagGraph, new File(configuration.getGRAPH_DIRECTORY(),
-                        configuration.getHASHTAG_SUMMARY_FILE()) , true);
+                        configuration.getHASHTAG_SUMMARY_FILE()), true);
 
                 GraphReadWriteService graphReadWriteService = new GraphReadWriteService();
                 graphReadWriteService.writeGephiFile(rtGraph, new File(configuration.getGRAPH_DIRECTORY(), configuration.getGEPHI_FILE_1()), configuration);
@@ -349,11 +350,11 @@ public class MainUtil {
 
                 rfs.writeFileFromGraph(rtGraph,
                         new File(configuration.getGRAPH_DIRECTORY(),
-                                configuration.getRTGRAPH_OUTPUT_FILE()),true);
+                                configuration.getRTGRAPH_OUTPUT_FILE()), true);
 
                 rfs.writeFileFromGraph(retweetedGraph,
                         new File(configuration.getGRAPH_DIRECTORY(),
-                                configuration.getRTWEETEDGRAPH_OUTPUT_FILE()),true);
+                                configuration.getRTWEETEDGRAPH_OUTPUT_FILE()), true);
 
                 assignStances = new AssignStances();
                 StanceFile = new File(configuration.getSTANCE_FILE());
@@ -371,7 +372,7 @@ public class MainUtil {
 
                 rfs.writeFileFromGraph(usertoHashTag,
                         new File(configuration.getGRAPH_DIRECTORY(),
-                                configuration.getUSERS_TO_HASHTAGS()),true);
+                                configuration.getUSERS_TO_HASHTAGS()), true);
 
                 findGraphElements2 = new FindGraphElements<>(new CreateHashtagVertex(), new CreateUserVertex());
 
@@ -379,7 +380,7 @@ public class MainUtil {
 
                 rfs.writeFileFromGraph(hashtagToUsers,
                         new File(configuration.getGRAPH_DIRECTORY(),
-                                configuration.getHASHTAGS_TO_USERS()),true);
+                                configuration.getHASHTAGS_TO_USERS()), true);
                 System.out.println("Hashtag graphs added successfully to Graph directory!");
 
                 graphAnalyser = new GraphAnalyser();
@@ -399,22 +400,22 @@ public class MainUtil {
                 //outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, true);
 
                 analyse = new StanceAnalysis();
-                analyse.assignStancesByHashtags( hashtagToUsers,graphElements, rtGraph);
+                analyse.assignStancesByHashtags(hashtagToUsers, graphElements, rtGraph);
 
                 analyse.find100Hashtags(hashtagToUsers);
 
-              //  analyse.find100HashtagsS5(rtGraph, hashtagToUsers);
+                //  analyse.find100HashtagsS5(rtGraph, hashtagToUsers);
 
                 System.out.println("Now calculating lexicon graph and hashtags to their individual words graph...");
 
                 hashtagSplitter = new HashtagSplitter();
                 hashtagSplitter.splitHashtagsByCamelCase(hashtagToUsers);
 
-                 graphElementsLexicon = new GraphElements();
+                graphElementsLexicon = new GraphElements();
 
-                 lexiconFile = new File(configuration.getLEXICON_FOLDER(), configuration.getLEXICON_DATA_FILE());
+                lexiconFile = new File(configuration.getLEXICON_FOLDER(), configuration.getLEXICON_DATA_FILE());
 
-                 lfs = new LexiconFileService();
+                lfs = new LexiconFileService();
 
                 lexicon = new Lexicon();
 
@@ -433,18 +434,18 @@ public class MainUtil {
 
                 hashtagSplitter.splitHashtagsByLexicon(hashtagToUsers, lexicon.getLexiconDictionary());
 
-                rfs.writeFileFromGraph(lexiconGraph, new File(configuration.getGRAPH_DIRECTORY(), configuration.getLEXICON_FILE()),false);
+                rfs.writeFileFromGraph(lexiconGraph, new File(configuration.getGRAPH_DIRECTORY(), configuration.getLEXICON_FILE()), false);
 
                 graphElements2 = new GraphElements();
 
-                hashtagToWordGraph = hashtagSummarizer.hashtagMadeUpOf(hashtagToUsers,graphElements2);
+                hashtagToWordGraph = hashtagSummarizer.hashtagMadeUpOf(hashtagToUsers, graphElements2);
 
-                rfs.writeFileFromGraph( hashtagToWordGraph, new File(configuration.getGRAPH_DIRECTORY(), configuration.getHASHTAG_TO_WORDS()), false);
+                rfs.writeFileFromGraph(hashtagToWordGraph, new File(configuration.getGRAPH_DIRECTORY(), configuration.getHASHTAG_TO_WORDS()), false);
 
                 hashtagSummarizer.assignGistOfTags(sumHashTagGraph);
 
                 rfs.writeFileFromGraph(sumHashTagGraph, new File(configuration.getGRAPH_DIRECTORY(),
-                        configuration.getHASHTAG_SUMMARY_FILE()) , true);
+                        configuration.getHASHTAG_SUMMARY_FILE()), true);
 
                 System.out.println("Now calculating User to Qualities graph...");
 
@@ -455,7 +456,7 @@ public class MainUtil {
                 DirectedGraph<TwitterUser, String> usersToQualities = modelUser.makeUserToQualityGraph(usertoHashTag, graphElements);
 
                 rfs.writeFileFromGraph(usersToQualities, new File(configuration.getGRAPH_DIRECTORY(),
-                        configuration.getUSER_QUALITIES()) , true);
+                        configuration.getUSER_QUALITIES()), true);
 
                 System.out.println("User to Qualities graph added successfully to Graph directory!");
                 StatCalculator statCalculator = new StatCalculator(usersToQualities);
@@ -474,10 +475,160 @@ public class MainUtil {
 
                 break;
 
-//            case 8:
-//                GraphReadWriteService graphReadWriteService = new GraphReadWriteService();
-//                graphReadWriteService.writeGephiFile(rtGraph, new File(configuration.getGRAPH_DIRECTORY(), configuration.getGEPHI_FILE_1()), configuration);
+            case 8:
+
+                // graph for using implemented methods on
+                // see org.tojaco.Graph.DirectedGraph.java for description of public methods
+
+                findGraphElements = new FindGraphElements(new CreateUserVertex(), new CreateUserVertex());
+
+                if (dataFile.exists()) {
+                    getRetweets().addAll(rfs.loadDataFromInputFile(dataFile));
+                }
+
+                getHashtags().addAll(rfs.getHashtags());
+
+                rtGraph = findGraphElements.createGraph(graphElements, getRetweets(), 0, 1);
+                retweetedGraph = findGraphElements.createGraph(graphElements, getRetweets(), 1, 0);
+
+                rfs.writeFileFromGraph(rtGraph,
+                        new File(configuration.getGRAPH_DIRECTORY(),
+                                configuration.getRTGRAPH_OUTPUT_FILE()), true);
+
+                rfs.writeFileFromGraph(retweetedGraph,
+                        new File(configuration.getGRAPH_DIRECTORY(),
+                                configuration.getRTWEETEDGRAPH_OUTPUT_FILE()), true);
+
+                System.out.println("Retweet graph and retweeted graph added successfully to Graph directory!");
+
+                findEvangelists = new FindEvangelists();
+                retweetHashMap = findEvangelists.findTotalRetweets(retweetedGraph);
+
+                assignStances = new AssignStances();
+                StanceFile = new File(configuration.getSTANCE_FILE());
+                assignStances.determineProAntiVaxEvangelists(graphElements, rtGraph, StanceFile);
+
+                // initial setup for calculating stances
+                graphAnalyser = new GraphAnalyser();
+
+                for (int i = 0; i < 10; i++) {
+                    graphAnalyser.assignUserStances(rtGraph);
+                    graphAnalyser.assignUserStances(retweetedGraph);
+
+                }
+
+                analysis = new StanceAnalysis();
+                analysis.checkStance100Users(retweetHashMap);
+
+                outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, false, false);
+
+                System.out.println("Now calculating hashtag graphs...");
+                fge1 = new FindGraphElements<>(new CreateUserVertex(), new CreateHashtagVertex());
+                usertoHashTag = fge1.createGraph(graphElements, getHashtags(), 0, 1);
+
+                //outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, true, false);
+
+                rfs.writeFileFromGraph(usertoHashTag,
+                        new File(configuration.getGRAPH_DIRECTORY(),
+                                configuration.getUSERS_TO_HASHTAGS()), true);
+
+
+                findGraphElements2 = new FindGraphElements<>(new CreateHashtagVertex(), new CreateUserVertex());
+
+                hashtagToUsers = findGraphElements2.createGraph(graphElements, getHashtags(), 1, 0);
+
+                rfs.writeFileFromGraph(hashtagToUsers,
+                        new File(configuration.getGRAPH_DIRECTORY(),
+                                configuration.getHASHTAGS_TO_USERS()), true);
+
+                //3a and 3b
+                for (int i = 0; i < 3; i++) { //theres no change in coverage from 3 to 4, but theres a change in coverage from 2 to 3
+                    graphAnalyser.assignUserStances(usertoHashTag);
+                    graphAnalyser.assignUserStances(hashtagToUsers);
+
+                }
+                //by running this again we get more coverage
+                for (int i = 0; i < 5; i++) { //by upping this to 10 there's no change in coverage
+                    graphAnalyser.assignUserStances(rtGraph);
+                    graphAnalyser.assignUserStances(retweetedGraph);
+
+                }
+                outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, true, false);
+                analyse = new StanceAnalysis();
+                // users100New.checkStance(retweetHashMap);
+                analyse.assignStancesByHashtags(hashtagToUsers, graphElements, rtGraph);
+
+                outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, false, true);
+
+                analyse.find100Hashtags(hashtagToUsers);
+
+                analyse.find100HashtagsS5(rtGraph, hashtagToUsers);
+
+                hashtagSplitter = new HashtagSplitter();
+                hashtagSplitter.splitHashtagsByCamelCase(hashtagToUsers);
+
+                graphElementsLexicon = new GraphElements();
+
+                lexiconFile = new File(configuration.getLEXICON_FOLDER(), configuration.getLEXICON_DATA_FILE());
+
+                lfs = new LexiconFileService();
+
+                lexicon = new Lexicon();
+
+                if (lexiconFile.exists()) {
+                    lexicon.addToLexiconWithFeatures(lfs.readLexiconFile(lexiconFile));
+                }
+
+                findGraphElementsLex = new FindGraphElements<>(new CreateStringVertex(), new CreateStringVertex());
+                lexiconGraph = findGraphElementsLex.createGraph(graphElementsLexicon, lexicon.getLexiconTermsWithFeatures(), 0, 1);
+
+                hashtagSummarizer = new HashtagSummarizer();
+
+                sumHashTagGraph = hashtagSummarizer.summarizeHashtag(hashtagToUsers, lexiconGraph, graphElementsLexicon);
+
+                lexicon.initialiseLexiconDictionary(lexiconGraph);
+
+                hashtagSplitter.splitHashtagsByLexicon(hashtagToUsers, lexicon.getLexiconDictionary());
+
+                rfs.writeFileFromGraph(lexiconGraph, new File(configuration.getGRAPH_DIRECTORY(), configuration.getLEXICON_FILE()), false);
+
+                graphElements2 = new GraphElements();
+
+                hashtagToWordGraph = hashtagSummarizer.hashtagMadeUpOf(hashtagToUsers, graphElements2);
+
+                rfs.writeFileFromGraph(hashtagToWordGraph, new File(configuration.getGRAPH_DIRECTORY(), configuration.getHASHTAG_TO_WORDS()), false);
+
+                hashtagSummarizer.assignGistOfTags(sumHashTagGraph);
+
+                rfs.writeFileFromGraph(sumHashTagGraph, new File(configuration.getGRAPH_DIRECTORY(),
+                        configuration.getHASHTAG_SUMMARY_FILE()), true);
+
+
+                System.out.println("Now calculating User to Qualities graph...");
+
+                modelUser = new ModelUser();
+                modelUser.addSummaryOfHashtag(sumHashTagGraph);
+                modelUser.addSummaryOfHashtagToUserQualities(usertoHashTag);
+
+                usersToQualities = modelUser.makeUserToQualityGraph(usertoHashTag, graphElements);
+
+                rfs.writeFileFromGraph(usersToQualities, new File(configuration.getGRAPH_DIRECTORY(),
+                        configuration.getUSER_QUALITIES()), true);
+
+                System.out.println("User to Qualities graph added successfully to Graph directory!");
+                statCalculator = new StatCalculator(usersToQualities);
+
+                System.out.println("Now automating collection of significant conditional probabilities");
+// not 100% done yet
+                statCalculator.automateConditionalProbCalculation(lexicon);
+                statCalculator.outputSignificantConditionalProbabilities();
+
+
+                graphReadWriteService = new GraphReadWriteService();
+                graphReadWriteService.writeGephiFile(rtGraph, new File(configuration.getGRAPH_DIRECTORY(), configuration.getGEPHI_FILE_1()), configuration);
+                break;
         }
+
 
     }
 
@@ -488,7 +639,7 @@ public class MainUtil {
             System.out.println("AFTER USING HASHTAGS:");
         }
 
-        if(hashtagsOnly){
+        if (hashtagsOnly) {
             System.out.println("\n4a, Set stances for users using hashtags only:");
         }
         System.out.println("Coverage in graph: " + graphAnalyser.calculateCoverage(graph, graphElements) + "%");
