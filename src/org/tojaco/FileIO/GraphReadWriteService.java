@@ -6,6 +6,7 @@ import org.tojaco.Graph.DirectedGraph;
 import org.tojaco.Graph.Vertex;
 import org.tojaco.GraphElements.Hashtag;
 import org.tojaco.GraphElements.TwitterUser;
+import org.tojaco.ModelUser;
 
 import java.io.*;
 import java.util.*;
@@ -168,7 +169,7 @@ public class GraphReadWriteService extends FileService {
         createFile(file.getParent(), file.getName());
         StringBuilder sb = new StringBuilder();
         try (PrintWriter pw = new PrintWriter(new FileWriter(file))) {
-            sb.append("nodedef>name VARCHAR,stance VARCHAR"/*,label VARCHAR,class VARCHAR, visible BOOLEAN," +
+            sb.append("nodedef>name VARCHAR,stance VARCHAR,acceptOrReject VARCHAR"/*,label VARCHAR,class VARCHAR, visible BOOLEAN," +
                         "labelvisible BOOLEAN,width DOUBLE,height DOUBLE,x DOUBLE,y DOUBLE,color VARCHAR"*/);
             pw.println(sb);
             sb.setLength(0);
@@ -185,6 +186,24 @@ public class GraphReadWriteService extends FileService {
                 }else {
                     sb.append("neutral");
                 }
+                int acceptance = 0;
+                int rejection = 0;
+                for(int i=0; i<vertex.getLabel().getQualities().size(); i++){
+                    if(vertex.getLabel().getQualities().get(i).equals("accepting")){
+                        acceptance++;
+                    }
+                    if(vertex.getLabel().getQualities().get(i).equals("rejecting")){
+                        rejection++;
+                    }
+                }
+                if(acceptance>rejection && acceptance!=0){
+                    sb.append(",accepting");
+                } else if(rejection>=acceptance && rejection!=0){ //don't get vaccinated is rejecting and accepting, overall rejecting
+                    sb.append(",rejecting");
+                } else if(acceptance==0 && rejection ==0){
+                    sb.append(",unspecified");
+                }
+
                 pw.println(sb);
                 sb.setLength(0);
                 pw.flush();
