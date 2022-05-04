@@ -110,7 +110,7 @@ public class GraphReadWriteService extends FileService {
         createFile(file.getParent(), file.getName());
         StringBuilder sb = new StringBuilder();
         try (PrintWriter pw = new PrintWriter(new FileWriter(file))) {
-            sb.append("nodedef>name VARCHAR,stance VARCHAR,focus VARCHAR, politics VARCHAR, acceptingorreject VARCHAR"/*,label VARCHAR,class VARCHAR, visible BOOLEAN," +
+            sb.append("nodedef>name VARCHAR,stance VARCHAR,focus VARCHAR, politics VARCHAR, acceptorreject VARCHAR"/*,label VARCHAR,class VARCHAR, visible BOOLEAN," +
                         "labelvisible BOOLEAN,width DOUBLE,height DOUBLE,x DOUBLE,y DOUBLE,color VARCHAR"*/);
             pw.println(sb);
             sb.setLength(0);
@@ -156,12 +156,6 @@ public class GraphReadWriteService extends FileService {
         catch (IOException e) {
             e.printStackTrace();
         }
-
-//        File file = createFile(configuration.getDataDirectory(), configuration.getUserFile());
-//
-//        PrintWriter pw = new PrintWriter(new FileWriter(file, true))
-//        pw.println("nodedef>name VARCHAR,label VARCHAR,class VARCHAR, visible BOOLEAN," +
-//                "labelvisible BOOLEAN,width DOUBLE,height DOUBLE,x DOUBLE,y DOUBLE,color VARCHAR");
 
     }
 
