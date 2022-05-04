@@ -34,7 +34,7 @@ public class MainUtil {
     public static void showProgramOptions(Configuration configuration, File dataFile) throws IOException {
         TwitterFileService ts = new TwitterFileService();
 
-        System.out.println("Enter 1, 2, 3, 4, 5, 6 or 7 " +
+        System.out.println("Enter 1, 2, 3, 4, 5, 6, 7 or 8 " +
                 "\n1. Search for Tweets using search API (Sprint 1)" +
                 "\n2. Search for Tweets using the streaming API (Sprint 2)" +
                 "\n3. Build a retweet Graph (Sprint 3)" +
