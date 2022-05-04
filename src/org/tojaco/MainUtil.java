@@ -523,7 +523,7 @@ public class MainUtil {
                 analysis = new StanceAnalysis();
                 analysis.checkStance100Users(retweetHashMap);
 
-                outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, false, false);
+                //outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, false, false);
 
                 System.out.println("Now calculating hashtag graphs...");
                 fge1 = new FindGraphElements<>(new CreateUserVertex(), new CreateHashtagVertex());
@@ -556,12 +556,12 @@ public class MainUtil {
                     graphAnalyser.assignUserStances(retweetedGraph);
 
                 }
-                outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, true, false);
+                //outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, true, false);
                 analyse = new StanceAnalysis();
                 // users100New.checkStance(retweetHashMap);
                 analyse.assignStancesByHashtags(hashtagToUsers, graphElements, rtGraph);
 
-                outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, false, true);
+               // outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, false, true);
 
                 analyse.find100Hashtags(hashtagToUsers);
 
@@ -622,10 +622,8 @@ public class MainUtil {
                 statCalculator = new StatCalculator(usersToQualities);
 
                 System.out.println("Now automating collection of significant conditional probabilities");
-// not 100% done yet
                 statCalculator.automateConditionalProbCalculation(lexicon);
                 statCalculator.outputSignificantConditionalProbabilities();
-
 
                 graphReadWriteService = new GraphReadWriteService();
                 graphReadWriteService.writeGephiFile(rtGraph, new File(configuration.getGRAPH_DIRECTORY(), configuration.getGEPHI_FILE_1()), configuration);
