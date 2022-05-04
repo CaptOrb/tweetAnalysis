@@ -129,6 +129,7 @@ public class GraphReadWriteService extends FileService {
                 sb.append(outputDominantProperty(vertex, "rights", "responsibilities"));
                 sb.append(outputDominantProperty(vertex, "leftwing", "rightwing"));
                 sb.append(outputDominantProperty(vertex, "accepting", "rejecting"));
+                sb.append(outputDominantProperty(vertex, "solution", "problem"));
 
                 pw.println(sb);
                 sb.setLength(0);
