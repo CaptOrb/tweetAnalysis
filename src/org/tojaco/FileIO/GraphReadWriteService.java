@@ -110,18 +110,22 @@ public class GraphReadWriteService extends FileService {
         StringBuilder sb = new StringBuilder();
 
         try (PrintWriter pw = new PrintWriter(new FileWriter(file))) {
-            sb.append("nodedef>name VARCHAR"/*,label VARCHAR,class VARCHAR, visible BOOLEAN," +
+            sb.append("nodedef>name VARCHAR, stance VARCHAR"/*,label VARCHAR,class VARCHAR, visible BOOLEAN," +
                         "labelvisible BOOLEAN,width DOUBLE,height DOUBLE,x DOUBLE,y DOUBLE,color VARCHAR"*/);
             pw.println(sb);
             sb.setLength(0);
             pw.flush();
 
             for(Vertex<TwitterUser> vertex: graph.getGraph().keySet()){
-                sb.append(vertex.getLabel().getUserHandle() + ", ");
+                sb.append(vertex.getLabel().getUserHandle() + ",");
                 if(vertex.getLabel().hasStance()){
-                    sb.append(vertex.getLabel().getStance() + " ");
+                    if(vertex.getLabel().getStance()<0)
+                        sb.append("anti");
+                    else if(vertex.getLabel().getStance()>0){
+                        sb.append("pro");
+                    }
                 }else {
-                    sb.append("neutral ");
+                    sb.append("neutral");
                 }
                 pw.println(sb);
                 sb.setLength(0);
@@ -129,16 +133,19 @@ public class GraphReadWriteService extends FileService {
             }
 
 
-            sb.append("edgedef>node1 VARCHAR,node2 VARCHAR,directed BOOLEAN,color VARCHAR");
+            sb.append("edgedef>node1 VARCHAR,node2 VARCHAR"); //,directed BOOLEAN");
             pw.println(sb);
             sb.setLength(0);
             pw.flush();
 
             for(Vertex<TwitterUser> vertex: graph.getGraph().keySet()){
-                sb.append(vertex.getLabel().getUserHandle() + ", ");
+                sb.append(vertex.getLabel().getUserHandle());
                 for(Arc<TwitterUser> arc : graph.getGraph().get(vertex)){
-                    sb.append(arc.getVertex().getLabel() + " ");
+                    sb.append("," + arc.getVertex().getLabel());
                 }
+                pw.println(sb);
+                sb.setLength(0);
+                pw.flush();
             }
         }
 

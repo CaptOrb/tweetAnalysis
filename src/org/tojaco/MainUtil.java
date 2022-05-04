@@ -146,6 +146,9 @@ public class MainUtil {
                 StanceAnalysis users100 = new StanceAnalysis();
                 users100.checkStance100Users(retweetsHashMap);
 
+                rfs.writeGephiFile(rtGraph, new File(configuration.getGRAPH_DIRECTORY(), configuration.getGEPHI_FILE_1()), configuration);
+
+
                 break;
 
             case 5:
