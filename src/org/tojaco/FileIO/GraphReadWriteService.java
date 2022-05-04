@@ -5,7 +5,6 @@ import org.tojaco.Graph.Arc;
 import org.tojaco.Graph.DirectedGraph;
 import org.tojaco.Graph.Vertex;
 import org.tojaco.GraphElements.TwitterUser;
-import twitter4j.Twitter;
 
 import java.io.*;
 import java.util.*;
@@ -109,7 +108,7 @@ public class GraphReadWriteService extends FileService {
         createFile(file.getParent(), file.getName());
         StringBuilder sb = new StringBuilder();
         try (PrintWriter pw = new PrintWriter(new FileWriter(file))) {
-            sb.append("nodedef>name VARCHAR,stance VARCHAR,focus VARCHAR"/*,label VARCHAR,class VARCHAR, visible BOOLEAN," +
+            sb.append("nodedef>name VARCHAR,stance VARCHAR,focus VARCHAR, politics VARCHAR, acceptingorreject VARCHAR"/*,label VARCHAR,class VARCHAR, visible BOOLEAN," +
                         "labelvisible BOOLEAN,width DOUBLE,height DOUBLE,x DOUBLE,y DOUBLE,color VARCHAR"*/);
             pw.println(sb);
             sb.setLength(0);
@@ -126,28 +125,15 @@ public class GraphReadWriteService extends FileService {
                 }else {
                     sb.append("neutral");
                 }
-                int rights = 0, responsibilities = 0;
-                for (String quality : vertex.getLabel().getQualities()){
-                    if (quality.equals("rights")){
-                        rights++;
-                    }
-                    else if (quality.equals("responsibilities")){
-                        responsibilities++;
-                    }
-                }
-                if ( rights > responsibilities ){
-                    sb.append(",rights");
-                }
-                else if ( responsibilities > rights){
-                    sb.append(",responsibilities");
-                }
-                else
-                    sb.append(",neither");
+
+                sb.append(outputDominantProperty(vertex, "rights", "responsibilities"));
+                sb.append(outputDominantProperty(vertex, "leftwing", "rightwing"));
+                sb.append(outputDominantProperty(vertex, "accepting", "rejecting"));
+
                 pw.println(sb);
                 sb.setLength(0);
                 pw.flush();
             }
-
 
             sb.append("edgedef>node1 VARCHAR,node2 VARCHAR"); //,directed BOOLEAN");
             pw.println(sb);
@@ -169,11 +155,27 @@ public class GraphReadWriteService extends FileService {
             e.printStackTrace();
         }
 
-//        File file = createFile(configuration.getDataDirectory(), configuration.getUserFile());
-//
-//        PrintWriter pw = new PrintWriter(new FileWriter(file, true))
-//        pw.println("nodedef>name VARCHAR,label VARCHAR,class VARCHAR, visible BOOLEAN," +
-//                "labelvisible BOOLEAN,width DOUBLE,height DOUBLE,x DOUBLE,y DOUBLE,color VARCHAR");
 
+    }
+
+    private String outputDominantProperty(Vertex<TwitterUser> vertex, String propertyOne, String propertyTwo) {
+
+        StringBuilder sb = new StringBuilder();
+
+        int countPropOne = 0, countProTwo = 0;
+        for (String quality : vertex.getLabel().getQualities()) {
+            if (quality.equals(propertyOne)) {
+                countPropOne++;
+            } else if (quality.equals(propertyTwo)) {
+                countProTwo++;
+            }
+        }
+        if (countPropOne > countProTwo) {
+            sb.append(",").append(propertyOne);
+        } else if (countProTwo > countPropOne) {
+            sb.append(",").append(propertyTwo);
+        } else
+            sb.append(",neither");
+        return sb.toString();
     }
 }
