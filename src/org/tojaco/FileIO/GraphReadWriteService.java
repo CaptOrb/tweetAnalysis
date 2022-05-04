@@ -117,16 +117,7 @@ public class GraphReadWriteService extends FileService {
 
             for(Vertex<TwitterUser> vertex: graph.getGraph().keySet()){
                 sb.append(vertex.getLabel().getUserHandle() + ",");
-                if(vertex.getLabel().hasStance()){
-                    if(vertex.getLabel().getStance()<0)
-                        sb.append("anti");
-                    else if(vertex.getLabel().getStance()>0){
-                        sb.append("pro");
-                    }
-                }else {
-                    sb.append("neutral");
-                }
-
+                sb.append(isProOrAnti(vertex));
                 sb.append(outputDominantProperty(vertex, "rights", "responsibilities"));
                 sb.append(outputDominantProperty(vertex, "leftwing", "rightwing"));
                 sb.append(outputDominantProperty(vertex, "accepting", "rejecting"));
@@ -156,12 +147,6 @@ public class GraphReadWriteService extends FileService {
         catch (IOException e) {
             e.printStackTrace();
         }
-
-//        File file = createFile(configuration.getDataDirectory(), configuration.getUserFile());
-//
-//        PrintWriter pw = new PrintWriter(new FileWriter(file, true))
-//        pw.println("nodedef>name VARCHAR,label VARCHAR,class VARCHAR, visible BOOLEAN," +
-//                "labelvisible BOOLEAN,width DOUBLE,height DOUBLE,x DOUBLE,y DOUBLE,color VARCHAR");
 
     }
 
@@ -233,6 +218,22 @@ public class GraphReadWriteService extends FileService {
             sb.append(",").append(propertyTwo);
         } else
             sb.append(",neither");
+        return sb.toString();
+    }
+
+    private String isProOrAnti(Vertex<TwitterUser> vertex){
+
+        StringBuilder sb = new StringBuilder();
+
+        if(vertex.getLabel().hasStance()){
+            if(vertex.getLabel().getStance()<0)
+                sb.append("anti");
+            else if(vertex.getLabel().getStance()>0){
+                sb.append("pro");
+            }
+        }else {
+            sb.append("neutral");
+        }
         return sb.toString();
     }
 }
