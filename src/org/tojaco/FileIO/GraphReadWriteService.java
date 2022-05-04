@@ -117,7 +117,16 @@ public class GraphReadWriteService extends FileService {
 
             for(Vertex<TwitterUser> vertex: graph.getGraph().keySet()){
                 sb.append(vertex.getLabel().getUserHandle() + ",");
-                sb.append(isProOrAnti(vertex));
+                if(vertex.getLabel().hasStance()){
+                    if(vertex.getLabel().getStance()<0)
+                        sb.append("anti");
+                    else if(vertex.getLabel().getStance()>0){
+                        sb.append("pro");
+                    }
+                }else {
+                    sb.append("neutral");
+                }
+
                 sb.append(outputDominantProperty(vertex, "rights", "responsibilities"));
                 sb.append(outputDominantProperty(vertex, "leftwing", "rightwing"));
                 sb.append(outputDominantProperty(vertex, "accepting", "rejecting"));
