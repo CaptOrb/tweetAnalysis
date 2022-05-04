@@ -623,7 +623,7 @@ public class MainUtil {
 
                 System.out.println("Now automating collection of significant conditional probabilities");
                 statCalculator.automateConditionalProbCalculation(lexicon);
-                statCalculator.outputSignificantConditionalProbabilities();
+               // statCalculator.outputSignificantConditionalProbabilities();
 
                 graphReadWriteService = new GraphReadWriteService();
                 graphReadWriteService.writeGephiFile(rtGraph, new File(configuration.getGRAPH_DIRECTORY(), configuration.getGEPHI_FILE_1()), configuration);
