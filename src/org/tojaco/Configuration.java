@@ -40,8 +40,11 @@ public class Configuration {
     private String SLEEP_TIME;
     private String[] HASHTAGS;
     private String GEPHI_FILE_1;
+    private String GEPHI_HASHTAG_TO_USER_FILE;
 
     public String getGEPHI_FILE_1() { return GEPHI_FILE_1; }
+
+    public String getGEPHI_HASHTAG_TO_USER_FILE() { return GEPHI_HASHTAG_TO_USER_FILE; }
 
     public String getAPIKey() {
         return API_KEY;
@@ -177,6 +180,7 @@ public class Configuration {
             configuration.BATCH_SIZE = properties.getProperty("BATCH_SIZE");
             configuration.HASHTAGS = splitHashTags(properties.getProperty("HASHTAGS"));
             configuration.GEPHI_FILE_1 = properties.getProperty("GEPHI_FILE_1");
+            configuration.GEPHI_HASHTAG_TO_USER_FILE=properties.getProperty("GEPHI_HASHTAG_TO_USER_FILE");
         } catch (IOException e) {
             throw new RuntimeException("Could not read properties from file:", e);
         }

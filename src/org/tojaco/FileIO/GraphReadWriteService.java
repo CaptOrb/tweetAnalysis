@@ -4,6 +4,7 @@ import org.tojaco.Configuration;
 import org.tojaco.Graph.Arc;
 import org.tojaco.Graph.DirectedGraph;
 import org.tojaco.Graph.Vertex;
+import org.tojaco.GraphElements.Hashtag;
 import org.tojaco.GraphElements.TwitterUser;
 
 import java.io.*;
@@ -144,7 +145,62 @@ public class GraphReadWriteService extends FileService {
             for(Vertex<TwitterUser> vertex: graph.getGraph().keySet()){
                 for(Arc<TwitterUser> arc : graph.getGraph().get(vertex)){
                     sb.append(vertex.getLabel().getUserHandle());
-                    sb.append("," + arc.getVertex().getLabel());
+                    sb.append("," + arc.getVertex().getLabel().getUserHandle());
+                    pw.println(sb);
+                    sb.setLength(0);
+                    pw.flush();
+                }
+            }
+        }
+
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+//        File file = createFile(configuration.getDataDirectory(), configuration.getUserFile());
+//
+//        PrintWriter pw = new PrintWriter(new FileWriter(file, true))
+//        pw.println("nodedef>name VARCHAR,label VARCHAR,class VARCHAR, visible BOOLEAN," +
+//                "labelvisible BOOLEAN,width DOUBLE,height DOUBLE,x DOUBLE,y DOUBLE,color VARCHAR");
+
+    }
+
+    public void writeGephiHashtagFile(DirectedGraph<Hashtag, TwitterUser> graph, File file) throws IOException {
+        createFile(file.getParent(), file.getName());
+        StringBuilder sb = new StringBuilder();
+        try (PrintWriter pw = new PrintWriter(new FileWriter(file))) {
+            sb.append("nodedef>name VARCHAR,stance VARCHAR"/*,label VARCHAR,class VARCHAR, visible BOOLEAN," +
+                        "labelvisible BOOLEAN,width DOUBLE,height DOUBLE,x DOUBLE,y DOUBLE,color VARCHAR"*/);
+            pw.println(sb);
+            sb.setLength(0);
+            pw.flush();
+
+            for(Vertex<Hashtag> vertex: graph.getGraph().keySet()){
+                sb.append(vertex.getLabel() + ",");
+                if(vertex.getLabel().hasStance()){
+                    if(vertex.getLabel().getStance()<0)
+                        sb.append("anti");
+                    else if(vertex.getLabel().getStance()>0){
+                        sb.append("pro");
+                    }
+                }else {
+                    sb.append("neutral");
+                }
+                pw.println(sb);
+                sb.setLength(0);
+                pw.flush();
+            }
+
+
+            sb.append("edgedef>node1 VARCHAR,node2 VARCHAR"); //,directed BOOLEAN");
+            pw.println(sb);
+            sb.setLength(0);
+            pw.flush();
+
+            for(Vertex<Hashtag> vertex: graph.getGraph().keySet()){
+                for(Arc<TwitterUser> arc : graph.getGraph().get(vertex)){
+                    sb.append(vertex.getLabel());
+                    sb.append("," + arc.getVertex().getLabel().getUserHandle());
                     pw.println(sb);
                     sb.setLength(0);
                     pw.flush();

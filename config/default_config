@@ -19,6 +19,7 @@ HASHTAG_SUMMARY_FILE=hashtagSummaries.txt
 USER_QUALITIES=userQualities.txt
 STANCE_FILE=stances.txt
 GEPHI_FILE_1=testGephi.gdf
+GEPHI_HASHTAG_TO_USER_FILE=hashtagsToUserGephi.gdf
 SLEEPTIMEMS=1000
 LANGUAGE=en
 BATCH_SIZE=10
