@@ -42,7 +42,7 @@ public class MainUtil {
                 "\n5. Assign stances to HashTags (Sprint 5)" +
                 "\n6. Get the gist of a Hashtag (Sprint 6)" +
                 "\n7. Assign a \"psychological profile\" to each user in the dataset  (Sprint 7)" +
-                "\n7. Generate .gdf files for Gephi  (Sprint 8)" +
+                "\n8. Generate .gdf files for Gephi  (Sprint 8)" +
                 "\nOr enter -1 to quit");
 
         Scanner scanner = new Scanner(System.in);
