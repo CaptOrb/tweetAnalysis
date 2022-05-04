@@ -109,7 +109,7 @@ public class GraphReadWriteService extends FileService {
         createFile(file.getParent(), file.getName());
         StringBuilder sb = new StringBuilder();
         try (PrintWriter pw = new PrintWriter(new FileWriter(file))) {
-            sb.append("nodedef>name VARCHAR,stance VARCHAR"/*,label VARCHAR,class VARCHAR, visible BOOLEAN," +
+            sb.append("nodedef>name VARCHAR,stance VARCHAR,focus VARCHAR"/*,label VARCHAR,class VARCHAR, visible BOOLEAN," +
                         "labelvisible BOOLEAN,width DOUBLE,height DOUBLE,x DOUBLE,y DOUBLE,color VARCHAR"*/);
             pw.println(sb);
             sb.setLength(0);
@@ -126,6 +126,23 @@ public class GraphReadWriteService extends FileService {
                 }else {
                     sb.append("neutral");
                 }
+                int rights = 0, responsibilities = 0;
+                for (String quality : vertex.getLabel().getQualities()){
+                    if (quality.equals("rights")){
+                        rights++;
+                    }
+                    else if (quality.equals("responsibilities")){
+                        responsibilities++;
+                    }
+                }
+                if ( rights > responsibilities ){
+                    sb.append(",rights");
+                }
+                else if ( responsibilities > rights){
+                    sb.append(",responsibilities");
+                }
+                else
+                    sb.append(",neither");
                 pw.println(sb);
                 sb.setLength(0);
                 pw.flush();
