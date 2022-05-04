@@ -110,7 +110,7 @@ public class GraphReadWriteService extends FileService {
         StringBuilder sb = new StringBuilder();
 
         try (PrintWriter pw = new PrintWriter(new FileWriter(file))) {
-            sb.append("nodedef>name VARCHAR, stance VARCHAR"/*,label VARCHAR,class VARCHAR, visible BOOLEAN," +
+            sb.append("nodedef>name VARCHAR,stance VARCHAR"/*,label VARCHAR,class VARCHAR, visible BOOLEAN," +
                         "labelvisible BOOLEAN,width DOUBLE,height DOUBLE,x DOUBLE,y DOUBLE,color VARCHAR"*/);
             pw.println(sb);
             sb.setLength(0);
@@ -139,13 +139,13 @@ public class GraphReadWriteService extends FileService {
             pw.flush();
 
             for(Vertex<TwitterUser> vertex: graph.getGraph().keySet()){
-                sb.append(vertex.getLabel().getUserHandle());
                 for(Arc<TwitterUser> arc : graph.getGraph().get(vertex)){
+                    sb.append(vertex.getLabel().getUserHandle());
                     sb.append("," + arc.getVertex().getLabel());
+                    pw.println(sb);
+                    sb.setLength(0);
+                    pw.flush();
                 }
-                pw.println(sb);
-                sb.setLength(0);
-                pw.flush();
             }
         }
 
