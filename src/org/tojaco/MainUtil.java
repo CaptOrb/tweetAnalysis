@@ -472,7 +472,6 @@ public class MainUtil {
                 for (int i = 0; i < 10; i++) {
                     graphAnalyser.assignUserStances(rtGraph);
                     graphAnalyser.assignUserStances(retweetedGraph);
-
                 }
 
                 analysis = new StanceAnalysis();
@@ -567,6 +566,15 @@ public class MainUtil {
 
                 graphReadWriteService = new GraphReadWriteService();
                 graphReadWriteService.writeGephiFile(rtGraph, new File(Configuration.getGRAPH_DIRECTORY(), Configuration.getGEPHI_FILE_1()));
+
+                assignStances.determineProAntiVaxEvangelists(mentionGraph.getMentionGE(), mentionGraph, StanceFile);
+
+                // is there a better way than this?
+                for (int i = 0; i < 10; i++) {
+                    graphAnalyser.assignUserStances(mentionGraph.getMentionGraph());
+                    graphAnalyser.assignUserStances(mentionGraph.getMentionedGraph());
+                }
+
                 graphReadWriteService.writeGephiFile(mentionGraph.getMentionGraph(), new File(Configuration.getGRAPH_DIRECTORY(), "testMentionGraph.gdf"));
                 graphReadWriteService.writeGephiFile(mentionGraph.getMentionedGraph(), new File(Configuration.getGRAPH_DIRECTORY(), "testMentionedGraph.gdf"));
                 graphReadWriteService.writeGephiHashtagFile(hashtagToUsers, new File(Configuration.getGRAPH_DIRECTORY(), Configuration.getGEPHI_HASHTAG_TO_USER_FILE()));

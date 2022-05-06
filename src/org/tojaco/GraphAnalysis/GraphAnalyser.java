@@ -8,9 +8,11 @@ import org.tojaco.GraphElements.TwitterUser;
 
 public class GraphAnalyser<T, E> {
     public void assignUserStances(DirectedGraph<Stanceable, Stanceable> Graph){
+
         int totalOfStances = 0;
         int numArcs = 0;
         for (Vertex<Stanceable> vertex : Graph.getGraph().keySet()) {
+
             totalOfStances = 0;
             numArcs = 0;
             for (Arc<Stanceable> arc : Graph.getGraph().get(vertex)) {
