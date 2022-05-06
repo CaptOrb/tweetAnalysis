@@ -185,17 +185,16 @@ public class GraphReadWriteService extends FileService {
                 for(int i=0; i<vertex.getLabel().getQualities().size(); i++){
                     if(vertex.getLabel().getQualities().get(i).equals("accepting")){
                         acceptance++;
-                    }
-                    if(vertex.getLabel().getQualities().get(i).equals("rejecting")){
+                    } else if(vertex.getLabel().getQualities().get(i).equals("rejecting")){
                         rejection++;
                     }
                 }
-                if(acceptance>rejection && acceptance!=0){
+                if(acceptance>rejection){
                     sb.append(",accepting");
-                } else if(rejection>=acceptance && rejection!=0){ //don't get vaccinated is rejecting and accepting, overall rejecting
+                } else if(rejection>=acceptance && rejection!=0){
                     sb.append(",rejecting");
                 } else if(acceptance==0 && rejection ==0){
-                    sb.append(",unspecified");
+                    sb.append(",neither");
                 }
 
                 pw.println(sb);
@@ -203,6 +202,27 @@ public class GraphReadWriteService extends FileService {
                 pw.flush();
             }
 
+            for(Vertex<Hashtag> vertex: graph.getGraph().keySet()){
+                for(Arc<TwitterUser> arc : graph.getGraph().get(vertex)){
+                    sb.append(arc.getVertex().getLabel().getUserHandle());
+                    sb.append(",");
+                    if(arc.getVertex().getLabel().hasStance()){
+                        if(arc.getVertex().getLabel().getStance()<0)
+                            sb.append("anti");
+                        else if(arc.getVertex().getLabel().getStance()>0){
+                            sb.append("pro");
+                        }
+                    }else {
+                        sb.append("neutral");
+                    }
+
+                    String toAdd = outputDominantProperty(arc.getVertex(),"accepting","rejecting");
+                    sb.append(toAdd);
+                    pw.println(sb);
+                    sb.setLength(0);
+                    pw.flush();
+                }
+            }
 
             sb.append("edgedef>node1 VARCHAR,node2 VARCHAR"); //,directed BOOLEAN");
             pw.println(sb);
@@ -212,7 +232,7 @@ public class GraphReadWriteService extends FileService {
             for(Vertex<Hashtag> vertex: graph.getGraph().keySet()){
                 for(Arc<TwitterUser> arc : graph.getGraph().get(vertex)){
                     sb.append(vertex.getLabel());
-                    sb.append("," + arc.getVertex().getLabel().getUserHandle());
+                    sb.append(","+arc.getVertex().getLabel().getUserHandle());
                     pw.println(sb);
                     sb.setLength(0);
                     pw.flush();
