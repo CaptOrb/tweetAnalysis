@@ -13,7 +13,7 @@ public class GrabTweets {
 
     // TEST CODE FROM STACK OVERFLOW
     // TO TRY AND AVOID EXCEEDING RATE LIMITS
-    private void handleRateLimit(RateLimitStatus rateLimitStatus, Configuration configuration) {
+    private void handleRateLimit(RateLimitStatus rateLimitStatus) {
         if (rateLimitStatus != null) {
             int remaining = rateLimitStatus.getRemaining();
             int resetTime = rateLimitStatus.getSecondsUntilReset();
@@ -25,7 +25,7 @@ public class GrabTweets {
             }
 
             try {
-                Thread.sleep(Math.max(sleep * configuration.getSleepTime(), 0));
+                Thread.sleep(Math.max(sleep * Configuration.getSleepTime(), 0));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -35,32 +35,32 @@ public class GrabTweets {
 
     // CAUTION: will keep running for a very long time.
     // don't run for too long or the API KEY's might get suspended ;)
-    public void grabSomeTweets(TwitterFactory tf, Configuration configuration, TwitterFileService tfs) throws IOException {
+    public void grabSomeTweets(TwitterFactory tf, TwitterFileService tfs) throws IOException {
 
-        String[] hashTags = configuration.getHashTags();
+        String[] hashTags = Configuration.getHashTags();
         final HashSet<Long> foundTweetIDS = tfs.getFoundTweetIDS();
         final HashSet<String> foundUserHandles = tfs.getFoundUserHandles();
 
         for (String hashTag : hashTags) {
             try {
                 Query query = new Query(hashTag);
-                query.setCount(configuration.getBatchSize());
+                query.setCount(Configuration.getBatchSize());
                 query.setResultType(Query.ResultType.recent);
-                query.setLang(configuration.getLanguage());
+                query.setLang(Configuration.getLanguage());
                 QueryResult result;
                 do {
                     result = tf.getInstance().search(query);
-                    handleRateLimit(result.getRateLimitStatus(), configuration);
+                    handleRateLimit(result.getRateLimitStatus());
                     List<Status> tweets = result.getTweets();
                     for (Status tweet : tweets) {
                         User user = tweet.getUser();
                         if (!(foundTweetIDS.contains(tweet.getId()))) {
-                            tfs.writeTweet(tweet, tweet.getRetweetedStatus() != null, configuration);
+                            tfs.writeTweet(tweet, tweet.getRetweetedStatus() != null);
                             foundTweetIDS.add(tweet.getId());
                         }
                         String userName = "@" + user.getScreenName();
                         if (!(foundUserHandles.contains(userName))) {
-                            tfs.writeUser(user, configuration);
+                            tfs.writeUser(user);
                             foundUserHandles.add(userName);
                         }
                     }

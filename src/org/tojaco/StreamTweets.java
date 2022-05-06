@@ -11,11 +11,9 @@ import java.io.IOException;
 // to search for occurrences of the hashtags listed in the config file being posted on Twitter
 public class StreamTweets {
 
-    private final Configuration internalConfig;
     private final TwitterFileService tfileService;
 
-    public StreamTweets(Configuration configuration, TwitterFileService tfs) {
-        this.internalConfig = configuration;
+    public StreamTweets(TwitterFileService tfs) {
         this.tfileService = tfs;
     }
 
@@ -30,8 +28,8 @@ public class StreamTweets {
 
             try {
 
-                tfileService.writeTweet(status, status.getRetweetedStatus() != null, internalConfig);
-                tfileService.writeUser(status.getUser(), internalConfig);
+                tfileService.writeTweet(status, status.getRetweetedStatus() != null);
+                tfileService.writeUser(status.getUser());
 
 
             } catch (IOException e) {
@@ -63,13 +61,13 @@ public class StreamTweets {
 
     public void streamTweets() {
         // set up streaming api and add the class field StatusListener
-        TwitterStream tf = internalConfig.getTwitterStream(internalConfig);
+        TwitterStream tf = Configuration.getTwitterStream();
         tf.addListener(listener);
 
         // create query using hashtags from config file and pass them to the streaming api
         FilterQuery query = new FilterQuery();
-        query.track(internalConfig.getHashTags());
-        query.language(internalConfig.getLanguage());
+        query.track(Configuration.getHashTags());
+        query.language(Configuration.getLanguage());
         tf.filter(query);
     }
 

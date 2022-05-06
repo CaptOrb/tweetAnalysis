@@ -5,6 +5,7 @@ import org.tojaco.GraphElements.GraphElements;
 import org.tojaco.GraphElements.Hashtag;
 import org.tojaco.GraphElements.TwitterUser;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,7 +42,7 @@ public class ModelUser {
         }
     }
 
-    public DirectedGraph<TwitterUser, String> makeUserToQualityGraph(DirectedGraph<TwitterUser, Hashtag> usersToHashtags, GraphElements graphElements){
+    public DirectedGraph<TwitterUser, String> makeUserToQualityGraph(DirectedGraph<TwitterUser, Hashtag> usersToHashtags, GraphElements graphElements) throws IOException {
         DirectedGraph<TwitterUser, String> usersToQualities = new DirectedGraph();
         //to display e.g. rejecting>accepting, I want to show just the one vertex 'rejecting>accepting'
         //rather than the separate vertices 'rejecting(3)' 'accepting(2)', but we can't edit the list directly
@@ -66,13 +67,15 @@ public class ModelUser {
         return usersToQualities;
     }
 
-    public List<String> editList(List<String> listOfQualities){
+    public List<String> editList(List<String> listOfQualities) throws IOException {
 
         listOfQualities.removeIf(str -> str.equals("pro") || str.equals("anti"));
 
         if(listOfQualities.size()>2) {
-        Lexicon oppositeQualitiesHashmap = new Lexicon();
-        HashMap<String, String> opposites = oppositeQualitiesHashmap.getOppositeQualities();
+
+            //  Lexicon oppositeQualitiesHashmap = new Lexicon();
+            // shouldn't initialise the lexicon more than once...
+        HashMap<String, String> opposites = Lexicon.getOppositeQualities();
             for(Map.Entry<String, String> entry : opposites.entrySet()) {
                int changeList = isFocusedOn(entry.getKey(), entry.getValue(), listOfQualities);
 

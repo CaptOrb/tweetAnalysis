@@ -1,17 +1,42 @@
 package org.tojaco;
 
+import org.tojaco.FileIO.LexiconFileService;
 import org.tojaco.Graph.Arc;
+import org.tojaco.Graph.CreateStringVertex;
 import org.tojaco.Graph.DirectedGraph;
 import org.tojaco.Graph.Vertex;
+import org.tojaco.GraphElements.GraphElements;
 import org.tojaco.GraphElements.Hashtag;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 public class Lexicon<E> {
+    DirectedGraph lexiconGraph;
+    private final GraphElements graphElementsLexicon = new GraphElements();
+    public GraphElements getGraphElementsLexicon() {
+        return graphElementsLexicon;
+    }
 
-    Lexicon(){
+    Lexicon() throws IOException {
         initOppositesHashmap();
         initStanceGivenConditionList();
+
+        File lexiconFile = new File(Configuration.getLEXICON_FOLDER(), Configuration.getLEXICON_DATA_FILE());
+        if (lexiconFile.exists()) {
+
+            LexiconFileService lfs = new LexiconFileService();
+
+            addToLexiconWithFeatures(lfs.readLexiconFile(lexiconFile));
+
+            FindGraphElements<String, String> findGraphElementsLex = new FindGraphElements<>(new CreateStringVertex(), new CreateStringVertex());
+            lexiconGraph = findGraphElementsLex.createGraph(graphElementsLexicon, getLexiconTermsWithFeatures(), 0, 1);
+
+            initialiseLexiconDictionary(lexiconGraph);
+        } else {
+            throw new IllegalStateException("cannot find lexicon file.");
+        }
     }
 
     private final Set<String> lexiconDictionary = new HashSet<>();
@@ -22,7 +47,7 @@ public class Lexicon<E> {
         return lexiconTermsWithFeatures;
     }
 
-    public void addToLexiconWithFeatures(Collection<String> term){
+    public void addToLexiconWithFeatures(Collection<String> term) {
         lexiconTermsWithFeatures.addAll(term);
     }
 
@@ -36,9 +61,13 @@ public class Lexicon<E> {
         }
     }
 
-    private final HashMap<String, String> oppositeQualities = new HashMap<>();
+    public DirectedGraph getLexiconGraph() {
+        return lexiconGraph;
+    }
 
-    private void initOppositesHashmap() {
+    private static final HashMap<String, String> oppositeQualities = new HashMap<>();
+
+    private static void initOppositesHashmap() {
         oppositeQualities.put("problem", "solution");
         oppositeQualities.put("accepting", "rejecting");
         oppositeQualities.put("scientific", "religious");
@@ -59,10 +88,12 @@ public class Lexicon<E> {
         oppositeQualities.put("political", null);
     }
 
-    public HashMap<String, String> getOppositeQualities() {
+    public static HashMap<String, String> getOppositeQualities() {
         return oppositeQualities;
     }
+
     Map<String, List<String>> stanceGivenConditionList = new LinkedHashMap<>();
+
     private void addToStanceGivenConditionList(String key, String newValue) {
         List<String> currentValue = stanceGivenConditionList.computeIfAbsent(key, k -> new ArrayList<>());
         currentValue.add(newValue);

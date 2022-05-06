@@ -40,8 +40,8 @@ public class TwitterFileService extends FileService {
 
     }
 
-    public void writeUser(User user, Configuration configuration) throws IOException {
-        File file = createFile(configuration.getDataDirectory(), configuration.getUserFile());
+    public void writeUser(User user) throws IOException {
+        File file = createFile(Configuration.getDataDirectory(), Configuration.getUserFile());
 
         String userName = "@" + user.getScreenName();
         if (!foundUserHandles.contains(userName)) {
@@ -66,8 +66,8 @@ public class TwitterFileService extends FileService {
     }
 
 
-    public void writeTweet(Status tweet, boolean retweet, Configuration configuration) throws IOException {
-        File file = createFile(configuration.getDataDirectory(), configuration.getDataFile());
+    public void writeTweet(Status tweet, boolean retweet) throws IOException {
+        File file = createFile(Configuration.getDataDirectory(), Configuration.getDataFile());
 
         if (!foundTweetIDS.contains(tweet.getId())) {
             try (PrintWriter pw = new PrintWriter(new FileWriter(file, true))) {

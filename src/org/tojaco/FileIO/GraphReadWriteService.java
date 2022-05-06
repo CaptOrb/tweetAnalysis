@@ -105,7 +105,7 @@ public class GraphReadWriteService extends FileService {
 
     }
 
-    public void writeGephiFile(DirectedGraph<TwitterUser, TwitterUser> graph, File file, Configuration configuration) throws IOException {
+    public void writeGephiFile(DirectedGraph<TwitterUser, TwitterUser> graph, File file) throws IOException {
         createFile(file.getParent(), file.getName());
         StringBuilder sb = new StringBuilder();
         try (PrintWriter pw = new PrintWriter(new FileWriter(file))) {
