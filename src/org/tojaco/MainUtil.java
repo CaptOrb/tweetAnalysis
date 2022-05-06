@@ -567,8 +567,9 @@ public class MainUtil {
 
                 graphReadWriteService = new GraphReadWriteService();
                 graphReadWriteService.writeGephiFile(rtGraph, new File(Configuration.getGRAPH_DIRECTORY(), Configuration.getGEPHI_FILE_1()));
+                graphReadWriteService.writeGephiFile(mentionGraph.getMentionGraph(), new File(Configuration.getGRAPH_DIRECTORY(), "testMentionGraph.gdf"));
+                graphReadWriteService.writeGephiFile(mentionGraph.getMentionedGraph(), new File(Configuration.getGRAPH_DIRECTORY(), "testMentionedGraph.gdf"));
                 graphReadWriteService.writeGephiHashtagFile(hashtagToUsers, new File(Configuration.getGRAPH_DIRECTORY(), Configuration.getGEPHI_HASHTAG_TO_USER_FILE()));
-
                 break;
         }
 

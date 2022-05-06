@@ -4,19 +4,20 @@ import org.tojaco.Configuration;
 import org.tojaco.FileIO.GraphReadWriteService;
 import org.tojaco.FindGraphElements;
 import org.tojaco.GraphElements.GraphElements;
+import org.tojaco.GraphElements.TwitterUser;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class MentionGraph extends DirectedGraph {
+public class MentionGraph extends DirectedGraph<TwitterUser,TwitterUser> {
 
     private static final ArrayList<String> mentions = new ArrayList<>();
-    DirectedGraph mentionGraph;
-    DirectedGraph mentionedGraph;
+    DirectedGraph<TwitterUser,TwitterUser> mentionGraph;
+    DirectedGraph<TwitterUser,TwitterUser> mentionedGraph;
 
     public MentionGraph(GraphReadWriteService grfs) throws IOException {
-        FindGraphElements mentionFGE = new FindGraphElements<>(new CreateUserVertex(), new CreateStringVertex());
+        FindGraphElements<TwitterUser, TwitterUser> mentionFGE = new FindGraphElements<>(new CreateUserVertex(), new CreateUserVertex());
 
         GraphElements mentionGE = new GraphElements();
         mentions.addAll(grfs.getMentions());
@@ -31,13 +32,14 @@ public class MentionGraph extends DirectedGraph {
         grfs.writeFileFromGraph(mentionedGraph,
                 new File(Configuration.getGRAPH_DIRECTORY(),
                         Configuration.getMentionedFile()), true);
+
     }
 
-    public DirectedGraph getMentionGraph() {
+    public DirectedGraph<TwitterUser, TwitterUser> getMentionGraph() {
         return mentionGraph;
     }
 
-    public DirectedGraph getMentionedGraph() {
+    public DirectedGraph<TwitterUser,TwitterUser> getMentionedGraph() {
         return mentionedGraph;
     }
 }
