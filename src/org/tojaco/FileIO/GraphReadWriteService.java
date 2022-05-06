@@ -127,7 +127,7 @@ public class GraphReadWriteService extends FileService {
                 pw.flush();
             }
 
-            sb.append("edgedef>node1 VARCHAR,node2 VARCHAR"); //,directed BOOLEAN");
+            sb.append("edgedef>node1 VARCHAR,node2 VARCHAR , weight DOUBLE"); //,directed BOOLEAN");
             pw.println(sb);
             sb.setLength(0);
             pw.flush();
@@ -136,6 +136,7 @@ public class GraphReadWriteService extends FileService {
                 for(Arc<TwitterUser> arc : graph.getGraph().get(vertex)){
                     sb.append(vertex.getLabel().getUserHandle());
                     sb.append("," + arc.getVertex().getLabel().getUserHandle());
+                    sb.append(",").append(arc.getWeight());
                     pw.println(sb);
                     sb.setLength(0);
                     pw.flush();
