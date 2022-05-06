@@ -109,7 +109,7 @@ public class GraphReadWriteService extends FileService {
         createFile(file.getParent(), file.getName());
         StringBuilder sb = new StringBuilder();
         try (PrintWriter pw = new PrintWriter(new FileWriter(file))) {
-            sb.append("nodedef>name VARCHAR,stance VARCHAR,focus VARCHAR, politics VARCHAR, acceptorreject VARCHAR, problemsolution VARCHAR"/*,label VARCHAR,class VARCHAR, visible BOOLEAN," +
+            sb.append("nodedef>name VARCHAR,stance VARCHAR,focus VARCHAR, politics VARCHAR, acceptorreject VARCHAR, problemorsolution VARCHAR"/*,label VARCHAR,class VARCHAR, visible BOOLEAN," +
                         "labelvisible BOOLEAN,width DOUBLE,height DOUBLE,x DOUBLE,y DOUBLE,color VARCHAR"*/);
             pw.println(sb);
             sb.setLength(0);
@@ -118,7 +118,10 @@ public class GraphReadWriteService extends FileService {
             for(Vertex<TwitterUser> vertex: graph.getGraph().keySet()){
                 sb.append(vertex.getLabel().getUserHandle() + ",");
                 sb.append(outputProOrAnti(vertex));
-                sb.append(outputAllDominantProperties(sb, vertex));
+                sb.append(outputDominantProperty(vertex, "rights", "responsibilities"));
+                sb.append(outputDominantProperty(vertex, "leftwing", "rightwing"));
+                sb.append(outputDominantProperty(vertex, "accepting", "rejecting"));
+                sb.append(outputDominantProperty(vertex, "problem", "solution"));
                 pw.println(sb);
                 sb.setLength(0);
                 pw.flush();
@@ -194,13 +197,6 @@ public class GraphReadWriteService extends FileService {
         }
 
 
-    }
-    private StringBuilder outputAllDominantProperties(StringBuilder sb, Vertex vertex){
-        sb.append(outputDominantProperty(vertex, "rights", "responsibilities"));
-        sb.append(outputDominantProperty(vertex, "leftwing", "rightwing"));
-        sb.append(outputDominantProperty(vertex, "accepting", "rejecting"));
-        sb.append(outputDominantProperty(vertex, "problem", "solution"));
-        return sb;
     }
 
     private String outputDominantProperty(Vertex<TwitterUser> vertex, String propertyOne, String propertyTwo) {
