@@ -6,6 +6,7 @@ import org.tojaco.Graph.DirectedGraph;
 import org.tojaco.Graph.Vertex;
 import org.tojaco.GraphElements.Hashtag;
 import org.tojaco.GraphElements.TwitterUser;
+import org.tojaco.ModelUser;
 
 import java.io.*;
 import java.util.*;
@@ -154,7 +155,7 @@ public class GraphReadWriteService extends FileService {
         createFile(file.getParent(), file.getName());
         StringBuilder sb = new StringBuilder();
         try (PrintWriter pw = new PrintWriter(new FileWriter(file))) {
-            sb.append("nodedef>name VARCHAR,stance VARCHAR"/*,label VARCHAR,class VARCHAR, visible BOOLEAN," +
+            sb.append("nodedef>name VARCHAR,stance VARCHAR,acceptOrReject VARCHAR"/*,label VARCHAR,class VARCHAR, visible BOOLEAN," +
                         "labelvisible BOOLEAN,width DOUBLE,height DOUBLE,x DOUBLE,y DOUBLE,color VARCHAR"*/);
             pw.println(sb);
             sb.setLength(0);
@@ -171,11 +172,49 @@ public class GraphReadWriteService extends FileService {
                 }else {
                     sb.append("neutral");
                 }
+                int acceptance = 0;
+                int rejection = 0;
+                for(int i=0; i<vertex.getLabel().getQualities().size(); i++){
+                    if(vertex.getLabel().getQualities().get(i).equals("accepting")){
+                        acceptance++;
+                    } else if(vertex.getLabel().getQualities().get(i).equals("rejecting")){
+                        rejection++;
+                    }
+                }
+                if(acceptance>rejection){
+                    sb.append(",accepting");
+                } else if(rejection>=acceptance && rejection!=0){
+                    sb.append(",rejecting");
+                } else if(acceptance==0 && rejection ==0){
+                    sb.append(",neither");
+                }
+
                 pw.println(sb);
                 sb.setLength(0);
                 pw.flush();
             }
 
+            for(Vertex<Hashtag> vertex: graph.getGraph().keySet()){
+                for(Arc<TwitterUser> arc : graph.getGraph().get(vertex)){
+                    sb.append(arc.getVertex().getLabel().getUserHandle());
+                    sb.append(",");
+                    if(arc.getVertex().getLabel().hasStance()){
+                        if(arc.getVertex().getLabel().getStance()<0)
+                            sb.append("anti");
+                        else if(arc.getVertex().getLabel().getStance()>0){
+                            sb.append("pro");
+                        }
+                    }else {
+                        sb.append("neutral");
+                    }
+
+                    String toAdd = outputDominantProperty(arc.getVertex(),"accepting","rejecting");
+                    sb.append(toAdd);
+                    pw.println(sb);
+                    sb.setLength(0);
+                    pw.flush();
+                }
+            }
 
             sb.append("edgedef>node1 VARCHAR,node2 VARCHAR"); //,directed BOOLEAN");
             pw.println(sb);
@@ -185,7 +224,7 @@ public class GraphReadWriteService extends FileService {
             for(Vertex<Hashtag> vertex: graph.getGraph().keySet()){
                 for(Arc<TwitterUser> arc : graph.getGraph().get(vertex)){
                     sb.append(vertex.getLabel());
-                    sb.append("," + arc.getVertex().getLabel().getUserHandle());
+                    sb.append(","+arc.getVertex().getLabel().getUserHandle());
                     pw.println(sb);
                     sb.setLength(0);
                     pw.flush();
