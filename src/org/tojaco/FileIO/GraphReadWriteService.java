@@ -16,8 +16,15 @@ public class GraphReadWriteService extends FileService {
 
     private final ArrayList<String> hashtags = new ArrayList<>();
 
+    private final ArrayList<String> mentions = new ArrayList<>();
+
+
     public ArrayList<String> getHashtags() {
         return hashtags;
+    }
+
+    public ArrayList<String> getMentions() {
+        return mentions;
     }
 
     public <T, E> void writeFileFromGraph(DirectedGraph<T, E> graph, File file, boolean weight) throws IOException {
@@ -79,6 +86,16 @@ public class GraphReadWriteService extends FileService {
                     }
                     String temp = retweetedUserWithText.trim().replaceAll(" +", " ");
                     //String temp = lineContents[2].replaceAll("  ", " ");
+
+                    String[] mentionSplitter  = temp.split("[^a-zA-Z@]+"); //split the tweet text
+
+                    for (String tweetComponent : mentionSplitter) {
+
+                        if (tweetComponent.startsWith("@") && !(retweetedUser.equals(tweetComponent) )) {
+                            mentions.add(lineContents[1] + "\t" + tweetComponent);
+                        }
+                    }
+
                     tweetText = temp.split("[^a-zA-Z#]+"); //split the tweet text
                     //tweetText= tweetText.split(" ");
                     for (String tweetComponent : tweetText) {

@@ -21,7 +21,6 @@ public class MainUtil {
 
     private static final ArrayList<String> retweets = new ArrayList<>();
     private static final ArrayList<String> hashtags = new ArrayList<>();
-
     public static ArrayList<String> getRetweets() {
         return retweets;
     }
@@ -452,7 +451,13 @@ public class MainUtil {
                         new File(Configuration.getGRAPH_DIRECTORY(),
                                 Configuration.getRTWEETEDGRAPH_OUTPUT_FILE()), true);
 
-                System.out.println("Retweet graph and retweeted graph added successfully to Graph directory!");
+                System.out.println("Retweet graph / retweeted graph added successfully to Graph directory!");
+
+                System.out.println("Now generating mentions / mentioned graphs. Standby.");
+                // calling this will both generate and output the mention / mentioned graphs
+                MentionGraph mentionGraph = new MentionGraph(rfs);
+
+                System.out.println("Mentions / Mentioned Graphs added successfully to Graph directory!");
 
                 findEvangelists = new FindEvangelists();
                 retweetHashMap = findEvangelists.findTotalRetweets(retweetedGraph);

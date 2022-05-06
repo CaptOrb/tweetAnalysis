@@ -10,7 +10,7 @@ public class FindGraphElements<T, E> {
     private final VertexCreator<T> srcVertexCreator;
     private final VertexCreator<E> destVertexCreator;
 
-    FindGraphElements(VertexCreator<T> srcVertexCreator, VertexCreator<E> destVertexCreator){
+    public FindGraphElements(VertexCreator<T> srcVertexCreator, VertexCreator<E> destVertexCreator){
         this.srcVertexCreator = srcVertexCreator;
         this.destVertexCreator = destVertexCreator;
     }

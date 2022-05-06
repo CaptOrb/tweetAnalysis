@@ -42,6 +42,10 @@ public class Configuration {
     private static String GEPHI_FILE_1;
     private static String GEPHI_HASHTAG_TO_USER_FILE;
 
+    private static String MENTIONS_FILE;
+
+    private static String MENTIONED_FILE;
+
     public static String getGEPHI_FILE_1() { return GEPHI_FILE_1; }
 
     public static String getGEPHI_HASHTAG_TO_USER_FILE() { return GEPHI_HASHTAG_TO_USER_FILE; }
@@ -105,6 +109,14 @@ public class Configuration {
     public static String getSTANCE_FILE(){ return STANCE_FILE; }
 
     public static String getHASHTAG_SUMMARY_FILE() { return HASHTAG_SUMMARY_FILE; }
+
+    public static String getMentionsFile() {
+        return MENTIONS_FILE;
+    }
+
+    public static String getMentionedFile() {
+        return MENTIONED_FILE;
+    }
 
     public static String getACCESS_TOKEN() {
         return ACCESS_TOKEN;
@@ -180,7 +192,10 @@ public class Configuration {
             Configuration.BATCH_SIZE = properties.getProperty("BATCH_SIZE");
             Configuration.HASHTAGS = splitHashTags(properties.getProperty("HASHTAGS"));
             Configuration.GEPHI_FILE_1 = properties.getProperty("GEPHI_FILE_1");
-            Configuration.GEPHI_HASHTAG_TO_USER_FILE=properties.getProperty("GEPHI_HASHTAG_TO_USER_FILE");
+            Configuration.GEPHI_HASHTAG_TO_USER_FILE = properties.getProperty("GEPHI_HASHTAG_TO_USER_FILE");
+            Configuration.MENTIONS_FILE = properties.getProperty("MENTIONS_FILE");
+            Configuration.MENTIONED_FILE= properties.getProperty("MENTIONED_FILE");
+
         } catch (IOException e) {
             throw new RuntimeException("Could not read properties from file:", e);
         }
