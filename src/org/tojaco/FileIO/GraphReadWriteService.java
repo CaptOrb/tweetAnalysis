@@ -40,7 +40,7 @@ public class GraphReadWriteService extends FileService {
                     } else {
                         sb.append(graphHashMap.get(vertex).get(i).getVertex().getLabel());
                     }
-                    if(weight==true) {
+                    if(weight) {
                         sb.append("(").append(graphHashMap.get(vertex).get(i).getWeight()).append(")");
                     }
 
@@ -110,7 +110,7 @@ public class GraphReadWriteService extends FileService {
         createFile(file.getParent(), file.getName());
         StringBuilder sb = new StringBuilder();
         try (PrintWriter pw = new PrintWriter(new FileWriter(file))) {
-            sb.append("nodedef>name VARCHAR,stance VARCHAR,focus VARCHAR, politics VARCHAR, acceptorreject VARCHAR"/*,label VARCHAR,class VARCHAR, visible BOOLEAN," +
+            sb.append("nodedef>name VARCHAR,stance VARCHAR,focus VARCHAR, politics VARCHAR, acceptorreject VARCHAR, problemorsolution VARCHAR"/*,label VARCHAR,class VARCHAR, visible BOOLEAN," +
                         "labelvisible BOOLEAN,width DOUBLE,height DOUBLE,x DOUBLE,y DOUBLE,color VARCHAR"*/);
             pw.println(sb);
             sb.setLength(0);
@@ -118,26 +118,17 @@ public class GraphReadWriteService extends FileService {
 
             for(Vertex<TwitterUser> vertex: graph.getGraph().keySet()){
                 sb.append(vertex.getLabel().getUserHandle() + ",");
-                if(vertex.getLabel().hasStance()){
-                    if(vertex.getLabel().getStance()<0)
-                        sb.append("anti");
-                    else if(vertex.getLabel().getStance()>0){
-                        sb.append("pro");
-                    }
-                }else {
-                    sb.append("neutral");
-                }
-
+                sb.append(outputProOrAnti(vertex));
                 sb.append(outputDominantProperty(vertex, "rights", "responsibilities"));
                 sb.append(outputDominantProperty(vertex, "leftwing", "rightwing"));
                 sb.append(outputDominantProperty(vertex, "accepting", "rejecting"));
-
+                sb.append(outputDominantProperty(vertex, "problem", "solution"));
                 pw.println(sb);
                 sb.setLength(0);
                 pw.flush();
             }
 
-            sb.append("edgedef>node1 VARCHAR,node2 VARCHAR"); //,directed BOOLEAN");
+            sb.append("edgedef>node1 VARCHAR,node2 VARCHAR , weight DOUBLE"); //,directed BOOLEAN");
             pw.println(sb);
             sb.setLength(0);
             pw.flush();
@@ -146,6 +137,7 @@ public class GraphReadWriteService extends FileService {
                 for(Arc<TwitterUser> arc : graph.getGraph().get(vertex)){
                     sb.append(vertex.getLabel().getUserHandle());
                     sb.append("," + arc.getVertex().getLabel().getUserHandle());
+                    sb.append(",").append(arc.getWeight());
                     pw.println(sb);
                     sb.setLength(0);
                     pw.flush();
@@ -265,6 +257,22 @@ public class GraphReadWriteService extends FileService {
             sb.append(",").append(propertyTwo);
         } else
             sb.append(",neither");
+        return sb.toString();
+    }
+
+    private String outputProOrAnti(Vertex<TwitterUser> vertex){
+
+        StringBuilder sb = new StringBuilder();
+
+        if(vertex.getLabel().hasStance()){
+            if(vertex.getLabel().getStance()<0)
+                sb.append("anti");
+            else if(vertex.getLabel().getStance()>0){
+                sb.append("pro");
+            }
+        }else {
+            sb.append("neutral");
+        }
         return sb.toString();
     }
 }
