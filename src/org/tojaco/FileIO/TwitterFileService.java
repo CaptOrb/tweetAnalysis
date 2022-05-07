@@ -35,7 +35,8 @@ public class TwitterFileService extends FileService {
                 foundUserHandles.add(lineContents[1]);
             }
         } catch (IOException | NullPointerException | NumberFormatException fnfe) {
-            fnfe.printStackTrace();
+            // suppress and carry on
+            //fnfe.printStackTrace();
         }
 
     }
@@ -45,7 +46,7 @@ public class TwitterFileService extends FileService {
 
         String userName = "@" + user.getScreenName();
         if (!foundUserHandles.contains(userName)) {
-            String bio; //if a user doesnt have a bio they were not getting written to the user file
+            String bio; //if a user doesn't have a bio they were not getting written to the user file
             if (user.getDescription() == null) {
                 bio = "No bio";
             } else {

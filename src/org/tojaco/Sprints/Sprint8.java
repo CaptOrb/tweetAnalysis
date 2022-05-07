@@ -9,7 +9,6 @@ import org.tojaco.GraphAnalysis.StatCalculator;
 import org.tojaco.GraphElements.GraphElements;
 import org.tojaco.GraphElements.Hashtag;
 import org.tojaco.GraphElements.TwitterUser;
-import twitter4j.Twitter;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,7 +17,9 @@ import java.util.Map;
 
 public class Sprint8 {
 
-    private static final ArrayList<String> retweets = new ArrayList<>();
+  //  no need for this to have global scope... because we never call Sprint8.getRetweets()
+  //  outside of this class.
+/*    private static final ArrayList<String> retweets = new ArrayList<>();
     private static final ArrayList<String> hashtags = new ArrayList<>();
     public static ArrayList<String> getRetweets() {
         return retweets;
@@ -26,31 +27,29 @@ public class Sprint8 {
 
     public static ArrayList<String> getHashtags() {
         return hashtags;
-    }
+    }*/
 
     public void sprint8(File dataFile) throws IOException {
-        GraphElements graphElements = new GraphElements();
-        FindGraphElements findGraphElements;
 
-        DirectedGraph<TwitterUser, TwitterUser> rtGraph = new DirectedGraph<>();
-        DirectedGraph<TwitterUser, TwitterUser> retweetedGraph;
+        final ArrayList<String> getRetweets = new ArrayList<>();
+
         GraphReadWriteService rfs = new GraphReadWriteService();
-        Lexicon lexicon = new Lexicon();
-        DirectedGraph lexiconGraph;
-        HashtagSummarizer hashtagSummarizer = new HashtagSummarizer();
+        Lexicon<String> lexicon = new Lexicon<>();
+        HashtagSummarizer hashtagSummarizer = new HashtagSummarizer<>();
         // graph for using implemented methods on
         // see org.tojaco.Graph.DirectedGraph.java for description of public methods
 
-        findGraphElements = new FindGraphElements(new CreateUserVertex(), new CreateUserVertex());
+        FindGraphElements<TwitterUser, TwitterUser> findGraphElements = new FindGraphElements<>(new CreateUserVertex(), new CreateUserVertex());
 
+        GraphElements graphElements = new GraphElements();
         if (dataFile.exists()) {
-            getRetweets().addAll(rfs.loadDataFromInputFile(dataFile));
+            getRetweets.addAll(rfs.loadDataFromInputFile(dataFile));
         }
 
-        getHashtags().addAll(rfs.getHashtags());
+        final ArrayList<String> getHashtags = new ArrayList<>(rfs.getHashtags());
 
-        rtGraph = findGraphElements.createGraph(graphElements, getRetweets(), 0, 1);
-        retweetedGraph = findGraphElements.createGraph(graphElements, getRetweets(), 1, 0);
+        DirectedGraph<TwitterUser, TwitterUser> rtGraph = findGraphElements.createGraph(graphElements, getRetweets, 0, 1);
+        DirectedGraph<TwitterUser, TwitterUser> retweetedGraph = findGraphElements.createGraph(graphElements, getRetweets, 1, 0);
 
         rfs.writeFileFromGraph(rtGraph,
                 new File(Configuration.getGRAPH_DIRECTORY(),
@@ -76,21 +75,21 @@ public class Sprint8 {
         assignStances.determineProAntiVaxEvangelists(graphElements, rtGraph, StanceFile);
 
         // initial setup for calculating stances
-        GraphAnalyser graphAnalyser = new GraphAnalyser();
+        GraphAnalyser graphAnalyser = new GraphAnalyser<>();
 
         for (int i = 0; i < 10; i++) {
             graphAnalyser.assignUserStances(rtGraph);
             graphAnalyser.assignUserStances(retweetedGraph);
         }
 
-        StanceAnalysis analysis = new StanceAnalysis();
+        StanceAnalysis analysis = new StanceAnalysis<>();
         analysis.checkStance100Users(retweetHashMap);
 
         //outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, false, false);
 
         System.out.println("Now calculating hashtag graphs...");
-        FindGraphElements fge1 = new FindGraphElements<>(new CreateUserVertex(), new CreateHashtagVertex());
-        DirectedGraph<TwitterUser, Hashtag> usertoHashTag = fge1.createGraph(graphElements, getHashtags(), 0, 1);
+        FindGraphElements<TwitterUser, Hashtag> userHashTagFGE = new FindGraphElements<>(new CreateUserVertex(), new CreateHashtagVertex());
+        DirectedGraph<TwitterUser, Hashtag> usertoHashTag = userHashTagFGE.createGraph(graphElements, getHashtags, 0, 1);
 
         //outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, true, false);
 
@@ -99,9 +98,9 @@ public class Sprint8 {
                         Configuration.getUSERS_TO_HASHTAGS()), true);
 
 
-        FindGraphElements findGraphElements2 = new FindGraphElements<>(new CreateHashtagVertex(), new CreateUserVertex());
+        FindGraphElements<Hashtag, TwitterUser> hashtagUsersFGE = new FindGraphElements<>(new CreateHashtagVertex(), new CreateUserVertex());
 
-        DirectedGraph<Hashtag, TwitterUser> hashtagToUsers = findGraphElements2.createGraph(graphElements, getHashtags(), 1, 0);
+        DirectedGraph<Hashtag, TwitterUser> hashtagToUsers = hashtagUsersFGE.createGraph(graphElements, getHashtags, 1, 0);
 
         rfs.writeFileFromGraph(hashtagToUsers,
                 new File(Configuration.getGRAPH_DIRECTORY(),
@@ -119,33 +118,23 @@ public class Sprint8 {
             graphAnalyser.assignUserStances(retweetedGraph);
 
         }
-        //outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, true, false);
-        StanceAnalysis analyse = new StanceAnalysis();
-        // users100New.checkStance(retweetHashMap);
+        StanceAnalysis analyse = new StanceAnalysis<>();
         analyse.assignStancesByHashtags(hashtagToUsers, graphElements, rtGraph);
 
-        // outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, false, true);
-
-        analyse.find100Hashtags(hashtagToUsers);
-
-        analyse.find100HashtagsS5(rtGraph, hashtagToUsers);
-
-        HashtagSplitter hashtagSplitter = new HashtagSplitter();
+        HashtagSplitter hashtagSplitter = new HashtagSplitter<>();
         hashtagSplitter.splitHashtagsByCamelCase(hashtagToUsers);
 
-        hashtagSummarizer = new HashtagSummarizer();
+        DirectedGraph<String,String> lexiconGraph = lexicon.getLexiconGraph();
 
-        lexiconGraph = lexicon.getLexiconGraph();
-
-        DirectedGraph sumHashTagGraph = hashtagSummarizer.summarizeHashtag(hashtagToUsers, lexiconGraph, lexicon.getGraphElementsLexicon());
+        DirectedGraph<Hashtag,String> sumHashTagGraph = hashtagSummarizer.summarizeHashtag(hashtagToUsers, lexiconGraph, lexicon.getGraphElementsLexicon());
 
         hashtagSplitter.splitHashtagsByLexicon(hashtagToUsers, lexicon.getLexiconDictionary());
 
         rfs.writeFileFromGraph(lexiconGraph, new File(Configuration.getGRAPH_DIRECTORY(), Configuration.getLEXICON_FILE()), false);
 
-        GraphElements graphElements2 = new GraphElements();
+        GraphElements hashTagGE = new GraphElements();
 
-        DirectedGraph hashtagToWordGraph = hashtagSummarizer.hashtagMadeUpOf(hashtagToUsers, graphElements2);
+        DirectedGraph<Hashtag,String> hashtagToWordGraph = hashtagSummarizer.hashtagMadeUpOf(hashtagToUsers, hashTagGE);
 
         rfs.writeFileFromGraph(hashtagToWordGraph, new File(Configuration.getGRAPH_DIRECTORY(), Configuration.getHASHTAG_TO_WORDS()), false);
 
@@ -154,14 +143,13 @@ public class Sprint8 {
         rfs.writeFileFromGraph(sumHashTagGraph, new File(Configuration.getGRAPH_DIRECTORY(),
                 Configuration.getHASHTAG_SUMMARY_FILE()), true);
 
-
         System.out.println("Now calculating User to Qualities graph...");
 
         ModelUser modelUser = new ModelUser();
         modelUser.addSummaryOfHashtag(sumHashTagGraph);
         modelUser.addSummaryOfHashtagToUserQualities(usertoHashTag);
 
-        DirectedGraph usersToQualities = modelUser.makeUserToQualityGraph(usertoHashTag, graphElements);
+        DirectedGraph<TwitterUser,String> usersToQualities = modelUser.makeUserToQualityGraph(usertoHashTag, graphElements);
 
         rfs.writeFileFromGraph(usersToQualities, new File(Configuration.getGRAPH_DIRECTORY(),
                 Configuration.getUSER_QUALITIES()), true);
@@ -171,8 +159,6 @@ public class Sprint8 {
 
         System.out.println("Now automating collection of significant conditional probabilities");
         statCalculator.automateConditionalProbCalculation(lexicon);
-        // statCalculator.outputSignificantConditionalProbabilities();
-
         GraphReadWriteService graphReadWriteService = new GraphReadWriteService();
         graphReadWriteService.writeGephiFile(rtGraph, new File(Configuration.getGRAPH_DIRECTORY(), Configuration.getGEPHI_FILE_1()));
 

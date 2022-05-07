@@ -17,38 +17,30 @@ import java.util.Map;
 
 public class Sprint6 {
 
-    private static final ArrayList<String> retweets = new ArrayList<>();
-    private static final ArrayList<String> hashtags = new ArrayList<>();
-    public static ArrayList<String> getRetweets() {
-        return retweets;
-    }
-
-    public static ArrayList<String> getHashtags() {
-        return hashtags;
-    }
     public void sprint6(File dataFile) throws IOException {
+
+        final ArrayList<String> getRetweets = new ArrayList<>();
+
         // graph for using implemented methods on
         // see org.tojaco.Graph.DirectedGraph.java for description of public methods
         GraphElements graphElements = new GraphElements();
-        FindGraphElements findGraphElements;
+        FindGraphElements<TwitterUser,TwitterUser> findGraphElements;
 
-        DirectedGraph<TwitterUser, TwitterUser> rtGraph = new DirectedGraph<>();
-        DirectedGraph<TwitterUser, TwitterUser> retweetedGraph;
         GraphReadWriteService rfs = new GraphReadWriteService();
-        Lexicon lexicon = new Lexicon();
-        DirectedGraph lexiconGraph;
-        HashtagSummarizer hashtagSummarizer = new HashtagSummarizer();
+        Lexicon<String> lexicon = new Lexicon<>();
 
-        findGraphElements = new FindGraphElements(new CreateUserVertex(), new CreateUserVertex());
+        HashtagSummarizer hashtagSummarizer = new HashtagSummarizer<>();
+
+        findGraphElements = new FindGraphElements<>(new CreateUserVertex(), new CreateUserVertex());
 
         if (dataFile.exists()) {
-            getRetweets().addAll(rfs.loadDataFromInputFile(dataFile));
+            getRetweets.addAll(rfs.loadDataFromInputFile(dataFile));
         }
 
-        getHashtags().addAll(rfs.getHashtags());
+        final ArrayList<String> getHashtags = new ArrayList<>(rfs.getHashtags());
 
-        rtGraph = findGraphElements.createGraph(graphElements, getRetweets(), 0, 1);
-        retweetedGraph = findGraphElements.createGraph(graphElements, getRetweets(), 1, 0);
+        DirectedGraph<TwitterUser, TwitterUser> rtGraph = findGraphElements.createGraph(graphElements, getRetweets, 0, 1);
+        DirectedGraph<TwitterUser, TwitterUser> retweetedGraph = findGraphElements.createGraph(graphElements, getRetweets, 1, 0);
 
         rfs.writeFileFromGraph(rtGraph,
                 new File(Configuration.getGRAPH_DIRECTORY(),
@@ -64,26 +56,26 @@ public class Sprint6 {
         Map<Vertex<TwitterUser>, Integer> retweetHashMap = findEvangelists.findTotalRetweets(retweetedGraph);
 
         System.out.println("Now calculating hashtag graphs...");
-        FindGraphElements fge1 = new FindGraphElements<>(new CreateUserVertex(), new CreateHashtagVertex());
+        FindGraphElements<TwitterUser, Hashtag> userHashTagFGE = new FindGraphElements<>(new CreateUserVertex(), new CreateHashtagVertex());
 
-        DirectedGraph<TwitterUser, Hashtag> usertoHashTag = fge1.createGraph(graphElements, getHashtags(), 0, 1);
+        DirectedGraph<TwitterUser, Hashtag> userToHashTag = userHashTagFGE.createGraph(graphElements, getHashtags, 0, 1);
 
-        rfs.writeFileFromGraph(usertoHashTag,
+        rfs.writeFileFromGraph(userToHashTag,
                 new File(Configuration.getGRAPH_DIRECTORY(),
                         Configuration.getUSERS_TO_HASHTAGS()), true);
 
-        FindGraphElements findGraphElements2 = new FindGraphElements<>(new CreateHashtagVertex(), new CreateUserVertex());
+        FindGraphElements<Hashtag,TwitterUser> HashTagUserFGE = new FindGraphElements<>(new CreateHashtagVertex(), new CreateUserVertex());
 
-        DirectedGraph<Hashtag, TwitterUser> hashtagToUsers = findGraphElements2.createGraph(graphElements, getHashtags(), 1, 0);
+        DirectedGraph<Hashtag, TwitterUser> hashtagToUsers = HashTagUserFGE.createGraph(graphElements, getHashtags, 1, 0);
 
         rfs.writeFileFromGraph(hashtagToUsers,
                 new File(Configuration.getGRAPH_DIRECTORY(),
                         Configuration.getHASHTAGS_TO_USERS()), true);
 
-        HashtagSplitter hashtagSplitter = new HashtagSplitter();
+        HashtagSplitter hashtagSplitter = new HashtagSplitter<>();
         hashtagSplitter.splitHashtagsByCamelCase(hashtagToUsers);
 
-        lexiconGraph = lexicon.getLexiconGraph();
+        DirectedGraph<String,String> lexiconGraph = lexicon.getLexiconGraph();
 
         DirectedGraph<Hashtag, String> sumHashTagGraph = hashtagSummarizer.summarizeHashtag(hashtagToUsers, lexiconGraph, lexicon.getGraphElementsLexicon());
 
@@ -91,9 +83,9 @@ public class Sprint6 {
 
         rfs.writeFileFromGraph(lexicon.getLexiconGraph(), new File(Configuration.getGRAPH_DIRECTORY(), Configuration.getLEXICON_FILE()), false);
 
-        GraphElements graphElements2 = new GraphElements();
+        GraphElements hashTagWordsGE = new GraphElements();
 
-        DirectedGraph<Hashtag, String> hashtagToWordGraph = hashtagSummarizer.hashtagMadeUpOf(hashtagToUsers, graphElements2);
+        DirectedGraph<Hashtag, String> hashtagToWordGraph = hashtagSummarizer.hashtagMadeUpOf(hashtagToUsers, hashTagWordsGE);
 
         rfs.writeFileFromGraph(hashtagToWordGraph, new File(Configuration.getGRAPH_DIRECTORY(), Configuration.getHASHTAG_TO_WORDS()), false);
 

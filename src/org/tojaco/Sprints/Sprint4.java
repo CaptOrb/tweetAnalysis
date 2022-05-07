@@ -19,33 +19,22 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class Sprint4 {
-    private static final ArrayList<String> retweets = new ArrayList<>();
-    private static final ArrayList<String> hashtags = new ArrayList<>();
-    public static ArrayList<String> getRetweets() {
-        return retweets;
-    }
-
-    public static ArrayList<String> getHashtags() {
-        return hashtags;
-    }
 
     public void sprint4(File dataFile) throws IOException {
-        DirectedGraph<TwitterUser, TwitterUser> rtGraph = new DirectedGraph<>();
-        DirectedGraph<TwitterUser, TwitterUser> retweetedGraph;
+        final ArrayList<String> getRetweets = new ArrayList<>();
 
-        FindGraphElements findGraphElements = new FindGraphElements<>(new CreateUserVertex(), new CreateUserVertex());
+        FindGraphElements<TwitterUser,TwitterUser> findGraphElements = new FindGraphElements<>(new CreateUserVertex(), new CreateUserVertex());
 
         GraphElements graphElements = new GraphElements();
 
         GraphReadWriteService rfs = new GraphReadWriteService();
 
         if (dataFile.exists()) {
-            getRetweets().addAll(rfs.loadDataFromInputFile(dataFile));
+            getRetweets.addAll(rfs.loadDataFromInputFile(dataFile));
         }
-        getHashtags().addAll(rfs.getHashtags());
 
-        rtGraph = findGraphElements.createGraph(graphElements, getRetweets(), 0, 1);
-        retweetedGraph = findGraphElements.createGraph(graphElements, getRetweets(), 1, 0);
+        DirectedGraph<TwitterUser, TwitterUser> rtGraph = findGraphElements.createGraph(graphElements, getRetweets, 0, 1);
+        DirectedGraph<TwitterUser, TwitterUser> retweetedGraph = findGraphElements.createGraph(graphElements, getRetweets, 1, 0);
 
         rfs.writeFileFromGraph(rtGraph,
                 new File(Configuration.getGRAPH_DIRECTORY(),
@@ -64,7 +53,7 @@ public class Sprint4 {
         assignStances.determineProAntiVaxEvangelists(graphElements, rtGraph, StanceFile);
 
         // initial setup for calculating stances
-        GraphAnalyser graphAnalyser = new GraphAnalyser();
+        GraphAnalyser graphAnalyser = new GraphAnalyser<>();
 
         for (int i = 0; i < 20; i++) {
             graphAnalyser.assignUserStances(rtGraph);
@@ -72,10 +61,7 @@ public class Sprint4 {
         }
 
         graphAnalyser.outputGraphAnalysis(rtGraph, graphElements, false, false);
-        StanceAnalysis users100 = new StanceAnalysis();
+        StanceAnalysis users100 = new StanceAnalysis<>();
         users100.checkStance100Users(retweetsHashMap);
-
-        rfs.writeGephiFile(rtGraph, new File(Configuration.getGRAPH_DIRECTORY(), Configuration.getGEPHI_FILE_1()));
-
     }
 }

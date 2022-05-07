@@ -13,28 +13,24 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Sprint3 {
-    private static final ArrayList<String> retweets = new ArrayList<>();
-    public static ArrayList<String> getRetweets() {
-        return retweets;
-    }
 
     public void sprint3(File dataFile) throws IOException {
-        DirectedGraph<TwitterUser, TwitterUser> rtGraph = new DirectedGraph<>();
-        DirectedGraph<TwitterUser, TwitterUser> retweetedGraph;
 
-        FindGraphElements findGraphElements = new FindGraphElements<>(new CreateUserVertex(), new CreateUserVertex());
+        final ArrayList<String> getRetweets = new ArrayList<>();
+
+        FindGraphElements<TwitterUser,TwitterUser> findGraphElements = new FindGraphElements<>(new CreateUserVertex(), new CreateUserVertex());
 
         GraphElements graphElements = new GraphElements();
 
         GraphReadWriteService rfs = new GraphReadWriteService();
 
         if (dataFile.exists()) {
-            getRetweets().addAll(rfs.loadDataFromInputFile(dataFile));
+            getRetweets.addAll(rfs.loadDataFromInputFile(dataFile));
         }
 
-        rtGraph = findGraphElements.createGraph(graphElements, getRetweets(), 0, 1);
+        DirectedGraph<TwitterUser, TwitterUser> rtGraph = findGraphElements.createGraph(graphElements, getRetweets, 0, 1);
 
-        retweetedGraph = findGraphElements.createGraph(graphElements, getRetweets(), 1, 0);
+        DirectedGraph<TwitterUser, TwitterUser> retweetedGraph = findGraphElements.createGraph(graphElements, getRetweets, 1, 0);
 
         rfs.writeFileFromGraph(rtGraph,
                 new File(Configuration.getGRAPH_DIRECTORY(),

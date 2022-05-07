@@ -44,7 +44,7 @@ public class StanceAnalysis<T, E> {
         }
         //now calculate stances for users just based solely on the hashtags they use
 
-        GraphAnalyser graphAnalyser = new GraphAnalyser();
+        GraphAnalyser graphAnalyser = new GraphAnalyser<>();
 
         for (int i = 0; i < 5; i++) { //by upping this to 10 there's no change in coverage
             graphAnalyser.assignUserStances(hashtagsToUsers);

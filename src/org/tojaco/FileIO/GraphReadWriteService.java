@@ -1,7 +1,6 @@
 package org.tojaco.FileIO;
 
 import org.tojaco.Graph.*;
-import org.tojaco.GraphElements.GraphElements;
 import org.tojaco.GraphElements.Hashtag;
 import org.tojaco.GraphElements.TwitterUser;
 
@@ -171,11 +170,11 @@ public class GraphReadWriteService extends FileService {
 
             for(Vertex<TwitterUser> vertex: graph.getGraph().keySet()){
                 sb.append(vertex.getLabel().getUserHandle() + ",");
-                sb.append(outputProOrAnti(vertex));
-                sb.append(outputDominantProperty(vertex, "rights", "responsibilities"));
-                sb.append(outputDominantProperty(vertex, "leftwing", "rightwing"));
-                sb.append(outputDominantProperty(vertex, "accepting", "rejecting"));
-                sb.append(outputDominantProperty(vertex, "problem", "solution"));
+                sb.append(outputProOrAntiUser(vertex));
+                sb.append(outputUserDominantProperty(vertex, "rights", "responsibilities"));
+                sb.append(outputUserDominantProperty(vertex, "leftwing", "rightwing"));
+                sb.append(outputUserDominantProperty(vertex, "accepting", "rejecting"));
+                sb.append(outputUserDominantProperty(vertex, "problem", "solution"));
                 pw.println(sb);
                 sb.setLength(0);
                 pw.flush();
@@ -251,7 +250,9 @@ public class GraphReadWriteService extends FileService {
                 for(Arc<TwitterUser> arc : graph.getGraph().get(vertex)){
                     sb.append(arc.getVertex().getLabel().getUserHandle());
                     sb.append(",");
-                    if(arc.getVertex().getLabel().hasStance()){
+
+                    // commented this out because we already have a method for it.
+/*                    if(arc.getVertex().getLabel().hasStance()){
                         if(arc.getVertex().getLabel().getStance()<0)
                             sb.append("anti");
                         else if(arc.getVertex().getLabel().getStance()>0){
@@ -259,9 +260,11 @@ public class GraphReadWriteService extends FileService {
                         }
                     }else {
                         sb.append("neutral");
-                    }
+                    }*/
 
-                    String toAdd = outputDominantProperty(arc.getVertex(),"accepting","rejecting");
+                    sb.append(outputProOrAntiUser(arc.getVertex()));
+
+                    String toAdd = outputUserDominantProperty(arc.getVertex(),"accepting","rejecting");
                     sb.append(toAdd);
                     pw.println(sb);
                     sb.setLength(0);
@@ -277,7 +280,7 @@ public class GraphReadWriteService extends FileService {
             for(Vertex<Hashtag> vertex: graph.getGraph().keySet()){
                 for(Arc<TwitterUser> arc : graph.getGraph().get(vertex)){
                     sb.append(vertex.getLabel());
-                    sb.append(","+arc.getVertex().getLabel().getUserHandle());
+                    sb.append("," +arc.getVertex().getLabel().getUserHandle());
                     pw.println(sb);
                     sb.setLength(0);
                     pw.flush();
@@ -288,11 +291,9 @@ public class GraphReadWriteService extends FileService {
         catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
-    private String outputDominantProperty(Vertex<TwitterUser> vertex, String propertyOne, String propertyTwo) {
+    private String outputUserDominantProperty(Vertex<TwitterUser> vertex, String propertyOne, String propertyTwo) {
 
         StringBuilder sb = new StringBuilder();
 
@@ -313,7 +314,7 @@ public class GraphReadWriteService extends FileService {
         return sb.toString();
     }
 
-    private String outputProOrAnti(Vertex<TwitterUser> vertex){
+    private String outputProOrAntiUser(Vertex<TwitterUser> vertex){
 
         StringBuilder sb = new StringBuilder();
 
