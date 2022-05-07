@@ -207,8 +207,8 @@ public class Configuration {
             Configuration.GEPHI_FILE_1 = properties.getProperty("GEPHI_FILE_1");
             Configuration.GEPHI_HASHTAG_TO_USER_FILE = properties.getProperty("GEPHI_HASHTAG_TO_USER_FILE");
             Configuration.MENTIONS_FILE = properties.getProperty("MENTIONS_FILE");
-            Configuration.MENTIONED_FILE= properties.getProperty("MENTIONED_FILE");
-            Configuration.MENTIONS_GEPHI_FILE= properties.getProperty("GEPHI_MENTIONS_FILE");
+            Configuration.MENTIONED_FILE = properties.getProperty("MENTIONED_FILE");
+            Configuration.MENTIONS_GEPHI_FILE = properties.getProperty("GEPHI_MENTIONS_FILE");
             Configuration.MENTIONED_GEPHI_FILE = properties.getProperty("GEPHI_MENTIONED_FILE");
 
         } catch (IOException e) {

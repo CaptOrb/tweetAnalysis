@@ -184,10 +184,8 @@ public class Sprint8 {
             graphAnalyser.assignUserStances(mentionGraph.getMentionedGraph());
         }
 
-        graphReadWriteService.writeGephiFile(mentionGraph.getMentionGraph(), new File(Configuration.getGRAPH_DIRECTORY(), "testMentionGraph.gdf"));
-        graphReadWriteService.writeGephiFile(mentionGraph.getMentionedGraph(), new File(Configuration.getGRAPH_DIRECTORY(), "testMentionedGraph.gdf"));
+        graphReadWriteService.writeGephiFile(mentionGraph.getMentionGraph(), new File(Configuration.getGRAPH_DIRECTORY(), Configuration.getMentionsGephiFile()));
+        graphReadWriteService.writeGephiFile(mentionGraph.getMentionedGraph(), new File(Configuration.getGRAPH_DIRECTORY(), Configuration.getMentionedGephiFile()));
         graphReadWriteService.writeGephiHashtagFile(hashtagToUsers, new File(Configuration.getGRAPH_DIRECTORY(), Configuration.getGEPHI_HASHTAG_TO_USER_FILE()));
-
-
     }
 }
