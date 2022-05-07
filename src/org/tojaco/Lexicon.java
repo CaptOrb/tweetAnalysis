@@ -19,7 +19,7 @@ public class Lexicon<E> {
         return graphElementsLexicon;
     }
 
-    Lexicon() throws IOException {
+    public Lexicon() throws IOException {
         initOppositesHashmap();
         initStanceGivenConditionList();
 
