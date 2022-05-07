@@ -44,7 +44,12 @@ public class Configuration {
 
     private static String MENTIONS_FILE;
 
+    private static String MENTIONS_GEPHI_FILE;
+
     private static String MENTIONED_FILE;
+
+    private static String MENTIONED_GEPHI_FILE;
+
 
     public static String getGEPHI_FILE_1() { return GEPHI_FILE_1; }
 
@@ -116,6 +121,14 @@ public class Configuration {
 
     public static String getMentionedFile() {
         return MENTIONED_FILE;
+    }
+
+    public static String getMentionedGephiFile() {
+        return MENTIONED_GEPHI_FILE;
+    }
+
+    public static String getMentionsGephiFile() {
+        return MENTIONS_GEPHI_FILE;
     }
 
     public static String getACCESS_TOKEN() {
@@ -195,6 +208,8 @@ public class Configuration {
             Configuration.GEPHI_HASHTAG_TO_USER_FILE = properties.getProperty("GEPHI_HASHTAG_TO_USER_FILE");
             Configuration.MENTIONS_FILE = properties.getProperty("MENTIONS_FILE");
             Configuration.MENTIONED_FILE= properties.getProperty("MENTIONED_FILE");
+            Configuration.MENTIONS_GEPHI_FILE= properties.getProperty("GEPHI_MENTIONS_FILE");
+            Configuration.MENTIONED_GEPHI_FILE = properties.getProperty("GEPHI_MENTIONED_FILE");
 
         } catch (IOException e) {
             throw new RuntimeException("Could not read properties from file:", e);
