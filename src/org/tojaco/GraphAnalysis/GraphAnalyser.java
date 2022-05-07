@@ -67,4 +67,21 @@ public class GraphAnalyser<T, E> {
         }
         return (negativeStances / hasStance) * 100;
     }
+
+    public void outputGraphAnalysis(DirectedGraph<TwitterUser,TwitterUser> graph, GraphElements graphElements
+            , boolean hashtagsUsed, boolean hashtagsOnly) {
+
+        if (hashtagsUsed) {
+            System.out.println("AFTER USING HASHTAGS:");
+        }
+
+        if (hashtagsOnly) {
+            System.out.println("\n4a, Set stances for users using hashtags only:");
+        }
+        System.out.println("Coverage in graph: " + calculateCoverage(graph, graphElements) + "%");
+        System.out.println("Percentage of users without a stance: " + (calculateCoverage(graph, graphElements) - 100) * -1 + "%");
+        System.out.println("Percentage positive stances: " + calculatePercentagePositiveStances(graph, graphElements) + "%");
+        System.out.println("Percentage negative stance: " + calculatePercentageNegativeStances(graph, graphElements) + "%");
+
+    }
 }

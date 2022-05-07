@@ -134,7 +134,7 @@ public class MainUtil {
                     graphAnalyser.assignUserStances(retweetedGraph);
                 }
 
-                outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, false, false);
+                graphAnalyser.outputGraphAnalysis(rtGraph, graphElements, false, false);
                 StanceAnalysis users100 = new StanceAnalysis();
                 users100.checkStance100Users(retweetsHashMap);
 
@@ -187,7 +187,7 @@ public class MainUtil {
                 StanceAnalysis analysis = new StanceAnalysis();
                 analysis.checkStance100Users(retweetHashMap);
 
-                outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, false, false);
+                graphAnalyser.outputGraphAnalysis(rtGraph, graphElements, false, false);
 
                 System.out.println("Now calculating hashtag graphs...");
                 FindGraphElements<TwitterUser, Hashtag> fge1 = new FindGraphElements<>(new CreateUserVertex(), new CreateHashtagVertex());
@@ -222,18 +222,16 @@ public class MainUtil {
                     graphAnalyser.assignUserStances(retweetedGraph);
 
                 }
-                outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, true, false);
+                graphAnalyser.outputGraphAnalysis(rtGraph, graphElements, true, false);
                 StanceAnalysis analyse = new StanceAnalysis();
                 // users100New.checkStance(retweetHashMap);
                 analyse.assignStancesByHashtags(hashtagToUsers, graphElements, rtGraph);
 
-                outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, false, true);
+                graphAnalyser.outputGraphAnalysis(rtGraph, graphElements, false, true);
 
                 analyse.find100Hashtags(hashtagToUsers);
 
                 analyse.find100HashtagsS5(rtGraph, hashtagToUsers);
-
-
                 break;
 
             case 6:
@@ -370,7 +368,6 @@ public class MainUtil {
                 for (int i = 0; i < 5; i++) { //by upping this to 10 there's no change in coverage
                     graphAnalyser.assignUserStances(rtGraph);
                     graphAnalyser.assignUserStances(retweetedGraph);
-
                 }
 
                 //outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, true);
@@ -499,13 +496,12 @@ public class MainUtil {
                                 Configuration.getHASHTAGS_TO_USERS()), true);
 
                 //3a and 3b
-                for (int i = 0; i < 3; i++) { //theres no change in coverage from 3 to 4, but theres a change in coverage from 2 to 3
+                for (int i = 0; i < 3; i++) {
                     graphAnalyser.assignUserStances(usertoHashTag);
                     graphAnalyser.assignUserStances(hashtagToUsers);
 
                 }
-                //by running this again we get more coverage
-                for (int i = 0; i < 5; i++) { //by upping this to 10 there's no change in coverage
+                for (int i = 0; i < 5; i++) {
                     graphAnalyser.assignUserStances(rtGraph);
                     graphAnalyser.assignUserStances(retweetedGraph);
 
@@ -580,27 +576,7 @@ public class MainUtil {
                 graphReadWriteService.writeGephiHashtagFile(hashtagToUsers, new File(Configuration.getGRAPH_DIRECTORY(), Configuration.getGEPHI_HASHTAG_TO_USER_FILE()));
                 break;
         }
-
-
     }
-
-    private static void outputGraphAnalysis(GraphAnalyser graphAnalyser, DirectedGraph graph, GraphElements graphElements
-            , boolean hashtagsUsed, boolean hashtagsOnly) {
-
-        if (hashtagsUsed) {
-            System.out.println("AFTER USING HASHTAGS:");
-        }
-
-        if (hashtagsOnly) {
-            System.out.println("\n4a, Set stances for users using hashtags only:");
-        }
-        System.out.println("Coverage in graph: " + graphAnalyser.calculateCoverage(graph, graphElements) + "%");
-        System.out.println("Percentage of users without a stance: " + (graphAnalyser.calculateCoverage(graph, graphElements) - 100) * -1 + "%");
-        System.out.println("Percentage positive stances: " + graphAnalyser.calculatePercentagePositiveStances(graph, graphElements) + "%");
-        System.out.println("Percentage negative stance: " + graphAnalyser.calculatePercentageNegativeStances(graph, graphElements) + "%");
-
-    }
-
 
     public static void showSprint3Options(Graph<TwitterUser, TwitterUser> rtGraph, GraphElements graphElements) {
         int option = 0;

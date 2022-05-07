@@ -16,9 +16,7 @@ public class MentionGraph extends DirectedGraph<TwitterUser,TwitterUser> {
     private final DirectedGraph<TwitterUser,TwitterUser> mentionGraph;
     private final DirectedGraph<TwitterUser,TwitterUser> mentionedGraph;
     private final FindGraphElements<TwitterUser, TwitterUser> mentionFGE;
-
     private final GraphElements mentionGE = new GraphElements();
-
 
     public MentionGraph(GraphReadWriteService grfs) throws IOException {
         mentionFGE = new FindGraphElements<>(new CreateUserVertex(), new CreateUserVertex());
@@ -50,5 +48,7 @@ public class MentionGraph extends DirectedGraph<TwitterUser,TwitterUser> {
         return mentionGE;
     }
 
-
+    public FindGraphElements<TwitterUser, TwitterUser> getMentionFGE() {
+        return mentionFGE;
+    }
 }
