@@ -145,7 +145,8 @@ public class Sprint8 {
         System.out.println("Now generating .gdf files");
 
         graphReadWriteService.writeGephiFile(rtGraph, new File(Configuration.getGRAPH_DIRECTORY(),Configuration.getGephiRetweetFile()));
-        graphReadWriteService.writeGephiFile(retweetedGraph,new File(Configuration.getGRAPH_DIRECTORY(),Configuration.getGephiRetweetedFile()));        graphReadWriteService.writeGephiHashtagFile(hashtagToUsers, new File(Configuration.getGRAPH_DIRECTORY(), Configuration.getGEPHI_HASHTAG_TO_USER_FILE()));
+        graphReadWriteService.writeGephiFile(retweetedGraph,new File(Configuration.getGRAPH_DIRECTORY(),Configuration.getGephiRetweetedFile()));
+        graphReadWriteService.writeGephiHashtagFile(hashtagToUsers, new File(Configuration.getGRAPH_DIRECTORY(), Configuration.getGEPHI_HASHTAG_TO_USER_FILE()));
         graphReadWriteService.writeGephiUserHashtagFile(userToHashTag, new File(Configuration.getGRAPH_DIRECTORY(), Configuration.getGEPHI_USER_TO_HASHTAG_FILE()));
         assignStances.determineProAntiVaxEvangelists(mentionGraph.getMentionGE(), mentionGraph, StanceFile);
 
