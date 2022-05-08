@@ -71,6 +71,10 @@ public class Sprint5 {
 
         graphAnalyser.outputGraphAnalysis(rtGraph, graphElements, false, false);
 
+        StanceAnalysis analyse = new StanceAnalysis();
+        //by creating this here, for 4c we just get users who have stances assigned by retweets only
+        Map<Vertex<TwitterUser>, Integer> retweetsHashMap = analyse.findTotalRetweets(retweetedGraph);
+
         System.out.println("Now calculating hashtag graphs...");
         FindGraphElements<TwitterUser, Hashtag> userHashTagFGE = new FindGraphElements<>(new CreateUserVertex(), new CreateHashtagVertex());
         DirectedGraph<TwitterUser, Hashtag> userToHashTag;
@@ -96,7 +100,7 @@ public class Sprint5 {
         }
         graphAnalyser.outputGraphAnalysis(rtGraph, graphElements, false, true);
 
-        StanceAnalysis analyse = new StanceAnalysis<>();
+        //StanceAnalysis analyse = new StanceAnalysis<>();
         //by creating this here, for 4c we just get users who have stances assigned by hashtag only
         Map<TwitterUser, Integer> hashtagUsers = analyse.findTotalHashtags(userToHashTag);
 
@@ -116,7 +120,6 @@ public class Sprint5 {
         //4c
         System.out.println("\nFor users who retweet 10 or more different users:");
 
-        Map<Vertex<TwitterUser>, Integer> retweetsHashMap = analyse.findTotalRetweets(retweetedGraph);
         Map<Vertex<TwitterUser>, Integer> topRetweeters = analyse.findUsers10orMoreRetweets(retweetsHashMap);
 
         graphAnalyser.check4c(topRetweeters, true);

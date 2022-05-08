@@ -67,7 +67,7 @@ Percentage negative stance using ONLY hashtags: 62.04249%
 
 4b) The two perspectives agree with each other for roughly 98% of the stances, and disagree with each other for roughly 2% of the stances based on the results from 4a.
 
-4c) 16% of users who use 10 or more different hashtags (based solely off of hashtag based stance calculation) are pro vax, whilst 35% of users who retweet 10 or more different users are pro vax. 
+4c) Roughly 16% of users who use 10 or more different hashtags (based solely off of hashtag based stance calculation) are pro vax, whilst roughly 35% of users who retweet 10 or more different users are pro vax. The percentage of pro vax users for hashtags is quite low because there are only 20657 users who use 10 different hashtags or more. 
 
 # Answers to Sprint 6 questions
 

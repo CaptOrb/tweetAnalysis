@@ -102,6 +102,7 @@ public class GraphAnalyser<T, E> {
             System.out.println(pro/users.size()*100 + "% of users who retweet 10 users or more, are pro vax");
             System.out.println(anti/users.size()*100 + "% of users who retweet 10 users or more, are anti vax");
         } else{
+            System.out.println("*Note* there are only " + users.size() + " who use 10 DIFFERENT hashtags, hence why the percentage of pro and anti vax users is not representative of the entire dataset");
             System.out.println(pro/users.size()*100 + "% of users who use 10 hashtags or more, are pro vax");
             System.out.println(anti/users.size()*100 + "% of users who use 10 hashtags or more, are anti vax");
         }
