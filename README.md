@@ -61,7 +61,7 @@ Percentage positive stances: 41.108273%
 Percentage negative stance: 58.89173%
 
 Calculating stances using hashtags only
-ercentage positive stances using ONLY hashtags: 37.95751%
+Percentage positive stances using ONLY hashtags: 37.95751%
 Percentage negative stance using ONLY hashtags: 62.04249%
 
 
@@ -82,21 +82,21 @@ Percentage negative stance using ONLY hashtags: 62.04249%
 - Our code calculates and outputs the significant conditional probabilities that take the form P( pro/anti | ref:x ), and we plan to expand it to also calculate for P( ref:x | pro/anti )
 - some significant probabilities we found were:
 
-| Property      |    Probability     |   Z-Score |
-| ----------- |:------------------:|----------:|
-| pro : rightwing     |      0.419196      |  3.503769 |
-| anti : -ref:tony_holohan       |      1.000000      |  6.049106 |
-|  anti : -ref:media    |     0.867737       |  3.598639 |
-| anti : ref:fauci     | 0.985401  |  6.513596 |
-| anti : -ref:pfizer    |  0.976415  |  5.799930 |
-| anti : -ref:corona     |  0.832000  |  2.349956 |
+| Property                 | Probability |  Z-Score |
+|--------------------------|:-----------:|---------:|
+| pro : rightwing          |  0.419196   | 3.503769 |
+| anti : -ref:tony_holohan |  1.000000   | 6.049106 |
+| anti : -ref:media        |  0.867737   | 3.598639 |
+| anti : ref:fauci         |  0.985401   | 6.513596 |
+| anti : -ref:pfizer       |  0.976415   | 5.799930 |
+| anti : -ref:corona       |  0.832000   | 2.349956 |
 
-#Sprint 8
+# Sprint 8
 
--The tasks were divided evenly between the team members. 
--Our code creates 6 .gdf files based on the retweet and retweeted graphs, the mentions and mentions graphs, and the hashtag to user and user to hashtag graphs using the Vax Dataset provided by Tony.
--See screenshots in the gdf Screenshots folder
+- The tasks were divided evenly between the team members. 
+- Our code creates 6 .gdf files based on the retweet and retweeted graphs, the mentions and mentions graphs, and the hashtag to user and user to hashtag graphs using the Vax Dataset provided by Tony.
+- See screenshots in the gdf Screenshots folder
 
 
-#Project
+# Project
 The tasks were divided evenly between the team members for the entire project.
