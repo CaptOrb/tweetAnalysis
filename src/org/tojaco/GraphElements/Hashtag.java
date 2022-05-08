@@ -11,8 +11,8 @@ public class Hashtag implements Stanceable {
     private int stance;
     private boolean hasStance;
     private String acceptance;
-    private List<String> refs = new ArrayList<>();
-    private List<String> qualities = new ArrayList<>();
+    private final List<String> refs = new ArrayList<>();
+    private final List<String> qualities = new ArrayList<>();
 
     public List<String> getQualities() {
         return qualities;

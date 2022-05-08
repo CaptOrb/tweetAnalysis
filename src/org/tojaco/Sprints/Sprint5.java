@@ -71,7 +71,7 @@ public class Sprint5 {
 
         graphAnalyser.outputGraphAnalysis(rtGraph, graphElements, false, false);
 
-        StanceAnalysis analyse = new StanceAnalysis();
+        StanceAnalysis analyse = new StanceAnalysis<>();
         //by creating this here, for 4c we just get users who have stances assigned by retweets only
         Map<Vertex<TwitterUser>, Integer> retweetsHashMap = analyse.findTotalRetweets(retweetedGraph);
 

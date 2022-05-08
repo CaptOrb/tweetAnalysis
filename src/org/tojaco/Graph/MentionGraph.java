@@ -15,11 +15,10 @@ public class MentionGraph extends DirectedGraph<TwitterUser,TwitterUser> {
     private static final ArrayList<String> mentions = new ArrayList<>();
     private final DirectedGraph<TwitterUser,TwitterUser> mentionGraph;
     private final DirectedGraph<TwitterUser,TwitterUser> mentionedGraph;
-    private final FindGraphElements<TwitterUser, TwitterUser> mentionFGE;
     private final GraphElements mentionGE = new GraphElements();
 
     public MentionGraph(GraphReadWriteService grfs) throws IOException {
-        mentionFGE = new FindGraphElements<>(new CreateUserVertex(), new CreateUserVertex());
+        FindGraphElements<TwitterUser, TwitterUser> mentionFGE = new FindGraphElements<>(new CreateUserVertex(), new CreateUserVertex());
 
         mentions.addAll(grfs.getMentions());
 
@@ -46,9 +45,5 @@ public class MentionGraph extends DirectedGraph<TwitterUser,TwitterUser> {
 
     public GraphElements getMentionGE() {
         return mentionGE;
-    }
-
-    public FindGraphElements<TwitterUser, TwitterUser> getMentionFGE() {
-        return mentionFGE;
     }
 }

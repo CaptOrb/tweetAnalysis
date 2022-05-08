@@ -36,8 +36,6 @@ public class Sprint8 {
         GraphReadWriteService rfs = new GraphReadWriteService();
         Lexicon<String> lexicon = new Lexicon<>();
         HashtagSummarizer hashtagSummarizer = new HashtagSummarizer<>();
-        // graph for using implemented methods on
-        // see org.tojaco.Graph.DirectedGraph.java for description of public methods
 
         FindGraphElements<TwitterUser, TwitterUser> findGraphElements = new FindGraphElements<>(new CreateUserVertex(), new CreateUserVertex());
 
@@ -162,11 +160,10 @@ public class Sprint8 {
         statCalculator.automateConditionalProbCalculation(lexicon);
         GraphReadWriteService graphReadWriteService = new GraphReadWriteService();
         graphReadWriteService.writeGephiFile(rtGraph, new File(Configuration.getGRAPH_DIRECTORY(), Configuration.getGEPHI_FILE_1()));
-        graphReadWriteService.writeGephiFile(retweetedGraph, new File(Configuration.getGRAPH_DIRECTORY(), Configuration.getRTWEETEDGRAPH_OUTPUT_FILE()));
+        graphReadWriteService.writeGephiFile(retweetedGraph, new File(Configuration.getGRAPH_DIRECTORY(), Configuration.getGephiRetweetedFile()));
 
         assignStances.determineProAntiVaxEvangelists(mentionGraph.getMentionGE(), mentionGraph, StanceFile);
 
-        // is there a better way than this?
         for (int i = 0; i < 10; i++) {
             graphAnalyser.assignUserStances(mentionGraph.getMentionGraph());
             graphAnalyser.assignUserStances(mentionGraph.getMentionedGraph());

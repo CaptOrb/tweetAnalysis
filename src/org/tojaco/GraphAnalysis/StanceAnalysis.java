@@ -1,12 +1,12 @@
 package org.tojaco.GraphAnalysis;
 
-import org.tojaco.Graph.*;
-import org.tojaco.GraphElements.Stanceable;
+import org.tojaco.Graph.DirectedGraph;
+import org.tojaco.Graph.Vertex;
 import org.tojaco.GraphElements.GraphElements;
 import org.tojaco.GraphElements.Hashtag;
+import org.tojaco.GraphElements.Stanceable;
 import org.tojaco.GraphElements.TwitterUser;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 

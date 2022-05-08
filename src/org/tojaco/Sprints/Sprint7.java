@@ -68,8 +68,6 @@ public class Sprint7 {
             graphAnalyser.assignUserStances(retweetedGraph);
         }
 
-        StanceAnalysis analysis = new StanceAnalysis<>();
-
         System.out.println("Now calculating hashtag graphs...");
         FindGraphElements<TwitterUser, Hashtag> userHashTagFGE = new FindGraphElements<>(new CreateUserVertex(), new CreateHashtagVertex());
         DirectedGraph<TwitterUser, Hashtag> userToHashTag = userHashTagFGE.createGraph(graphElements, getHashtags, 0, 1);
