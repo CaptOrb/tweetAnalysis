@@ -222,7 +222,7 @@ public class Configuration {
             Configuration.MENTIONED_FILE = properties.getProperty("MENTIONED_FILE");
             Configuration.MENTIONS_GEPHI_FILE = properties.getProperty("GEPHI_MENTIONS_FILE");
             Configuration.MENTIONED_GEPHI_FILE = properties.getProperty("GEPHI_MENTIONED_FILE");
-            Configuration.MENTIONED_GEPHI_FILE = properties.getProperty("GEPHI_RETWEETED_FILE");
+            Configuration.GEPHI_RETWEETED_FILE = properties.getProperty("GEPHI_RETWEETED_FILE");
 
 
         } catch (IOException e) {

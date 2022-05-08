@@ -117,47 +117,6 @@ public class GraphReadWriteService extends FileService {
         return lineContents[0].contains("RT") && lineContents[1].startsWith("@");
 
     }
-
-/*    public <T, E> DirectedGraph<T, E> readGraphFile(File file, String delimiter, int mode, int mode2, boolean lexicon) throws IOException {
-        DirectedGraph<T, E> graph = new DirectedGraph<>();
-        GraphElements ge = new GraphElements();
-
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] lineContents = line.split(delimiter);
-
-                Vertex<T> sourceVertex = returnCorrectTypeVertex(mode, lineContents[0], ge);
-
-                for (int i = 1; i < lineContents.length; i++) {
-
-                    lineContents[i] = lineContents[i].replaceAll("\\[", "").replaceAll("]", "");
-                    int arcWeight = 0;
-                    if(!lexicon) {
-                        String[] splitBracket = lineContents[i].split("\\(");
-
-                        splitBracket[1] = splitBracket[1].replaceAll("\\)", "");
-                        splitBracket[1] = splitBracket[1].replaceAll(",", "");
-
-                         arcWeight = Integer.parseInt(splitBracket[1]);
-                    }
-
-                    lineContents[i] = lineContents[i].replaceAll(",", "");
-                    lineContents[i] = lineContents[i].replaceAll("\\(.*\\)", "");
-
-                    Vertex<E> destVertex = returnCorrectTypeVertex(mode2, lineContents[i], ge);
-                    
-                    Arc<E> myArc = new Arc<>(destVertex, arcWeight);
-                    graph.addArc(sourceVertex, myArc);
-                }
-            }
-        } catch (IOException | NullPointerException fnfe) {
-            fnfe.printStackTrace();
-        }
-
-        return graph;
-    }*/
-
     public void writeGephiFile(DirectedGraph<TwitterUser, TwitterUser> graph, File file) throws IOException {
         createFile(file.getParent(), file.getName());
         StringBuilder sb = new StringBuilder();
@@ -403,25 +362,4 @@ public class GraphReadWriteService extends FileService {
         }
         return sb.toString();
     }
-
-/*
-    private <T> Vertex<T> returnCorrectTypeVertex(int mode, String vertex, GraphElements ge){
-        Vertex<T> sourceVertex;
-        switch (mode){
-            case 0:
-                sourceVertex = ge.getVertex(vertex, new CreateUserVertex());
-                break;
-            case 1:
-                sourceVertex = ge.getVertex(vertex, new CreateHashtagVertex());
-                break;
-            case 2:
-                sourceVertex = ge.getVertex(vertex, new CreateStringVertex());
-                break;
-
-            default:
-                throw new IllegalStateException("INVALID MODE CHOSEN FOR VERTEX TYPE.");
-        }
-        return sourceVertex;
-
-    }*/
 }
