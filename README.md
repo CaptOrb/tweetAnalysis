@@ -96,3 +96,7 @@ Percentage negative stance using ONLY hashtags: 62.04249%
 -The tasks were divided evenly between the team members. 
 -Our code creates 6 .gdf files based on the retweet and retweeted graphs, the mentions and mentions graphs, and the hashtag to user and user to hashtag graphs using the Vax Dataset provided by Tony.
 -See screenshots in the gdf Screenshots folder
+
+
+#Project
+The tasks were divided evenly between the team members for the entire project.
