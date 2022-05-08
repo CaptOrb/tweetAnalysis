@@ -157,7 +157,7 @@ public class Sprint8 {
 
         ////////////////////FOR MENTION GRAPH/////////////////////////////////////////////////////////////////
 
-        System.out.println("Now calculating hashtag graphs...");
+        System.out.println("Now calculating hashtag graphs for mentions...");
         userHashTagFGE = new FindGraphElements<>(new CreateUserVertex(), new CreateHashtagVertex());
         userToHashTag = userHashTagFGE.createGraph(mentionGraph.getMentionGE(), getHashtags, 0, 1);
 
@@ -202,7 +202,7 @@ public class Sprint8 {
 
         graphReadWriteService = new GraphReadWriteService();
 
-        System.out.println("Now generating .gdf files");
+        System.out.println("Now generating .gdf files for mentions");
         graphReadWriteService.writeGephiFile(mentionGraph.getMentionGraph(), new File(Configuration.getGRAPH_DIRECTORY(), Configuration.getMentionsGephiFile()));
         graphReadWriteService.writeGephiFile(mentionGraph.getMentionedGraph(), new File(Configuration.getGRAPH_DIRECTORY(), Configuration.getMentionedGephiFile()));
 
