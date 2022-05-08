@@ -91,3 +91,12 @@ Percentage negative stance using ONLY hashtags: 62.04249%
 | anti : -ref:pfizer    |  0.976415  |  5.799930 |
 | anti : -ref:corona     |  0.832000  |  2.349956 |
 
+#Sprint 8
+
+-The tasks were divided evenly between the team members. 
+-Our code creates 6 .gdf files based on the retweet and retweeted graphs, the mentions and mentions graphs, and the hashtag to user and user to hashtag graphs using the Vax Dataset provided by Tony.
+-See screenshots in the gdf Screenshots folder
+
+
+#Project
+The tasks were divided evenly between the team members for the entire project.

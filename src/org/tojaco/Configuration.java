@@ -39,7 +39,8 @@ public class Configuration {
     private static String BATCH_SIZE;
     private static String SLEEP_TIME;
     private static String[] HASHTAGS;
-    private static String GEPHI_FILE_1;
+
+    private static String GEPHI_RETWEET_FILE;
 
     private static String GEPHI_RETWEETED_FILE;
 
@@ -54,13 +55,6 @@ public class Configuration {
     private static String MENTIONED_FILE;
 
     private static String MENTIONED_GEPHI_FILE;
-
-
-    public static String getGEPHI_FILE_1() { return GEPHI_FILE_1; }
-
-    public static String getGEPHI_HASHTAG_TO_USER_FILE() { return GEPHI_HASHTAG_TO_USER_FILE; }
-
-    public static String getGEPHI_USER_TO_HASHTAG_FILE() { return GEPHI_USER_TO_HASHTAG_FILE; }
 
     public static String getAPIKey() {
         return API_KEY;
@@ -138,9 +132,15 @@ public class Configuration {
         return MENTIONS_GEPHI_FILE;
     }
 
+    public static String getGEPHI_HASHTAG_TO_USER_FILE() { return GEPHI_HASHTAG_TO_USER_FILE; }
+
+    public static String getGEPHI_USER_TO_HASHTAG_FILE() { return GEPHI_USER_TO_HASHTAG_FILE; }
+
     public static String getGephiRetweetedFile() {
         return GEPHI_RETWEETED_FILE;
     }
+
+    public static String getGephiRetweetFile(){return GEPHI_RETWEET_FILE;}
 
     public static String getACCESS_TOKEN() {
         return ACCESS_TOKEN;
@@ -215,7 +215,8 @@ public class Configuration {
             Configuration.LANGUAGE = properties.getProperty("LANGUAGE");
             Configuration.BATCH_SIZE = properties.getProperty("BATCH_SIZE");
             Configuration.HASHTAGS = splitHashTags(properties.getProperty("HASHTAGS"));
-            Configuration.GEPHI_FILE_1 = properties.getProperty("GEPHI_FILE_1");
+            Configuration.GEPHI_RETWEET_FILE = properties.getProperty("GEPHI_RETWEET_FILE");
+            Configuration.GEPHI_RETWEETED_FILE=properties.getProperty("GEPHI_RETWEETED_FILE");
             Configuration.GEPHI_HASHTAG_TO_USER_FILE = properties.getProperty("GEPHI_HASHTAG_TO_USER_FILE");
             Configuration.GEPHI_USER_TO_HASHTAG_FILE=properties.getProperty("GEPHI_USER_TO_HASHTAG_FILE");
             Configuration.MENTIONS_FILE = properties.getProperty("MENTIONS_FILE");
