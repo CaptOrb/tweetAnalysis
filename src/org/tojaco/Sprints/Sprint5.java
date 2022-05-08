@@ -11,10 +11,12 @@ import org.tojaco.GraphAnalysis.StanceAnalysis;
 import org.tojaco.GraphElements.GraphElements;
 import org.tojaco.GraphElements.Hashtag;
 import org.tojaco.GraphElements.TwitterUser;
+import twitter4j.Twitter;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Sprint5 {
@@ -94,19 +96,37 @@ public class Sprint5 {
         }
         graphAnalyser.outputGraphAnalysis(rtGraph, graphElements, false, true);
 
+        StanceAnalysis analyse = new StanceAnalysis<>();
+        //by creating this here, for 4c we just get users who have stances assigned by hashtag only
+        Map<TwitterUser, Integer> hashtagUsers = analyse.findTotalHashtags(userToHashTag);
+
         //by running this again we get more coverage
         for (int i = 0; i < 5; i++) { //by upping this to 10 there's no change in coverage
             graphAnalyser.assignUserStances(rtGraph);
             graphAnalyser.assignUserStances(retweetedGraph);
 
         }
-        StanceAnalysis analyse = new StanceAnalysis<>();
+
         analyse.assignStancesByHashtags(hashtagToUsers, graphElements, rtGraph);
 
         graphAnalyser.outputGraphAnalysis(rtGraph, graphElements, true, false);
 
-        analyse.find100Hashtags(hashtagToUsers);
+        //analyse.find100Hashtags(hashtagToUsers); //call this method when checking if 100 hashtags have correct stance
 
-        analyse.find100HashtagsS5(rtGraph, hashtagToUsers);
+        //4c
+        System.out.println("\nFor users who retweet 10 or more different users:");
+
+        Map<Vertex<TwitterUser>, Integer> retweetsHashMap = analyse.findTotalRetweets(retweetedGraph);
+        Map<Vertex<TwitterUser>, Integer> topRetweeters = analyse.findUsers10orMoreRetweets(retweetsHashMap);
+
+        graphAnalyser.check4c(topRetweeters, true);
+
+        System.out.println("\nFor the users who use 10 or more different hashtags:");
+
+        Map<Vertex<TwitterUser>, Integer> topHashtagUsers = analyse.findUsers10orMoreHashtags(hashtagUsers);
+        graphAnalyser.check4c(topHashtagUsers, false);
+
+
     }
+
 }

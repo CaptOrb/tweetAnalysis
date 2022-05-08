@@ -6,6 +6,8 @@ import org.tojaco.GraphElements.GraphElements;
 import org.tojaco.GraphElements.Stanceable;
 import org.tojaco.GraphElements.TwitterUser;
 
+import java.util.Map;
+
 public class GraphAnalyser<T, E> {
     public void assignUserStances(DirectedGraph<Stanceable, Stanceable> Graph){
 
@@ -72,7 +74,7 @@ public class GraphAnalyser<T, E> {
             , boolean hashtagsUsed, boolean hashtagsOnly) {
 
         if (hashtagsUsed) {
-            System.out.println("AFTER USING HASHTAGS:");
+            System.out.println("\nAfter using both hashtags and evangelists to percolate stances:");
         }
 
         if (hashtagsOnly) {
@@ -83,5 +85,25 @@ public class GraphAnalyser<T, E> {
         System.out.println("Percentage positive stances: " + calculatePercentagePositiveStances(graph, graphElements) + "%");
         System.out.println("Percentage negative stance: " + calculatePercentageNegativeStances(graph, graphElements) + "%");
 
+    }
+
+    public void check4c(Map<TwitterUser, Integer> users, boolean retweet){
+        float pro=0;
+        float anti=0;
+        for(Map.Entry<TwitterUser, Integer> user :users.entrySet()){
+            if(user.getValue()>0){
+                pro++;
+            }
+            else if(user.getValue()<0){
+                anti++;
+            }
+        }
+        if(retweet){
+            System.out.println(pro/users.size()*100 + "% of users who retweet 10 users or more, are pro vax");
+            System.out.println(anti/users.size()*100 + "% of users who retweet 10 users or more, are anti vax");
+        } else{
+            System.out.println(pro/users.size()*100 + "% of users who use 10 hashtags or more, are pro vax");
+            System.out.println(anti/users.size()*100 + "% of users who use 10 hashtags or more, are anti vax");
+        }
     }
 }
