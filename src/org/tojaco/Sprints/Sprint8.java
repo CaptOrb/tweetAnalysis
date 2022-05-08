@@ -169,8 +169,11 @@ public class Sprint8 {
             graphAnalyser.assignUserStances(mentionGraph.getMentionedGraph());
         }
 
+        System.out.println("Now generating .gdf files");
         graphReadWriteService.writeGephiFile(mentionGraph.getMentionGraph(), new File(Configuration.getGRAPH_DIRECTORY(), Configuration.getMentionsGephiFile()));
         graphReadWriteService.writeGephiFile(mentionGraph.getMentionedGraph(), new File(Configuration.getGRAPH_DIRECTORY(), Configuration.getMentionedGephiFile()));
         graphReadWriteService.writeGephiHashtagFile(hashtagToUsers, new File(Configuration.getGRAPH_DIRECTORY(), Configuration.getGEPHI_HASHTAG_TO_USER_FILE()));
+        graphReadWriteService.writeGephiUserHashtagFile(userToHashTag, new File(Configuration.getGRAPH_DIRECTORY(),Configuration.getGEPHI_USER_TO_HASHTAG_FILE()));
+        System.out.println(".gdf files can be found in Graph directory!");
     }
 }

@@ -45,6 +45,8 @@ public class Configuration {
 
     private static String GEPHI_HASHTAG_TO_USER_FILE;
 
+    private static String GEPHI_USER_TO_HASHTAG_FILE;
+
     private static String MENTIONS_FILE;
 
     private static String MENTIONS_GEPHI_FILE;
@@ -57,6 +59,8 @@ public class Configuration {
     public static String getGEPHI_FILE_1() { return GEPHI_FILE_1; }
 
     public static String getGEPHI_HASHTAG_TO_USER_FILE() { return GEPHI_HASHTAG_TO_USER_FILE; }
+
+    public static String getGEPHI_USER_TO_HASHTAG_FILE() { return GEPHI_USER_TO_HASHTAG_FILE; }
 
     public static String getAPIKey() {
         return API_KEY;
@@ -213,6 +217,7 @@ public class Configuration {
             Configuration.HASHTAGS = splitHashTags(properties.getProperty("HASHTAGS"));
             Configuration.GEPHI_FILE_1 = properties.getProperty("GEPHI_FILE_1");
             Configuration.GEPHI_HASHTAG_TO_USER_FILE = properties.getProperty("GEPHI_HASHTAG_TO_USER_FILE");
+            Configuration.GEPHI_USER_TO_HASHTAG_FILE=properties.getProperty("GEPHI_USER_TO_HASHTAG_FILE");
             Configuration.MENTIONS_FILE = properties.getProperty("MENTIONS_FILE");
             Configuration.MENTIONED_FILE = properties.getProperty("MENTIONED_FILE");
             Configuration.MENTIONS_GEPHI_FILE = properties.getProperty("GEPHI_MENTIONS_FILE");

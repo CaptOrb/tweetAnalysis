@@ -210,17 +210,6 @@ public class GraphReadWriteService extends FileService {
                     sb.append(arc.getVertex().getLabel().getUserHandle());
                     sb.append(",");
 
-                    // commented this out because we already have a method for it.
-/*                    if(arc.getVertex().getLabel().hasStance()){
-                        if(arc.getVertex().getLabel().getStance()<0)
-                            sb.append("anti");
-                        else if(arc.getVertex().getLabel().getStance()>0){
-                            sb.append("pro");
-                        }
-                    }else {
-                        sb.append("neutral");
-                    }*/
-
                     sb.append(outputProOrAntiUser(arc.getVertex()));
 
                     String toAdd = outputUserDominantProperty(arc.getVertex(),"accepting","rejecting");
@@ -231,7 +220,7 @@ public class GraphReadWriteService extends FileService {
                 }
             }
 
-            sb.append("edgedef>node1 VARCHAR,node2 VARCHAR"); //,directed BOOLEAN");
+            sb.append("edgedef>node1 VARCHAR,node2 VARCHAR,weight DOUBLE"); //,directed BOOLEAN");
             pw.println(sb);
             sb.setLength(0);
             pw.flush();
@@ -240,6 +229,91 @@ public class GraphReadWriteService extends FileService {
                 for(Arc<TwitterUser> arc : graph.getGraph().get(vertex)){
                     sb.append(vertex.getLabel());
                     sb.append("," +arc.getVertex().getLabel().getUserHandle());
+                    sb.append("," + arc.getWeight());
+                    pw.println(sb);
+                    sb.setLength(0);
+                    pw.flush();
+                }
+            }
+        }
+
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void writeGephiUserHashtagFile(DirectedGraph<TwitterUser, Hashtag> graph, File file) throws IOException {
+        createFile(file.getParent(), file.getName());
+        StringBuilder sb = new StringBuilder();
+        try (PrintWriter pw = new PrintWriter(new FileWriter(file))) {
+            sb.append("nodedef>name VARCHAR,stance VARCHAR,acceptOrReject VARCHAR"/*,label VARCHAR,class VARCHAR, visible BOOLEAN," +
+                        "labelvisible BOOLEAN,width DOUBLE,height DOUBLE,x DOUBLE,y DOUBLE,color VARCHAR"*/);
+            pw.println(sb);
+            sb.setLength(0);
+            pw.flush();
+
+            for(Vertex<TwitterUser> vertex: graph.getGraph().keySet()){
+                    sb.append(vertex.getLabel().getUserHandle());
+                    sb.append(",");
+
+                    sb.append(outputProOrAntiUser(vertex));
+
+                    String toAdd = outputUserDominantProperty(vertex,"accepting","rejecting");
+                    sb.append(toAdd);
+                    pw.println(sb);
+                    sb.setLength(0);
+                    pw.flush();
+            }
+
+
+
+            for(Vertex<TwitterUser> vertex: graph.getGraph().keySet()) {
+                for (Arc<Hashtag> arc : graph.getGraph().get(vertex)) {
+                    sb.append(arc.getVertex().getLabel() + ",");
+                    if (arc.getVertex().getLabel().hasStance()) {
+                        if (vertex.getLabel().getStance() < 0)
+                            sb.append("anti");
+                        else if (vertex.getLabel().getStance() > 0) {
+                            sb.append("pro");
+                        }
+                    } else {
+                        sb.append("neutral");
+                    }
+                    int acceptance = 0;
+                    int rejection = 0;
+                    for (int i = 0; i < arc.getVertex().getLabel().getQualities().size(); i++) {
+                        if (vertex.getLabel().getQualities().get(i).equals("accepting")) {
+                            acceptance++;
+                        } else if (arc.getVertex().getLabel().getQualities().get(i).equals("rejecting")) {
+                            rejection++;
+                        }
+                    }
+                    if (acceptance > rejection) {
+                        sb.append(",accepting");
+                    } else if (rejection >= acceptance && rejection != 0) {
+                        sb.append(",rejecting");
+                    } else if (acceptance == 0 && rejection == 0) {
+                        sb.append(",neither");
+                    }
+
+                    pw.println(sb);
+                    sb.setLength(0);
+                    pw.flush();
+                }
+            }
+
+
+
+            sb.append("edgedef>node1 VARCHAR,node2 VARCHAR,weight DOUBLE"); //,directed BOOLEAN");
+            pw.println(sb);
+            sb.setLength(0);
+            pw.flush();
+
+            for(Vertex<TwitterUser> vertex: graph.getGraph().keySet()){
+                for(Arc<Hashtag> arc : graph.getGraph().get(vertex)){
+                    sb.append(vertex.getLabel());
+                    sb.append("," +arc.getVertex().getLabel());
+                    sb.append("," + arc.getWeight());
                     pw.println(sb);
                     sb.setLength(0);
                     pw.flush();
