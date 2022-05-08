@@ -143,9 +143,3 @@ replay_pid*
 /config/META-INF
 
 VaxData1
-
-Graph
-/Graph/hashtagsToUsers.txt
-/Graph/retweetedgraph.txt
-/Graph/retweetgraph.txt
-/Graph/usersToHashtags.txt
