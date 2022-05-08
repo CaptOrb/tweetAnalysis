@@ -30,23 +30,16 @@ public class StanceAnalysis<T, E> {
 
     public void assignStancesByHashtags(DirectedGraph<Stanceable, Stanceable> hashtagsToUsers, GraphElements graphElements, DirectedGraph graph) {
         for (Vertex<Stanceable> vertex : hashtagsToUsers.getGraph().keySet()) {
-            if (vertex.getLabel().hasStance()) {
+            if (!(vertex.getLabel().toString().startsWith("#"))) { //reset user stances, keep hashtag stances the same
                 vertex.getLabel().setStance(0); //in Vertex.java, by setting stance to 0 we set hasStance to false
             }
-    /*        for (Arc<Stanceable> arc : hashtagsToUsers.getGraph().get(vertex)) {
-                if (arc.getVertex().getLabel().hasStance()) {
-                    arc.getVertex().getLabel().setStance(0); //in Vertex.java, by setting stance to 0 we set hasStance to false
 
-                }*/
-
-
-            //}
         }
         //now calculate stances for users just based solely on the hashtags they use
 
         GraphAnalyser graphAnalyser = new GraphAnalyser<>();
 
-        for (int i = 0; i < 5; i++) { //by upping this to 10 there's no change in coverage
+        for (int i = 0; i < 5; i++) {
             graphAnalyser.assignUserStances(hashtagsToUsers);
         }
     }
