@@ -20,6 +20,7 @@ USER_QUALITIES=userQualities.txt
 STANCE_FILE=stances.txt
 GEPHI_FILE_1=testGephi.gdf
 GEPHI_HASHTAG_TO_USER_FILE=hashtagsToUserGephi.gdf
+GEPHI_USER_TO_HASHTAG_FILE=userToHashtagGephi.gdf
 MENTIONS_FILE=mentions.txt
 MENTIONED_FILE=mentioned.txt
 GEPHI_MENTIONS_FILE=GEPHI_MENTIONS.gdf
