@@ -55,9 +55,10 @@ public class Sprint8 {
                 new File(Configuration.getGRAPH_DIRECTORY(),
                         Configuration.getRTGRAPH_OUTPUT_FILE()), true);
 
-        rfs.writeFileFromGraph(retweetedGraph,
-                new File(Configuration.getGRAPH_DIRECTORY(),
-                        Configuration.getRTWEETEDGRAPH_OUTPUT_FILE()), true);
+        // experimental - where should we get graph elements for each of these graphs?
+        //DirectedGraph<TwitterUser, TwitterUser> rtGraph = rfs.readGraphFile(new File(Configuration.getGRAPH_DIRECTORY(), Configuration.getRTGRAPH_OUTPUT_FILE()), " ", 0, 0, false);
+
+        //DirectedGraph<TwitterUser, TwitterUser> retweetedGraph = rfs.readGraphFile(new File(Configuration.getGRAPH_DIRECTORY(), Configuration.getRTWEETEDGRAPH_OUTPUT_FILE()), " ", 0, 0, false);
 
         System.out.println("Retweet graph / retweeted graph added successfully to Graph directory!");
 
@@ -89,11 +90,11 @@ public class Sprint8 {
 
         System.out.println("Now calculating hashtag graphs...");
         FindGraphElements<TwitterUser, Hashtag> userHashTagFGE = new FindGraphElements<>(new CreateUserVertex(), new CreateHashtagVertex());
-        DirectedGraph<TwitterUser, Hashtag> usertoHashTag = userHashTagFGE.createGraph(graphElements, getHashtags, 0, 1);
+        DirectedGraph<TwitterUser, Hashtag> userToHashTag = userHashTagFGE.createGraph(graphElements, getHashtags, 0, 1);
 
         //outputGraphAnalysis(graphAnalyser, rtGraph, graphElements, true, false);
 
-        rfs.writeFileFromGraph(usertoHashTag,
+        rfs.writeFileFromGraph(userToHashTag,
                 new File(Configuration.getGRAPH_DIRECTORY(),
                         Configuration.getUSERS_TO_HASHTAGS()), true);
 
@@ -108,7 +109,7 @@ public class Sprint8 {
 
         //3a and 3b
         for (int i = 0; i < 3; i++) { //theres no change in coverage from 3 to 4, but theres a change in coverage from 2 to 3
-            graphAnalyser.assignUserStances(usertoHashTag);
+            graphAnalyser.assignUserStances(userToHashTag);
             graphAnalyser.assignUserStances(hashtagToUsers);
 
         }
@@ -147,9 +148,9 @@ public class Sprint8 {
 
         ModelUser modelUser = new ModelUser();
         modelUser.addSummaryOfHashtag(sumHashTagGraph);
-        modelUser.addSummaryOfHashtagToUserQualities(usertoHashTag);
+        modelUser.addSummaryOfHashtagToUserQualities(userToHashTag);
 
-        DirectedGraph<TwitterUser,String> usersToQualities = modelUser.makeUserToQualityGraph(usertoHashTag, graphElements);
+        DirectedGraph<TwitterUser,String> usersToQualities = modelUser.makeUserToQualityGraph(userToHashTag, graphElements);
 
         rfs.writeFileFromGraph(usersToQualities, new File(Configuration.getGRAPH_DIRECTORY(),
                 Configuration.getUSER_QUALITIES()), true);
@@ -161,6 +162,7 @@ public class Sprint8 {
         statCalculator.automateConditionalProbCalculation(lexicon);
         GraphReadWriteService graphReadWriteService = new GraphReadWriteService();
         graphReadWriteService.writeGephiFile(rtGraph, new File(Configuration.getGRAPH_DIRECTORY(), Configuration.getGEPHI_FILE_1()));
+        graphReadWriteService.writeGephiFile(retweetedGraph, new File(Configuration.getGRAPH_DIRECTORY(), Configuration.getRTWEETEDGRAPH_OUTPUT_FILE()));
 
         assignStances.determineProAntiVaxEvangelists(mentionGraph.getMentionGE(), mentionGraph, StanceFile);
 

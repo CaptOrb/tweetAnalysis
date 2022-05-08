@@ -330,7 +330,8 @@ public class GraphReadWriteService extends FileService {
         return sb.toString();
     }
 
-/*    private <T> Vertex<T> returnCorrectTypeVertex(int mode, String vertex, GraphElements ge){
+/*
+    private <T> Vertex<T> returnCorrectTypeVertex(int mode, String vertex, GraphElements ge){
         Vertex<T> sourceVertex;
         switch (mode){
             case 0:

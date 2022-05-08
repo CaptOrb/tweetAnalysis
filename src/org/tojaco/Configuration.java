@@ -40,6 +40,9 @@ public class Configuration {
     private static String SLEEP_TIME;
     private static String[] HASHTAGS;
     private static String GEPHI_FILE_1;
+
+    private static String GEPHI_RETWEETED_FILE;
+
     private static String GEPHI_HASHTAG_TO_USER_FILE;
 
     private static String MENTIONS_FILE;
@@ -131,6 +134,10 @@ public class Configuration {
         return MENTIONS_GEPHI_FILE;
     }
 
+    public static String getGephiRetweetedFile() {
+        return GEPHI_RETWEETED_FILE;
+    }
+
     public static String getACCESS_TOKEN() {
         return ACCESS_TOKEN;
     }
@@ -210,6 +217,8 @@ public class Configuration {
             Configuration.MENTIONED_FILE = properties.getProperty("MENTIONED_FILE");
             Configuration.MENTIONS_GEPHI_FILE = properties.getProperty("GEPHI_MENTIONS_FILE");
             Configuration.MENTIONED_GEPHI_FILE = properties.getProperty("GEPHI_MENTIONED_FILE");
+            Configuration.MENTIONED_GEPHI_FILE = properties.getProperty("GEPHI_RETWEETED_FILE");
+
 
         } catch (IOException e) {
             throw new RuntimeException("Could not read properties from file:", e);
