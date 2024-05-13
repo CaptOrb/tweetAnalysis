@@ -100,3 +100,7 @@ Percentage negative stance using ONLY hashtags: 62.04249%
 
 # Project
 The tasks were divided evenly between the team members for the entire project.
+
+## Acknowledgements
+
+* Assoc Professor Tony Veale, UCD
